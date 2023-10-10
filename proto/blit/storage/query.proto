@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package blit.storage;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "blit/storage/params.proto";
+import "blit/storage/storage.proto";
+
+option go_package = "blit/x/storage/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/blit/storage/params";
+  
+  }
+  
+  // Queries a list of Storage items.
+  rpc Storage    (QueryGetStorageRequest) returns (QueryGetStorageResponse) {
+    option (google.api.http).get = "/blit/storage/storage/{address}/{index}";
+  
+  }
+  rpc StorageAll (QueryAllStorageRequest) returns (QueryAllStorageResponse) {
+    option (google.api.http).get = "/blit/storage/storage";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetStorageRequest {
+  string address = 1;
+  string index   = 2;
+}
+
+message QueryGetStorageResponse {
+  Storage storage = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllStorageRequest {
+  string filter_address = 1;
+  string filter_index_prefix = 2;
+  cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+message QueryAllStorageResponse {
+  repeated Storage                                storage    = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

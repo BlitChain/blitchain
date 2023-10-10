@@ -1,0 +1,4 @@
+[submodule "cosmos-sdk"]
+	path = cosmos-sdk
+	url = https://github.com/sybilsingleton/cosmos-sdk.git
+	branch = release/v0.47.x

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package blit.script;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "blit/script/params.proto";
+import "blit/script/script.proto";
+
+option go_package = "blit/x/script/types";
+
+// GenesisState defines the script module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params params     = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Script scriptList = 2 [(gogoproto.nullable) = false] ;
+}
+

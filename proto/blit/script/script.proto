@@ -1,0 +1,11 @@
+syntax = "proto3";
+package blit.script;
+
+option go_package = "blit/x/script/types";
+
+message Script {
+  string address = 1; 
+  string code = 2;
+  int64 version = 3;
+}
+

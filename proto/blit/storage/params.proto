@@ -1,0 +1,16 @@
+syntax = "proto3";
+package blit.storage;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "blit/x/storage/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "blit/x/storage/Params";
+  option (gogoproto.equal) = true;
+
+  
+  string gasPerChar = 1 [(gogoproto.moretags) = "yaml:\"gas_per_char\""];
+}

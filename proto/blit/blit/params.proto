@@ -1,0 +1,15 @@
+syntax = "proto3";
+package blit.blit;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "blit/x/blit/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "blit/x/blit/Params";
+  option (gogoproto.equal) = true;
+
+  
+}

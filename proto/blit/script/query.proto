@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package blit.script;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "blit/script/params.proto";
+import "blit/script/script.proto";
+import "blit/script/msgrun.proto";
+
+option go_package = "blit/x/script/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/blit/script/params";
+  
+  }
+  
+  // Queries a list of Script items.
+  rpc Script    (QueryGetScriptRequest) returns (QueryGetScriptResponse) {
+    option (google.api.http).get = "/blit/script/script/{address}";
+  
+  }
+  rpc ScriptAll (QueryAllScriptRequest) returns (QueryAllScriptResponse) {
+    option (google.api.http).get = "/blit/script/script";
+  
+  }
+  
+  // Runs the function and returns the result.
+  rpc Eval (MsgRun) returns (MsgRunResponse) {
+    option (google.api.http).post = "/blit/script/eval/{script_address}";
+  
+  }
+  
+  // Queries the WSGI web application function of a script.
+  rpc Web (QueryWebRequest) returns (QueryWebResponse) {
+    option (google.api.http).get = "/blit/script/web/{address}";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetScriptRequest {
+  string address = 1;
+}
+
+message QueryGetScriptResponse {
+  Script script = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllScriptRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllScriptResponse {
+  repeated Script                                 script     = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryWebRequest {
+  string address     = 1;
+  string httprequest = 2;
+}
+
+message QueryWebResponse {
+  string httpresponse = 1;
+}
+

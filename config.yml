@@ -1,0 +1,32 @@
+version: 1
+build:
+  main: cmd/blitd/
+accounts:
+- name: alice
+  coins:
+  - 20000token
+  - 200000000blit
+- name: bob
+  coins:
+  - 100000000blit
+client:
+  openapi:
+    path: docs/static/openapi.yml
+faucet:
+  name: bob
+  coins:
+  - 100000blit
+validators:
+- name: alice
+  bonded: 100000000blit
+genesis:
+  consensus_params:
+    block:
+      max_gas: "3000000"
+      max_bytes: "2000000"
+  app_state:
+    staking:
+      params:
+        bond_denom: "blit"
+
+

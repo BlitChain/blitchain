@@ -1,0 +1,11 @@
+syntax = "proto3";
+package blit.storage;
+
+option go_package = "blit/x/storage/types";
+
+message Storage {
+  string address = 1; 
+  string index = 2; 
+  string data = 3; 
+}
+

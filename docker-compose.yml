@@ -1,0 +1,14 @@
+version: "3.9"
+
+services: 
+  blit:
+    build: 
+      context: .
+    image: blit:${TAG-dev}
+    environment:
+      - TAG
+    ports: 
+      - "26656-26657:26656-26657"
+      - "1317:1317"
+    volumes:
+      - ${DEAMON_HOME:~/.blit}:/home/user/.blit

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package blit.storage;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "blit/storage/params.proto";
+import "blit/storage/storage.proto";
+
+option go_package = "blit/x/storage/types";
+
+// GenesisState defines the storage module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params  params      = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Storage storageList = 2 [(gogoproto.nullable) = false] ;
+}
+

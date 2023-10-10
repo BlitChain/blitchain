@@ -1,0 +1,21 @@
+syntax = "proto3";
+package blit.script;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "blit/x/script/types";
+
+// MsgRun runs a script at a specific address
+message MsgRun {
+  string caller_address = 2;
+  string script_address = 3;
+  string extra_code     = 4;
+  string function_name  = 5;
+  string kwargs        = 6;
+  string grantee       = 7;
+}
+
+message MsgRunResponse {
+  string response = 1;
+}
+
