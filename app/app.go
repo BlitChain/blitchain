@@ -484,12 +484,12 @@ func catchAllMiddleware(next http.Handler) http.Handler {
 			}
 		}
 
-		if address == "" {
-			address, err = DigBlitAddress(host)
-			if err != nil {
-				fmt.Println(w, "Failed to dig blit address", err)
-			}
-		}
+		//if address == "" {
+		//	address, err = DigBlitAddress(host)
+		//	if err != nil {
+		//		fmt.Println(w, "Failed to dig blit address", err)
+		//	}
+		//}
 
 		// Let the handler process the request
 
