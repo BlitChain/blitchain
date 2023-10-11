@@ -4,7 +4,7 @@ services:
   blit:
     build: 
       context: .
-    image: blit:${TAG-dev}
+    image: blitchain/blitchain:${TAG-dev}
     environment:
       - TAG
     ports: 
