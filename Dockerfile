@@ -2,6 +2,28 @@ FROM golang:bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+WORKDIR /app
+COPY go.mod go.sum .go-version ./
+COPY cosmos-sdk ./cosmos-sdk
+RUN go mod download -x
+
+COPY . .
+
+RUN GOWORK=off go build \
+        -mod=readonly \
+        -ldflags \
+            "-X github.com/cosmos/cosmos-sdk/version.Name="blit" \
+            -X github.com/cosmos/cosmos-sdk/version.AppName="blitd" \
+            -X github.com/cosmos/cosmos-sdk/version.Version=${GIT_VERSION} \
+            -X github.com/cosmos/cosmos-sdk/version.Commit=${GIT_COMMIT} \
+            -X github.com/cosmos/cosmos-sdk/version.BuildTags=${BUILD_TAGS} \
+            -w -s -linkmode=external -extldflags '-Wl,-z,muldefs -static'" \
+        -trimpath \
+        -o ./blitd \
+        ./cmd/blitd
+
+FROM debian:bookworm-slim
+
 RUN apt-get update -y \
     && apt-get install -y \
         make \
@@ -45,25 +67,7 @@ RUN pyenv install --patch < patch
 COPY --chown=user:user blitvm/requirements.txt ./blitvm/requirements.txt
 RUN python -m pip install --user -r ./blitvm/requirements.txt
 
-COPY --chown=user:user go.mod go.sum .go-version ./
-COPY --chown=user:user cosmos-sdk ./cosmos-sdk
-RUN go mod download -x
-
-COPY --chown=user:user . .
-
-
-RUN GOWORK=off go build \
-        -mod=readonly \
-        -ldflags \
-            "-X github.com/cosmos/cosmos-sdk/version.Name="blit" \
-            -X github.com/cosmos/cosmos-sdk/version.AppName="blitd" \
-            -X github.com/cosmos/cosmos-sdk/version.Version=${GIT_VERSION} \
-            -X github.com/cosmos/cosmos-sdk/version.Commit=${GIT_COMMIT} \
-            -X github.com/cosmos/cosmos-sdk/version.BuildTags=${BUILD_TAGS} \
-            -w -s -linkmode=external -extldflags '-Wl,-z,muldefs -static'" \
-        -trimpath \
-        -o ./blitd \
-        ./cmd/blitd
+COPY --from=0 --chown=user:user /app/blitd ./blitd
 
 CMD ["./blitd", "start"]
 

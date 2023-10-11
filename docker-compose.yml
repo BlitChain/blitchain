@@ -11,4 +11,4 @@ services:
       - "26656-26657:26656-26657"
       - "1317:1317"
     volumes:
-      - ${DEAMON_HOME:~/.blit}:/home/user/.blit
+      - ${DEAMON_HOME}:/home/user/.blit
