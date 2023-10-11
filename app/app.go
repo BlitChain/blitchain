@@ -473,7 +473,6 @@ func catchAllMiddleware(next http.Handler) http.Handler {
 		hostParts := strings.Split(host, ".")
 
 		var address string
-		var err error
 		// Loop through the subdomains in reverse order to find a valid address
 		for i := len(hostParts) - 1; i >= 0; i-- {
 			hostItem := hostParts[i]
