@@ -16,9 +16,16 @@ JSONRPC_26657=${JSONRPC_26657:-26657}
 REST_1317=${REST_1317:-1317}
 GRPC_9090=${GRPC_9090:-9090}
 
+# Check if script is run in TTY
+TTY_OPTION=""
+if [ -t 0 ]; then
+    TTY_OPTION="-ti"
+fi
+
 # Run docker command
 exec docker run -it --rm \
     -e TAG \
+    $TTY_OPTION \
     -v $DAEMON_HOME_MAP \
     -p $P2P_26656:26656 -p $JSONRPC_26657:26657 -p $REST_1317:1317 -p $GRPC_9090:9090 \
     $IMAGE_NAME \
