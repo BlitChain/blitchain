@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Docker image name from your docker-compose file
-IMAGE_NAME="blitchain/blitchain:${TAG-dev}"
+IMAGE_NAME="blitchain/blitchain:${TAG:-dev}"
 
 # Mapping the daemon home directory from host to container
 DAEMON_HOME_MAP="${DEAMON_HOME}:/home/user/.blit"

@@ -4,7 +4,6 @@ build:
 accounts:
 - name: alice
   coins:
-  - 20000token
   - 200000000blit
 - name: bob
   coins:
@@ -20,6 +19,7 @@ validators:
 - name: alice
   bonded: 100000000blit
 genesis:
+  chain_id: "blit-dev"
   consensus_params:
     block:
       max_gas: "3000000"
@@ -28,5 +28,17 @@ genesis:
     staking:
       params:
         bond_denom: "blit"
-
+    mint:
+      params:
+        mint_denom: "blit"
+    crisis:
+      constant_fee:
+        denom: "blit"
+    gov:
+      voting_params:
+        voting_period: "30s"
+      deposit_params:
+        min_deposit:
+            - amount: "1000"
+              denom: "blit"
 
