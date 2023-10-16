@@ -17,7 +17,7 @@ REST_1317=${REST_1317:-1317}
 GRPC_9090=${GRPC_9090:-9090}
 
 # Run docker command
-docker run -it --rm \
+exec docker run -it --rm \
     -e TAG \
     -v $DAEMON_HOME_MAP \
     -p $P2P_26656:26656 -p $JSONRPC_26657:26657 -p $REST_1317:1317 -p $GRPC_9090:9090 \
