@@ -17,11 +17,11 @@ faucet:
   - 100000blit
 client:
   typescript:
-    path: ../ts-client
+    path: ../blit-client-ts
   composables:
-    path: ../vue/src/composables
+    path: ../vue-composables
   hooks:
-    path: ../react/src/hooks
+    path: ../react-hooks
   openapi:
     path: docs/static/openapi.yml
 genesis:
