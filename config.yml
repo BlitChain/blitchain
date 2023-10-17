@@ -1,6 +1,9 @@
 version: 1
 build:
   main: cmd/blitd/
+  proto:
+    path: ""
+    third_party_paths: []
 accounts:
 - name: alice
   coins:
@@ -8,37 +11,42 @@ accounts:
 - name: bob
   coins:
   - 100000000blit
-client:
-  openapi:
-    path: docs/static/openapi.yml
 faucet:
   name: bob
   coins:
   - 100000blit
+client:
+  typescript:
+    path: ts-client
+  composables:
+    path: vue/src/composables
+  hooks:
+    path: react/src/hooks
+  openapi:
+    path: docs/static/openapi.yml
+genesis:
+  app_state:
+    crisis:
+      constant_fee:
+        denom: blit
+    gov:
+      deposit_params:
+        min_deposit:
+        - amount: "1000"
+          denom: blit
+      voting_params:
+        voting_period: 30s
+    mint:
+      params:
+        mint_denom: blit
+    staking:
+      params:
+        bond_denom: blit
+  chain_id: blit-dev
+  consensus_params:
+    block:
+      max_bytes: "2000000"
+      max_gas: "3000000"
 validators:
 - name: alice
   bonded: 100000000blit
-genesis:
-  chain_id: "blit-dev"
-  consensus_params:
-    block:
-      max_gas: "3000000"
-      max_bytes: "2000000"
-  app_state:
-    staking:
-      params:
-        bond_denom: "blit"
-    mint:
-      params:
-        mint_denom: "blit"
-    crisis:
-      constant_fee:
-        denom: "blit"
-    gov:
-      voting_params:
-        voting_period: "30s"
-      deposit_params:
-        min_deposit:
-            - amount: "1000"
-              denom: "blit"
-
