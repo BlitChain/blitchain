@@ -230,4 +230,4 @@ replace (
 // Do to hard coded paths in ignite-cli, proto files are not built using custom forks from github.
 // But local paths work. See: https://github.com/ignite/cli/blob/fa472206be95e1f3431ee7f1c17709da121c4159/ignite/pkg/cosmosbuf/buf.go#L96
 // git clone https://github.com/sybilsingleton/cosmos-sdk.git /tmp/sdk --depth 1 --branch release/v0.47.x
-replace github.com/cosmos/cosmos-sdk => ./cosmos-sdk
+replace github.com/cosmos/cosmos-sdk => ../cosmos-sdk

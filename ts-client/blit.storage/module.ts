@@ -7,14 +7,20 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
+import { MsgCreateStorage } from "./types/blit/storage/tx";
 import { MsgUpdateStorage } from "./types/blit/storage/tx";
 import { MsgDeleteStorage } from "./types/blit/storage/tx";
-import { MsgCreateStorage } from "./types/blit/storage/tx";
 
 import { Params as typeParams} from "./types"
 import { Storage as typeStorage} from "./types"
 
-export { MsgUpdateStorage, MsgDeleteStorage, MsgCreateStorage };
+export { MsgCreateStorage, MsgUpdateStorage, MsgDeleteStorage };
+
+type sendMsgCreateStorageParams = {
+  value: MsgCreateStorage,
+  fee?: StdFee,
+  memo?: string
+};
 
 type sendMsgUpdateStorageParams = {
   value: MsgUpdateStorage,
@@ -28,12 +34,10 @@ type sendMsgDeleteStorageParams = {
   memo?: string
 };
 
-type sendMsgCreateStorageParams = {
-  value: MsgCreateStorage,
-  fee?: StdFee,
-  memo?: string
-};
 
+type msgCreateStorageParams = {
+  value: MsgCreateStorage,
+};
 
 type msgUpdateStorageParams = {
   value: MsgUpdateStorage,
@@ -41,10 +45,6 @@ type msgUpdateStorageParams = {
 
 type msgDeleteStorageParams = {
   value: MsgDeleteStorage,
-};
-
-type msgCreateStorageParams = {
-  value: MsgCreateStorage,
 };
 
 
@@ -77,6 +77,20 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
+		async sendMsgCreateStorage({ value, fee, memo }: sendMsgCreateStorageParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgCreateStorage: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgCreateStorage({ value: MsgCreateStorage.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgCreateStorage: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
 		async sendMsgUpdateStorage({ value, fee, memo }: sendMsgUpdateStorageParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgUpdateStorage: Unable to sign Tx. Signer is not present.')
@@ -105,20 +119,14 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgCreateStorage({ value, fee, memo }: sendMsgCreateStorageParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgCreateStorage: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgCreateStorage({ value: MsgCreateStorage.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+		
+		msgCreateStorage({ value }: msgCreateStorageParams): EncodeObject {
+			try {
+				return { typeUrl: "/blit.storage.MsgCreateStorage", value: MsgCreateStorage.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgCreateStorage: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:MsgCreateStorage: Could not create message: ' + e.message)
 			}
 		},
-		
 		
 		msgUpdateStorage({ value }: msgUpdateStorageParams): EncodeObject {
 			try {
@@ -133,14 +141,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 				return { typeUrl: "/blit.storage.MsgDeleteStorage", value: MsgDeleteStorage.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgDeleteStorage: Could not create message: ' + e.message)
-			}
-		},
-		
-		msgCreateStorage({ value }: msgCreateStorageParams): EncodeObject {
-			try {
-				return { typeUrl: "/blit.storage.MsgCreateStorage", value: MsgCreateStorage.fromPartial( value ) }  
-			} catch (e: any) {
-				throw new Error('TxClient:MsgCreateStorage: Could not create message: ' + e.message)
 			}
 		},
 		

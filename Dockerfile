@@ -2,14 +2,17 @@ FROM golang:bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-WORKDIR /app
-COPY go.mod go.sum .go-version ./
-COPY cosmos-sdk ./cosmos-sdk
-RUN go mod download -x
+WORKDIR /app/
+COPY .go-version .
+COPY src/go.mod src/go.mod
+COPY src/go.sum src/go.sum
+COPY cosmos-sdk cosmos-sdk
 
-COPY . .
+RUN cd src && go mod download -x
 
-RUN GOWORK=off go build \
+COPY src src
+
+RUN GOWORK=off cd src && go build \
         -mod=readonly \
         -ldflags \
             "-X github.com/cosmos/cosmos-sdk/version.Name="blit" \
@@ -19,7 +22,7 @@ RUN GOWORK=off go build \
             -X github.com/cosmos/cosmos-sdk/version.BuildTags=${BUILD_TAGS} \
             -w -s -linkmode=external -extldflags '-Wl,-z,muldefs -static'" \
         -trimpath \
-        -o ./blitd \
+        -o ../blitd \
         ./cmd/blitd
 
 FROM debian:bookworm-slim

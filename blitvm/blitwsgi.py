@@ -62,9 +62,8 @@ class SimpleWSGIServer(WSGIServer):
 
     def server_bind(self):
         """Override server_bind to store the server name."""
-        host, port = self.server_address[:2]
-        self.server_port = port
-        self.server_name = "blitvm"
+        self.server_port = ""
+        self.server_name = "blitchain"
         self.setup_environ()
 
     def handle_request(self, request_text, output):
