@@ -110,16 +110,18 @@ go install\
     ./cmd/blitd
 ```
 
-## Init the node
+
+### Init the node
 
 ```
-blitd init $MY_MONIKOR
+blitd init $MY_MONIKER
 ```
 
 
 ## Connect to the Testnet
-
-
 ```
 make testnet start
 ```
+
+
+
