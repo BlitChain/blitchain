@@ -7,14 +7,20 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
+import { MsgCreateScript } from "./types/blit/script/tx";
 import { MsgRun } from "./types/blit/script/msgrun";
 import { MsgUpdateScript } from "./types/blit/script/tx";
-import { MsgCreateScript } from "./types/blit/script/tx";
 
 import { Params as typeParams} from "./types"
 import { Script as typeScript} from "./types"
 
-export { MsgRun, MsgUpdateScript, MsgCreateScript };
+export { MsgCreateScript, MsgRun, MsgUpdateScript };
+
+type sendMsgCreateScriptParams = {
+  value: MsgCreateScript,
+  fee?: StdFee,
+  memo?: string
+};
 
 type sendMsgRunParams = {
   value: MsgRun,
@@ -28,12 +34,10 @@ type sendMsgUpdateScriptParams = {
   memo?: string
 };
 
-type sendMsgCreateScriptParams = {
-  value: MsgCreateScript,
-  fee?: StdFee,
-  memo?: string
-};
 
+type msgCreateScriptParams = {
+  value: MsgCreateScript,
+};
 
 type msgRunParams = {
   value: MsgRun,
@@ -41,10 +45,6 @@ type msgRunParams = {
 
 type msgUpdateScriptParams = {
   value: MsgUpdateScript,
-};
-
-type msgCreateScriptParams = {
-  value: MsgCreateScript,
 };
 
 
@@ -77,6 +77,20 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
+		async sendMsgCreateScript({ value, fee, memo }: sendMsgCreateScriptParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgCreateScript: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgCreateScript({ value: MsgCreateScript.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgCreateScript: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
 		async sendMsgRun({ value, fee, memo }: sendMsgRunParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgRun: Unable to sign Tx. Signer is not present.')
@@ -105,20 +119,14 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgCreateScript({ value, fee, memo }: sendMsgCreateScriptParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgCreateScript: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgCreateScript({ value: MsgCreateScript.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+		
+		msgCreateScript({ value }: msgCreateScriptParams): EncodeObject {
+			try {
+				return { typeUrl: "/blit.script.MsgCreateScript", value: MsgCreateScript.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgCreateScript: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:MsgCreateScript: Could not create message: ' + e.message)
 			}
 		},
-		
 		
 		msgRun({ value }: msgRunParams): EncodeObject {
 			try {
@@ -133,14 +141,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 				return { typeUrl: "/blit.script.MsgUpdateScript", value: MsgUpdateScript.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgUpdateScript: Could not create message: ' + e.message)
-			}
-		},
-		
-		msgCreateScript({ value }: msgCreateScriptParams): EncodeObject {
-			try {
-				return { typeUrl: "/blit.script.MsgCreateScript", value: MsgCreateScript.fromPartial( value ) }  
-			} catch (e: any) {
-				throw new Error('TxClient:MsgCreateScript: Could not create message: ' + e.message)
 			}
 		},
 		
