@@ -33,15 +33,20 @@ sudo apt-get update -y && sudo apt-get install -y \
     dnsutils
 ```
 
-Also install Go from the [Offical Docs](https://go.dev/dl/) or manually below.
+Also install Go from the [Offical Docs](https://go.dev/dl/) or using goenv
+
+
 
 ```
 curl -OL https://go.dev/dl/go1.20.3.linux-amd64.tar.gz
 sudo tar -C /usr/local -xvf ./go1.20.3.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
+
+echo '
+export GOPATH=$HOME/go
+export GOROOT=/usr/local/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:/usr/local/go/bin:$GOBIN' >> ~/.bashrc
 ```
-
-
 
 ### 3\. Install Pyenv
 
@@ -49,43 +54,22 @@ Similarly, for managing Python versions, you can use `pyenv`. Here's how to inst
 
 ```bash
 git clone --depth=1 https://github.com/pyenv/pyenv.git ~/.pyenv
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
-echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
-source ~/.bash_profile
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ### 4\. Clone the Repository
 
-Now, clone the BlitChain repository to your local machine:
+Now, clone the Blit repository to your local machine:
 
 ```bash
-git clone https://github.com/BlitChain/blitchain
+git clone --depth=1  --recursive  https://github.com/BlitChain/blitchain
 cd blitchain
 ```
 
-### 5\. Build blitd
-
-Now you need to build `blitd` from the source. First, ensure you have the right version of Go installed by checking the `.go-version` file in the project. Then run:
-
-```bash
-export GIT_VERSION=`git rev-parse --abbrev-ref HEAD`
-export GIT_COMMIT=`git rev-parse HEAD`
-go mod download -x
-go build\
-    -mod=readonly\
-    -ldflags\
-        "-X github.com/cosmos/cosmos-sdk/version.Name=blit\
-        -X github.com/cosmos/cosmos-sdk/version.AppName=blitd\
-        -X github.com/cosmos/cosmos-sdk/version.Version=${GIT_VERSION}\
-        -X github.com/cosmos/cosmos-sdk/version.Commit=${GIT_COMMIT}\
-        -w -s -linkmode=external -extldflags '-Wl,-z,muldefs -static'"\
-    -trimpath\
-    -o ./blitd\
-    ./cmd/blitd
-```
-
-### 6\. Pyenv build with Python Patch
+### 5\. Pyenv build with Python Patch
 
 To build the patched version of Python in `.python-version` run:
 
@@ -93,7 +77,7 @@ To build the patched version of Python in `.python-version` run:
 pyenv install --patch < patch
 ```
 
-### 7\. Install Python Requirements
+### 6\. Install Python Requirements
 
 Now install the required Python packages using pip:
 
@@ -105,7 +89,37 @@ python -m pip install -r ./blitvm/requirements.txt
 Now, you should have all the necessary dependencies installed and have built the project. You can start `blitd` with the following command:
 
 
+### 7\. Build blitd
+
+Now you need to build `blitd` from the source. First, ensure you have the right version of Go installed by checking the `.go-version` file in the project. Then run:
+
 ```bash
-./blitd start
+cd ./src
+
+export GIT_VERSION=`git rev-parse --abbrev-ref HEAD`
+export GIT_COMMIT=`git rev-parse HEAD`
+go mod download -x
+go install\
+    -mod=readonly\
+    -ldflags\
+        "-X github.com/cosmos/cosmos-sdk/version.Name=blit\
+        -X github.com/cosmos/cosmos-sdk/version.AppName=blitd\
+        -X github.com/cosmos/cosmos-sdk/version.Version=${GIT_VERSION}\
+        -X github.com/cosmos/cosmos-sdk/version.Commit=${GIT_COMMIT}"\
+    -trimpath\
+    ./cmd/blitd
 ```
 
+## Init the node
+
+```
+blitd init $MY_MONIKOR
+```
+
+
+## Connect to the Testnet
+
+
+```
+make testnet start
+```

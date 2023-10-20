@@ -1,4 +1,4 @@
-.PHONY: watch build
+.PHONY: watch build testnet
 
 build: 
 	ignite chain build -v --release -t linux:amd64 -t darwin:amd64 -t darwin:arm64 --check-dependencies
@@ -14,3 +14,9 @@ watch:
 		blitd q tx $$TXHASH -o json | jq -r .raw_log | tee /dev/tty | jq | tee /dev/tty | jq -r .[0].events[1].attributes[3].value | jq \
 	'
 
+
+testnet:
+	RPC_HOST="192.46.233.149" ./scripts/setenv.bash
+
+start:
+	blitd start
