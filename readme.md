@@ -29,9 +29,18 @@ sudo apt-get update -y && sudo apt-get install -y \
     liblzma-dev \
     python3-openssl \
     git \
-	libre2-dev \
+    libre2-dev \
     dnsutils
 ```
+
+Also install Go from the [Offical Docs](https://go.dev/dl/) or manually below.
+
+```
+curl -OL https://go.dev/dl/go1.20.3.linux-amd64.tar.gz
+sudo tar -C /usr/local -xvf ./go1.20.3.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+```
+
 
 
 ### 3\. Install Pyenv
