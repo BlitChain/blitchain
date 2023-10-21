@@ -11,7 +11,7 @@ watch:
 
 
 testnet:
-	RPC_HOST="192.46.233.149" ./scripts/setenv.bash
+	RPC_HOST="192.46.233.149" bash ./scripts/setenv.bash
 
 
 
