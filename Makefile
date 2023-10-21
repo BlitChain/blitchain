@@ -11,11 +11,12 @@ watch:
 
 
 testnet:
-	RPC_HOST="192.46.233.149" bash ./scripts/setenv.bash
+	RPC_HOST="192.46.233.149" python ./scripts/setconfig.py
 
 
 
-build:
+
+build: 
 	@cd ./src && \
 	export GIT_VERSION=`git rev-parse --abbrev-ref HEAD` && \
 	export GIT_COMMIT=`git rev-parse HEAD` && \
@@ -27,6 +28,19 @@ build:
 		-trimpath \
 		-o ../blitd \
 		./cmd/blitd 
+
+
+install:
+	@cd ./src && \
+	export GIT_VERSION=`git rev-parse --abbrev-ref HEAD` && \
+	export GIT_COMMIT=`git rev-parse HEAD` && \
+	go install -mod=readonly \
+		-ldflags "-X github.com/cosmos/cosmos-sdk/version.Name=blit \
+		-X github.com/cosmos/cosmos-sdk/version.AppName=blitd \
+		-X github.com/cosmos/cosmos-sdk/version.Version=$${GIT_VERSION} \
+		-X github.com/cosmos/cosmos-sdk/version.Commit=$${GIT_COMMIT}" \
+		-trimpath \
+		./cmd/blitd
 
 
 start:

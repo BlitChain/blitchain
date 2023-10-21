@@ -5,4 +5,5 @@ black
 requests
 simplejson
 python-forge
+toml
 

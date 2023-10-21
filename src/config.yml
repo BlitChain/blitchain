@@ -6,6 +6,7 @@ build:
     third_party_paths: []
 accounts:
 - name: alice
+  mnemonic: about round cry leisure vague idea park drop minor double horse occur despair cool lazy floor betray network midnight bonus oak couch crime write
   coins:
   - 200000000blit
 - name: bob
