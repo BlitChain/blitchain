@@ -94,31 +94,19 @@ Now, you should have all the necessary dependencies installed and have built the
 Now you need to build `blitd` from the source. First, ensure you have the right version of Go installed by checking the `.go-version` file in the project. Then run:
 
 ```bash
-cd ./src
-
-export GIT_VERSION=`git rev-parse --abbrev-ref HEAD`
-export GIT_COMMIT=`git rev-parse HEAD`
-go mod download -x
-go install\
-    -mod=readonly\
-    -ldflags\
-        "-X github.com/cosmos/cosmos-sdk/version.Name=blit\
-        -X github.com/cosmos/cosmos-sdk/version.AppName=blitd\
-        -X github.com/cosmos/cosmos-sdk/version.Version=${GIT_VERSION}\
-        -X github.com/cosmos/cosmos-sdk/version.Commit=${GIT_COMMIT}"\
-    -trimpath\
-    ./cmd/blitd
+make build
 ```
 
 
 ### Init the node
 
+
 ```
-blitd init $MY_MONIKER
+./blitd init $MY_MONIKER 
 ```
 
 
-## Connect to the Testnet
+## Connect to the Testnet and start the node
 ```
 make testnet start
 ```
