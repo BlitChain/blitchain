@@ -1,0 +1,1 @@
+{"version":3,"file":"registry.js","sourceRoot":"","sources":["../../blit-client-ts/cosmos.upgrade.v1beta1/registry.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,kBAAkB,EAAE,MAAM,mCAAmC,CAAC;AACvE,OAAO,EAAE,gBAAgB,EAAE,MAAM,mCAAmC,CAAC;AAErE,MAAM,QAAQ,GAAoC;IAC9C,CAAC,4CAA4C,EAAE,kBAAkB,CAAC;IAClE,CAAC,0CAA0C,EAAE,gBAAgB,CAAC;CAEjE,CAAC;AAEF,OAAO,EAAE,QAAQ,EAAE,CAAA"}

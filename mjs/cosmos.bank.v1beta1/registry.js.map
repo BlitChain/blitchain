@@ -1,0 +1,1 @@
+{"version":3,"file":"registry.js","sourceRoot":"","sources":["../../blit-client-ts/cosmos.bank.v1beta1/registry.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,YAAY,EAAE,MAAM,gCAAgC,CAAC;AAC9D,OAAO,EAAE,OAAO,EAAE,MAAM,gCAAgC,CAAC;AAEzD,MAAM,QAAQ,GAAoC;IAC9C,CAAC,mCAAmC,EAAE,YAAY,CAAC;IACnD,CAAC,8BAA8B,EAAE,OAAO,CAAC;CAE5C,CAAC;AAEF,OAAO,EAAE,QAAQ,EAAE,CAAA"}
