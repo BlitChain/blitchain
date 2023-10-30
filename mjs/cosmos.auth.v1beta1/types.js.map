@@ -1,1 +1,0 @@
-{"version":3,"file":"types.js","sourceRoot":"","sources":["../../blit-client-ts/cosmos.auth.v1beta1/types.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,MAAM,kCAAkC,CAAA;AAC9D,OAAO,EAAE,aAAa,EAAE,MAAM,kCAAkC,CAAA;AAChE,OAAO,EAAE,gBAAgB,EAAE,MAAM,kCAAkC,CAAA;AACnE,OAAO,EAAE,MAAM,EAAE,MAAM,kCAAkC,CAAA;AAGzD,OAAO,EACH,WAAW,EACX,aAAa,EACb,gBAAgB,EAChB,MAAM,GAER,CAAA"}
