@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) Eval(goCtx context.Context, msg *types.MsgRun) (*types.MsgRunResponse, error) {
+func (k Keeper) Eval(goCtx context.Context, msg *types.QueryEval) (*types.QueryEvalResponse, error) {
 	if msg == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -31,5 +31,5 @@ func (k Keeper) Eval(goCtx context.Context, msg *types.MsgRun) (*types.MsgRunRes
 	if err != nil {
 		return nil, err
 	}
-	return &types.MsgRunResponse{Response: res.Response}, nil
+	return &types.QueryEvalResponse{Response: res.Response}, nil
 }

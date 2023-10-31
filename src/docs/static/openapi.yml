@@ -41,7 +41,7 @@ paths:
       tags:
         - Query
   /blit/script/eval/{script_address}:
-    post:
+    get:
       summary: Runs the function and returns the result.
       operationId: BlitScriptEval
       responses:
@@ -41824,11 +41824,6 @@ definitions:
       MsgUpdateParams message.
 
       Since: cosmos-sdk 0.47
-  blit.script.MsgRunResponse:
-    type: object
-    properties:
-      response:
-        type: string
   blit.script.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -41873,6 +41868,11 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  blit.script.QueryEvalResponse:
+    type: object
+    properties:
+      response:
+        type: string
   blit.script.QueryGetScriptResponse:
     type: object
     properties:
@@ -41987,6 +41987,11 @@ definitions:
        }
   blit.script.MsgCreateScriptResponse:
     type: object
+  blit.script.MsgRunResponse:
+    type: object
+    properties:
+      response:
+        type: string
   blit.script.MsgUpdateParamsResponse:
     type: object
     description: |-
