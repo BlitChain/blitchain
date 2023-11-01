@@ -66,7 +66,6 @@ SCOPE_MEMORY_COST = 0.001
 
 
 def main():
-
     (
         port,
         caller_address,
@@ -265,7 +264,6 @@ def build_sandbox(port, caller_address, script_address, block_info):
         # print(f"rpc response: {res.text}")
         try:
             ret_json = res.json()
-            del ret_json["id"]
             if ret_json["error"] and ret_json["error"].startswith(
                 "CHAIN ERROR: types.ErrorOutOfGas"
             ):
@@ -280,7 +278,7 @@ def build_sandbox(port, caller_address, script_address, block_info):
 
         if ret_json["error"] is not None:
             raise Exception(ret_json["error"])
-        return ret_json
+        return ret_json["result"]
 
     _chain.__qualname__ = "_chain"
     allow_blit_func(_chain)
@@ -292,16 +290,16 @@ def build_sandbox(port, caller_address, script_address, block_info):
         "nodes_called": 0,
     }
 
-
     class ScopedBlitEval(blitlang.BlitEval):
-
         def gas_state(self):
             return gas_state
 
         def _eval(self, node):
-            #print("scopse ", [s.scope.dicts[-1] for s in blitlang.sandboxes])
+            # print("scopse ", [s.scope.dicts[-1] for s in blitlang.sandboxes])
             gas_state["nodes_called"] += 1
-            gas_state["unconsumed_gas"] += NODE_GAS_COST + int(get_scope_size() * SCOPE_MEMORY_COST) 
+            gas_state["unconsumed_gas"] += NODE_GAS_COST + int(
+                get_scope_size() * SCOPE_MEMORY_COST
+            )
             if gas_state["unconsumed_gas"] > 100000 or isinstance(node, ast.Module):
                 self.consume_gas()
             if gas_state["nodes_called"] > blitlang.MAX_NODE_CALLS:
@@ -312,14 +310,13 @@ def build_sandbox(port, caller_address, script_address, block_info):
             resp = _chain("Consumegas", amount=gas_state["unconsumed_gas"])
             gas_state["unconsumed_gas"] = 1
 
-            gas_state["gas_consumed"] = resp["result"].get("GasConsumed", None)
-            gas_state["gas_limit"] = resp["result"].get("GasLimit", None)
-            if gas_state["gas_limit"] > 0 and gas_state["gas_consumed"] > gas_state["gas_limit"]:
+            gas_state["gas_consumed"] = resp.get("GasConsumed", None)
+            gas_state["gas_limit"] = resp.get("GasLimit", None)
+            if (
+                gas_state["gas_limit"] > 0
+                and gas_state["gas_consumed"] > gas_state["gas_limit"]
+            ):
                 raise MemoryError("Out of Gas")
-
-
-
-
 
     scope = {}
     sandbox = ScopedBlitEval(
@@ -340,6 +337,63 @@ def build_sandbox(port, caller_address, script_address, block_info):
     sandbox.scope.dicts[0]["print"] = blit_print
     # sandbox.scope.dicts[0]["globals"] = sandbox.scope.globals
     # sandbox.scope.dicts[0]["locals"] = sandbox.scope.locals
+
+    @allow_blit_func
+    def _sendMsg(typeUrl, value=None, **kwargs):
+        """
+        Send a message to the chain.
+
+        :param typeUrl: the type of message to send (camlCase to match the protobuf usage)
+        :param value: the value of the message to send
+        :param **kwargs: the params of the message
+
+        Only value or kwargs can be used.
+
+        :returns: the response of the message or error
+
+        """
+        # only value or kwargs can be used
+        assert value is None or kwargs == {}, AssertionError(
+            "value and kwargs cannot both be used"
+        )
+
+        if value is None:
+            value = kwargs
+        value["@type"] = typeUrl
+        res = _chain("Msg", json_msg=json.dumps(value))
+        if "data" in res:
+            del res["data"]
+        if "events" in res:
+            res["event"] = res["events"][0]
+            del res["events"]
+        if "msg_responses" in res:
+            res["msg_response"] = res["msg_responses"][0]
+            del res["msg_responses"]
+        return res
+
+    @allow_blit_func
+    def sendQuery(method, params=None, **kwargs):
+        """
+        Send a query to the chain.
+
+        :param method: the query method to call
+        :param params: the params of the query
+        :param **kwargs: the params of the query
+
+        Only params or kwargs can be used.
+
+        :returns: the response of the query or error
+
+        """
+        # only params or kwargs can be used
+        assert params is None or kwargs == {}, AssertionError(
+            "params and kwargs cannot both be used"
+        )
+
+        if params is None:
+            params = kwargs
+
+        return _chain("Query", method=method, json_args=json.dumps(params))
 
     @allow_blit_func
     def get_gas_consumed():
@@ -383,7 +437,6 @@ def build_sandbox(port, caller_address, script_address, block_info):
         """
         return blitlang.MAX_SCOPE_SIZE
 
-
     @allow_blit_func
     def get_caller_address() -> str:
         """
@@ -399,7 +452,9 @@ def build_sandbox(port, caller_address, script_address, block_info):
         return block_info
 
     @allow_blit_func
-    def blit_eval(code, scope=None, track_func=None, max_node_calls=None, max_scope_size=None):
+    def _blit_eval(
+        code, scope=None, track_func=None, max_node_calls=None, max_scope_size=None
+    ):
         """
         Evaluate a string of blit code.
 
@@ -411,14 +466,13 @@ def build_sandbox(port, caller_address, script_address, block_info):
 
         """
 
-
         sandbox = ScopedBlitEval(
             scope=scope,
             local_track_func=track_func,
             max_node_calls=max_node_calls,
             max_scope_size=max_scope_size,
         )
-        
+
         result = sandbox.eval(code)
         sandbox.consume_gas()
         if not result:
@@ -429,6 +483,8 @@ def build_sandbox(port, caller_address, script_address, block_info):
 
     module_dict["blit"] = {
         "_chain": _chain,
+        "_sendMsg": _sendMsg,
+        "sendQuery": sendQuery,
         "get_gas_consumed": get_gas_consumed,
         "get_gas_limit": get_gas_limit,
         "get_scope_size": get_scope_size,
@@ -437,7 +493,7 @@ def build_sandbox(port, caller_address, script_address, block_info):
         "get_caller_address": get_caller_address,
         "get_block_info": get_block_info,
         "get_nodes_called": get_nodes_called,
-        "blit_eval": blit_eval,
+        "_blit_eval": _blit_eval,
     }
 
     sandbox.modules = blitlang.make_modules(module_dict)
@@ -493,6 +549,7 @@ def eval_script(
                         k
                         for k, v in scope.items()
                         if v is not sandbox.modules.blit._chain
+                        and v is not sandbox.modules.blit._sendMsg
                         and not k.startswith("_")
                         and k not in []
                     ],
