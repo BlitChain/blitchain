@@ -20,12 +20,13 @@ service Query {
   
   }
   
-  // Queries a list of Storage items.
-  rpc Storage    (QueryGetStorageRequest) returns (QueryGetStorageResponse) {
+  rpc StorageDetail (QueryStorageDetailRequest) returns (QueryStorageDetailResponse) {
     option (google.api.http).get = "/blit/storage/storage/{address}/{index}";
   
   }
-  rpc StorageAll (QueryAllStorageRequest) returns (QueryAllStorageResponse) {
+
+  // Queries a list of Storage items.
+  rpc FilterStorage (QueryFilterStorageRequest) returns (QueryFilterStorageResponse) {
     option (google.api.http).get = "/blit/storage/storage";
   
   }
@@ -40,22 +41,22 @@ message QueryParamsResponse {
   Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
-message QueryGetStorageRequest {
+message QueryStorageDetailRequest {
   string address = 1;
   string index   = 2;
 }
 
-message QueryGetStorageResponse {
+message QueryStorageDetailResponse {
   Storage storage = 1 [(gogoproto.nullable) = false];
 }
 
-message QueryAllStorageRequest {
+message QueryFilterStorageRequest {
   string filter_address = 1;
   string filter_index_prefix = 2;
   cosmos.base.query.v1beta1.PageRequest pagination = 3;
 }
 
-message QueryAllStorageResponse {
+message QueryFilterStorageResponse {
   repeated Storage                                storage    = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }

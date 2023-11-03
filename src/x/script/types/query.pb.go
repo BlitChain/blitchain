@@ -114,22 +114,22 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
-type QueryGetScriptRequest struct {
+type QueryScriptRequest struct {
 	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-func (m *QueryGetScriptRequest) Reset()         { *m = QueryGetScriptRequest{} }
-func (m *QueryGetScriptRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryGetScriptRequest) ProtoMessage()    {}
-func (*QueryGetScriptRequest) Descriptor() ([]byte, []int) {
+func (m *QueryScriptRequest) Reset()         { *m = QueryScriptRequest{} }
+func (m *QueryScriptRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryScriptRequest) ProtoMessage()    {}
+func (*QueryScriptRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ccea14c161d545ca, []int{2}
 }
-func (m *QueryGetScriptRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryScriptRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryGetScriptRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryScriptRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryGetScriptRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryScriptRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -139,41 +139,41 @@ func (m *QueryGetScriptRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *QueryGetScriptRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryGetScriptRequest.Merge(m, src)
+func (m *QueryScriptRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryScriptRequest.Merge(m, src)
 }
-func (m *QueryGetScriptRequest) XXX_Size() int {
+func (m *QueryScriptRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryGetScriptRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryGetScriptRequest.DiscardUnknown(m)
+func (m *QueryScriptRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryScriptRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryGetScriptRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryScriptRequest proto.InternalMessageInfo
 
-func (m *QueryGetScriptRequest) GetAddress() string {
+func (m *QueryScriptRequest) GetAddress() string {
 	if m != nil {
 		return m.Address
 	}
 	return ""
 }
 
-type QueryGetScriptResponse struct {
+type QueryScriptResponse struct {
 	Script Script `protobuf:"bytes,1,opt,name=script,proto3" json:"script"`
 }
 
-func (m *QueryGetScriptResponse) Reset()         { *m = QueryGetScriptResponse{} }
-func (m *QueryGetScriptResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryGetScriptResponse) ProtoMessage()    {}
-func (*QueryGetScriptResponse) Descriptor() ([]byte, []int) {
+func (m *QueryScriptResponse) Reset()         { *m = QueryScriptResponse{} }
+func (m *QueryScriptResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryScriptResponse) ProtoMessage()    {}
+func (*QueryScriptResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ccea14c161d545ca, []int{3}
 }
-func (m *QueryGetScriptResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryScriptResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryGetScriptResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryScriptResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryGetScriptResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryScriptResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -183,41 +183,41 @@ func (m *QueryGetScriptResponse) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return b[:n], nil
 	}
 }
-func (m *QueryGetScriptResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryGetScriptResponse.Merge(m, src)
+func (m *QueryScriptResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryScriptResponse.Merge(m, src)
 }
-func (m *QueryGetScriptResponse) XXX_Size() int {
+func (m *QueryScriptResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryGetScriptResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryGetScriptResponse.DiscardUnknown(m)
+func (m *QueryScriptResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryScriptResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryGetScriptResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryScriptResponse proto.InternalMessageInfo
 
-func (m *QueryGetScriptResponse) GetScript() Script {
+func (m *QueryScriptResponse) GetScript() Script {
 	if m != nil {
 		return m.Script
 	}
 	return Script{}
 }
 
-type QueryAllScriptRequest struct {
+type QueryScriptsRequest struct {
 	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
-func (m *QueryAllScriptRequest) Reset()         { *m = QueryAllScriptRequest{} }
-func (m *QueryAllScriptRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryAllScriptRequest) ProtoMessage()    {}
-func (*QueryAllScriptRequest) Descriptor() ([]byte, []int) {
+func (m *QueryScriptsRequest) Reset()         { *m = QueryScriptsRequest{} }
+func (m *QueryScriptsRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryScriptsRequest) ProtoMessage()    {}
+func (*QueryScriptsRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ccea14c161d545ca, []int{4}
 }
-func (m *QueryAllScriptRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryScriptsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryAllScriptRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryScriptsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryAllScriptRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryScriptsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -227,42 +227,42 @@ func (m *QueryAllScriptRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return b[:n], nil
 	}
 }
-func (m *QueryAllScriptRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryAllScriptRequest.Merge(m, src)
+func (m *QueryScriptsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryScriptsRequest.Merge(m, src)
 }
-func (m *QueryAllScriptRequest) XXX_Size() int {
+func (m *QueryScriptsRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryAllScriptRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryAllScriptRequest.DiscardUnknown(m)
+func (m *QueryScriptsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryScriptsRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryAllScriptRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryScriptsRequest proto.InternalMessageInfo
 
-func (m *QueryAllScriptRequest) GetPagination() *query.PageRequest {
+func (m *QueryScriptsRequest) GetPagination() *query.PageRequest {
 	if m != nil {
 		return m.Pagination
 	}
 	return nil
 }
 
-type QueryAllScriptResponse struct {
+type QueryScriptsResponse struct {
 	Script     []Script            `protobuf:"bytes,1,rep,name=script,proto3" json:"script"`
 	Pagination *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
-func (m *QueryAllScriptResponse) Reset()         { *m = QueryAllScriptResponse{} }
-func (m *QueryAllScriptResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryAllScriptResponse) ProtoMessage()    {}
-func (*QueryAllScriptResponse) Descriptor() ([]byte, []int) {
+func (m *QueryScriptsResponse) Reset()         { *m = QueryScriptsResponse{} }
+func (m *QueryScriptsResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryScriptsResponse) ProtoMessage()    {}
+func (*QueryScriptsResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ccea14c161d545ca, []int{5}
 }
-func (m *QueryAllScriptResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryScriptsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryAllScriptResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryScriptsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryAllScriptResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryScriptsResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -272,26 +272,26 @@ func (m *QueryAllScriptResponse) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return b[:n], nil
 	}
 }
-func (m *QueryAllScriptResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryAllScriptResponse.Merge(m, src)
+func (m *QueryScriptsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryScriptsResponse.Merge(m, src)
 }
-func (m *QueryAllScriptResponse) XXX_Size() int {
+func (m *QueryScriptsResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryAllScriptResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryAllScriptResponse.DiscardUnknown(m)
+func (m *QueryScriptsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryScriptsResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryAllScriptResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryScriptsResponse proto.InternalMessageInfo
 
-func (m *QueryAllScriptResponse) GetScript() []Script {
+func (m *QueryScriptsResponse) GetScript() []Script {
 	if m != nil {
 		return m.Script
 	}
 	return nil
 }
 
-func (m *QueryAllScriptResponse) GetPagination() *query.PageResponse {
+func (m *QueryScriptsResponse) GetPagination() *query.PageResponse {
 	if m != nil {
 		return m.Pagination
 	}
@@ -394,7 +394,7 @@ func (m *QueryWebResponse) GetHttpresponse() string {
 	return ""
 }
 
-type QueryEval struct {
+type QueryEvalRequest struct {
 	CallerAddress string `protobuf:"bytes,2,opt,name=caller_address,json=callerAddress,proto3" json:"caller_address,omitempty"`
 	ScriptAddress string `protobuf:"bytes,3,opt,name=script_address,json=scriptAddress,proto3" json:"script_address,omitempty"`
 	ExtraCode     string `protobuf:"bytes,4,opt,name=extra_code,json=extraCode,proto3" json:"extra_code,omitempty"`
@@ -403,18 +403,18 @@ type QueryEval struct {
 	Grantee       string `protobuf:"bytes,7,opt,name=grantee,proto3" json:"grantee,omitempty"`
 }
 
-func (m *QueryEval) Reset()         { *m = QueryEval{} }
-func (m *QueryEval) String() string { return proto.CompactTextString(m) }
-func (*QueryEval) ProtoMessage()    {}
-func (*QueryEval) Descriptor() ([]byte, []int) {
+func (m *QueryEvalRequest) Reset()         { *m = QueryEvalRequest{} }
+func (m *QueryEvalRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryEvalRequest) ProtoMessage()    {}
+func (*QueryEvalRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ccea14c161d545ca, []int{8}
 }
-func (m *QueryEval) XXX_Unmarshal(b []byte) error {
+func (m *QueryEvalRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryEval) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryEvalRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryEval.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryEvalRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -424,54 +424,54 @@ func (m *QueryEval) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *QueryEval) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryEval.Merge(m, src)
+func (m *QueryEvalRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryEvalRequest.Merge(m, src)
 }
-func (m *QueryEval) XXX_Size() int {
+func (m *QueryEvalRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryEval) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryEval.DiscardUnknown(m)
+func (m *QueryEvalRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryEvalRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryEval proto.InternalMessageInfo
+var xxx_messageInfo_QueryEvalRequest proto.InternalMessageInfo
 
-func (m *QueryEval) GetCallerAddress() string {
+func (m *QueryEvalRequest) GetCallerAddress() string {
 	if m != nil {
 		return m.CallerAddress
 	}
 	return ""
 }
 
-func (m *QueryEval) GetScriptAddress() string {
+func (m *QueryEvalRequest) GetScriptAddress() string {
 	if m != nil {
 		return m.ScriptAddress
 	}
 	return ""
 }
 
-func (m *QueryEval) GetExtraCode() string {
+func (m *QueryEvalRequest) GetExtraCode() string {
 	if m != nil {
 		return m.ExtraCode
 	}
 	return ""
 }
 
-func (m *QueryEval) GetFunctionName() string {
+func (m *QueryEvalRequest) GetFunctionName() string {
 	if m != nil {
 		return m.FunctionName
 	}
 	return ""
 }
 
-func (m *QueryEval) GetKwargs() string {
+func (m *QueryEvalRequest) GetKwargs() string {
 	if m != nil {
 		return m.Kwargs
 	}
 	return ""
 }
 
-func (m *QueryEval) GetGrantee() string {
+func (m *QueryEvalRequest) GetGrantee() string {
 	if m != nil {
 		return m.Grantee
 	}
@@ -525,65 +525,64 @@ func (m *QueryEvalResponse) GetResponse() string {
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "blit.script.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "blit.script.QueryParamsResponse")
-	proto.RegisterType((*QueryGetScriptRequest)(nil), "blit.script.QueryGetScriptRequest")
-	proto.RegisterType((*QueryGetScriptResponse)(nil), "blit.script.QueryGetScriptResponse")
-	proto.RegisterType((*QueryAllScriptRequest)(nil), "blit.script.QueryAllScriptRequest")
-	proto.RegisterType((*QueryAllScriptResponse)(nil), "blit.script.QueryAllScriptResponse")
+	proto.RegisterType((*QueryScriptRequest)(nil), "blit.script.QueryScriptRequest")
+	proto.RegisterType((*QueryScriptResponse)(nil), "blit.script.QueryScriptResponse")
+	proto.RegisterType((*QueryScriptsRequest)(nil), "blit.script.QueryScriptsRequest")
+	proto.RegisterType((*QueryScriptsResponse)(nil), "blit.script.QueryScriptsResponse")
 	proto.RegisterType((*QueryWebRequest)(nil), "blit.script.QueryWebRequest")
 	proto.RegisterType((*QueryWebResponse)(nil), "blit.script.QueryWebResponse")
-	proto.RegisterType((*QueryEval)(nil), "blit.script.QueryEval")
+	proto.RegisterType((*QueryEvalRequest)(nil), "blit.script.QueryEvalRequest")
 	proto.RegisterType((*QueryEvalResponse)(nil), "blit.script.QueryEvalResponse")
 }
 
 func init() { proto.RegisterFile("blit/script/query.proto", fileDescriptor_ccea14c161d545ca) }
 
 var fileDescriptor_ccea14c161d545ca = []byte{
-	// 707 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0xcd, 0x4e, 0x14, 0x4d,
-	0x14, 0x9d, 0x86, 0x61, 0xf8, 0xe6, 0xf2, 0x81, 0x52, 0x03, 0xd8, 0x69, 0xa1, 0x21, 0x8d, 0xa8,
-	0x21, 0xb1, 0x2b, 0x83, 0x09, 0x7b, 0x30, 0xca, 0xc2, 0x60, 0x70, 0x5c, 0x90, 0xb8, 0x99, 0x54,
-	0xcf, 0x14, 0xcd, 0x68, 0x4f, 0x57, 0xd3, 0x55, 0xc3, 0x4f, 0x08, 0x1b, 0x9f, 0xc0, 0x44, 0x1f,
-	0xc2, 0xa5, 0xf1, 0x29, 0xd8, 0x49, 0xe2, 0xc6, 0x95, 0x31, 0x60, 0xe2, 0x6b, 0x98, 0xae, 0xaa,
-	0xf9, 0xe9, 0xe9, 0x46, 0xdc, 0xcc, 0x74, 0xdd, 0x7b, 0xee, 0x39, 0xa7, 0x6e, 0xd5, 0x2d, 0xb8,
-	0xe3, 0x05, 0x2d, 0x81, 0x79, 0x23, 0x6e, 0x45, 0x02, 0x1f, 0x74, 0x68, 0x7c, 0xe2, 0x46, 0x31,
-	0x13, 0x0c, 0x4d, 0x24, 0x09, 0x57, 0x25, 0xac, 0x69, 0xd2, 0x6e, 0x85, 0x0c, 0xcb, 0x5f, 0x95,
-	0xb7, 0x66, 0x7c, 0xe6, 0x33, 0xf9, 0x89, 0x93, 0x2f, 0x1d, 0x9d, 0xf7, 0x19, 0xf3, 0x03, 0x8a,
-	0x49, 0xd4, 0xc2, 0x24, 0x0c, 0x99, 0x20, 0xa2, 0xc5, 0x42, 0xae, 0xb3, 0xab, 0x0d, 0xc6, 0xdb,
-	0x8c, 0x63, 0x8f, 0x70, 0xaa, 0xc4, 0xf0, 0x61, 0xd5, 0xa3, 0x82, 0x54, 0x71, 0x44, 0xfc, 0x56,
-	0x28, 0xc1, 0x1a, 0x6b, 0x0e, 0x1a, 0x8b, 0x48, 0x4c, 0xda, 0x3c, 0x2f, 0xa3, 0xfe, 0xf2, 0x32,
-	0x6d, 0xee, 0xc7, 0x1d, 0xcd, 0xe6, 0xcc, 0x00, 0x7a, 0x99, 0xe8, 0xed, 0x48, 0xa2, 0x1a, 0x3d,
-	0xe8, 0x50, 0x2e, 0x9c, 0x6d, 0xa8, 0xa4, 0xa2, 0x3c, 0x62, 0x21, 0xa7, 0x68, 0x1d, 0x4a, 0x4a,
-	0xd0, 0x34, 0x96, 0x8c, 0x87, 0x13, 0x6b, 0x15, 0x77, 0xa0, 0x17, 0xae, 0x02, 0x6f, 0x96, 0xcf,
-	0x7f, 0x2c, 0x16, 0x3e, 0xfd, 0xfe, 0xbc, 0x6a, 0xd4, 0x34, 0xda, 0xa9, 0xc2, 0xac, 0xa4, 0xdb,
-	0xa2, 0xe2, 0x95, 0xc4, 0x6a, 0x1d, 0x64, 0xc2, 0x38, 0x69, 0x36, 0x63, 0xca, 0x15, 0x63, 0xb9,
-	0xd6, 0x5d, 0x3a, 0xcf, 0x61, 0x6e, 0xb8, 0x44, 0x9b, 0xa8, 0x42, 0x49, 0x09, 0xe6, 0x9a, 0x50,
-	0xe0, 0xcd, 0x62, 0x62, 0xa2, 0xa6, 0x81, 0x4e, 0x5d, 0xeb, 0x6f, 0x04, 0x41, 0x5a, 0xff, 0x19,
-	0x40, 0xbf, 0xbf, 0x9a, 0xef, 0xbe, 0xab, 0x0e, 0xc3, 0x4d, 0x0e, 0xc3, 0x55, 0x27, 0xaf, 0x0f,
-	0xc3, 0xdd, 0x21, 0x3e, 0xd5, 0xb5, 0xb5, 0x81, 0x4a, 0xe7, 0xa3, 0xa1, 0xed, 0x0e, 0x28, 0xe4,
-	0xd8, 0x1d, 0xfd, 0x27, 0xbb, 0x68, 0x2b, 0xe5, 0x6a, 0x44, 0xba, 0x7a, 0x70, 0xa3, 0x2b, 0xa5,
-	0x97, 0xb2, 0xb5, 0x0d, 0xb7, 0xa4, 0xab, 0x5d, 0xea, 0xdd, 0xd8, 0x71, 0xb4, 0x04, 0x13, 0xfb,
-	0x42, 0x44, 0xb1, 0x02, 0x4a, 0xd9, 0x72, 0x6d, 0x30, 0xe4, 0xac, 0xc3, 0xed, 0x3e, 0x9d, 0xde,
-	0x9e, 0x03, 0xff, 0x2b, 0x88, 0x5a, 0x6b, 0xd2, 0x54, 0xcc, 0xf9, 0x6a, 0x40, 0x59, 0x16, 0x3e,
-	0x3d, 0x24, 0x01, 0x5a, 0x81, 0xa9, 0x06, 0x09, 0x02, 0x1a, 0xd7, 0xbb, 0x46, 0x94, 0xd4, 0xa4,
-	0x8a, 0x6e, 0x68, 0x3b, 0x2b, 0x30, 0xa5, 0xda, 0xd1, 0x83, 0x8d, 0x2a, 0x98, 0x8a, 0x76, 0x61,
-	0x0b, 0x00, 0xf4, 0x58, 0xc4, 0xa4, 0xde, 0x60, 0x4d, 0x6a, 0x16, 0x25, 0xa4, 0x2c, 0x23, 0x4f,
-	0x58, 0x93, 0xa2, 0x65, 0x98, 0xdc, 0xeb, 0x84, 0x8d, 0xa4, 0x1b, 0xf5, 0x90, 0xb4, 0xa9, 0x39,
-	0xa6, 0xfc, 0x75, 0x83, 0x2f, 0x48, 0x9b, 0xa2, 0x39, 0x28, 0xbd, 0x3d, 0x22, 0xb1, 0xcf, 0xcd,
-	0x92, 0xcc, 0xea, 0x55, 0xd2, 0x2b, 0x3f, 0x26, 0xa1, 0xa0, 0xd4, 0x1c, 0x57, 0xbd, 0xd2, 0x4b,
-	0x07, 0xc3, 0x74, 0x6f, 0x43, 0xbd, 0x56, 0x58, 0xf0, 0xdf, 0x50, 0x1b, 0x7a, 0xeb, 0xb5, 0x2f,
-	0x45, 0x18, 0x93, 0x15, 0x68, 0x1f, 0x4a, 0x6a, 0x50, 0xd0, 0x62, 0xea, 0x26, 0x64, 0xa7, 0xd0,
-	0x5a, 0xba, 0x1e, 0xa0, 0x3b, 0x7b, 0xf7, 0xdd, 0xb7, 0x5f, 0x1f, 0x46, 0x66, 0x51, 0x05, 0x67,
-	0x1f, 0x05, 0x74, 0x0c, 0x25, 0x75, 0xbd, 0x90, 0x93, 0x25, 0x1a, 0x1e, 0x45, 0x6b, 0xf9, 0xaf,
-	0x18, 0xad, 0xb7, 0x22, 0xf5, 0x16, 0xd1, 0x02, 0xce, 0x3e, 0x35, 0xf8, 0x54, 0x1f, 0xd4, 0x19,
-	0x3a, 0x80, 0xb2, 0x2a, 0xdc, 0x08, 0x82, 0x3c, 0xf1, 0xe1, 0x39, 0xcc, 0x13, 0xcf, 0x4c, 0xd2,
-	0x35, 0x9b, 0xd5, 0x33, 0xf3, 0x06, 0x8a, 0xf2, 0x76, 0xcd, 0x65, 0x99, 0x92, 0xb8, 0x65, 0xe7,
-	0xc7, 0x7b, 0xe4, 0xab, 0x92, 0xfc, 0x1e, 0x72, 0x52, 0xe4, 0xf4, 0x90, 0x04, 0xf8, 0x34, 0x7d,
-	0x0f, 0xcf, 0xd0, 0x1e, 0x8c, 0xee, 0x52, 0x0f, 0xcd, 0x67, 0x29, 0xfb, 0x83, 0x66, 0x2d, 0x5c,
-	0x93, 0xd5, 0x7a, 0x8e, 0xd4, 0x9b, 0x47, 0x56, 0x4a, 0xef, 0x88, 0x7a, 0xfd, 0x36, 0x6e, 0x3e,
-	0x3a, 0xbf, 0xb4, 0x8d, 0x8b, 0x4b, 0xdb, 0xf8, 0x79, 0x69, 0x1b, 0xef, 0xaf, 0xec, 0xc2, 0xc5,
-	0x95, 0x5d, 0xf8, 0x7e, 0x65, 0x17, 0x5e, 0x57, 0x64, 0xd1, 0x71, 0xb7, 0x4c, 0x9c, 0x44, 0x94,
-	0x7b, 0x25, 0xf9, 0xa2, 0x3f, 0xfe, 0x13, 0x00, 0x00, 0xff, 0xff, 0x88, 0xbc, 0x09, 0xf8, 0xba,
-	0x06, 0x00, 0x00,
+	// 703 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x94, 0x5d, 0x4f, 0x13, 0x4d,
+	0x14, 0xc7, 0xbb, 0x50, 0x96, 0xa7, 0x87, 0x07, 0x94, 0x69, 0xc5, 0xcd, 0xda, 0x2e, 0x38, 0x8a,
+	0x1a, 0x12, 0x77, 0x02, 0x26, 0xdc, 0x8b, 0xf1, 0xe5, 0x06, 0x83, 0xf5, 0x82, 0xc4, 0xc4, 0x90,
+	0xd9, 0x76, 0x58, 0x1a, 0xb7, 0x3b, 0xcb, 0xce, 0x96, 0x97, 0x10, 0x6e, 0xfc, 0x04, 0x46, 0xbf,
+	0x84, 0x57, 0xc6, 0x8f, 0xc1, 0x25, 0x89, 0x89, 0xf1, 0xca, 0x18, 0x30, 0xf1, 0x6b, 0x98, 0x9d,
+	0x99, 0xa5, 0x5d, 0xbb, 0x15, 0x6f, 0xda, 0x9d, 0x73, 0xfe, 0x73, 0x7e, 0xff, 0x39, 0xf3, 0x02,
+	0xd7, 0xbd, 0xa0, 0x93, 0x10, 0xd1, 0x8a, 0x3b, 0x51, 0x42, 0x76, 0x7b, 0x2c, 0x3e, 0x74, 0xa3,
+	0x98, 0x27, 0x1c, 0x4d, 0xa5, 0x09, 0x57, 0x25, 0xec, 0x59, 0xda, 0xed, 0x84, 0x9c, 0xc8, 0x5f,
+	0x95, 0xb7, 0x6b, 0x3e, 0xf7, 0xb9, 0xfc, 0x24, 0xe9, 0x97, 0x8e, 0xd6, 0x7d, 0xce, 0xfd, 0x80,
+	0x11, 0x1a, 0x75, 0x08, 0x0d, 0x43, 0x9e, 0xd0, 0xa4, 0xc3, 0x43, 0xa1, 0xb3, 0x4b, 0x2d, 0x2e,
+	0xba, 0x5c, 0x10, 0x8f, 0x0a, 0xa6, 0x60, 0x64, 0x6f, 0xd9, 0x63, 0x09, 0x5d, 0x26, 0x11, 0xf5,
+	0x3b, 0xa1, 0x14, 0x6b, 0xad, 0x35, 0x68, 0x2c, 0xa2, 0x31, 0xed, 0x8a, 0xa2, 0x8c, 0xfa, 0x2b,
+	0xca, 0x74, 0x85, 0x1f, 0xf7, 0x74, 0x35, 0x5c, 0x03, 0xf4, 0x22, 0xe5, 0x6d, 0xc8, 0x42, 0x4d,
+	0xb6, 0xdb, 0x63, 0x22, 0xc1, 0xeb, 0x50, 0xcd, 0x45, 0x45, 0xc4, 0x43, 0xc1, 0xd0, 0x2a, 0x98,
+	0x0a, 0x68, 0x19, 0x0b, 0xc6, 0xbd, 0xa9, 0x95, 0xaa, 0x3b, 0xd0, 0x0b, 0x57, 0x89, 0xd7, 0x2a,
+	0x27, 0xdf, 0xe7, 0x4b, 0x1f, 0x7f, 0x7d, 0x5e, 0x32, 0x9a, 0x5a, 0x8d, 0x5d, 0x0d, 0x79, 0x29,
+	0x85, 0x1a, 0x82, 0x2c, 0x98, 0xa4, 0xed, 0x76, 0xcc, 0x84, 0x2a, 0x57, 0x69, 0x66, 0x43, 0xfc,
+	0x4c, 0xe3, 0x33, 0xbd, 0xc6, 0x2f, 0x83, 0xa9, 0x50, 0x85, 0x78, 0x25, 0x5e, 0x2b, 0xa7, 0xf8,
+	0xa6, 0x16, 0xe2, 0xd7, 0xb9, 0x4a, 0xd9, 0xfa, 0xd0, 0x13, 0x80, 0x7e, 0x5f, 0x75, 0xb5, 0x3b,
+	0xae, 0xda, 0x04, 0x37, 0xdd, 0x04, 0x57, 0xed, 0xb8, 0xde, 0x04, 0x77, 0x83, 0xfa, 0x4c, 0xcf,
+	0x6d, 0x0e, 0xcc, 0xc4, 0xef, 0x0d, 0xa8, 0xe5, 0xeb, 0x17, 0x58, 0x1d, 0xff, 0x27, 0xab, 0xe8,
+	0x69, 0xce, 0xd3, 0x98, 0xf4, 0x74, 0xf7, 0x52, 0x4f, 0x8a, 0x97, 0x33, 0xb5, 0x0e, 0x57, 0xa4,
+	0xa7, 0x4d, 0xe6, 0x5d, 0xda, 0x6a, 0xb4, 0x00, 0x53, 0x3b, 0x49, 0x12, 0xc5, 0x4a, 0x28, 0xb1,
+	0x95, 0xe6, 0x60, 0x08, 0xaf, 0xc2, 0xd5, 0x7e, 0x39, 0xbd, 0x3c, 0x0c, 0xff, 0x2b, 0x89, 0x1a,
+	0xeb, 0xa2, 0xb9, 0x18, 0xfe, 0x6a, 0xe8, 0x89, 0x8f, 0xf7, 0x68, 0x90, 0x19, 0x59, 0x84, 0x99,
+	0x16, 0x0d, 0x02, 0x16, 0x6f, 0x65, 0x7e, 0x14, 0x71, 0x5a, 0x45, 0x1f, 0x6a, 0x57, 0x8b, 0x30,
+	0xa3, 0xba, 0x72, 0x21, 0x1b, 0x57, 0x32, 0x15, 0xcd, 0x64, 0x0d, 0x00, 0x76, 0x90, 0xc4, 0x74,
+	0xab, 0xc5, 0xdb, 0xcc, 0x2a, 0x4b, 0x49, 0x45, 0x46, 0x1e, 0xf1, 0x36, 0x43, 0xb7, 0x60, 0x7a,
+	0xbb, 0x17, 0xb6, 0xd2, 0xa6, 0x6c, 0x85, 0xb4, 0xcb, 0xac, 0x09, 0x65, 0x33, 0x0b, 0x3e, 0xa7,
+	0x5d, 0x86, 0xe6, 0xc0, 0x7c, 0xb3, 0x4f, 0x63, 0x5f, 0x58, 0xa6, 0xcc, 0xea, 0x51, 0xda, 0x32,
+	0x3f, 0xa6, 0x61, 0xc2, 0x98, 0x35, 0xa9, 0x5a, 0xa6, 0x87, 0x98, 0xc0, 0xec, 0xc0, 0xba, 0x74,
+	0x47, 0x6c, 0xf8, 0xef, 0x8f, 0x6e, 0x5c, 0x8c, 0x57, 0x3e, 0x95, 0x61, 0x42, 0xce, 0x40, 0x3b,
+	0x60, 0xaa, 0x5b, 0x82, 0xe6, 0x73, 0x07, 0x62, 0xf8, 0x0a, 0xda, 0x0b, 0xa3, 0x05, 0xba, 0xc1,
+	0x37, 0xde, 0x7e, 0xf9, 0xf9, 0x61, 0xec, 0x1a, 0xaa, 0x92, 0xe1, 0x17, 0x01, 0xc5, 0x60, 0xaa,
+	0x53, 0x56, 0x44, 0xca, 0xdd, 0xc3, 0x22, 0x52, 0xfe, 0xe2, 0xe1, 0x45, 0x49, 0x9a, 0x47, 0x0d,
+	0x32, 0xfc, 0xc2, 0x90, 0x23, 0xbd, 0x45, 0xc7, 0x28, 0x80, 0x49, 0x7d, 0x0f, 0xd0, 0xc8, 0x9a,
+	0x17, 0xeb, 0xbb, 0xf9, 0x17, 0x85, 0xc6, 0xd6, 0x25, 0x76, 0x0e, 0xd5, 0x0a, 0xb0, 0x02, 0xed,
+	0x42, 0x39, 0xdd, 0x01, 0xd4, 0x18, 0x2e, 0x34, 0x70, 0xe2, 0x6c, 0x67, 0x54, 0x5a, 0x43, 0x96,
+	0x24, 0xe4, 0x36, 0xc2, 0x39, 0x08, 0xdb, 0xa3, 0x01, 0x39, 0xca, 0x9f, 0xc1, 0x63, 0xb4, 0x0d,
+	0xe3, 0x9b, 0xcc, 0x43, 0xf5, 0xe1, 0x92, 0xfd, 0xbb, 0x66, 0x37, 0x46, 0x64, 0x35, 0x0f, 0x4b,
+	0x5e, 0x1d, 0xd9, 0x39, 0xde, 0x3e, 0xf3, 0xfa, 0x8d, 0x5c, 0xbb, 0x7f, 0x72, 0xe6, 0x18, 0xa7,
+	0x67, 0x8e, 0xf1, 0xe3, 0xcc, 0x31, 0xde, 0x9d, 0x3b, 0xa5, 0xd3, 0x73, 0xa7, 0xf4, 0xed, 0xdc,
+	0x29, 0xbd, 0xaa, 0xca, 0x49, 0x07, 0xd9, 0xb4, 0xe4, 0x30, 0x62, 0xc2, 0x33, 0xe5, 0x53, 0xfe,
+	0xe0, 0x77, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2a, 0xc1, 0x73, 0x47, 0xb3, 0x06, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -601,10 +600,10 @@ type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 	// Queries a list of Script items.
-	Script(ctx context.Context, in *QueryGetScriptRequest, opts ...grpc.CallOption) (*QueryGetScriptResponse, error)
-	ScriptAll(ctx context.Context, in *QueryAllScriptRequest, opts ...grpc.CallOption) (*QueryAllScriptResponse, error)
+	Script(ctx context.Context, in *QueryScriptRequest, opts ...grpc.CallOption) (*QueryScriptResponse, error)
+	Scripts(ctx context.Context, in *QueryScriptsRequest, opts ...grpc.CallOption) (*QueryScriptsResponse, error)
 	// Runs the function and returns the result.
-	Eval(ctx context.Context, in *QueryEval, opts ...grpc.CallOption) (*QueryEvalResponse, error)
+	Eval(ctx context.Context, in *QueryEvalRequest, opts ...grpc.CallOption) (*QueryEvalResponse, error)
 	// Queries the WSGI web application function of a script.
 	Web(ctx context.Context, in *QueryWebRequest, opts ...grpc.CallOption) (*QueryWebResponse, error)
 }
@@ -626,8 +625,8 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
-func (c *queryClient) Script(ctx context.Context, in *QueryGetScriptRequest, opts ...grpc.CallOption) (*QueryGetScriptResponse, error) {
-	out := new(QueryGetScriptResponse)
+func (c *queryClient) Script(ctx context.Context, in *QueryScriptRequest, opts ...grpc.CallOption) (*QueryScriptResponse, error) {
+	out := new(QueryScriptResponse)
 	err := c.cc.Invoke(ctx, "/blit.script.Query/Script", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -635,16 +634,16 @@ func (c *queryClient) Script(ctx context.Context, in *QueryGetScriptRequest, opt
 	return out, nil
 }
 
-func (c *queryClient) ScriptAll(ctx context.Context, in *QueryAllScriptRequest, opts ...grpc.CallOption) (*QueryAllScriptResponse, error) {
-	out := new(QueryAllScriptResponse)
-	err := c.cc.Invoke(ctx, "/blit.script.Query/ScriptAll", in, out, opts...)
+func (c *queryClient) Scripts(ctx context.Context, in *QueryScriptsRequest, opts ...grpc.CallOption) (*QueryScriptsResponse, error) {
+	out := new(QueryScriptsResponse)
+	err := c.cc.Invoke(ctx, "/blit.script.Query/Scripts", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *queryClient) Eval(ctx context.Context, in *QueryEval, opts ...grpc.CallOption) (*QueryEvalResponse, error) {
+func (c *queryClient) Eval(ctx context.Context, in *QueryEvalRequest, opts ...grpc.CallOption) (*QueryEvalResponse, error) {
 	out := new(QueryEvalResponse)
 	err := c.cc.Invoke(ctx, "/blit.script.Query/Eval", in, out, opts...)
 	if err != nil {
@@ -667,10 +666,10 @@ type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	// Queries a list of Script items.
-	Script(context.Context, *QueryGetScriptRequest) (*QueryGetScriptResponse, error)
-	ScriptAll(context.Context, *QueryAllScriptRequest) (*QueryAllScriptResponse, error)
+	Script(context.Context, *QueryScriptRequest) (*QueryScriptResponse, error)
+	Scripts(context.Context, *QueryScriptsRequest) (*QueryScriptsResponse, error)
 	// Runs the function and returns the result.
-	Eval(context.Context, *QueryEval) (*QueryEvalResponse, error)
+	Eval(context.Context, *QueryEvalRequest) (*QueryEvalResponse, error)
 	// Queries the WSGI web application function of a script.
 	Web(context.Context, *QueryWebRequest) (*QueryWebResponse, error)
 }
@@ -682,13 +681,13 @@ type UnimplementedQueryServer struct {
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
-func (*UnimplementedQueryServer) Script(ctx context.Context, req *QueryGetScriptRequest) (*QueryGetScriptResponse, error) {
+func (*UnimplementedQueryServer) Script(ctx context.Context, req *QueryScriptRequest) (*QueryScriptResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Script not implemented")
 }
-func (*UnimplementedQueryServer) ScriptAll(ctx context.Context, req *QueryAllScriptRequest) (*QueryAllScriptResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ScriptAll not implemented")
+func (*UnimplementedQueryServer) Scripts(ctx context.Context, req *QueryScriptsRequest) (*QueryScriptsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Scripts not implemented")
 }
-func (*UnimplementedQueryServer) Eval(ctx context.Context, req *QueryEval) (*QueryEvalResponse, error) {
+func (*UnimplementedQueryServer) Eval(ctx context.Context, req *QueryEvalRequest) (*QueryEvalResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Eval not implemented")
 }
 func (*UnimplementedQueryServer) Web(ctx context.Context, req *QueryWebRequest) (*QueryWebResponse, error) {
@@ -718,7 +717,7 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 }
 
 func _Query_Script_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryGetScriptRequest)
+	in := new(QueryScriptRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -730,31 +729,31 @@ func _Query_Script_Handler(srv interface{}, ctx context.Context, dec func(interf
 		FullMethod: "/blit.script.Query/Script",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Script(ctx, req.(*QueryGetScriptRequest))
+		return srv.(QueryServer).Script(ctx, req.(*QueryScriptRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_ScriptAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryAllScriptRequest)
+func _Query_Scripts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryScriptsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).ScriptAll(ctx, in)
+		return srv.(QueryServer).Scripts(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/blit.script.Query/ScriptAll",
+		FullMethod: "/blit.script.Query/Scripts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).ScriptAll(ctx, req.(*QueryAllScriptRequest))
+		return srv.(QueryServer).Scripts(ctx, req.(*QueryScriptsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Query_Eval_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryEval)
+	in := new(QueryEvalRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -766,7 +765,7 @@ func _Query_Eval_Handler(srv interface{}, ctx context.Context, dec func(interfac
 		FullMethod: "/blit.script.Query/Eval",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Eval(ctx, req.(*QueryEval))
+		return srv.(QueryServer).Eval(ctx, req.(*QueryEvalRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -802,8 +801,8 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Query_Script_Handler,
 		},
 		{
-			MethodName: "ScriptAll",
-			Handler:    _Query_ScriptAll_Handler,
+			MethodName: "Scripts",
+			Handler:    _Query_Scripts_Handler,
 		},
 		{
 			MethodName: "Eval",
@@ -874,7 +873,7 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryGetScriptRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryScriptRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -884,12 +883,12 @@ func (m *QueryGetScriptRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryGetScriptRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryScriptRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryGetScriptRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryScriptRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -904,7 +903,7 @@ func (m *QueryGetScriptRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryGetScriptResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryScriptResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -914,12 +913,12 @@ func (m *QueryGetScriptResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryGetScriptResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryScriptResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryGetScriptResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryScriptResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -937,7 +936,7 @@ func (m *QueryGetScriptResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryAllScriptRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryScriptsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -947,12 +946,12 @@ func (m *QueryAllScriptRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryAllScriptRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryScriptsRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryAllScriptRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryScriptsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -972,7 +971,7 @@ func (m *QueryAllScriptRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryAllScriptResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryScriptsResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -982,12 +981,12 @@ func (m *QueryAllScriptResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryAllScriptResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryScriptsResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryAllScriptResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryScriptsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1088,7 +1087,7 @@ func (m *QueryWebResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryEval) Marshal() (dAtA []byte, err error) {
+func (m *QueryEvalRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1098,12 +1097,12 @@ func (m *QueryEval) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryEval) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryEvalRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryEval) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryEvalRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1214,7 +1213,7 @@ func (m *QueryParamsResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryGetScriptRequest) Size() (n int) {
+func (m *QueryScriptRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1227,7 +1226,7 @@ func (m *QueryGetScriptRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryGetScriptResponse) Size() (n int) {
+func (m *QueryScriptResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1238,7 +1237,7 @@ func (m *QueryGetScriptResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryAllScriptRequest) Size() (n int) {
+func (m *QueryScriptsRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1251,7 +1250,7 @@ func (m *QueryAllScriptRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryAllScriptResponse) Size() (n int) {
+func (m *QueryScriptsResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1300,7 +1299,7 @@ func (m *QueryWebResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryEval) Size() (n int) {
+func (m *QueryEvalRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1485,7 +1484,7 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryGetScriptRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryScriptRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1508,10 +1507,10 @@ func (m *QueryGetScriptRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryGetScriptRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryScriptRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryGetScriptRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryScriptRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1567,7 +1566,7 @@ func (m *QueryGetScriptRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryGetScriptResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryScriptResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1590,10 +1589,10 @@ func (m *QueryGetScriptResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryGetScriptResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryScriptResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryGetScriptResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryScriptResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1650,7 +1649,7 @@ func (m *QueryGetScriptResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryAllScriptRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryScriptsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1673,10 +1672,10 @@ func (m *QueryAllScriptRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryAllScriptRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryScriptsRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryAllScriptRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryScriptsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1736,7 +1735,7 @@ func (m *QueryAllScriptRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryAllScriptResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryScriptsResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1759,10 +1758,10 @@ func (m *QueryAllScriptResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryAllScriptResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryScriptsResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryAllScriptResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryScriptsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2052,7 +2051,7 @@ func (m *QueryWebResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryEval) Unmarshal(dAtA []byte) error {
+func (m *QueryEvalRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2075,10 +2074,10 @@ func (m *QueryEval) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryEval: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryEvalRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryEval: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryEvalRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 2:

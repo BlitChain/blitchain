@@ -114,23 +114,23 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
-type QueryGetStorageRequest struct {
+type QueryStorageDetailRequest struct {
 	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
 	Index   string `protobuf:"bytes,2,opt,name=index,proto3" json:"index,omitempty"`
 }
 
-func (m *QueryGetStorageRequest) Reset()         { *m = QueryGetStorageRequest{} }
-func (m *QueryGetStorageRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryGetStorageRequest) ProtoMessage()    {}
-func (*QueryGetStorageRequest) Descriptor() ([]byte, []int) {
+func (m *QueryStorageDetailRequest) Reset()         { *m = QueryStorageDetailRequest{} }
+func (m *QueryStorageDetailRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryStorageDetailRequest) ProtoMessage()    {}
+func (*QueryStorageDetailRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_fcccd36e83588400, []int{2}
 }
-func (m *QueryGetStorageRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryStorageDetailRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryGetStorageRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryStorageDetailRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryGetStorageRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryStorageDetailRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -140,48 +140,48 @@ func (m *QueryGetStorageRequest) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return b[:n], nil
 	}
 }
-func (m *QueryGetStorageRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryGetStorageRequest.Merge(m, src)
+func (m *QueryStorageDetailRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryStorageDetailRequest.Merge(m, src)
 }
-func (m *QueryGetStorageRequest) XXX_Size() int {
+func (m *QueryStorageDetailRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryGetStorageRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryGetStorageRequest.DiscardUnknown(m)
+func (m *QueryStorageDetailRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryStorageDetailRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryGetStorageRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryStorageDetailRequest proto.InternalMessageInfo
 
-func (m *QueryGetStorageRequest) GetAddress() string {
+func (m *QueryStorageDetailRequest) GetAddress() string {
 	if m != nil {
 		return m.Address
 	}
 	return ""
 }
 
-func (m *QueryGetStorageRequest) GetIndex() string {
+func (m *QueryStorageDetailRequest) GetIndex() string {
 	if m != nil {
 		return m.Index
 	}
 	return ""
 }
 
-type QueryGetStorageResponse struct {
+type QueryStorageDetailResponse struct {
 	Storage Storage `protobuf:"bytes,1,opt,name=storage,proto3" json:"storage"`
 }
 
-func (m *QueryGetStorageResponse) Reset()         { *m = QueryGetStorageResponse{} }
-func (m *QueryGetStorageResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryGetStorageResponse) ProtoMessage()    {}
-func (*QueryGetStorageResponse) Descriptor() ([]byte, []int) {
+func (m *QueryStorageDetailResponse) Reset()         { *m = QueryStorageDetailResponse{} }
+func (m *QueryStorageDetailResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryStorageDetailResponse) ProtoMessage()    {}
+func (*QueryStorageDetailResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_fcccd36e83588400, []int{3}
 }
-func (m *QueryGetStorageResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryStorageDetailResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryGetStorageResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryStorageDetailResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryGetStorageResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryStorageDetailResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -191,43 +191,43 @@ func (m *QueryGetStorageResponse) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return b[:n], nil
 	}
 }
-func (m *QueryGetStorageResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryGetStorageResponse.Merge(m, src)
+func (m *QueryStorageDetailResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryStorageDetailResponse.Merge(m, src)
 }
-func (m *QueryGetStorageResponse) XXX_Size() int {
+func (m *QueryStorageDetailResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryGetStorageResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryGetStorageResponse.DiscardUnknown(m)
+func (m *QueryStorageDetailResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryStorageDetailResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryGetStorageResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryStorageDetailResponse proto.InternalMessageInfo
 
-func (m *QueryGetStorageResponse) GetStorage() Storage {
+func (m *QueryStorageDetailResponse) GetStorage() Storage {
 	if m != nil {
 		return m.Storage
 	}
 	return Storage{}
 }
 
-type QueryAllStorageRequest struct {
+type QueryFilterStorageRequest struct {
 	FilterAddress     string             `protobuf:"bytes,1,opt,name=filter_address,json=filterAddress,proto3" json:"filter_address,omitempty"`
 	FilterIndexPrefix string             `protobuf:"bytes,2,opt,name=filter_index_prefix,json=filterIndexPrefix,proto3" json:"filter_index_prefix,omitempty"`
 	Pagination        *query.PageRequest `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
-func (m *QueryAllStorageRequest) Reset()         { *m = QueryAllStorageRequest{} }
-func (m *QueryAllStorageRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryAllStorageRequest) ProtoMessage()    {}
-func (*QueryAllStorageRequest) Descriptor() ([]byte, []int) {
+func (m *QueryFilterStorageRequest) Reset()         { *m = QueryFilterStorageRequest{} }
+func (m *QueryFilterStorageRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryFilterStorageRequest) ProtoMessage()    {}
+func (*QueryFilterStorageRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_fcccd36e83588400, []int{4}
 }
-func (m *QueryAllStorageRequest) XXX_Unmarshal(b []byte) error {
+func (m *QueryFilterStorageRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryAllStorageRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryFilterStorageRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryAllStorageRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryFilterStorageRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -237,56 +237,56 @@ func (m *QueryAllStorageRequest) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return b[:n], nil
 	}
 }
-func (m *QueryAllStorageRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryAllStorageRequest.Merge(m, src)
+func (m *QueryFilterStorageRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryFilterStorageRequest.Merge(m, src)
 }
-func (m *QueryAllStorageRequest) XXX_Size() int {
+func (m *QueryFilterStorageRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryAllStorageRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryAllStorageRequest.DiscardUnknown(m)
+func (m *QueryFilterStorageRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryFilterStorageRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryAllStorageRequest proto.InternalMessageInfo
+var xxx_messageInfo_QueryFilterStorageRequest proto.InternalMessageInfo
 
-func (m *QueryAllStorageRequest) GetFilterAddress() string {
+func (m *QueryFilterStorageRequest) GetFilterAddress() string {
 	if m != nil {
 		return m.FilterAddress
 	}
 	return ""
 }
 
-func (m *QueryAllStorageRequest) GetFilterIndexPrefix() string {
+func (m *QueryFilterStorageRequest) GetFilterIndexPrefix() string {
 	if m != nil {
 		return m.FilterIndexPrefix
 	}
 	return ""
 }
 
-func (m *QueryAllStorageRequest) GetPagination() *query.PageRequest {
+func (m *QueryFilterStorageRequest) GetPagination() *query.PageRequest {
 	if m != nil {
 		return m.Pagination
 	}
 	return nil
 }
 
-type QueryAllStorageResponse struct {
+type QueryFilterStorageResponse struct {
 	Storage    []Storage           `protobuf:"bytes,1,rep,name=storage,proto3" json:"storage"`
 	Pagination *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
-func (m *QueryAllStorageResponse) Reset()         { *m = QueryAllStorageResponse{} }
-func (m *QueryAllStorageResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryAllStorageResponse) ProtoMessage()    {}
-func (*QueryAllStorageResponse) Descriptor() ([]byte, []int) {
+func (m *QueryFilterStorageResponse) Reset()         { *m = QueryFilterStorageResponse{} }
+func (m *QueryFilterStorageResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryFilterStorageResponse) ProtoMessage()    {}
+func (*QueryFilterStorageResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_fcccd36e83588400, []int{5}
 }
-func (m *QueryAllStorageResponse) XXX_Unmarshal(b []byte) error {
+func (m *QueryFilterStorageResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *QueryAllStorageResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *QueryFilterStorageResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_QueryAllStorageResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_QueryFilterStorageResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -296,26 +296,26 @@ func (m *QueryAllStorageResponse) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return b[:n], nil
 	}
 }
-func (m *QueryAllStorageResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryAllStorageResponse.Merge(m, src)
+func (m *QueryFilterStorageResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryFilterStorageResponse.Merge(m, src)
 }
-func (m *QueryAllStorageResponse) XXX_Size() int {
+func (m *QueryFilterStorageResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *QueryAllStorageResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryAllStorageResponse.DiscardUnknown(m)
+func (m *QueryFilterStorageResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryFilterStorageResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_QueryAllStorageResponse proto.InternalMessageInfo
+var xxx_messageInfo_QueryFilterStorageResponse proto.InternalMessageInfo
 
-func (m *QueryAllStorageResponse) GetStorage() []Storage {
+func (m *QueryFilterStorageResponse) GetStorage() []Storage {
 	if m != nil {
 		return m.Storage
 	}
 	return nil
 }
 
-func (m *QueryAllStorageResponse) GetPagination() *query.PageResponse {
+func (m *QueryFilterStorageResponse) GetPagination() *query.PageResponse {
 	if m != nil {
 		return m.Pagination
 	}
@@ -325,51 +325,51 @@ func (m *QueryAllStorageResponse) GetPagination() *query.PageResponse {
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "blit.storage.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "blit.storage.QueryParamsResponse")
-	proto.RegisterType((*QueryGetStorageRequest)(nil), "blit.storage.QueryGetStorageRequest")
-	proto.RegisterType((*QueryGetStorageResponse)(nil), "blit.storage.QueryGetStorageResponse")
-	proto.RegisterType((*QueryAllStorageRequest)(nil), "blit.storage.QueryAllStorageRequest")
-	proto.RegisterType((*QueryAllStorageResponse)(nil), "blit.storage.QueryAllStorageResponse")
+	proto.RegisterType((*QueryStorageDetailRequest)(nil), "blit.storage.QueryStorageDetailRequest")
+	proto.RegisterType((*QueryStorageDetailResponse)(nil), "blit.storage.QueryStorageDetailResponse")
+	proto.RegisterType((*QueryFilterStorageRequest)(nil), "blit.storage.QueryFilterStorageRequest")
+	proto.RegisterType((*QueryFilterStorageResponse)(nil), "blit.storage.QueryFilterStorageResponse")
 }
 
 func init() { proto.RegisterFile("blit/storage/query.proto", fileDescriptor_fcccd36e83588400) }
 
 var fileDescriptor_fcccd36e83588400 = []byte{
-	// 546 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x94, 0x3f, 0x6f, 0xd3, 0x40,
-	0x18, 0xc6, 0x73, 0x29, 0x4d, 0xd4, 0xe3, 0x8f, 0xd4, 0xab, 0xdb, 0x1a, 0xab, 0x98, 0x62, 0x51,
-	0x0a, 0x1d, 0xee, 0xd4, 0x22, 0xc4, 0x9c, 0x0c, 0x14, 0x16, 0x14, 0xcc, 0xc6, 0x52, 0x5d, 0xc8,
-	0xd5, 0xb2, 0x70, 0x7c, 0xae, 0xef, 0x8a, 0x52, 0x55, 0x5d, 0x58, 0x58, 0x91, 0x98, 0xf8, 0x06,
-	0x8c, 0x6c, 0x7c, 0x85, 0x8e, 0x95, 0x58, 0x98, 0x10, 0x4a, 0x90, 0xf8, 0x0a, 0x8c, 0xc8, 0x77,
-	0x6f, 0x68, 0x8c, 0x2d, 0xca, 0x92, 0xd8, 0xf7, 0x3e, 0xf7, 0xbc, 0xbf, 0xbb, 0xf7, 0x49, 0xb0,
-	0xdb, 0x4f, 0x62, 0xcd, 0x94, 0x96, 0x39, 0x8f, 0x04, 0x3b, 0x38, 0x14, 0xf9, 0x11, 0xcd, 0x72,
-	0xa9, 0x25, 0xb9, 0x52, 0x54, 0x28, 0x54, 0xbc, 0x45, 0x3e, 0x8c, 0x53, 0xc9, 0xcc, 0xa7, 0x15,
-	0x78, 0x4e, 0x24, 0x23, 0x69, 0x1e, 0x59, 0xf1, 0x04, 0xab, 0x6b, 0x91, 0x94, 0x51, 0x22, 0x18,
-	0xcf, 0x62, 0xc6, 0xd3, 0x54, 0x6a, 0xae, 0x63, 0x99, 0x2a, 0xa8, 0x6e, 0xbd, 0x94, 0x6a, 0x28,
-	0x15, 0xeb, 0x73, 0x05, 0xdd, 0xd8, 0xeb, 0xed, 0xbe, 0xd0, 0x7c, 0x9b, 0x65, 0x3c, 0x8a, 0x53,
-	0x23, 0x06, 0xed, 0xf5, 0x12, 0x5a, 0xc6, 0x73, 0x3e, 0x9c, 0xda, 0x78, 0xa5, 0x12, 0x7c, 0xdb,
-	0x5a, 0xe0, 0x60, 0xf2, 0xac, 0x30, 0xee, 0x99, 0x0d, 0xa1, 0x38, 0x38, 0x14, 0x4a, 0x07, 0x4f,
-	0xf1, 0x52, 0x69, 0x55, 0x65, 0x32, 0x55, 0x82, 0x3c, 0xc4, 0x2d, 0x6b, 0xec, 0xa2, 0x75, 0x74,
-	0xf7, 0xf2, 0x8e, 0x43, 0x67, 0x4f, 0x4d, 0xad, 0xba, 0xbb, 0x70, 0xfa, 0xed, 0x66, 0xe3, 0xe3,
-	0xcf, 0x4f, 0x5b, 0x28, 0x04, 0x79, 0xf0, 0x18, 0xaf, 0x18, 0xbf, 0x5d, 0xa1, 0x9f, 0x5b, 0x31,
-	0x74, 0x22, 0x2e, 0x6e, 0xf3, 0xc1, 0x20, 0x17, 0xca, 0x7a, 0x2e, 0x84, 0xd3, 0x57, 0xe2, 0xe0,
-	0xf9, 0x38, 0x1d, 0x88, 0x91, 0xdb, 0x34, 0xeb, 0xf6, 0x25, 0xe8, 0xe1, 0xd5, 0x8a, 0x13, 0xd0,
-	0x3d, 0xc0, 0x6d, 0x20, 0x01, 0xbc, 0xe5, 0x32, 0x1e, 0xe8, 0xbb, 0x97, 0x0a, 0xbe, 0x70, 0xaa,
-	0x0d, 0x3e, 0x23, 0x80, 0xeb, 0x24, 0xc9, 0x5f, 0x70, 0x1b, 0xf8, 0xda, 0x7e, 0x9c, 0x68, 0x91,
-	0xef, 0x95, 0x19, 0xaf, 0xda, 0xd5, 0x0e, 0x90, 0x52, 0xbc, 0x04, 0x32, 0xc3, 0xb8, 0x97, 0xe5,
-	0x62, 0x3f, 0x9e, 0x72, 0x2f, 0xda, 0xd2, 0x93, 0xa2, 0xd2, 0x33, 0x05, 0xf2, 0x08, 0xe3, 0xf3,
-	0xf1, 0xb9, 0x73, 0x86, 0xf5, 0x0e, 0xb5, 0xb3, 0xa6, 0xc5, 0xac, 0xa9, 0x4d, 0x16, 0xcc, 0x9a,
-	0xf6, 0xce, 0x91, 0xc2, 0x99, 0x9d, 0xc1, 0x07, 0x04, 0x97, 0x31, 0x4b, 0x5e, 0x77, 0x19, 0x73,
-	0xff, 0x7b, 0x19, 0x64, 0xb7, 0x84, 0xd6, 0x34, 0x68, 0x9b, 0x17, 0xa2, 0xd9, 0x9e, 0xb3, 0x6c,
-	0x3b, 0xbf, 0x9a, 0x78, 0xde, 0xb0, 0x91, 0x57, 0xb8, 0x65, 0x83, 0x41, 0xd6, 0xcb, 0x08, 0xd5,
-	0xdc, 0x79, 0xb7, 0xfe, 0xa1, 0xb0, 0x4d, 0x82, 0xb5, 0x37, 0x5f, 0x7e, 0xbc, 0x6f, 0xae, 0x10,
-	0x87, 0xd5, 0x04, 0x9e, 0xbc, 0x45, 0xb8, 0x0d, 0x47, 0x23, 0xb7, 0x6b, 0xcc, 0x2a, 0x01, 0xf4,
-	0x36, 0x2e, 0x50, 0x41, 0x5b, 0x66, 0xda, 0xde, 0x23, 0x9b, 0xac, 0xee, 0xc7, 0xc4, 0x8e, 0x21,
-	0x20, 0x27, 0xec, 0xd8, 0x64, 0xe0, 0x84, 0x8c, 0x30, 0x06, 0x8f, 0x4e, 0x92, 0xd4, 0xb2, 0x54,
-	0xf2, 0x56, 0xcb, 0x52, 0x9d, 0x6d, 0x70, 0xc3, 0xb0, 0xac, 0x92, 0xe5, 0x5a, 0x96, 0x2e, 0x3d,
-	0x1d, 0xfb, 0xe8, 0x6c, 0xec, 0xa3, 0xef, 0x63, 0x1f, 0xbd, 0x9b, 0xf8, 0x8d, 0xb3, 0x89, 0xdf,
-	0xf8, 0x3a, 0xf1, 0x1b, 0x2f, 0x1c, 0xa3, 0x1f, 0xfd, 0xd9, 0xa1, 0x8f, 0x32, 0xa1, 0xfa, 0x2d,
-	0xf3, 0x4f, 0x70, 0xff, 0x77, 0x00, 0x00, 0x00, 0xff, 0xff, 0x83, 0x48, 0x08, 0x91, 0xdd, 0x04,
-	0x00, 0x00,
+	// 548 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x94, 0xc1, 0x6a, 0x13, 0x41,
+	0x18, 0xc7, 0x33, 0x8d, 0x4d, 0xe9, 0x68, 0x84, 0x4e, 0xb7, 0xba, 0x5d, 0xea, 0x5a, 0x17, 0x34,
+	0xb5, 0x87, 0x19, 0x5a, 0x11, 0xcf, 0x06, 0xa9, 0x88, 0x20, 0x71, 0x7b, 0xf3, 0x52, 0x26, 0x66,
+	0xba, 0x2c, 0x26, 0x3b, 0xdb, 0x9d, 0xa9, 0xb4, 0x94, 0x1e, 0xf4, 0x01, 0x44, 0xe8, 0xd5, 0x07,
+	0xf0, 0xe8, 0xd9, 0x27, 0xe8, 0xb1, 0xe0, 0xc5, 0x93, 0x48, 0x22, 0xf8, 0x1a, 0xb2, 0x33, 0xdf,
+	0xda, 0xac, 0x0e, 0xd6, 0x4b, 0xb2, 0xf3, 0xfd, 0xff, 0xf3, 0xcd, 0x2f, 0xf3, 0xfd, 0xb3, 0xd8,
+	0xef, 0x0f, 0x53, 0xcd, 0x94, 0x96, 0x05, 0x4f, 0x04, 0xdb, 0xdb, 0x17, 0xc5, 0x21, 0xcd, 0x0b,
+	0xa9, 0x25, 0xb9, 0x52, 0x2a, 0x14, 0x94, 0x60, 0x81, 0x8f, 0xd2, 0x4c, 0x32, 0xf3, 0x69, 0x0d,
+	0x81, 0x97, 0xc8, 0x44, 0x9a, 0x47, 0x56, 0x3e, 0x41, 0x75, 0x25, 0x91, 0x32, 0x19, 0x0a, 0xc6,
+	0xf3, 0x94, 0xf1, 0x2c, 0x93, 0x9a, 0xeb, 0x54, 0x66, 0x0a, 0xd4, 0xf5, 0x97, 0x52, 0x8d, 0xa4,
+	0x62, 0x7d, 0xae, 0xe0, 0x34, 0xf6, 0x7a, 0xa3, 0x2f, 0x34, 0xdf, 0x60, 0x39, 0x4f, 0xd2, 0xcc,
+	0x98, 0xc1, 0xbb, 0x5c, 0x43, 0xcb, 0x79, 0xc1, 0x47, 0x55, 0x9b, 0xa0, 0x26, 0xc1, 0xb7, 0xd5,
+	0x22, 0x0f, 0x93, 0xe7, 0x65, 0xe3, 0x9e, 0xd9, 0x10, 0x8b, 0xbd, 0x7d, 0xa1, 0x74, 0xf4, 0x0c,
+	0x2f, 0xd6, 0xaa, 0x2a, 0x97, 0x99, 0x12, 0xe4, 0x01, 0x6e, 0xd9, 0xc6, 0x3e, 0x5a, 0x45, 0x6b,
+	0x97, 0x37, 0x3d, 0x3a, 0xfd, 0xab, 0xa9, 0x75, 0x77, 0xe7, 0x4f, 0xbf, 0xdd, 0x6c, 0x7c, 0xfc,
+	0xf9, 0x69, 0x1d, 0xc5, 0x60, 0x8f, 0x9e, 0xe2, 0x65, 0xd3, 0x6f, 0xdb, 0x3a, 0x1f, 0x09, 0xcd,
+	0xd3, 0x21, 0x1c, 0x46, 0x7c, 0x3c, 0xc7, 0x07, 0x83, 0x42, 0x28, 0xdb, 0x76, 0x3e, 0xae, 0x96,
+	0xc4, 0xc3, 0xb3, 0x69, 0x36, 0x10, 0x07, 0xfe, 0x8c, 0xa9, 0xdb, 0x45, 0xb4, 0x8d, 0x03, 0x57,
+	0x33, 0x60, 0xbc, 0x8f, 0xe7, 0x80, 0x07, 0x20, 0x97, 0xea, 0x90, 0xb0, 0xab, 0x7b, 0xa9, 0xa4,
+	0x8c, 0x2b, 0x6f, 0xf4, 0x19, 0x01, 0xe2, 0x56, 0x3a, 0xd4, 0xa2, 0x00, 0x57, 0x85, 0x78, 0x1b,
+	0x5f, 0xdd, 0x35, 0xf5, 0x9d, 0x3a, 0x69, 0xdb, 0x56, 0x1f, 0x02, 0x2f, 0xc5, 0x8b, 0x60, 0x33,
+	0xa4, 0x3b, 0x79, 0x21, 0x76, 0xd3, 0x8a, 0x7e, 0xc1, 0x4a, 0x4f, 0x4a, 0xa5, 0x67, 0x04, 0xb2,
+	0x85, 0xf1, 0xf9, 0x1c, 0xfd, 0xa6, 0xc1, 0xbd, 0x43, 0xed, 0xd0, 0x69, 0x39, 0x74, 0x6a, 0x23,
+	0x06, 0x43, 0xa7, 0xbd, 0x73, 0xa4, 0x78, 0x6a, 0x67, 0xf4, 0x01, 0xc1, 0x95, 0xfc, 0x01, 0xef,
+	0xba, 0x92, 0xe6, 0xff, 0x5e, 0x09, 0x79, 0x5c, 0xa3, 0x9b, 0x31, 0x74, 0x9d, 0x0b, 0xe9, 0xec,
+	0x99, 0xd3, 0x78, 0x9b, 0xef, 0x9a, 0x78, 0xd6, 0xe0, 0x91, 0x57, 0xb8, 0x65, 0x43, 0x42, 0x56,
+	0xeb, 0x08, 0x7f, 0x67, 0x30, 0xb8, 0xf5, 0x0f, 0x87, 0x3d, 0x24, 0x5a, 0x79, 0xfb, 0xe5, 0xc7,
+	0xc9, 0xcc, 0x35, 0xe2, 0x31, 0x47, 0xf8, 0xc9, 0x09, 0xc2, 0xed, 0x5a, 0x46, 0x48, 0xc7, 0xd1,
+	0xd2, 0x15, 0xc9, 0x60, 0xed, 0x62, 0x23, 0x20, 0x30, 0x83, 0x70, 0x97, 0x74, 0x98, 0xeb, 0x4f,
+	0xc6, 0x8e, 0x20, 0x2f, 0xc7, 0xec, 0xc8, 0x44, 0xe2, 0x98, 0xbc, 0x41, 0xb8, 0x5d, 0x1b, 0x93,
+	0x93, 0xca, 0x95, 0x42, 0x27, 0x95, 0x73, 0xe2, 0xd1, 0x0d, 0x43, 0x75, 0x9d, 0x2c, 0x39, 0xa9,
+	0xba, 0xf4, 0x74, 0x1c, 0xa2, 0xb3, 0x71, 0x88, 0xbe, 0x8f, 0x43, 0xf4, 0x7e, 0x12, 0x36, 0xce,
+	0x26, 0x61, 0xe3, 0xeb, 0x24, 0x6c, 0xbc, 0xf0, 0x8c, 0xff, 0xe0, 0xf7, 0x0e, 0x7d, 0x98, 0x0b,
+	0xd5, 0x6f, 0x99, 0x77, 0xc5, 0xbd, 0x5f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x6d, 0x06, 0x2b, 0x41,
+	0xff, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -386,9 +386,9 @@ const _ = grpc.SupportPackageIsVersion4
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	StorageDetail(ctx context.Context, in *QueryStorageDetailRequest, opts ...grpc.CallOption) (*QueryStorageDetailResponse, error)
 	// Queries a list of Storage items.
-	Storage(ctx context.Context, in *QueryGetStorageRequest, opts ...grpc.CallOption) (*QueryGetStorageResponse, error)
-	StorageAll(ctx context.Context, in *QueryAllStorageRequest, opts ...grpc.CallOption) (*QueryAllStorageResponse, error)
+	FilterStorage(ctx context.Context, in *QueryFilterStorageRequest, opts ...grpc.CallOption) (*QueryFilterStorageResponse, error)
 }
 
 type queryClient struct {
@@ -408,18 +408,18 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
-func (c *queryClient) Storage(ctx context.Context, in *QueryGetStorageRequest, opts ...grpc.CallOption) (*QueryGetStorageResponse, error) {
-	out := new(QueryGetStorageResponse)
-	err := c.cc.Invoke(ctx, "/blit.storage.Query/Storage", in, out, opts...)
+func (c *queryClient) StorageDetail(ctx context.Context, in *QueryStorageDetailRequest, opts ...grpc.CallOption) (*QueryStorageDetailResponse, error) {
+	out := new(QueryStorageDetailResponse)
+	err := c.cc.Invoke(ctx, "/blit.storage.Query/StorageDetail", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *queryClient) StorageAll(ctx context.Context, in *QueryAllStorageRequest, opts ...grpc.CallOption) (*QueryAllStorageResponse, error) {
-	out := new(QueryAllStorageResponse)
-	err := c.cc.Invoke(ctx, "/blit.storage.Query/StorageAll", in, out, opts...)
+func (c *queryClient) FilterStorage(ctx context.Context, in *QueryFilterStorageRequest, opts ...grpc.CallOption) (*QueryFilterStorageResponse, error) {
+	out := new(QueryFilterStorageResponse)
+	err := c.cc.Invoke(ctx, "/blit.storage.Query/FilterStorage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -430,9 +430,9 @@ func (c *queryClient) StorageAll(ctx context.Context, in *QueryAllStorageRequest
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	StorageDetail(context.Context, *QueryStorageDetailRequest) (*QueryStorageDetailResponse, error)
 	// Queries a list of Storage items.
-	Storage(context.Context, *QueryGetStorageRequest) (*QueryGetStorageResponse, error)
-	StorageAll(context.Context, *QueryAllStorageRequest) (*QueryAllStorageResponse, error)
+	FilterStorage(context.Context, *QueryFilterStorageRequest) (*QueryFilterStorageResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -442,11 +442,11 @@ type UnimplementedQueryServer struct {
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
-func (*UnimplementedQueryServer) Storage(ctx context.Context, req *QueryGetStorageRequest) (*QueryGetStorageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Storage not implemented")
+func (*UnimplementedQueryServer) StorageDetail(ctx context.Context, req *QueryStorageDetailRequest) (*QueryStorageDetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StorageDetail not implemented")
 }
-func (*UnimplementedQueryServer) StorageAll(ctx context.Context, req *QueryAllStorageRequest) (*QueryAllStorageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StorageAll not implemented")
+func (*UnimplementedQueryServer) FilterStorage(ctx context.Context, req *QueryFilterStorageRequest) (*QueryFilterStorageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FilterStorage not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -471,38 +471,38 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_Storage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryGetStorageRequest)
+func _Query_StorageDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryStorageDetailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).Storage(ctx, in)
+		return srv.(QueryServer).StorageDetail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/blit.storage.Query/Storage",
+		FullMethod: "/blit.storage.Query/StorageDetail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Storage(ctx, req.(*QueryGetStorageRequest))
+		return srv.(QueryServer).StorageDetail(ctx, req.(*QueryStorageDetailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_StorageAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryAllStorageRequest)
+func _Query_FilterStorage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryFilterStorageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).StorageAll(ctx, in)
+		return srv.(QueryServer).FilterStorage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/blit.storage.Query/StorageAll",
+		FullMethod: "/blit.storage.Query/FilterStorage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).StorageAll(ctx, req.(*QueryAllStorageRequest))
+		return srv.(QueryServer).FilterStorage(ctx, req.(*QueryFilterStorageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -516,12 +516,12 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Query_Params_Handler,
 		},
 		{
-			MethodName: "Storage",
-			Handler:    _Query_Storage_Handler,
+			MethodName: "StorageDetail",
+			Handler:    _Query_StorageDetail_Handler,
 		},
 		{
-			MethodName: "StorageAll",
-			Handler:    _Query_StorageAll_Handler,
+			MethodName: "FilterStorage",
+			Handler:    _Query_FilterStorage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -584,7 +584,7 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryGetStorageRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryStorageDetailRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -594,12 +594,12 @@ func (m *QueryGetStorageRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryGetStorageRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryStorageDetailRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryGetStorageRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryStorageDetailRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -621,7 +621,7 @@ func (m *QueryGetStorageRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryGetStorageResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryStorageDetailResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -631,12 +631,12 @@ func (m *QueryGetStorageResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryGetStorageResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryStorageDetailResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryGetStorageResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryStorageDetailResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -654,7 +654,7 @@ func (m *QueryGetStorageResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryAllStorageRequest) Marshal() (dAtA []byte, err error) {
+func (m *QueryFilterStorageRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -664,12 +664,12 @@ func (m *QueryAllStorageRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryAllStorageRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryFilterStorageRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryAllStorageRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryFilterStorageRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -703,7 +703,7 @@ func (m *QueryAllStorageRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryAllStorageResponse) Marshal() (dAtA []byte, err error) {
+func (m *QueryFilterStorageResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -713,12 +713,12 @@ func (m *QueryAllStorageResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *QueryAllStorageResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *QueryFilterStorageResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *QueryAllStorageResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *QueryFilterStorageResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -783,7 +783,7 @@ func (m *QueryParamsResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryGetStorageRequest) Size() (n int) {
+func (m *QueryStorageDetailRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -800,7 +800,7 @@ func (m *QueryGetStorageRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryGetStorageResponse) Size() (n int) {
+func (m *QueryStorageDetailResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -811,7 +811,7 @@ func (m *QueryGetStorageResponse) Size() (n int) {
 	return n
 }
 
-func (m *QueryAllStorageRequest) Size() (n int) {
+func (m *QueryFilterStorageRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -832,7 +832,7 @@ func (m *QueryAllStorageRequest) Size() (n int) {
 	return n
 }
 
-func (m *QueryAllStorageResponse) Size() (n int) {
+func (m *QueryFilterStorageResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -990,7 +990,7 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryGetStorageRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryStorageDetailRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1013,10 +1013,10 @@ func (m *QueryGetStorageRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryGetStorageRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryStorageDetailRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryGetStorageRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryStorageDetailRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1104,7 +1104,7 @@ func (m *QueryGetStorageRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryGetStorageResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryStorageDetailResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1127,10 +1127,10 @@ func (m *QueryGetStorageResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryGetStorageResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryStorageDetailResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryGetStorageResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryStorageDetailResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1187,7 +1187,7 @@ func (m *QueryGetStorageResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryAllStorageRequest) Unmarshal(dAtA []byte) error {
+func (m *QueryFilterStorageRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1210,10 +1210,10 @@ func (m *QueryAllStorageRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryAllStorageRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryFilterStorageRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryAllStorageRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryFilterStorageRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1337,7 +1337,7 @@ func (m *QueryAllStorageRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *QueryAllStorageResponse) Unmarshal(dAtA []byte) error {
+func (m *QueryFilterStorageResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1360,10 +1360,10 @@ func (m *QueryAllStorageResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: QueryAllStorageResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: QueryFilterStorageResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryAllStorageResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: QueryFilterStorageResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

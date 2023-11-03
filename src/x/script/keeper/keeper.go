@@ -451,10 +451,6 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 
 	if !isFound {
 		if scriptCtx.ScriptAddress == scriptCtx.CallerAddress {
-			k.SetScript(ctx, types.Script{
-				Address: scriptCtx.CallerAddress,
-				Code:    "",
-			})
 			valFound, isFound = k.GetScript(ctx, resolvedAddress)
 			if !isFound {
 				// This shouldn't happen

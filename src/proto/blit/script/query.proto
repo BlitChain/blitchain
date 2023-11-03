@@ -22,17 +22,17 @@ service Query {
   }
   
   // Queries a list of Script items.
-  rpc Script    (QueryGetScriptRequest) returns (QueryGetScriptResponse) {
+  rpc Script    (QueryScriptRequest) returns (QueryScriptResponse) {
     option (google.api.http).get = "/blit/script/script/{address}";
   
   }
-  rpc ScriptAll (QueryAllScriptRequest) returns (QueryAllScriptResponse) {
-    option (google.api.http).get = "/blit/script/script";
+  rpc Scripts (QueryScriptsRequest) returns (QueryScriptsResponse) {
+    option (google.api.http).get = "/blit/script/scripts";
   
   }
   
   // Runs the function and returns the result.
-  rpc Eval (QueryEval) returns (QueryEvalResponse) {
+  rpc Eval (QueryEvalRequest) returns (QueryEvalResponse) {
     option (google.api.http).get = "/blit/script/eval/{script_address}";
   
   }
@@ -53,19 +53,19 @@ message QueryParamsResponse {
   Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
-message QueryGetScriptRequest {
+message QueryScriptRequest {
   string address = 1;
 }
 
-message QueryGetScriptResponse {
+message QueryScriptResponse {
   Script script = 1 [(gogoproto.nullable) = false];
 }
 
-message QueryAllScriptRequest {
+message QueryScriptsRequest {
   cosmos.base.query.v1beta1.PageRequest pagination = 1;
 }
 
-message QueryAllScriptResponse {
+message QueryScriptsResponse {
   repeated Script                                 script     = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
@@ -79,7 +79,7 @@ message QueryWebResponse {
   string httpresponse = 1;
 }
 
-message QueryEval {
+message QueryEvalRequest {
   string caller_address = 2;
   string script_address = 3;
   string extra_code     = 4;

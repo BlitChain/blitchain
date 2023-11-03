@@ -57,14 +57,18 @@ message MsgCreateScript {
            string grantee              = 4;
 }
 
-message MsgCreateScriptResponse {}
-
-message MsgUpdateScript {
-  string address = 1;
-  string code    = 2;
-  string grantee = 3;
+message MsgCreateScriptResponse {
+  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
-message MsgUpdateScriptResponse {}
+message MsgUpdateScript {
+  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string code    = 2;
+  string grantee = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+}
+
+message MsgUpdateScriptResponse {
+  int64 version = 1;
+}
 
 

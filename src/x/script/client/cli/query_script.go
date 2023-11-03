@@ -10,8 +10,8 @@ import (
 
 func CmdListScript() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list-script",
-		Short: "list all script",
+		Use:   "scripts",
+		Short: "list all scripts",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -25,11 +25,11 @@ func CmdListScript() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryAllScriptRequest{
+			params := &types.QueryScriptsRequest{
 				Pagination: pageReq,
 			}
 
-			res, err := queryClient.ScriptAll(cmd.Context(), params)
+			res, err := queryClient.Scripts(cmd.Context(), params)
 			if err != nil {
 				return err
 			}
@@ -59,7 +59,7 @@ func CmdShowScript() *cobra.Command {
 
 			argAddress := args[0]
 
-			params := &types.QueryGetScriptRequest{
+			params := &types.QueryScriptRequest{
 				Address: argAddress,
 			}
 

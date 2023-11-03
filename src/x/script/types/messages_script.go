@@ -53,6 +53,11 @@ func (msg *MsgCreateScript) ValidateBasic() error {
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+	// if MsgTypePermissions is not empty, grantee must be set
+	if len(msg.MsgTypePermissions) > 0 && msg.Grantee == "" {
+		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "grantee must be set if MsgTypePermissions is not empty")
+	}
+
 	return nil
 }
 

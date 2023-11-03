@@ -41,7 +41,7 @@ func (k Keeper) GetScript(
 			Version: 0,
 		}
 		k.SetScript(ctx, val)
-		return val, true
+		return val, false
 
 	}
 

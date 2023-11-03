@@ -133,9 +133,54 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /blit/script/script:
+  /blit/script/script/{address}:
     get:
-      operationId: BlitScriptScriptAll
+      summary: Queries a list of Script items.
+      operationId: BlitScriptScript
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              script:
+                type: object
+                properties:
+                  address:
+                    type: string
+                  code:
+                    type: string
+                  version:
+                    type: string
+                    format: int64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: address
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /blit/script/scripts:
+    get:
+      operationId: BlitScriptScripts
       responses:
         '200':
           description: A successful response.
@@ -259,51 +304,6 @@ paths:
           type: boolean
       tags:
         - Query
-  /blit/script/script/{address}:
-    get:
-      summary: Queries a list of Script items.
-      operationId: BlitScriptScript
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              script:
-                type: object
-                properties:
-                  address:
-                    type: string
-                  code:
-                    type: string
-                  version:
-                    type: string
-                    format: int64
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      parameters:
-        - name: address
-          in: path
-          required: true
-          type: string
-      tags:
-        - Query
   /blit/script/web/{address}:
     get:
       summary: Queries the WSGI web application function of a script.
@@ -386,7 +386,8 @@ paths:
         - Query
   /blit/storage/storage:
     get:
-      operationId: BlitStorageStorageAll
+      summary: Queries a list of Storage items.
+      operationId: BlitStorageFilterStorage
       responses:
         '200':
           description: A successful response.
@@ -519,8 +520,7 @@ paths:
         - Query
   /blit/storage/storage/{address}/{index}:
     get:
-      summary: Queries a list of Storage items.
-      operationId: BlitStorageStorage
+      operationId: BlitStorageStorageDetail
       responses:
         '200':
           description: A successful response.
@@ -41827,7 +41827,32 @@ definitions:
   blit.script.Params:
     type: object
     description: Params defines the parameters for the module.
-  blit.script.QueryAllScriptResponse:
+  blit.script.QueryEvalResponse:
+    type: object
+    properties:
+      response:
+        type: string
+  blit.script.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  blit.script.QueryScriptResponse:
+    type: object
+    properties:
+      script:
+        type: object
+        properties:
+          address:
+            type: string
+          code:
+            type: string
+          version:
+            type: string
+            format: int64
+  blit.script.QueryScriptsResponse:
     type: object
     properties:
       script:
@@ -41868,31 +41893,6 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  blit.script.QueryEvalResponse:
-    type: object
-    properties:
-      response:
-        type: string
-  blit.script.QueryGetScriptResponse:
-    type: object
-    properties:
-      script:
-        type: object
-        properties:
-          address:
-            type: string
-          code:
-            type: string
-          version:
-            type: string
-            format: int64
-  blit.script.QueryParamsResponse:
-    type: object
-    properties:
-      params:
-        description: params holds all the parameters of this module.
-        type: object
-    description: QueryParamsResponse is response type for the Query/Params RPC method.
   blit.script.QueryWebResponse:
     type: object
     properties:
@@ -41987,6 +41987,9 @@ definitions:
        }
   blit.script.MsgCreateScriptResponse:
     type: object
+    properties:
+      address:
+        type: string
   blit.script.MsgRunResponse:
     type: object
     properties:
@@ -42001,13 +42004,17 @@ definitions:
       Since: cosmos-sdk 0.47
   blit.script.MsgUpdateScriptResponse:
     type: object
+    properties:
+      version:
+        type: string
+        format: int64
   blit.storage.Params:
     type: object
     properties:
       gasPerChar:
         type: string
     description: Params defines the parameters for the module.
-  blit.storage.QueryAllStorageResponse:
+  blit.storage.QueryFilterStorageResponse:
     type: object
     properties:
       storage:
@@ -42047,7 +42054,17 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  blit.storage.QueryGetStorageResponse:
+  blit.storage.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+        properties:
+          gasPerChar:
+            type: string
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  blit.storage.QueryStorageDetailResponse:
     type: object
     properties:
       storage:
@@ -42059,16 +42076,6 @@ definitions:
             type: string
           data:
             type: string
-  blit.storage.QueryParamsResponse:
-    type: object
-    properties:
-      params:
-        description: params holds all the parameters of this module.
-        type: object
-        properties:
-          gasPerChar:
-            type: string
-    description: QueryParamsResponse is response type for the Query/Params RPC method.
   blit.storage.Storage:
     type: object
     properties:

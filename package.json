@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "@blitchain/blitjs": "file:../blitjs"
-  }
-}

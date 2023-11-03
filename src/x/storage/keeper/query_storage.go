@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) StorageAll(goCtx context.Context, req *types.QueryAllStorageRequest) (*types.QueryAllStorageResponse, error) {
+func (k Keeper) FilterStorage(goCtx context.Context, req *types.QueryFilterStorageRequest) (*types.QueryFilterStorageResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -38,10 +38,10 @@ func (k Keeper) StorageAll(goCtx context.Context, req *types.QueryAllStorageRequ
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	return &types.QueryAllStorageResponse{Storage: storages, Pagination: pageRes}, nil
+	return &types.QueryFilterStorageResponse{Storage: storages, Pagination: pageRes}, nil
 }
 
-func (k Keeper) Storage(goCtx context.Context, req *types.QueryGetStorageRequest) (*types.QueryGetStorageResponse, error) {
+func (k Keeper) StorageDetail(goCtx context.Context, req *types.QueryStorageDetailRequest) (*types.QueryStorageDetailResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -56,5 +56,5 @@ func (k Keeper) Storage(goCtx context.Context, req *types.QueryGetStorageRequest
 		return nil, status.Error(codes.NotFound, "not found")
 	}
 
-	return &types.QueryGetStorageResponse{Storage: val}, nil
+	return &types.QueryStorageDetailResponse{Storage: val}, nil
 }

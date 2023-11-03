@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) ScriptAll(goCtx context.Context, req *types.QueryAllScriptRequest) (*types.QueryAllScriptResponse, error) {
+func (k Keeper) Scripts(goCtx context.Context, req *types.QueryScriptsRequest) (*types.QueryScriptsResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -37,10 +37,10 @@ func (k Keeper) ScriptAll(goCtx context.Context, req *types.QueryAllScriptReques
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	return &types.QueryAllScriptResponse{Script: scripts, Pagination: pageRes}, nil
+	return &types.QueryScriptsResponse{Script: scripts, Pagination: pageRes}, nil
 }
 
-func (k Keeper) Script(goCtx context.Context, req *types.QueryGetScriptRequest) (*types.QueryGetScriptResponse, error) {
+func (k Keeper) Script(goCtx context.Context, req *types.QueryScriptRequest) (*types.QueryScriptResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -54,5 +54,5 @@ func (k Keeper) Script(goCtx context.Context, req *types.QueryGetScriptRequest) 
 		return nil, status.Error(codes.NotFound, "not found")
 	}
 
-	return &types.QueryGetScriptResponse{Script: val}, nil
+	return &types.QueryScriptResponse{Script: val}, nil
 }

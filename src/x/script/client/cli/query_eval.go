@@ -31,7 +31,7 @@ func CmdEval() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryEval{
+			params := &types.QueryEvalRequest{
 
 				CallerAddress: argCallerAddress,
 				ScriptAddress: argScriptAddress,

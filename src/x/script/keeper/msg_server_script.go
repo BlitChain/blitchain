@@ -70,7 +70,7 @@ func (k msgServer) CreateScript(goCtx context.Context, msg *types.MsgCreateScrip
 		ctx,
 		script,
 	)
-	return &types.MsgCreateScriptResponse{}, nil
+	return &types.MsgCreateScriptResponse{Address: script.Address}, nil
 }
 
 func (k msgServer) UpdateScript(goCtx context.Context, msg *types.MsgUpdateScript) (*types.MsgUpdateScriptResponse, error) {
@@ -92,11 +92,16 @@ func (k msgServer) UpdateScript(goCtx context.Context, msg *types.MsgUpdateScrip
 			[]sdk.Msg{msg},
 		)
 
-		_, err := k.AuthzKeeper.Exec(ctx, &execMsg)
+		msgExecResp, err := k.AuthzKeeper.Exec(ctx, &execMsg)
 		if err != nil {
 			return nil, err
 		}
-		return &types.MsgUpdateScriptResponse{}, nil
+
+		var execResp types.MsgUpdateScriptResponse
+
+		data := msgExecResp.Results[0]
+		k.cdc.MustUnmarshal(data, &execResp)
+		return &execResp, nil
 
 	}
 
@@ -118,5 +123,5 @@ func (k msgServer) UpdateScript(goCtx context.Context, msg *types.MsgUpdateScrip
 		script,
 	)
 
-	return &types.MsgUpdateScriptResponse{}, nil
+	return &types.MsgUpdateScriptResponse{Version: script.Version}, nil
 }

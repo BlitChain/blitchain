@@ -8,10 +8,10 @@ import (
 	"blit/x/storage/types"
 )
 
-func CmdListStorage() *cobra.Command {
+func CmdFilterStorage() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list-storage --address [address] --filter-prefix [filter prefix]",
-		Short: "list all storage",
+		Use:   "filter-storage --address [address] --filter-prefix [filter prefix]",
+		Short: "Filter storage by address and/or prefix",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			argAddress, _ := cmd.Flags().GetString("filter-address")
 			argPrefix, _ := cmd.Flags().GetString("filter-prefix")
@@ -27,13 +27,13 @@ func CmdListStorage() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryAllStorageRequest{
+			params := &types.QueryFilterStorageRequest{
 				FilterAddress:     argAddress,
 				FilterIndexPrefix: argPrefix,
 				Pagination:        pageReq,
 			}
 
-			res, err := queryClient.StorageAll(cmd.Context(), params)
+			res, err := queryClient.FilterStorage(cmd.Context(), params)
 			if err != nil {
 				return err
 			}
@@ -50,10 +50,10 @@ func CmdListStorage() *cobra.Command {
 	return cmd
 }
 
-func CmdShowStorage() *cobra.Command {
+func CmdGetStorage() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-storage [address] [index]",
-		Short: "shows a storage",
+		Use:   "get-storage [address] [index]",
+		Short: "get a storage by address and index",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx, err := client.GetClientQueryContext(cmd)
@@ -66,12 +66,12 @@ func CmdShowStorage() *cobra.Command {
 			argAddress := args[0]
 			argIndex := args[1]
 
-			params := &types.QueryGetStorageRequest{
+			params := &types.QueryStorageDetailRequest{
 				Address: argAddress,
 				Index:   argIndex,
 			}
 
-			res, err := queryClient.Storage(cmd.Context(), params)
+			res, err := queryClient.StorageDetail(cmd.Context(), params)
 			if err != nil {
 				return err
 			}

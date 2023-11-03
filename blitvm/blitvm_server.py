@@ -339,7 +339,7 @@ def build_sandbox(port, caller_address, script_address, block_info):
     # sandbox.scope.dicts[0]["locals"] = sandbox.scope.locals
 
     @allow_blit_func
-    def _sendMsg(typeUrl, value=None, **kwargs):
+    def _send_msg(typeUrl, value=None, **kwargs):
         """
         Send a message to the chain.
 
@@ -363,16 +363,16 @@ def build_sandbox(port, caller_address, script_address, block_info):
         res = _chain("Msg", json_msg=json.dumps(value))
         if "data" in res:
             del res["data"]
-        if "events" in res:
+        if res.get("events"):
             res["event"] = res["events"][0]
             del res["events"]
-        if "msg_responses" in res:
+        if res.get("msg_responses"):
             res["msg_response"] = res["msg_responses"][0]
             del res["msg_responses"]
         return res
 
     @allow_blit_func
-    def sendQuery(method, params=None, **kwargs):
+    def send_query(method, params=None, **kwargs):
         """
         Send a query to the chain.
 
@@ -483,8 +483,8 @@ def build_sandbox(port, caller_address, script_address, block_info):
 
     module_dict["blit"] = {
         "_chain": _chain,
-        "_sendMsg": _sendMsg,
-        "sendQuery": sendQuery,
+        "_send_msg": _send_msg,
+        "send_query": send_query,
         "get_gas_consumed": get_gas_consumed,
         "get_gas_limit": get_gas_limit,
         "get_scope_size": get_scope_size,
@@ -549,12 +549,13 @@ def eval_script(
                         k
                         for k, v in scope.items()
                         if v is not sandbox.modules.blit._chain
-                        and v is not sandbox.modules.blit._sendMsg
+                        and v is not sandbox.modules.blit._send_msg
                         and not k.startswith("_")
                         and k not in []
                     ],
                 )
                 if function_name:
+                    result = None
                     if function_name in scope:
                         if function_name in public_scope_all:
                             kwargs = json.loads(json_kwargs or "{}")
