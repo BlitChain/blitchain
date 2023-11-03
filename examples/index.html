@@ -11,22 +11,21 @@
       import {
         default as blitjs,
         experimentalHelpers,
-      } from "https://cdn.jsdelivr.net/npm/@blitchain/blitjs/+esm";
+      } from "https://cdn.jsdelivr.net/npm/@blitchain/blitjs@1.0.14/+esm";
 
-      let { makeQueryClient, makeKeplrClient, runFunction, queryFunction } =
+      let { makeKeplrClient, runFunction, queryFunction } =
         experimentalHelpers;
 
       let rpcEndpoint = "http://localhost:26657";
       let restEndpoint = "http://localhost:1317";
-      let chainId = "blit-dev";
 
       let msgClient = await makeKeplrClient({
         rpcEndpoint,
         restEndpoint,
-        chainId,
       });
-      let queryClient = await makeQueryClient({ restEndpoint });
-
+      let queryClient = await blitjs.blit.ClientFactory.createLCDClient({
+        restEndpoint
+      });
       let address = (await msgClient.signer.getAccounts())[0].address;
       console.log(address);
 
@@ -69,107 +68,5 @@
       };
       */
     </script>
-    <pre>
-<samp>
-/*
-// Example usage of Blitjs
-
-Open the console and run the following commands.
-Also look at the source code for this page to see how it works.
-
-// Keplr example
-msgClient = await makeKeplrClient(
-  "http://testnet.blitchain.net:26657",
-  "http://testnet.blitchain.net:1317",
-  "blit-dev"
-);
-
-
-// Query client example
-queryClient = await makeQueryClient("http://testnet.blitchain.net:1317");
-
-// Get your address
-address = (await msgClient.signer.getAccounts())[0].address;
-
-// Send a message to update a script
-// Important: watch the indentaion
-let code = `def greet(name): // this is not indented
-    print(f"Hello {name}!")    // these are indented
-    return {"name": name}`
-await sendMsg(msgClient, address, blitjs.blit.script.MessageComposer.fromPartial.updateScript({address, code: code}))
-
-// Run the "greet" function from the script you just updated
-// assuming you have a script at your address with the function above
-runResp = await run(msgClient, address, address, "greet", {
-  name: "bob",
-});
-
-// Query example of the previous function
-JSON.parse(
-  (await queryClient.blit.script.eval({ script_address: address, called_address: address, function_name: "greet", kwargs: JSON.stringify({name: "Bob"}) }))
-    .response
-);
-OUTPUT: 
-{
-    "exception": null,
-    "gas_limit": 10000000,
-    "nodes_called": 15,
-    "result": {
-        "name": "Bob"
-    },
-    "script_gas_consumed": 1568,
-    "stdout": "Hello Bob!\n"
-}
-
-// Send a message to create then update storage
-await sendMsg(
-  msgClient,
-  address,
-  blitjs.blit.storage.MessageComposer.fromPartial.createStorage({
-    address,
-    index: "foo123",
-    data: "some data",
-  })
-);
-await sendMsg(
-  msgClient,
-  address,
-  blitjs.blit.storage.MessageComposer.fromPartial.updateStorage({
-    address,
-    index: "foo123",
-    data: "some NEW data",
-  })
-);
-
-// Query all storage for an address example
-await queryClient.blit.storage.storageAll({ filter_address: address });
-
-// Query a specific storage index for an address example
-await queryClient.blit.storage.storage({ address, index: "foo123" });
-
-// Query a script for it's code and version
-await queryClient.blit.script.script({ address });
-
-// Send a message example to update a script
-await sendMsg(
-  msgClient,
-  address,
-  blitjs.blit.script.MessageComposer.fromPartial.updateScript({
-    address,
-    code: newCode,
-  })
-);
-
-// Query all balances for an address example
-await queryClient.cosmos.bank.v1beta1.allBalances({ address, pagination: {limit:"1", offset:0, countTotal:true}})
-OUTPUT:
-{ "balances": [ { "denom": "blit", "amount": "8419444" } ], "pagination": { "next_key": "dG9rZW4=", "total": "2" } }
-
-await queryClient.cosmos.bank.v1beta1.allBalances({ address, pagination: {limit:"1", offset:1, countTotal:true}})
-OUTPUT:
-{ "balances": [ { "denom": "token", "amount": "20000" } ], "pagination": { "next_key": null, "total": "2" } } 
-*/
-</samp>
-    </pre>
   </body>
 </html>

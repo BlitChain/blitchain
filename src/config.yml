@@ -2,31 +2,30 @@ version: 1
 build:
   main: cmd/blitd/
   proto:
-    path: ""
+    path: "./proto/"
     third_party_paths: []
 accounts:
 - name: alice
-  mnemonic: about round cry leisure vague idea park drop minor double horse occur despair cool lazy floor betray network midnight bonus oak couch crime write
   coins:
-  - 200000000blit
-- name: bob
-  coins:
-  - 100000000blit
-faucet:
-  name: bob
-  coins:
-  - 100000blit
+  - 10000000000000ublit
 client:
-  typescript:
-    path: ../ts-client
-  composables:
-    path: ../vue-composables
-  hooks:
-    path: ../react-hooks
   openapi:
     path: docs/static/openapi.yml
 genesis:
   app_state:
+    bank:
+      denom_metadata:
+      - name: Blit
+        description: The native staking token of Blitchain
+        denom_units:
+        - denom: ublit
+          exponent: 0
+          aliases: ["microblit"]
+        - denom: blit
+          exponent: 6
+        base: ublit
+        display: blit
+        symbol: BLT
     crisis:
       constant_fee:
         denom: blit
@@ -39,10 +38,14 @@ genesis:
         voting_period: 30s
     mint:
       params:
-        mint_denom: blit
+        goal_bonded: "0.67"
+        inflation_max: "0.10"
+        inflation_min: "0.01"
+        inflation_rate_change: "0.10"
+        mint_denom: ublit
     staking:
       params:
-        bond_denom: blit
+        bond_denom: ublit
   chain_id: blit-dev
   consensus_params:
     block:
@@ -50,4 +53,4 @@ genesis:
       max_gas: "3000000"
 validators:
 - name: alice
-  bonded: 100000000blit
+  bonded: 100000000ublit
