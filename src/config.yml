@@ -30,11 +30,10 @@ genesis:
       constant_fee:
         denom: blit
     gov:
-      deposit_params:
+      params:
         min_deposit:
         - amount: "1000"
           denom: blit
-      voting_params:
         voting_period: 30s
     mint:
       params:
@@ -54,3 +53,11 @@ genesis:
 validators:
 - name: alice
   bonded: 100000000ublit
+  client:
+    output: "json"
+  app:
+    state-sync:
+      snapshot-interval: "10"
+      snapshot-keep-recent: "2"
+
+
