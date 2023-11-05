@@ -26,7 +26,7 @@ build:
 		-X github.com/cosmos/cosmos-sdk/version.Version=$${GIT_VERSION} \
 		-X github.com/cosmos/cosmos-sdk/version.Commit=$${GIT_COMMIT}" \
 		-trimpath \
-		-o ../blitd \
+		-o ../bin/blitd \
 		./cmd/blitd 
 
 
