@@ -8,12 +8,12 @@ Environment=DAEMON_ALLOW_DOWNLOAD_BINARIES=false
 Environment=DAEMON_RESTART_AFTER_UPGRADE=true
 Environment=DAEMON_POLL_INTERVAL=300ms
 Environment=DAEMON_LOG_BUFFER_SIZE=512
-Environment=DAEMON_DATA_BACKUP_DIR=/root/.blit
+Environment=DAEMON_DATA_BACKUP_DIR=/home/user/.blit
 Environment=UNSAFE_SKIP_BACKUP=true
 Environment=DAEMON_PREUPGRADE_MAX_RETRIES=10
 Environment=COSMOVISOR_CUSTOM_PREUPGRADE=cosmovisor-preupgrade.sh
-WorkingDirectory=/root/blitchain
-User=root
+WorkingDirectory=/home/user/blitchain
+User=user
 ExecStart=/home/user/.goenv/shims/cosmovisor run start
 Environment=PATH=/home/user/.pyenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 Restart=always
