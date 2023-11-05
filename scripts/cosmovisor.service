@@ -12,7 +12,7 @@ Environment=DAEMON_DATA_BACKUP_DIR=/home/user/.blit
 Environment=UNSAFE_SKIP_BACKUP=true
 Environment=DAEMON_PREUPGRADE_MAX_RETRIES=10
 Environment=COSMOVISOR_CUSTOM_PREUPGRADE=cosmovisor-preupgrade.sh
-WorkingDirectory=/home/user/blitchain
+WorkingDirectory=/home/user/.blit/cosmovisor/current/
 User=user
 ExecStart=/home/user/.goenv/shims/cosmovisor run start
 Environment=PATH=/home/user/.pyenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
