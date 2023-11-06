@@ -44,4 +44,4 @@ install:
 
 
 start:
-	./blitd start
+	./bin/blitd start

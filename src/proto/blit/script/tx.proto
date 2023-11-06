@@ -49,6 +49,8 @@ message MsgUpdateParams {
 message MsgUpdateParamsResponse {}
 
 message MsgCreateScript {
+  option (cosmos.msg.v1.signer) = "creator";
+
   string creator = 1;
   string code    = 2;
   
@@ -62,6 +64,9 @@ message MsgCreateScriptResponse {
 }
 
 message MsgUpdateScript {
+
+  option (cosmos.msg.v1.signer) = "grantee";
+
   string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   string code    = 2;
   string grantee = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
