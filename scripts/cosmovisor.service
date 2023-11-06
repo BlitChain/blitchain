@@ -3,19 +3,19 @@ Description=Cosmovisor daemon
 After=network-online.target
 [Service]
 Environment=DAEMON_NAME=blitd
-Environment=DAEMON_HOME=/root/.blit
+Environment=DAEMON_HOME=/home/user/.blit
 Environment=DAEMON_ALLOW_DOWNLOAD_BINARIES=false
 Environment=DAEMON_RESTART_AFTER_UPGRADE=true
 Environment=DAEMON_POLL_INTERVAL=300ms
 Environment=DAEMON_LOG_BUFFER_SIZE=512
-Environment=DAEMON_DATA_BACKUP_DIR=/root/.blit
+Environment=DAEMON_DATA_BACKUP_DIR=/home/user/.blit
 Environment=UNSAFE_SKIP_BACKUP=true
 Environment=DAEMON_PREUPGRADE_MAX_RETRIES=10
 Environment=COSMOVISOR_CUSTOM_PREUPGRADE=cosmovisor-preupgrade.sh
-WorkingDirectory=/root/blitchain
-User=root
-ExecStart=/root/.goenv/shims/cosmovisor run start
-Environment=PATH=/root/.pyenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+WorkingDirectory=/home/user/.blit/cosmovisor/current/
+User=user
+ExecStart=/home/user/.goenv/shims/cosmovisor run start
+Environment=PATH=/home/user/.pyenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 Restart=always
 RestartSec=4
 LimitNOFILE=infinity
