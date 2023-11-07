@@ -75,6 +75,8 @@ def main():
         json_kwargs,
         extra_code,
         code,
+        json_msgs,
+        json_msg_results,
     ) = sys.argv[1:]
 
     return eval_script(
@@ -86,6 +88,8 @@ def main():
         json_kwargs,
         extra_code,
         code,
+        json_msgs,
+        json_msg_results,
     )
 
 
@@ -237,7 +241,7 @@ def get_module_dict():
     return mod_dict
 
 
-def build_sandbox(port, caller_address, script_address, block_info):
+def build_sandbox(port, caller_address, script_address, block_info, json_msgs, json_msg_results):
     url = f"http://localhost:{port}/rpc"
 
     def _chain(chain_method, **params):
@@ -452,6 +456,22 @@ def build_sandbox(port, caller_address, script_address, block_info):
         return block_info
 
     @allow_blit_func
+    def get_msgs() -> list[dict]:
+        """
+        Returns the result of a message sent to the chain.
+        """
+        return json_msgs
+
+    @allow_blit_func
+    def get_msg_results() -> list[dict]:
+        """
+        Returns the result of a message sent to the chain.
+        """
+        return json_msg_results
+
+
+
+    @allow_blit_func
     def _blit_eval(
         code, scope=None, track_func=None, max_node_calls=None, max_scope_size=None
     ):
@@ -493,6 +513,8 @@ def build_sandbox(port, caller_address, script_address, block_info):
         "get_caller_address": get_caller_address,
         "get_block_info": get_block_info,
         "get_nodes_called": get_nodes_called,
+        "get_msgs": get_msgs,
+        "get_msg_results": get_msg_results,
         "_blit_eval": _blit_eval,
     }
 
@@ -509,6 +531,8 @@ def eval_script(
     json_kwargs,
     extra_code,
     code,
+    json_msgs,
+    json_msg_results,
 ):
     result = None
     stdout = None
@@ -516,6 +540,10 @@ def eval_script(
     sandbox = None
 
     block_info = json.loads(block_info)
+    if json_msgs:
+        json_msgs = json.loads(json_msgs)
+    if json_msg_results:
+        json_msg_results = json.loads(json_msg_results)
     with freeze_time(block_info["time"]):
         with io.StringIO() as buf, redirect_stdout(buf):
             try:
@@ -524,6 +552,8 @@ def eval_script(
                     caller_address,
                     script_address,
                     block_info,
+                    json_msgs,
+                    json_msg_results,
                 )
                 sandbox.consume_gas()
 
@@ -535,6 +565,8 @@ def eval_script(
                     + (json_kwargs or "")
                     + (extra_code or "")
                     + str(sandbox.gas_state() or "")
+                    + str(json_msgs or "")
+                    + str(json_msg_results or "")
                 )
                 result = (
                     sandbox.eval(

@@ -45,8 +45,14 @@ func (k msgServer) Run(goCtx context.Context, msg *types.MsgRun) (*types.MsgRunR
 
 	}
 
+	messages, err := msg.GetMessages()
+	if err != nil {
+		return nil, err
+	}
+
 	fmt.Println(fmt.Sprintf("Script at address %v found", msg.ScriptAddress))
 	res, err := k.EvalScript(goCtx, &EvalScriptContext{
+		Messages:      messages,
 		CallerAddress: msg.CallerAddress,
 		ScriptAddress: msg.ScriptAddress,
 		ExtraCode:     msg.ExtraCode,

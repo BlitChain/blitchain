@@ -14,6 +14,7 @@ import (
 	"unsafe"
 
 	cosmossdkerrors "cosmossdk.io/errors"
+	errorsmod "cosmossdk.io/errors"
 	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/cometbft/cometbft/libs/log"
 	"github.com/cosmos/cosmos-sdk/baseapp"
@@ -22,6 +23,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	authzKeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
+	"github.com/cosmos/cosmos-sdk/x/group/errors"
 	"github.com/gorilla/mux"
 
 	"blit/x/script/types"
@@ -74,6 +76,7 @@ func NewKeeper(
 }
 
 type EvalScriptContext struct {
+	Messages      []sdk.Msg
 	CallerAddress string
 	ScriptAddress string
 	FunctionName  string
@@ -213,7 +216,7 @@ func (k Keeper) HandleMsg(ctx sdk.Context, jsonMsg string, signer string) (res s
 		return "", cosmossdkerrors.Wrapf(types.MsgError, "could not unmarshal message: %v", err)
 	}
 
-	err = ensureMsgAuthZ(m, signer)
+	err = ensureMsgAuthZ([]sdk.Msg{m}, signer)
 	if err != nil {
 		return "", err
 	}
@@ -352,12 +355,15 @@ func (k Keeper) HandleQuery(ctx sdk.Context, method string, json_args string) (s
 
 // ensureMsgAuthZ checks that if a message requires signers that all of them
 // are equal to the given account address of script.
-func ensureMsgAuthZ(msgs sdk.Msg, signer string) error {
+func ensureMsgAuthZ(msgs []sdk.Msg, signer string) error {
 	// In practice, GetSigners() should return a non-empty array without
 	// duplicates.
-	for _, acct := range msgs.GetSigners() {
-		if signer != acct.String() {
-			return cosmossdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "msg does not have authorization; expected [%s], got [%s]", signer, acct.String())
+	for i := range msgs {
+
+		for _, acct := range msgs[i].GetSigners() {
+			if signer != acct.String() {
+				return cosmossdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "msg [%d] does not have authorization; expected [%s], got [%s]", i, signer, acct.String())
+			}
 		}
 	}
 	return nil
@@ -447,6 +453,60 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 	//}
 	resolvedAddress := scriptCtx.ScriptAddress
 
+	// Run attached messages
+	if err := ensureMsgAuthZ(scriptCtx.Messages, resolvedAddress); err != nil {
+		return nil, err
+	}
+	// print the messages
+	jsonMsgs := "["
+	jsonMsgResults := "["
+
+	for i, msg := range scriptCtx.Messages {
+
+		if i > 0 {
+			jsonMsgs += ","
+			jsonMsgResults += ","
+		}
+		jsonMsg, err := k.cdc.MarshalJSON(msg)
+		if err != nil {
+			return nil, sdkerrors.Wrapf(sdkerrors.ErrJSONMarshal, "failed to marshal json msg: %v", err)
+		}
+		jsonMsgs += string(jsonMsg)
+
+		fmt.Println(fmt.Sprintf("Message json: %s", k.cdc.MustMarshalJSON(msg)))
+		handler := k.Router.Handler(msg)
+		if handler == nil {
+			return nil, errorsmod.Wrapf(errors.ErrInvalid, "no message handler found for attached message %q at index %d", sdk.MsgTypeURL(msg), i)
+		}
+		r, err := handler(ctx, msg)
+		if err != nil {
+			return nil, errorsmod.Wrapf(err, "message %s at position %d", sdk.MsgTypeURL(msg), i)
+		}
+		// Handler should always return non-nil sdk.Result.
+		if r == nil {
+			return nil, fmt.Errorf("got nil sdk.Result for message %q at position %d", msg, i)
+		}
+
+		jsonMsgResults += string(k.cdc.MustMarshalJSON(r))
+
+		// emit the events from the dispatched actions
+		events := r.Events
+		sdkEvents := make([]sdk.Event, 0, len(events))
+		for _, event := range events {
+			e := event
+			e.Attributes = append(e.Attributes, abci.EventAttribute{Key: "authz_msg_index", Value: strconv.Itoa(i)})
+
+			sdkEvents = append(sdkEvents, sdk.Event(e))
+		}
+
+		ctx.EventManager().EmitEvents(sdkEvents)
+
+	}
+
+	jsonMsgs += "]"
+	// join results with commas
+	jsonMsgResults += "]"
+
 	valFound, isFound := k.GetScript(ctx, resolvedAddress)
 
 	if !isFound {
@@ -493,6 +553,8 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 		scriptCtx.Kwargs,
 		scriptCtx.ExtraCode,
 		valFound.Code,
+		jsonMsgs,
+		jsonMsgResults,
 	).CombinedOutput()
 
 	temp := strings.Split(string(out), "\n")
