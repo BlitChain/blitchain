@@ -11,7 +11,7 @@ watch:
 
 
 testnet:
-	RPC_HOST="192.46.233.149" python ./scripts/setconfig.py
+	NODE_IP="149.248.76.117" python ./scripts/setconfig.py
 
 
 

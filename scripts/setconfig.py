@@ -7,13 +7,14 @@ import logging
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 
+
 # Define Constants
-RPC_HOST = "192.46.233.149"
+NODE_IP = os.environ.get("NODE_IP", "127.0.0.1")
 HOME_DIR = os.path.expanduser("~/.blit")
 
 def fetch_data_from_rpc(endpoint):
     try:
-        response = requests.get(f"http://{RPC_HOST}:26657/{endpoint}")
+        response = requests.get(f"http://{NODE_IP}:26657/{endpoint}")
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -66,9 +67,9 @@ def main():
     # Define config updates
     BLIT_P2P_MAX_NUM_OUTBOUND_PEERS = 100
     BLIT_P2P_MAX_NUM_INBOUND_PEERS = 100
-    BLIT_STATESYNC_RPC_SERVERS = f"http://{RPC_HOST}:26657,http://{RPC_HOST}:26657"
-    BLIT_P2P_SEEDS = f"{NODE_ID}@{RPC_HOST}:26656"
-    BLIT_P2P_PERSISTENT_PEERS = f"{NODE_ID}@{RPC_HOST}:26656"
+    BLIT_STATESYNC_RPC_SERVERS = f"http://{NODE_IP}:26657,http://{NODE_IP}:26657"
+    BLIT_P2P_SEEDS = f"{NODE_ID}@{NODE_IP}:26656"
+    BLIT_P2P_PERSISTENT_PEERS = f"{NODE_ID}@{NODE_IP}:26656"
 
     updates = {
         'p2p.persistent_peers': BLIT_P2P_PERSISTENT_PEERS,
