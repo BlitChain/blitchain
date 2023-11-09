@@ -102,7 +102,7 @@ make build
 
 
 ```
-./blitd init $MY_MONIKER 
+./bin/blitd init $MY_MONIKER 
 ```
 
 
