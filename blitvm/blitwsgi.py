@@ -97,6 +97,8 @@ if __name__ == "__main__":
                     json_kwargs=None,
                     extra_code="",
                     code=code,
+                    json_msgs=None,
+                    json_msg_results=None,
                 )
                 app = None
                 if sandbox and (
