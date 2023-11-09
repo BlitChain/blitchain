@@ -102,7 +102,7 @@ make build
 
 
 ```
-./blitd init $MY_MONIKER 
+./bin/blitd init $MY_MONIKER 
 ```
 
 
@@ -111,5 +111,26 @@ make build
 make testnet start
 ```
 
+## Configure
+
+Depending on your needs the following configs may need to be changed:
+
+
+```
+File: ~/.blitd/config/app.toml
+###############################################################################
+###                           API Configuration                             ###
+###############################################################################
+
+[api]
+# Enable defines if the API server should be enabled.
+enable = true
+
+# Swagger defines if swagger documentation should automatically be registered.
+swagger = true
+
+# Allow other domains and ports to access the api. This is useful when developing locally.
+enabled-unsafe-cors = true
+```
 
 
