@@ -18,7 +18,7 @@ testnet:
 
 build: 
 	@cd ./src && \
-	export GIT_VERSION=`git rev-parse --abbrev-ref HEAD` && \
+	export GIT_VERSION=`git symbolic-ref -q --short HEAD || git describe --tags --exact-match 2> /dev/null   || git rev-parse --short HEAD` && \
 	export GIT_COMMIT=`git rev-parse HEAD` && \
 	go build -mod=readonly \
 		-ldflags "-X github.com/cosmos/cosmos-sdk/version.Name=blit \
@@ -32,7 +32,7 @@ build:
 
 install:
 	@cd ./src && \
-	export GIT_VERSION=`git rev-parse --abbrev-ref HEAD` && \
+	export GIT_VERSION=`git symbolic-ref -q --short HEAD || git describe --tags --exact-match 2> /dev/null   || git rev-parse --short HEAD` && \
 	export GIT_COMMIT=`git rev-parse HEAD` && \
 	go install -mod=readonly \
 		-ldflags "-X github.com/cosmos/cosmos-sdk/version.Name=blit \
