@@ -115,9 +115,8 @@ make testnet start
 
 Depending on your needs the following configs may need to be changed:
 
-
-```
-File: ~/.blitd/config/app.toml
+### ~/.blitd/config/app.toml
+```toml
 ###############################################################################
 ###                           API Configuration                             ###
 ###############################################################################
@@ -133,4 +132,9 @@ swagger = true
 enabled-unsafe-cors = true
 ```
 
-
+ ### ~/.blit/config/config.toml
+```toml
+[rpc]
+laddr = "tcp://127.0.0.1:26657"
+cors_allowed_origins = [ "*" ]
+```
