@@ -537,6 +537,12 @@ func catchAllMiddleware(next http.Handler) http.Handler {
 			// Parse the JSON response from the fallback URL
 			var response struct {
 				HTTPResponse string `json:"httpresponse"`
+				Message      string `json:"message"`
+			}
+
+			if response.Message != "" {
+				http.Error(w, response.Message, http.StatusInternalServerError)
+				return
 			}
 
 			json.NewDecoder(rec.Body).Decode(&response)
@@ -553,6 +559,7 @@ func catchAllMiddleware(next http.Handler) http.Handler {
 			if err != nil {
 				http.Error(w, "Failed to write raw response", http.StatusInternalServerError)
 				fmt.Println("Error:", err)
+				fmt.Println("Error:", response.Message)
 			}
 			return
 		}
@@ -605,7 +612,7 @@ func WriteRawResponse(rawResponse []byte, w http.ResponseWriter) error {
 	// Read the status line
 	statusLine, err := reader.ReadString('\n')
 	if err != nil {
-		return fmt.Errorf("failed to read status line: %v", err)
+		return fmt.Errorf("failed to read status line: %v, %s", err, rawResponse)
 	}
 	statusLine = strings.TrimSpace(statusLine) // Remove any trailing whitespace
 

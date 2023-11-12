@@ -86,6 +86,7 @@ message QueryEvalRequest {
   string function_name  = 5;
   string kwargs        = 6;
   string grantee       = 7;
+  string attached_messages      = 8;
 }
 
 message QueryEvalResponse {

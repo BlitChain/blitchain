@@ -229,6 +229,10 @@ paths:
           in: query
           required: false
           type: string
+        - name: attached_messages
+          in: query
+          required: false
+          type: string
       tags:
         - Query
   /blit/script/params:

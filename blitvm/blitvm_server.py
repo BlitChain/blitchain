@@ -456,18 +456,23 @@ def build_sandbox(port, caller_address, script_address, block_info, json_msgs, j
         return block_info
 
     @allow_blit_func
-    def get_msgs() -> list[dict]:
+    def get_attached_messages() -> list[dict]:
         """
         Returns the result of a message sent to the chain.
         """
-        return json_msgs
+        msgs, responses = json.loads(json_msgs), json.loads(json_msg_results)
+        results = []
+        for msg, response in zip(msgs, responses):
+            results.append(
+                {
+                    "msg": msg,
+                    "events": response.get("events", []),
+                    "msg_response": response.get("msg_responses", [None])[0],
+                    "log": response.get("log", ""),
+                }
+            )
+        return results
 
-    @allow_blit_func
-    def get_msg_results() -> list[dict]:
-        """
-        Returns the result of a message sent to the chain.
-        """
-        return json_msg_results
 
 
 
@@ -513,8 +518,7 @@ def build_sandbox(port, caller_address, script_address, block_info, json_msgs, j
         "get_caller_address": get_caller_address,
         "get_block_info": get_block_info,
         "get_nodes_called": get_nodes_called,
-        "get_msgs": get_msgs,
-        "get_msg_results": get_msg_results,
+        "get_attached_messages": get_attached_messages,
         "_blit_eval": _blit_eval,
     }
 
@@ -531,19 +535,20 @@ def eval_script(
     json_kwargs,
     extra_code,
     code,
-    json_msgs,
-    json_msg_results,
+    json_msgs=None,
+    json_msg_results=None,
 ):
     result = None
     stdout = None
     exception = None
     sandbox = None
 
+    if json_msgs is None:
+        json_msgs = "[]"
+    if json_msg_results is None:
+        json_msg_results = "[]"
+
     block_info = json.loads(block_info)
-    if json_msgs:
-        json_msgs = json.loads(json_msgs)
-    if json_msg_results:
-        json_msg_results = json.loads(json_msg_results)
     with freeze_time(block_info["time"]):
         with io.StringIO() as buf, redirect_stdout(buf):
             try:

@@ -467,20 +467,21 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 			jsonMsgs += ","
 			jsonMsgResults += ","
 		}
-		jsonMsg, err := k.cdc.MarshalJSON(msg)
+		msgbz, err := k.cdc.MarshalInterfaceJSON(msg)
 		if err != nil {
-			return nil, sdkerrors.Wrapf(sdkerrors.ErrJSONMarshal, "failed to marshal json msg: %v", err)
+			fmt.Println("error:", err)
+			return nil, errorsmod.Wrapf(err, "failed to marshal attached message at index %d: %s", i, msg)
 		}
-		jsonMsgs += string(jsonMsg)
 
-		fmt.Println(fmt.Sprintf("Message json: %s", k.cdc.MustMarshalJSON(msg)))
+		jsonMsgs += string(msgbz)
+
 		handler := k.Router.Handler(msg)
 		if handler == nil {
 			return nil, errorsmod.Wrapf(errors.ErrInvalid, "no message handler found for attached message %q at index %d", sdk.MsgTypeURL(msg), i)
 		}
 		r, err := handler(ctx, msg)
 		if err != nil {
-			return nil, errorsmod.Wrapf(err, "message %s at position %d", sdk.MsgTypeURL(msg), i)
+			return nil, errorsmod.Wrapf(err, "attached message %s at position %d", sdk.MsgTypeURL(msg), i)
 		}
 		// Handler should always return non-nil sdk.Result.
 		if r == nil {

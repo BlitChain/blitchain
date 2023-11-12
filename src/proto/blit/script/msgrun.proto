@@ -14,13 +14,13 @@ option go_package = "blit/x/script/types";
 
 // MsgRun runs a script at a specific address
 message MsgRun {
-  repeated google.protobuf.Any msgs = 1 [(cosmos_proto.accepts_interface) = "cosmos.base.v1beta1.Msg"];
   string caller_address = 2;
   string script_address = 3;
   string extra_code     = 4;
   string function_name  = 5;
   string kwargs        = 6;
   string grantee       = 7;
+  string attached_messages = 1;
 }
 
 message MsgRunResponse {

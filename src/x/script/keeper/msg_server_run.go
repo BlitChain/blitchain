@@ -2,10 +2,12 @@ package keeper
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"blit/x/script/types"
 
+	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/x/authz"
@@ -45,14 +47,40 @@ func (k msgServer) Run(goCtx context.Context, msg *types.MsgRun) (*types.MsgRunR
 
 	}
 
-	messages, err := msg.GetMessages()
-	if err != nil {
-		return nil, err
+	attachedMsgs := []sdk.Msg{}
+
+	if msg.AttachedMessages != "" {
+		var objects []map[string]interface{}
+		err := json.Unmarshal([]byte(msg.AttachedMessages), &objects)
+		if err != nil {
+			fmt.Println("error:", err)
+			return nil, errorsmod.Wrapf(err, "failed to unmarshal attached messages: %+v", msg.AttachedMessages)
+		}
+
+		// Step 2: Iterate and marshal each object back to JSON string
+		var stringifiedObjects []string
+		for i, obj := range objects {
+			jsonStr, err := json.Marshal(obj)
+			if err != nil {
+				return nil, errorsmod.Wrapf(err, "failed to marshal attached message at index %d: %s", i, obj)
+			}
+			stringifiedObjects = append(stringifiedObjects, string(jsonStr))
+		}
+
+		for i, anyJSON := range stringifiedObjects {
+			var attachedMsg sdk.Msg
+			err = k.cdc.UnmarshalInterfaceJSON([]byte(anyJSON), &attachedMsg)
+			if err != nil {
+				return nil, errorsmod.Wrapf(err, "failed to unmarshal attached message at index %d: %s", i, anyJSON)
+			}
+
+			attachedMsgs = append(attachedMsgs, attachedMsg)
+		}
 	}
 
 	fmt.Println(fmt.Sprintf("Script at address %v found", msg.ScriptAddress))
 	res, err := k.EvalScript(goCtx, &EvalScriptContext{
-		Messages:      messages,
+		Messages:      attachedMsgs,
 		CallerAddress: msg.CallerAddress,
 		ScriptAddress: msg.ScriptAddress,
 		ExtraCode:     msg.ExtraCode,
