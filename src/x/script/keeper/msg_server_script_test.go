@@ -4,7 +4,6 @@ import (
 	"strconv"
 	"testing"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/require"
 
@@ -19,24 +18,23 @@ var _ = strconv.IntSize
 func TestScriptMsgServerCreate(t *testing.T) {
 	k, ctx := keepertest.ScriptKeeper(t)
 	srv := keeper.NewMsgServerImpl(k)
-	wctx := sdk.WrapSDKContext(ctx)
-	creator := "A"
+	address := "A"
 	for i := 0; i < 5; i++ {
-		expected := &types.MsgCreateScript{Creator: creator,
+		expected := &types.MsgCreateScript{Address: address,
 			Index: strconv.Itoa(i),
 		}
-		_, err := srv.CreateScript(wctx, expected)
+		_, err := srv.CreateScript(ctx, expected)
 		require.NoError(t, err)
 		rst, found := k.GetScript(ctx,
 			expected.Index,
 		)
 		require.True(t, found)
-		require.Equal(t, expected.Creator, rst.Creator)
+		require.Equal(t, expected.Address, rst.Address)
 	}
 }
 
 func TestScriptMsgServerUpdate(t *testing.T) {
-	creator := "A"
+	address := "A"
 
 	tests := []struct {
 		desc    string
@@ -45,20 +43,20 @@ func TestScriptMsgServerUpdate(t *testing.T) {
 	}{
 		{
 			desc: "Completed",
-			request: &types.MsgUpdateScript{Creator: creator,
+			request: &types.MsgUpdateScript{Address: address,
 				Index: strconv.Itoa(0),
 			},
 		},
 		{
 			desc: "Unauthorized",
-			request: &types.MsgUpdateScript{Creator: "B",
+			request: &types.MsgUpdateScript{Address: "B",
 				Index: strconv.Itoa(0),
 			},
 			err: sdkerrors.ErrUnauthorized,
 		},
 		{
 			desc: "KeyNotFound",
-			request: &types.MsgUpdateScript{Creator: creator,
+			request: &types.MsgUpdateScript{Address: address,
 				Index: strconv.Itoa(100000),
 			},
 			err: sdkerrors.ErrKeyNotFound,
@@ -68,14 +66,13 @@ func TestScriptMsgServerUpdate(t *testing.T) {
 		t.Run(tc.desc, func(t *testing.T) {
 			k, ctx := keepertest.ScriptKeeper(t)
 			srv := keeper.NewMsgServerImpl(k)
-			wctx := sdk.WrapSDKContext(ctx)
-			expected := &types.MsgCreateScript{Creator: creator,
+			expected := &types.MsgCreateScript{Address: address,
 				Index: strconv.Itoa(0),
 			}
-			_, err := srv.CreateScript(wctx, expected)
+			_, err := srv.CreateScript(ctx, expected)
 			require.NoError(t, err)
 
-			_, err = srv.UpdateScript(wctx, tc.request)
+			_, err = srv.UpdateScript(ctx, tc.request)
 			if tc.err != nil {
 				require.ErrorIs(t, err, tc.err)
 			} else {
@@ -84,60 +81,7 @@ func TestScriptMsgServerUpdate(t *testing.T) {
 					expected.Index,
 				)
 				require.True(t, found)
-				require.Equal(t, expected.Creator, rst.Creator)
-			}
-		})
-	}
-}
-
-func TestScriptMsgServerDelete(t *testing.T) {
-	creator := "A"
-
-	tests := []struct {
-		desc    string
-		request *types.MsgDeleteScript
-		err     error
-	}{
-		{
-			desc: "Completed",
-			request: &types.MsgDeleteScript{Creator: creator,
-				Index: strconv.Itoa(0),
-			},
-		},
-		{
-			desc: "Unauthorized",
-			request: &types.MsgDeleteScript{Creator: "B",
-				Index: strconv.Itoa(0),
-			},
-			err: sdkerrors.ErrUnauthorized,
-		},
-		{
-			desc: "KeyNotFound",
-			request: &types.MsgDeleteScript{Creator: creator,
-				Index: strconv.Itoa(100000),
-			},
-			err: sdkerrors.ErrKeyNotFound,
-		},
-	}
-	for _, tc := range tests {
-		t.Run(tc.desc, func(t *testing.T) {
-			k, ctx := keepertest.ScriptKeeper(t)
-			srv := keeper.NewMsgServerImpl(k)
-			wctx := sdk.WrapSDKContext(ctx)
-
-			_, err := srv.CreateScript(wctx, &types.MsgCreateScript{Creator: creator,
-				Index: strconv.Itoa(0),
-			})
-			require.NoError(t, err)
-			_, err = srv.DeleteScript(wctx, tc.request)
-			if tc.err != nil {
-				require.ErrorIs(t, err, tc.err)
-			} else {
-				require.NoError(t, err)
-				_, found := k.GetScript(ctx,
-					tc.request.Index,
-				)
-				require.False(t, found)
+				require.Equal(t, expected.Address, rst.Address)
 			}
 		})
 	}

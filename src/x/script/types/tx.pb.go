@@ -32,8 +32,6 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // MsgUpdateParams is the Msg/UpdateParams request type.
-//
-// Since: cosmos-sdk 0.47
 type MsgUpdateParams struct {
 	// authority is the address that controls the module (defaults to x/gov unless overwritten).
 	Authority string `protobuf:"bytes,1,opt,name=authority,proto3" json:"authority,omitempty"`
@@ -90,8 +88,6 @@ func (m *MsgUpdateParams) GetParams() Params {
 
 // MsgUpdateParamsResponse defines the response structure for executing a
 // MsgUpdateParams message.
-//
-// Since: cosmos-sdk 0.47
 type MsgUpdateParamsResponse struct {
 }
 
@@ -345,6 +341,231 @@ func (m *MsgUpdateScriptResponse) GetVersion() int64 {
 	return 0
 }
 
+type MsgDeleteScript struct {
+	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Index   string `protobuf:"bytes,2,opt,name=index,proto3" json:"index,omitempty"`
+}
+
+func (m *MsgDeleteScript) Reset()         { *m = MsgDeleteScript{} }
+func (m *MsgDeleteScript) String() string { return proto.CompactTextString(m) }
+func (*MsgDeleteScript) ProtoMessage()    {}
+func (*MsgDeleteScript) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7e68a8d51fcee610, []int{6}
+}
+func (m *MsgDeleteScript) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeleteScript) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeleteScript.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeleteScript) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeleteScript.Merge(m, src)
+}
+func (m *MsgDeleteScript) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeleteScript) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeleteScript.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeleteScript proto.InternalMessageInfo
+
+func (m *MsgDeleteScript) GetAddress() string {
+	if m != nil {
+		return m.Address
+	}
+	return ""
+}
+
+func (m *MsgDeleteScript) GetIndex() string {
+	if m != nil {
+		return m.Index
+	}
+	return ""
+}
+
+type MsgDeleteScriptResponse struct {
+}
+
+func (m *MsgDeleteScriptResponse) Reset()         { *m = MsgDeleteScriptResponse{} }
+func (m *MsgDeleteScriptResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgDeleteScriptResponse) ProtoMessage()    {}
+func (*MsgDeleteScriptResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7e68a8d51fcee610, []int{7}
+}
+func (m *MsgDeleteScriptResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeleteScriptResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeleteScriptResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeleteScriptResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeleteScriptResponse.Merge(m, src)
+}
+func (m *MsgDeleteScriptResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeleteScriptResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeleteScriptResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeleteScriptResponse proto.InternalMessageInfo
+
+// MsgRun runs a script at a specific address
+type MsgRun struct {
+	CallerAddress    string `protobuf:"bytes,2,opt,name=caller_address,json=callerAddress,proto3" json:"caller_address,omitempty"`
+	ScriptAddress    string `protobuf:"bytes,3,opt,name=script_address,json=scriptAddress,proto3" json:"script_address,omitempty"`
+	ExtraCode        string `protobuf:"bytes,4,opt,name=extra_code,json=extraCode,proto3" json:"extra_code,omitempty"`
+	FunctionName     string `protobuf:"bytes,5,opt,name=function_name,json=functionName,proto3" json:"function_name,omitempty"`
+	Kwargs           string `protobuf:"bytes,6,opt,name=kwargs,proto3" json:"kwargs,omitempty"`
+	Grantee          string `protobuf:"bytes,7,opt,name=grantee,proto3" json:"grantee,omitempty"`
+	AttachedMessages string `protobuf:"bytes,1,opt,name=attached_messages,json=attachedMessages,proto3" json:"attached_messages,omitempty"`
+}
+
+func (m *MsgRun) Reset()         { *m = MsgRun{} }
+func (m *MsgRun) String() string { return proto.CompactTextString(m) }
+func (*MsgRun) ProtoMessage()    {}
+func (*MsgRun) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7e68a8d51fcee610, []int{8}
+}
+func (m *MsgRun) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgRun) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgRun.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgRun) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgRun.Merge(m, src)
+}
+func (m *MsgRun) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgRun) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgRun.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgRun proto.InternalMessageInfo
+
+func (m *MsgRun) GetCallerAddress() string {
+	if m != nil {
+		return m.CallerAddress
+	}
+	return ""
+}
+
+func (m *MsgRun) GetScriptAddress() string {
+	if m != nil {
+		return m.ScriptAddress
+	}
+	return ""
+}
+
+func (m *MsgRun) GetExtraCode() string {
+	if m != nil {
+		return m.ExtraCode
+	}
+	return ""
+}
+
+func (m *MsgRun) GetFunctionName() string {
+	if m != nil {
+		return m.FunctionName
+	}
+	return ""
+}
+
+func (m *MsgRun) GetKwargs() string {
+	if m != nil {
+		return m.Kwargs
+	}
+	return ""
+}
+
+func (m *MsgRun) GetGrantee() string {
+	if m != nil {
+		return m.Grantee
+	}
+	return ""
+}
+
+func (m *MsgRun) GetAttachedMessages() string {
+	if m != nil {
+		return m.AttachedMessages
+	}
+	return ""
+}
+
+type MsgRunResponse struct {
+	Response string `protobuf:"bytes,1,opt,name=response,proto3" json:"response,omitempty"`
+}
+
+func (m *MsgRunResponse) Reset()         { *m = MsgRunResponse{} }
+func (m *MsgRunResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgRunResponse) ProtoMessage()    {}
+func (*MsgRunResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7e68a8d51fcee610, []int{9}
+}
+func (m *MsgRunResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgRunResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgRunResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgRunResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgRunResponse.Merge(m, src)
+}
+func (m *MsgRunResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgRunResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgRunResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgRunResponse proto.InternalMessageInfo
+
+func (m *MsgRunResponse) GetResponse() string {
+	if m != nil {
+		return m.Response
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*MsgUpdateParams)(nil), "blit.script.MsgUpdateParams")
 	proto.RegisterType((*MsgUpdateParamsResponse)(nil), "blit.script.MsgUpdateParamsResponse")
@@ -352,46 +573,60 @@ func init() {
 	proto.RegisterType((*MsgCreateScriptResponse)(nil), "blit.script.MsgCreateScriptResponse")
 	proto.RegisterType((*MsgUpdateScript)(nil), "blit.script.MsgUpdateScript")
 	proto.RegisterType((*MsgUpdateScriptResponse)(nil), "blit.script.MsgUpdateScriptResponse")
+	proto.RegisterType((*MsgDeleteScript)(nil), "blit.script.MsgDeleteScript")
+	proto.RegisterType((*MsgDeleteScriptResponse)(nil), "blit.script.MsgDeleteScriptResponse")
+	proto.RegisterType((*MsgRun)(nil), "blit.script.MsgRun")
+	proto.RegisterType((*MsgRunResponse)(nil), "blit.script.MsgRunResponse")
 }
 
 func init() { proto.RegisterFile("blit/script/tx.proto", fileDescriptor_7e68a8d51fcee610) }
 
 var fileDescriptor_7e68a8d51fcee610 = []byte{
-	// 531 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x53, 0x3f, 0x6b, 0xdb, 0x40,
-	0x14, 0xb7, 0xa2, 0x34, 0x41, 0x17, 0x43, 0xe9, 0xd9, 0x10, 0x45, 0x6d, 0x55, 0x23, 0x3a, 0x18,
-	0x43, 0xac, 0xd4, 0x81, 0x14, 0xb2, 0xd5, 0x9d, 0x0d, 0xe1, 0xd2, 0x2e, 0x5d, 0x8c, 0x62, 0x1f,
-	0x57, 0x41, 0xa5, 0x13, 0xf7, 0xce, 0x21, 0xde, 0x4a, 0xc7, 0x42, 0xa1, 0x6b, 0xbf, 0x41, 0x47,
-	0x43, 0xfb, 0x05, 0xba, 0x65, 0x0c, 0x9d, 0x3a, 0x95, 0x62, 0x0f, 0xfe, 0x1a, 0x45, 0x77, 0x52,
-	0x2c, 0x2b, 0x4a, 0x03, 0x5d, 0xa4, 0x7b, 0xef, 0xf7, 0xee, 0x77, 0xbf, 0xf7, 0x0f, 0x35, 0xcf,
-	0xde, 0x85, 0xd2, 0x87, 0x91, 0x08, 0x13, 0xe9, 0xcb, 0x8b, 0x6e, 0x22, 0xb8, 0xe4, 0x78, 0x27,
-	0xf5, 0x76, 0xb5, 0xd7, 0x79, 0x10, 0x44, 0x61, 0xcc, 0x7d, 0xf5, 0xd5, 0xb8, 0xb3, 0x3b, 0xe2,
-	0x10, 0x71, 0xf0, 0x23, 0x60, 0xfe, 0xf9, 0xb3, 0xf4, 0x97, 0x01, 0x7b, 0x1a, 0x18, 0x2a, 0xcb,
-	0xd7, 0x46, 0x06, 0x35, 0x19, 0x67, 0x5c, 0xfb, 0xd3, 0x53, 0xe6, 0xb5, 0x8b, 0xef, 0x27, 0x81,
-	0x08, 0x22, 0xa8, 0x42, 0xf4, 0xaf, 0x0a, 0x89, 0x80, 0x89, 0x49, 0xac, 0x11, 0xef, 0x9b, 0x81,
-	0xee, 0x0f, 0x80, 0xbd, 0x4e, 0xc6, 0x81, 0xa4, 0x27, 0x8a, 0x0d, 0x1f, 0x21, 0x2b, 0x98, 0xc8,
-	0xb7, 0x5c, 0x84, 0x72, 0x6a, 0x1b, 0x2d, 0xa3, 0x6d, 0xf5, 0xed, 0x9f, 0xdf, 0xf7, 0x9b, 0x99,
-	0xb8, 0x17, 0xe3, 0xb1, 0xa0, 0x00, 0xa7, 0x52, 0x84, 0x31, 0x23, 0xab, 0x50, 0x7c, 0x84, 0xb6,
-	0xb4, 0x1e, 0x7b, 0xa3, 0x65, 0xb4, 0x77, 0x7a, 0x8d, 0x6e, 0xa1, 0x28, 0x5d, 0x4d, 0xde, 0xb7,
-	0x2e, 0x7f, 0x3f, 0xa9, 0x7d, 0x5d, 0xce, 0x3a, 0x06, 0xc9, 0xa2, 0x8f, 0x0f, 0x3e, 0x2c, 0x67,
-	0x9d, 0x15, 0xcf, 0xc7, 0xe5, 0xac, 0xf3, 0x58, 0x09, 0xbe, 0xc8, 0x25, 0x97, 0x14, 0x7a, 0x7b,
-	0x68, 0xb7, 0xe4, 0x22, 0x14, 0x12, 0x1e, 0x03, 0xf5, 0xbe, 0xe8, 0x84, 0x5e, 0x0a, 0x1a, 0x48,
-	0x7a, 0xaa, 0xae, 0x63, 0x1b, 0x6d, 0x8f, 0x52, 0x9b, 0x0b, 0x9d, 0x0e, 0xc9, 0x4d, 0x8c, 0xd1,
-	0xe6, 0x88, 0x8f, 0xa9, 0x12, 0x6c, 0x11, 0x75, 0xc6, 0x07, 0xa8, 0x19, 0x01, 0x1b, 0xca, 0x69,
-	0x42, 0x87, 0x09, 0x15, 0x51, 0x08, 0x10, 0xf2, 0x18, 0x6c, 0xb3, 0x65, 0xb6, 0x2d, 0x82, 0x23,
-	0x60, 0xaf, 0xa6, 0x09, 0x3d, 0x59, 0x21, 0x29, 0x3f, 0x13, 0x41, 0x2c, 0x29, 0xb5, 0x37, 0x35,
-	0x7f, 0x66, 0x1e, 0xd7, 0xd3, 0xd4, 0xf2, 0xd7, 0xbc, 0x81, 0x92, 0x5d, 0x94, 0x96, 0xcb, 0xc6,
-	0x3d, 0xb4, 0x1d, 0xe8, 0xba, 0xde, 0x59, 0xf1, 0x3c, 0xd0, 0xfb, 0x54, 0xec, 0x5d, 0x96, 0xea,
-	0x7f, 0xf0, 0x54, 0x16, 0xa1, 0xb7, 0x4a, 0xc9, 0xbc, 0x8b, 0x27, 0x0b, 0xf4, 0x0e, 0x0b, 0x5d,
-	0x29, 0xa5, 0x67, 0xa3, 0xed, 0x73, 0x2a, 0xd2, 0x6a, 0x29, 0x59, 0x26, 0xc9, 0xcd, 0xde, 0x8f,
-	0x0d, 0x64, 0x0e, 0x80, 0x61, 0x82, 0xea, 0x6b, 0x43, 0xf8, 0x68, 0x6d, 0x78, 0x4a, 0xdd, 0x76,
-	0x9e, 0xfe, 0x0b, 0xbd, 0x7e, 0x95, 0xa0, 0xfa, 0xda, 0x1c, 0xdc, 0xe0, 0x2c, 0xa2, 0x37, 0x39,
-	0x2b, 0x1b, 0x75, 0xad, 0xf3, 0x36, 0xce, 0x22, 0x7a, 0x9b, 0xce, 0x12, 0xe7, 0x73, 0x64, 0x92,
-	0x49, 0x8c, 0x1b, 0xe5, 0x60, 0x32, 0x89, 0x9d, 0x87, 0x15, 0xce, 0xfc, 0xa2, 0x73, 0xef, 0x7d,
-	0xba, 0x48, 0xfd, 0xfd, 0xcb, 0xb9, 0x6b, 0x5c, 0xcd, 0x5d, 0xe3, 0xcf, 0xdc, 0x35, 0x3e, 0x2f,
-	0xdc, 0xda, 0xd5, 0xc2, 0xad, 0xfd, 0x5a, 0xb8, 0xb5, 0x37, 0x8d, 0xf5, 0x3d, 0x4a, 0x67, 0x1a,
-	0xce, 0xb6, 0xd4, 0xea, 0x1f, 0xfe, 0x0d, 0x00, 0x00, 0xff, 0xff, 0xcd, 0x79, 0xff, 0xcb, 0xca,
-	0x04, 0x00, 0x00,
+	// 696 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x54, 0x4f, 0x4f, 0x13, 0x4f,
+	0x18, 0xee, 0xb2, 0x50, 0x7e, 0x1d, 0x0a, 0x3f, 0x19, 0x1a, 0x59, 0xaa, 0x54, 0x52, 0x35, 0x21,
+	0x28, 0x2d, 0x96, 0x04, 0x13, 0x6e, 0x82, 0xd7, 0x2a, 0x59, 0xf4, 0xe2, 0x65, 0x33, 0x6c, 0xc7,
+	0x65, 0x63, 0x77, 0x67, 0x33, 0x33, 0xc5, 0x72, 0x33, 0x5e, 0x4c, 0x3c, 0x79, 0x35, 0x7e, 0x01,
+	0x8f, 0x24, 0xfa, 0x05, 0xbc, 0x71, 0x24, 0x9e, 0x3c, 0x19, 0x03, 0x87, 0x7e, 0x0d, 0x33, 0xff,
+	0xda, 0xdd, 0xa5, 0xe0, 0xa5, 0xdd, 0xf7, 0x7d, 0xde, 0x79, 0xe6, 0x79, 0xde, 0x79, 0x67, 0x40,
+	0xe5, 0xa0, 0x1b, 0xf2, 0x26, 0xf3, 0x69, 0x98, 0xf0, 0x26, 0xef, 0x37, 0x12, 0x4a, 0x38, 0x81,
+	0x33, 0x22, 0xdb, 0x50, 0xd9, 0xea, 0x3c, 0x8a, 0xc2, 0x98, 0x34, 0xe5, 0xaf, 0xc2, 0xab, 0x8b,
+	0x3e, 0x61, 0x11, 0x61, 0xcd, 0x88, 0x05, 0xcd, 0xa3, 0x47, 0xe2, 0x4f, 0x03, 0x4b, 0x0a, 0xf0,
+	0x64, 0xd4, 0x54, 0x81, 0x86, 0x2a, 0x01, 0x09, 0x88, 0xca, 0x8b, 0x2f, 0x9d, 0x75, 0xd2, 0xfb,
+	0x27, 0x88, 0xa2, 0x88, 0x8d, 0x43, 0xd4, 0x9f, 0x42, 0xea, 0xdf, 0x2c, 0xf0, 0x7f, 0x9b, 0x05,
+	0x2f, 0x93, 0x0e, 0xe2, 0x78, 0x4f, 0xae, 0x81, 0x5b, 0xa0, 0x84, 0x7a, 0xfc, 0x90, 0xd0, 0x90,
+	0x1f, 0x3b, 0xd6, 0x8a, 0xb5, 0x5a, 0xda, 0x71, 0x7e, 0x7e, 0x5f, 0xaf, 0x68, 0x09, 0x4f, 0x3a,
+	0x1d, 0x8a, 0x19, 0xdb, 0xe7, 0x34, 0x8c, 0x03, 0x77, 0x54, 0x0a, 0xb7, 0x40, 0x51, 0xed, 0xea,
+	0x4c, 0xac, 0x58, 0xab, 0x33, 0xad, 0x85, 0x46, 0xca, 0x7a, 0x43, 0x91, 0xef, 0x94, 0x4e, 0x7f,
+	0xdf, 0x29, 0x7c, 0x1d, 0x9c, 0xac, 0x59, 0xae, 0xae, 0xde, 0xde, 0x78, 0x3f, 0x38, 0x59, 0x1b,
+	0xf1, 0x7c, 0x1c, 0x9c, 0xac, 0x2d, 0x4b, 0xc1, 0x7d, 0x23, 0x39, 0xa7, 0xb0, 0xbe, 0x04, 0x16,
+	0x73, 0x29, 0x17, 0xb3, 0x84, 0xc4, 0x0c, 0xd7, 0x3f, 0x2b, 0x43, 0xbb, 0x14, 0x23, 0x8e, 0xf7,
+	0xe5, 0x72, 0xe8, 0x80, 0x69, 0x5f, 0xc4, 0x84, 0x2a, 0x3b, 0xae, 0x09, 0x21, 0x04, 0x93, 0x3e,
+	0xe9, 0x60, 0x29, 0xb8, 0xe4, 0xca, 0x6f, 0xb8, 0x01, 0x2a, 0x11, 0x0b, 0x3c, 0x7e, 0x9c, 0x60,
+	0x2f, 0xc1, 0x34, 0x0a, 0x19, 0x0b, 0x49, 0xcc, 0x1c, 0x7b, 0xc5, 0x5e, 0x2d, 0xb9, 0x30, 0x62,
+	0xc1, 0x8b, 0xe3, 0x04, 0xef, 0x8d, 0x10, 0xc1, 0x1f, 0x50, 0x14, 0x73, 0x8c, 0x9d, 0x49, 0xc5,
+	0xaf, 0xc3, 0xed, 0xb2, 0xb0, 0x66, 0x76, 0xab, 0x6f, 0x4a, 0xd9, 0x69, 0x69, 0x46, 0xb6, 0xa0,
+	0x40, 0xaa, 0xaf, 0x46, 0xa2, 0x0e, 0xeb, 0x5f, 0xd2, 0x27, 0xa4, 0x0d, 0xb5, 0x72, 0xd5, 0xd7,
+	0x9c, 0x8f, 0x29, 0x1c, 0x6b, 0xb5, 0x35, 0x12, 0x6e, 0xff, 0x8b, 0x27, 0x6b, 0x49, 0x47, 0xda,
+	0x52, 0x5a, 0x5c, 0xda, 0xd2, 0x11, 0xa6, 0xa2, 0x43, 0x52, 0xa4, 0xed, 0x9a, 0xb0, 0xfe, 0x5c,
+	0x3a, 0x7a, 0x8a, 0xbb, 0x38, 0x7d, 0x44, 0xe3, 0xfd, 0xc3, 0x0a, 0x98, 0x0a, 0xe3, 0x0e, 0xee,
+	0x6b, 0xe1, 0x2a, 0xd0, 0x2a, 0x4c, 0x8f, 0xd4, 0x3c, 0xa4, 0x09, 0x87, 0xf3, 0xf0, 0x61, 0x02,
+	0x14, 0xdb, 0x2c, 0x70, 0x7b, 0x31, 0xbc, 0x0f, 0xe6, 0x7c, 0xd4, 0xed, 0x62, 0xea, 0x99, 0xad,
+	0x14, 0xe5, 0xac, 0xca, 0x6a, 0xbf, 0xa2, 0x4c, 0x8d, 0xdd, 0xb0, 0xcc, 0x56, 0x65, 0x2a, 0x6b,
+	0xca, 0x96, 0x01, 0xc0, 0x7d, 0x4e, 0x91, 0x27, 0xbb, 0xaa, 0xce, 0xbd, 0x24, 0x33, 0xbb, 0xa2,
+	0xb5, 0x77, 0xc1, 0xec, 0xeb, 0x5e, 0xec, 0xf3, 0x90, 0xc4, 0x5e, 0x8c, 0x22, 0xec, 0x4c, 0xc9,
+	0x8a, 0xb2, 0x49, 0x3e, 0x43, 0x11, 0x86, 0x37, 0x41, 0xf1, 0xcd, 0x5b, 0x44, 0x03, 0xe6, 0x14,
+	0x25, 0xaa, 0xa3, 0xf4, 0x40, 0x4d, 0x67, 0x06, 0x0a, 0x3e, 0x00, 0xf3, 0x88, 0x73, 0xe4, 0x1f,
+	0xe2, 0x8e, 0x17, 0x61, 0xc6, 0x50, 0x80, 0x4d, 0xc7, 0x6e, 0x18, 0xa0, 0xad, 0xf3, 0xb9, 0xa3,
+	0x7a, 0x08, 0xe6, 0x54, 0x23, 0x86, 0x27, 0x54, 0x05, 0xff, 0x51, 0xfd, 0xad, 0x39, 0x86, 0x71,
+	0xeb, 0xc7, 0x04, 0xb0, 0xdb, 0x2c, 0x80, 0x2e, 0x28, 0x67, 0x1e, 0x87, 0xdb, 0x99, 0x4b, 0x9d,
+	0xbb, 0x85, 0xd5, 0x7b, 0xd7, 0xa1, 0xc3, 0x7d, 0x5d, 0x50, 0xce, 0xdc, 0xcf, 0x4b, 0x9c, 0x69,
+	0xf4, 0x32, 0xe7, 0xd8, 0x0b, 0x34, 0xd4, 0x79, 0x15, 0x67, 0x1a, 0xbd, 0x4a, 0x67, 0x8e, 0xf3,
+	0x31, 0xb0, 0xc5, 0xdc, 0x2c, 0xe4, 0x8b, 0xdd, 0x5e, 0x5c, 0xbd, 0x35, 0x26, 0x69, 0x16, 0x56,
+	0xa7, 0xde, 0x89, 0x07, 0x6e, 0x67, 0xfd, 0xf4, 0xbc, 0x66, 0x9d, 0x9d, 0xd7, 0xac, 0x3f, 0xe7,
+	0x35, 0xeb, 0xd3, 0x45, 0xad, 0x70, 0x76, 0x51, 0x2b, 0xfc, 0xba, 0xa8, 0x15, 0x5e, 0x2d, 0x64,
+	0xdf, 0x37, 0xf1, 0xd6, 0xb0, 0x83, 0xa2, 0x7c, 0x92, 0x37, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff,
+	0x1d, 0x3a, 0xc0, 0x19, 0x48, 0x06, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -406,7 +641,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
-	// Since: cosmos-sdk 0.47
+	// UpdateParams defines a (governance) operation for updating the module
+	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
 	CreateScript(ctx context.Context, in *MsgCreateScript, opts ...grpc.CallOption) (*MsgCreateScriptResponse, error)
 	UpdateScript(ctx context.Context, in *MsgUpdateScript, opts ...grpc.CallOption) (*MsgUpdateScriptResponse, error)
@@ -459,7 +695,8 @@ func (c *msgClient) Run(ctx context.Context, in *MsgRun, opts ...grpc.CallOption
 
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
-	// Since: cosmos-sdk 0.47
+	// UpdateParams defines a (governance) operation for updating the module
+	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
 	CreateScript(context.Context, *MsgCreateScript) (*MsgCreateScriptResponse, error)
 	UpdateScript(context.Context, *MsgUpdateScript) (*MsgUpdateScriptResponse, error)
@@ -802,6 +1039,168 @@ func (m *MsgUpdateScriptResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgDeleteScript) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeleteScript) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeleteScript) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Index) > 0 {
+		i -= len(m.Index)
+		copy(dAtA[i:], m.Index)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Index)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Address) > 0 {
+		i -= len(m.Address)
+		copy(dAtA[i:], m.Address)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Address)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDeleteScriptResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeleteScriptResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeleteScriptResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgRun) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgRun) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgRun) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Grantee) > 0 {
+		i -= len(m.Grantee)
+		copy(dAtA[i:], m.Grantee)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Grantee)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.Kwargs) > 0 {
+		i -= len(m.Kwargs)
+		copy(dAtA[i:], m.Kwargs)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Kwargs)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.FunctionName) > 0 {
+		i -= len(m.FunctionName)
+		copy(dAtA[i:], m.FunctionName)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.FunctionName)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.ExtraCode) > 0 {
+		i -= len(m.ExtraCode)
+		copy(dAtA[i:], m.ExtraCode)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ExtraCode)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.ScriptAddress) > 0 {
+		i -= len(m.ScriptAddress)
+		copy(dAtA[i:], m.ScriptAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.ScriptAddress)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.CallerAddress) > 0 {
+		i -= len(m.CallerAddress)
+		copy(dAtA[i:], m.CallerAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.CallerAddress)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.AttachedMessages) > 0 {
+		i -= len(m.AttachedMessages)
+		copy(dAtA[i:], m.AttachedMessages)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.AttachedMessages)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgRunResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgRunResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgRunResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Response) > 0 {
+		i -= len(m.Response)
+		copy(dAtA[i:], m.Response)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Response)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -906,6 +1305,82 @@ func (m *MsgUpdateScriptResponse) Size() (n int) {
 	_ = l
 	if m.Version != 0 {
 		n += 1 + sovTx(uint64(m.Version))
+	}
+	return n
+}
+
+func (m *MsgDeleteScript) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Address)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Index)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgDeleteScriptResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgRun) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.AttachedMessages)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.CallerAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.ScriptAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.ExtraCode)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.FunctionName)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Kwargs)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Grantee)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgRunResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Response)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
 	}
 	return n
 }
@@ -1535,6 +2010,526 @@ func (m *MsgUpdateScriptResponse) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeleteScript) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeleteScript: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeleteScript: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Address = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Index", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Index = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeleteScriptResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeleteScriptResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeleteScriptResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgRun) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgRun: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgRun: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AttachedMessages", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AttachedMessages = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CallerAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CallerAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ScriptAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ScriptAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExtraCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ExtraCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FunctionName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.FunctionName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Kwargs", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Kwargs = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Grantee", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Grantee = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgRunResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgRunResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgRunResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Response", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Response = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTx(dAtA[iNdEx:])

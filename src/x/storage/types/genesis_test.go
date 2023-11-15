@@ -24,12 +24,10 @@ func TestGenesisState_Validate(t *testing.T) {
 
 				StorageList: []types.Storage{
 					{
-						Address: "0",
-						Index:   "0",
+						Index: "0",
 					},
 					{
-						Address: "1",
-						Index:   "1",
+						Index: "1",
 					},
 				},
 				// this line is used by starport scaffolding # types/genesis/validField
@@ -41,12 +39,10 @@ func TestGenesisState_Validate(t *testing.T) {
 			genState: &types.GenesisState{
 				StorageList: []types.Storage{
 					{
-						Address: "0",
-						Index:   "0",
+						Index: "0",
 					},
 					{
-						Address: "0",
-						Index:   "0",
+						Index: "0",
 					},
 				},
 			},

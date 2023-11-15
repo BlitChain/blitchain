@@ -21,9 +21,8 @@ import (
 // Prevent strconv unused error
 var _ = strconv.IntSize
 
-func networkWithScriptObjects(t *testing.T, n int) (*network.Network, []types.Script) {
-	t.Helper()
-	cfg := network.DefaultConfig()
+func (s *IntegrationTestSuite) networkWithScriptObjects(n int) (*network.Network, []types.Script) {
+	s.T().Helper()
 	state := types.GenesisState{}
 	for i := 0; i < n; i++ {
 		script := types.Script{
@@ -32,19 +31,17 @@ func networkWithScriptObjects(t *testing.T, n int) (*network.Network, []types.Sc
 		nullify.Fill(&script)
 		state.ScriptList = append(state.ScriptList, script)
 	}
-	buf, err := cfg.Codec.MarshalJSON(&state)
-	require.NoError(t, err)
-	cfg.GenesisState[types.ModuleName] = buf
-	return network.New(t, cfg), state.ScriptList
+	return s.network(&state), state.ScriptList
 }
 
-func TestShowScript(t *testing.T) {
-	net, objs := networkWithScriptObjects(t, 2)
-
-	ctx := net.Validators[0].ClientCtx
-	common := []string{
-		fmt.Sprintf("--%s=json", tmcli.OutputFlag),
-	}
+func (s *IntegrationTestSuite) TestShowScript() {
+	var (
+		net, objs = s.networkWithScriptObjects(2)
+		ctx       = net.Validators[0].ClientCtx
+		common    = []string{
+			fmt.Sprintf("--%s=json", tmcli.OutputFlag),
+		}
+	)
 	tests := []struct {
 		desc    string
 		idIndex string
@@ -69,7 +66,7 @@ func TestShowScript(t *testing.T) {
 		},
 	}
 	for _, tc := range tests {
-		t.Run(tc.desc, func(t *testing.T) {
+		s.T().Run(tc.desc, func(t *testing.T) {
 			args := []string{
 				tc.idIndex,
 			}
@@ -79,24 +76,25 @@ func TestShowScript(t *testing.T) {
 				stat, ok := status.FromError(tc.err)
 				require.True(t, ok)
 				require.ErrorIs(t, stat.Err(), tc.err)
-			} else {
-				require.NoError(t, err)
-				var resp types.QueryGetScriptResponse
-				require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
-				require.NotNil(t, resp.Script)
-				require.Equal(t,
-					nullify.Fill(&tc.obj),
-					nullify.Fill(&resp.Script),
-				)
+				return
 			}
+			require.NoError(t, err)
+			var resp types.QueryGetScriptResponse
+			require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
+			require.NotNil(t, resp.Script)
+			require.Equal(t,
+				nullify.Fill(&tc.obj),
+				nullify.Fill(&resp.Script),
+			)
 		})
 	}
 }
 
-func TestListScript(t *testing.T) {
-	net, objs := networkWithScriptObjects(t, 5)
-
-	ctx := net.Validators[0].ClientCtx
+func (s *IntegrationTestSuite) TestListScript() {
+	var (
+		net, objs = s.networkWithScriptObjects(5)
+		ctx       = net.Validators[0].ClientCtx
+	)
 	request := func(next []byte, offset, limit uint64, total bool) []string {
 		args := []string{
 			fmt.Sprintf("--%s=json", tmcli.OutputFlag),
@@ -112,7 +110,7 @@ func TestListScript(t *testing.T) {
 		}
 		return args
 	}
-	t.Run("ByOffset", func(t *testing.T) {
+	s.T().Run("ByOffset", func(t *testing.T) {
 		step := 2
 		for i := 0; i < len(objs); i += step {
 			args := request(nil, uint64(i), uint64(step), false)
@@ -127,7 +125,7 @@ func TestListScript(t *testing.T) {
 			)
 		}
 	})
-	t.Run("ByKey", func(t *testing.T) {
+	s.T().Run("ByKey", func(t *testing.T) {
 		step := 2
 		var next []byte
 		for i := 0; i < len(objs); i += step {
@@ -144,7 +142,7 @@ func TestListScript(t *testing.T) {
 			next = resp.Pagination.NextKey
 		}
 	})
-	t.Run("Total", func(t *testing.T) {
+	s.T().Run("Total", func(t *testing.T) {
 		args := request(nil, 0, uint64(len(objs)), true)
 		out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdListScript(), args)
 		require.NoError(t, err)

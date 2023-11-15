@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"context"
 	"strconv"
 	"testing"
 
@@ -8,14 +9,13 @@ import (
 	"blit/testutil/nullify"
 	"blit/x/script/keeper"
 	"blit/x/script/types"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 )
 
 // Prevent strconv unused error
 var _ = strconv.IntSize
 
-func createNScript(keeper keeper.Keeper, ctx sdk.Context, n int) []types.Script {
+func createNScript(keeper keeper.Keeper, ctx context.Context, n int) []types.Script {
 	items := make([]types.Script, n)
 	for i := range items {
 		items[i].Index = strconv.Itoa(i)

@@ -36,7 +36,7 @@ func (k msgServer) CreateScript(goCtx context.Context, msg *types.MsgCreateScrip
 		authorization := authz.NewGenericAuthorization(msgType)
 
 		if authorization == nil {
-			return nil, sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "unrecognized message type: %s", msgType)
+			return nil, errorsmod.Wrapf(sdkerrors.ErrUnknownRequest, "unrecognized message type: %s", msgType)
 		}
 
 		grantMsg, err := authz.NewMsgGrant(scriptAddress, sdk.MustAccAddressFromBech32(msg.Grantee), authorization, nil)
@@ -45,7 +45,7 @@ func (k msgServer) CreateScript(goCtx context.Context, msg *types.MsgCreateScrip
 		}
 
 		if k.Router == nil {
-			return nil, sdkerrors.Wrapf(sdkerrors.ErrUnknownRequest, "router is nil")
+			return nil, errorsmod.Wrapf(sdkerrors.ErrUnknownRequest, "router is nil")
 		}
 
 		handler := k.Router.Handler(grantMsg)
@@ -55,7 +55,7 @@ func (k msgServer) CreateScript(goCtx context.Context, msg *types.MsgCreateScrip
 
 		_, err = handler(ctx, grantMsg)
 		if err != nil {
-			return nil, sdkerrors.Wrapf(err, "failed to execute message; message %v", msg)
+			return nil, errorsmod.Wrapf(err, "failed to execute message; message %v", msg)
 		}
 
 	}

@@ -21,7 +21,7 @@ var template embed.FS
 
 func RegisterOpenAPIService(appName string, rtr *mux.Router) {
 	rtr.Handle(apiFile, http.FileServer(http.FS(Static)))
-	// rtr.HandleFunc("/", DocHandler(appName))
+	//rtr.HandleFunc("/", handler(appName))
 }
 
 // handler returns an http handler that servers OpenAPI console for an OpenAPI spec at specURL.

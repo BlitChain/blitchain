@@ -14,17 +14,15 @@ import (
 
 var (
 	md_Storage         protoreflect.MessageDescriptor
-	fd_Storage_address protoreflect.FieldDescriptor
 	fd_Storage_index   protoreflect.FieldDescriptor
-	fd_Storage_data    protoreflect.FieldDescriptor
+	fd_Storage_creator protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_blit_storage_storage_proto_init()
 	md_Storage = File_blit_storage_storage_proto.Messages().ByName("Storage")
-	fd_Storage_address = md_Storage.Fields().ByName("address")
 	fd_Storage_index = md_Storage.Fields().ByName("index")
-	fd_Storage_data = md_Storage.Fields().ByName("data")
+	fd_Storage_creator = md_Storage.Fields().ByName("creator")
 }
 
 var _ protoreflect.Message = (*fastReflection_Storage)(nil)
@@ -92,21 +90,15 @@ func (x *fastReflection_Storage) Interface() protoreflect.ProtoMessage {
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_Storage) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Address != "" {
-		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_Storage_address, value) {
-			return
-		}
-	}
 	if x.Index != "" {
 		value := protoreflect.ValueOfString(x.Index)
 		if !f(fd_Storage_index, value) {
 			return
 		}
 	}
-	if x.Data != "" {
-		value := protoreflect.ValueOfString(x.Data)
-		if !f(fd_Storage_data, value) {
+	if x.Creator != "" {
+		value := protoreflect.ValueOfString(x.Creator)
+		if !f(fd_Storage_creator, value) {
 			return
 		}
 	}
@@ -125,12 +117,10 @@ func (x *fastReflection_Storage) Range(f func(protoreflect.FieldDescriptor, prot
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_Storage) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "blit.storage.Storage.address":
-		return x.Address != ""
 	case "blit.storage.Storage.index":
 		return x.Index != ""
-	case "blit.storage.Storage.data":
-		return x.Data != ""
+	case "blit.storage.Storage.creator":
+		return x.Creator != ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.storage.Storage"))
@@ -147,12 +137,10 @@ func (x *fastReflection_Storage) Has(fd protoreflect.FieldDescriptor) bool {
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Storage) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "blit.storage.Storage.address":
-		x.Address = ""
 	case "blit.storage.Storage.index":
 		x.Index = ""
-	case "blit.storage.Storage.data":
-		x.Data = ""
+	case "blit.storage.Storage.creator":
+		x.Creator = ""
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.storage.Storage"))
@@ -169,14 +157,11 @@ func (x *fastReflection_Storage) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_Storage) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "blit.storage.Storage.address":
-		value := x.Address
-		return protoreflect.ValueOfString(value)
 	case "blit.storage.Storage.index":
 		value := x.Index
 		return protoreflect.ValueOfString(value)
-	case "blit.storage.Storage.data":
-		value := x.Data
+	case "blit.storage.Storage.creator":
+		value := x.Creator
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
@@ -198,12 +183,10 @@ func (x *fastReflection_Storage) Get(descriptor protoreflect.FieldDescriptor) pr
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Storage) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "blit.storage.Storage.address":
-		x.Address = value.Interface().(string)
 	case "blit.storage.Storage.index":
 		x.Index = value.Interface().(string)
-	case "blit.storage.Storage.data":
-		x.Data = value.Interface().(string)
+	case "blit.storage.Storage.creator":
+		x.Creator = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.storage.Storage"))
@@ -224,12 +207,10 @@ func (x *fastReflection_Storage) Set(fd protoreflect.FieldDescriptor, value prot
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Storage) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.storage.Storage.address":
-		panic(fmt.Errorf("field address of message blit.storage.Storage is not mutable"))
 	case "blit.storage.Storage.index":
 		panic(fmt.Errorf("field index of message blit.storage.Storage is not mutable"))
-	case "blit.storage.Storage.data":
-		panic(fmt.Errorf("field data of message blit.storage.Storage is not mutable"))
+	case "blit.storage.Storage.creator":
+		panic(fmt.Errorf("field creator of message blit.storage.Storage is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.storage.Storage"))
@@ -243,11 +224,9 @@ func (x *fastReflection_Storage) Mutable(fd protoreflect.FieldDescriptor) protor
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_Storage) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.storage.Storage.address":
-		return protoreflect.ValueOfString("")
 	case "blit.storage.Storage.index":
 		return protoreflect.ValueOfString("")
-	case "blit.storage.Storage.data":
+	case "blit.storage.Storage.creator":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
@@ -318,15 +297,11 @@ func (x *fastReflection_Storage) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		l = len(x.Address)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
 		l = len(x.Index)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.Data)
+		l = len(x.Creator)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
@@ -359,24 +334,17 @@ func (x *fastReflection_Storage) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.Data) > 0 {
-			i -= len(x.Data)
-			copy(dAtA[i:], x.Data)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Data)))
+		if len(x.Creator) > 0 {
+			i -= len(x.Creator)
+			copy(dAtA[i:], x.Creator)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
 			i--
-			dAtA[i] = 0x1a
+			dAtA[i] = 0x12
 		}
 		if len(x.Index) > 0 {
 			i -= len(x.Index)
 			copy(dAtA[i:], x.Index)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Index)))
-			i--
-			dAtA[i] = 0x12
-		}
-		if len(x.Address) > 0 {
-			i -= len(x.Address)
-			copy(dAtA[i:], x.Address)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Address)))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -431,38 +399,6 @@ func (x *fastReflection_Storage) ProtoMethods() *protoiface.Methods {
 			switch fieldNum {
 			case 1:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Address", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Address = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 2:
-				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Index", wireType)
 				}
 				var stringLen uint64
@@ -493,9 +429,9 @@ func (x *fastReflection_Storage) ProtoMethods() *protoiface.Methods {
 				}
 				x.Index = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
-			case 3:
+			case 2:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
 				}
 				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
@@ -523,7 +459,7 @@ func (x *fastReflection_Storage) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Data = string(dAtA[iNdEx:postIndex])
+				x.Creator = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -578,9 +514,8 @@ type Storage struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Index   string `protobuf:"bytes,2,opt,name=index,proto3" json:"index,omitempty"`
-	Data    string `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Index   string `protobuf:"bytes,1,opt,name=index,proto3" json:"index,omitempty"`
+	Creator string `protobuf:"bytes,2,opt,name=creator,proto3" json:"creator,omitempty"`
 }
 
 func (x *Storage) Reset() {
@@ -603,13 +538,6 @@ func (*Storage) Descriptor() ([]byte, []int) {
 	return file_blit_storage_storage_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Storage) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
 func (x *Storage) GetIndex() string {
 	if x != nil {
 		return x.Index
@@ -617,9 +545,9 @@ func (x *Storage) GetIndex() string {
 	return ""
 }
 
-func (x *Storage) GetData() string {
+func (x *Storage) GetCreator() string {
 	if x != nil {
-		return x.Data
+		return x.Creator
 	}
 	return ""
 }
@@ -629,22 +557,20 @@ var File_blit_storage_storage_proto protoreflect.FileDescriptor
 var file_blit_storage_storage_proto_rawDesc = []byte{
 	0x0a, 0x1a, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2f, 0x73,
 	0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0c, 0x62, 0x6c,
-	0x69, 0x74, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x22, 0x4d, 0x0a, 0x07, 0x53, 0x74,
-	0x6f, 0x72, 0x61, 0x67, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12,
-	0x14, 0x0a, 0x05, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
-	0x69, 0x6e, 0x64, 0x65, 0x78, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x90, 0x01, 0x0a, 0x10, 0x63, 0x6f,
-	0x6d, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x42, 0x0c,
-	0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1d,
-	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73, 0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69,
-	0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0xa2, 0x02, 0x03,
-	0x42, 0x53, 0x58, 0xaa, 0x02, 0x0c, 0x42, 0x6c, 0x69, 0x74, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x61,
-	0x67, 0x65, 0xca, 0x02, 0x0c, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67,
-	0x65, 0xe2, 0x02, 0x18, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65,
-	0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0d, 0x42,
-	0x6c, 0x69, 0x74, 0x3a, 0x3a, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x69, 0x74, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x22, 0x39, 0x0a, 0x07, 0x53, 0x74,
+	0x6f, 0x72, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x12, 0x18, 0x0a, 0x07, 0x63,
+	0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72,
+	0x65, 0x61, 0x74, 0x6f, 0x72, 0x42, 0x90, 0x01, 0x0a, 0x10, 0x63, 0x6f, 0x6d, 0x2e, 0x62, 0x6c,
+	0x69, 0x74, 0x2e, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x42, 0x0c, 0x53, 0x74, 0x6f, 0x72,
+	0x61, 0x67, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1d, 0x63, 0x6f, 0x73, 0x6d,
+	0x6f, 0x73, 0x73, 0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x62, 0x6c, 0x69,
+	0x74, 0x2f, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0xa2, 0x02, 0x03, 0x42, 0x53, 0x58, 0xaa,
+	0x02, 0x0c, 0x42, 0x6c, 0x69, 0x74, 0x2e, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0xca, 0x02,
+	0x0c, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0xe2, 0x02, 0x18,
+	0x42, 0x6c, 0x69, 0x74, 0x5c, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x5c, 0x47, 0x50, 0x42,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0d, 0x42, 0x6c, 0x69, 0x74, 0x3a,
+	0x3a, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (

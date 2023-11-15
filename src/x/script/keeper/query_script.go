@@ -5,22 +5,23 @@ import (
 
 	"blit/x/script/types"
 
-	"github.com/cosmos/cosmos-sdk/store/prefix"
+	"cosmossdk.io/store/prefix"
+	"github.com/cosmos/cosmos-sdk/runtime"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) Scripts(goCtx context.Context, req *types.QueryScriptsRequest) (*types.QueryScriptsResponse, error) {
+func (k Keeper) Scripts(ctx context.Context, req *types.QueryScriptsRequest) (*types.QueryScriptsResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
 	var scripts []types.Script
-	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	store := ctx.KVStore(k.storeKey)
+	store := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	scriptStore := prefix.NewStore(store, types.KeyPrefix(types.ScriptKeyPrefix))
 
 	pageRes, err := query.Paginate(scriptStore, req.Pagination, func(key []byte, value []byte) error {

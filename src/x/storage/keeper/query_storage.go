@@ -5,7 +5,8 @@ import (
 
 	"blit/x/storage/types"
 
-	"github.com/cosmos/cosmos-sdk/store/prefix"
+	"cosmossdk.io/store/prefix"
+	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"google.golang.org/grpc/codes"
@@ -20,8 +21,7 @@ func (k Keeper) FilterStorage(goCtx context.Context, req *types.QueryFilterStora
 	var storages []types.Storage
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	store := ctx.KVStore(k.storeKey)
-
+	store := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	storageStore := prefix.NewStore(prefix.NewStore(store, types.KeyPrefix(types.StorageKeyPrefix)), types.StorageKeyFilterPrefix(req.FilterAddress, req.FilterIndexPrefix))
 
 	pageRes, err := query.Paginate(storageStore, req.Pagination, func(key []byte, value []byte) error {

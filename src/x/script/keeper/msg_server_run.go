@@ -21,7 +21,7 @@ func (k msgServer) Run(goCtx context.Context, msg *types.MsgRun) (*types.MsgRunR
 	// Allow anyone to run their own script even if it's not set yet
 	if !isFound && msg.ScriptAddress != msg.CallerAddress {
 		fmt.Println(fmt.Sprintf("Script at address %v not found", msg.ScriptAddress))
-		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("Script at address %v not set", msg.ScriptAddress))
+		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("Script at address %v not set", msg.ScriptAddress))
 	}
 
 	if msg.Grantee != "" && msg.Grantee != msg.CallerAddress {

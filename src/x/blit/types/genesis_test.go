@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"blit/x/blit/types"
-
 	"github.com/stretchr/testify/require"
 )
 

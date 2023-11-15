@@ -1,23 +1,28 @@
-package blit
+package script
 
 import (
-	"blit/x/blit/keeper"
-	"blit/x/blit/types"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
+
+	"blit/x/script/keeper"
+	"blit/x/script/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) {
+	// Set all the script
+	for _, elem := range genState.ScriptList {
+		k.SetScript(ctx, elem)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
 
-// ExportGenesis returns the module's exported genesis
+// ExportGenesis returns the module's exported genesis.
 func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis := types.DefaultGenesis()
 	genesis.Params = k.GetParams(ctx)
 
+	genesis.ScriptList = k.GetAllScript(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

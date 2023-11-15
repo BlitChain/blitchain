@@ -3,28 +3,26 @@ package blit
 import (
 	"math/rand"
 
-	"blit/testutil/sample"
-	blitsimulation "blit/x/blit/simulation"
-	"blit/x/blit/types"
-
-	"github.com/cosmos/cosmos-sdk/baseapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
+
+	"blit/testutil/sample"
+	blitsimulation "blit/x/blit/simulation"
+	"blit/x/blit/types"
 )
 
 // avoid unused import issue
 var (
-	_ = sample.AccAddress
 	_ = blitsimulation.FindAccount
-	_ = simulation.MsgEntryKind
-	_ = baseapp.Paramspace
 	_ = rand.Rand{}
+	_ = sample.AccAddress
+	_ = sdk.AccAddress{}
+	_ = simulation.MsgEntryKind
 )
 
 const (
-
 // this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -42,7 +40,7 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 }
 
 // RegisterStoreDecoder registers a decoder.
-func (am AppModule) RegisterStoreDecoder(_ sdk.StoreDecoderRegistry) {}
+func (am AppModule) RegisterStoreDecoder(_ simtypes.StoreDecoderRegistry) {}
 
 // ProposalContents doesn't return any content functions for governance proposals.
 func (AppModule) ProposalContents(_ module.SimulationState) []simtypes.WeightedProposalContent {

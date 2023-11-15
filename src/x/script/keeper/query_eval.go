@@ -8,6 +8,7 @@ import (
 	"blit/x/script/types"
 
 	errorsmod "cosmossdk.io/errors"
+	storetypes "cosmossdk.io/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -20,7 +21,7 @@ func (k Keeper) Eval(goCtx context.Context, msg *types.QueryEvalRequest) (*types
 
 	ctx, _ := sdk.UnwrapSDKContext(goCtx).CacheContext()
 	if ctx.GasMeter().Limit() < 1 || ctx.GasMeter().Limit() > 10000000 { // TODO make param
-		ctx = ctx.WithGasMeter(sdk.NewGasMeter(10000000))
+		ctx = ctx.WithGasMeter(storetypes.NewGasMeter(10000000))
 	}
 	goCtx = sdk.WrapSDKContext(ctx)
 

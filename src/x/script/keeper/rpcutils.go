@@ -5,6 +5,8 @@ import (
 	"math"
 	"net/http"
 
+	errorsmod "cosmossdk.io/errors"
+	storetypes "cosmossdk.io/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
@@ -61,8 +63,8 @@ func (rpcservice *RpcService) Consumegas(_ *http.Request, msg *ConsumeGasRequest
 
 			fmt.Printf("Consumegas recovered: %v\n", r)
 			switch r := r.(type) {
-			case sdk.ErrorOutOfGas:
-				err = sdkerrors.Wrapf(sdkerrors.ErrOutOfGas,
+			case storetypes.ErrorOutOfGas:
+				err = errorsmod.Wrapf(sdkerrors.ErrOutOfGas,
 					"Consumegas script out of gas, gasWanted: %d, gasUsed: %d",
 					ctx.GasMeter().Limit(), ctx.GasMeter().GasConsumed(),
 				)
@@ -73,7 +75,7 @@ func (rpcservice *RpcService) Consumegas(_ *http.Request, msg *ConsumeGasRequest
 			}
 		} else {
 			if ctx.GasMeter().IsPastLimit() {
-				err = sdkerrors.Wrapf(sdkerrors.ErrOutOfGas,
+				err = errorsmod.Wrapf(sdkerrors.ErrOutOfGas,
 					"PastLimit script out of gas, gasWanted: %d, gasUsed: %d",
 					ctx.GasMeter().Limit(), ctx.GasMeter().GasConsumed(),
 				)

@@ -1,12 +1,12 @@
-package script_test
+package storage_test
 
 import (
 	"testing"
 
 	keepertest "blit/testutil/keeper"
 	"blit/testutil/nullify"
-	"blit/x/script"
-	"blit/x/script/types"
+	"blit/x/storage/module"
+	"blit/x/storage/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -14,7 +14,7 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
-		ScriptList: []types.Script{
+		StorageList: []types.Storage{
 			{
 				Index: "0",
 			},
@@ -25,14 +25,14 @@ func TestGenesis(t *testing.T) {
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
-	k, ctx := keepertest.ScriptKeeper(t)
-	script.InitGenesis(ctx, k, genesisState)
-	got := script.ExportGenesis(ctx, k)
+	k, ctx := keepertest.StorageKeeper(t)
+	storage.InitGenesis(ctx, k, genesisState)
+	got := storage.ExportGenesis(ctx, k)
 	require.NotNil(t, got)
 
 	nullify.Fill(&genesisState)
 	nullify.Fill(got)
 
-	require.ElementsMatch(t, genesisState.ScriptList, got.ScriptList)
+	require.ElementsMatch(t, genesisState.StorageList, got.StorageList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

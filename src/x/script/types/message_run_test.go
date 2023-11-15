@@ -17,13 +17,13 @@ func TestMsgRun_ValidateBasic(t *testing.T) {
 		{
 			name: "invalid address",
 			msg: MsgRun{
-				Caller: "invalid_address",
+				Creator: "invalid_address",
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid address",
 			msg: MsgRun{
-				Caller: sample.AccAddress(),
+				Creator: sample.AccAddress(),
 			},
 		},
 	}

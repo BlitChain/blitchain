@@ -17,16 +17,12 @@ service Msg {
   
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
-  
-  // Since: cosmos-sdk 0.47
   rpc UpdateParams  (MsgUpdateParams ) returns (MsgUpdateParamsResponse );
   rpc CreateStorage (MsgCreateStorage) returns (MsgCreateStorageResponse);
   rpc UpdateStorage (MsgUpdateStorage) returns (MsgUpdateStorageResponse);
   rpc DeleteStorage (MsgDeleteStorage) returns (MsgDeleteStorageResponse);
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
-//
-// Since: cosmos-sdk 0.47
 message MsgUpdateParams {
   option (cosmos.msg.v1.signer) =                      "authority";
   option           (amino.name) = "blit/x/storage/MsgUpdateParams";
@@ -42,20 +38,21 @@ message MsgUpdateParams {
 
 // MsgUpdateParamsResponse defines the response structure for executing a
 // MsgUpdateParams message.
-//
-// Since: cosmos-sdk 0.47
 message MsgUpdateParamsResponse {}
 
 message MsgCreateStorage {
+  option (cosmos.msg.v1.signer) = "grantee";
   string address = 1;
   string index   = 2;
   string data    = 3;
   string grantee = 4;
+
 }
 
 message MsgCreateStorageResponse {}
 
 message MsgUpdateStorage {
+  option (cosmos.msg.v1.signer) = "grantee";
   string address = 1;
   string index   = 2;
   string data    = 3;
@@ -65,6 +62,7 @@ message MsgUpdateStorage {
 message MsgUpdateStorageResponse {}
 
 message MsgDeleteStorage {
+  option (cosmos.msg.v1.signer) = "grantee";
   string address = 1;
   string index   = 2;
   string grantee = 3;

@@ -25,7 +25,7 @@ func (gs GenesisState) Validate() error {
 	for _, elem := range gs.StorageList {
 		index := string(StorageKey(elem.Address, elem.Index))
 		if _, ok := storageIndexMap[index]; ok {
-			return fmt.Errorf("duplicated index for storage")
+			return fmt.Errorf("duplicated address + index for storage")
 		}
 		storageIndexMap[index] = struct{}{}
 	}

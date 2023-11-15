@@ -8,7 +8,6 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "blit/script/params.proto";
 import "blit/script/script.proto";
-import "blit/script/msgrun.proto";
 
 option go_package = "blit/x/script/types";
 
@@ -21,11 +20,13 @@ service Query {
   
   }
   
-  // Queries a list of Script items.
+  // Queries a specific Script item.
   rpc Script    (QueryScriptRequest) returns (QueryScriptResponse) {
     option (google.api.http).get = "/blit/script/script/{address}";
   
   }
+  
+  // Queries a list of Script items.
   rpc Scripts (QueryScriptsRequest) returns (QueryScriptsResponse) {
     option (google.api.http).get = "/blit/script/scripts";
   

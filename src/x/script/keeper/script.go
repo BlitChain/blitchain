@@ -1,7 +1,6 @@
 package keeper
 
 import (
-	"blit/x/script/types"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -10,13 +9,18 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/cosmos/cosmos-sdk/store/prefix"
+	"blit/x/script/types"
+
+	"cosmossdk.io/store/prefix"
+	storetypes "cosmossdk.io/store/types"
+	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 // SetScript set a specific script in the store from its index
-func (k Keeper) SetScript(ctx sdk.Context, script types.Script) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ScriptKeyPrefix))
+func (k Keeper) SetScript(ctx context.Context, script types.Script) {
+	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
+	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.ScriptKeyPrefix))
 	b := k.cdc.MustMarshal(&script)
 	store.Set(types.ScriptKey(
 		script.Address,
@@ -25,11 +29,12 @@ func (k Keeper) SetScript(ctx sdk.Context, script types.Script) {
 
 // GetScript returns a script from its index
 func (k Keeper) GetScript(
-	ctx sdk.Context,
+	ctx context.Context,
 	address string,
 
 ) (val types.Script, found bool) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ScriptKeyPrefix))
+	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
+	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.ScriptKeyPrefix))
 
 	b := store.Get(types.ScriptKey(
 		address,
@@ -51,20 +56,22 @@ func (k Keeper) GetScript(
 
 // RemoveScript removes a script from the store
 func (k Keeper) RemoveScript(
-	ctx sdk.Context,
-	index string,
+	ctx context.Context,
+	address string,
 
 ) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ScriptKeyPrefix))
+	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
+	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.ScriptKeyPrefix))
 	store.Delete(types.ScriptKey(
-		index,
+		address,
 	))
 }
 
 // GetAllScript returns all script
-func (k Keeper) GetAllScript(ctx sdk.Context) (list []types.Script) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ScriptKeyPrefix))
-	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+func (k Keeper) GetAllScript(ctx context.Context) (list []types.Script) {
+	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
+	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.ScriptKeyPrefix))
+	iterator := storetypes.KVStorePrefixIterator(store, []byte{})
 
 	defer iterator.Close()
 

@@ -1,6 +1,7 @@
 package keeper
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -13,13 +14,13 @@ import (
 	"time"
 	"unsafe"
 
-	cosmossdkerrors "cosmossdk.io/errors"
+	"cosmossdk.io/core/store"
 	errorsmod "cosmossdk.io/errors"
+	"cosmossdk.io/log"
+	storetypes "cosmossdk.io/store/types"
 	abci "github.com/cometbft/cometbft/abci/types"
-	"github.com/cometbft/cometbft/libs/log"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
-	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	authzKeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
@@ -35,9 +36,9 @@ import (
 
 type (
 	Keeper struct {
-		cdc      codec.Codec
-		storeKey storetypes.StoreKey
-		memKey   storetypes.StoreKey
+		cdc          codec.Codec
+		storeService store.KVStoreService
+		logger       log.Logger
 
 		// the address capable of executing a MsgUpdateParams message. Typically, this
 		// should be the x/gov module account.
@@ -45,17 +46,19 @@ type (
 		Router       *baseapp.MsgServiceRouter
 		Querier      *baseapp.GRPCQueryRouter
 		AuthzKeeper  authzKeeper.Keeper
+		accKeeper    types.AccountKeeper
 		currentDepth int
 	}
 )
 
 func NewKeeper(
 	cdc codec.Codec,
-	storeKey,
-	memKey storetypes.StoreKey,
+	storeService store.KVStoreService,
+	logger log.Logger,
 	router *baseapp.MsgServiceRouter,
 	querier *baseapp.GRPCQueryRouter,
 	authzKeeper authzKeeper.Keeper,
+	accKeeper types.AccountKeeper,
 	authority string,
 
 ) Keeper {
@@ -65,12 +68,13 @@ func NewKeeper(
 
 	return Keeper{
 		cdc:          cdc,
-		storeKey:     storeKey,
-		memKey:       memKey,
+		storeService: storeService,
+		logger:       logger,
 		authority:    authority,
 		Router:       router,
 		Querier:      querier,
 		AuthzKeeper:  authzKeeper,
+		accKeeper:    accKeeper,
 		currentDepth: 0,
 	}
 }
@@ -103,7 +107,7 @@ func (k Keeper) GetAuthority() string {
 
 // Logger returns a module-specific logger.
 func (k Keeper) Logger(ctx sdk.Context) log.Logger {
-	return ctx.Logger().With("module", fmt.Sprintf("x/%s", types.ModuleName))
+	return k.logger.With("module", fmt.Sprintf("x/%s", types.ModuleName))
 }
 
 func (keeper Keeper) MsgServiceRouter() *baseapp.MsgServiceRouter {
@@ -195,7 +199,7 @@ func (k Keeper) HandleMsg(ctx sdk.Context, jsonMsg string, signer string) (res s
 
 	defer func() {
 		if r := recover(); r != nil {
-			err = cosmossdkerrors.Wrapf(types.MsgError, "Error in HandleMsg: %v", r)
+			err = errorsmod.Wrapf(types.MsgError, "Error in HandleMsg: %v", r)
 			k.Logger(ctx).Error("Error in HandleMsg", "error", r)
 			res = string("oh no")
 		} else {
@@ -207,46 +211,46 @@ func (k Keeper) HandleMsg(ctx sdk.Context, jsonMsg string, signer string) (res s
 	var anyJSON json.RawMessage
 	err = json.Unmarshal([]byte(jsonMsg), &anyJSON)
 	if err != nil {
-		return "", cosmossdkerrors.Wrapf(types.MsgError, "could not unmarshal JSON: %v", err)
+		return "", errorsmod.Wrapf(types.MsgError, "could not unmarshal JSON: %v", err)
 	}
 
 	var m sdk.Msg
 	err = k.cdc.UnmarshalInterfaceJSON(anyJSON, &m)
 	if err != nil {
-		return "", cosmossdkerrors.Wrapf(types.MsgError, "could not unmarshal message: %v", err)
+		return "", errorsmod.Wrapf(types.MsgError, "could not unmarshal message: %v", err)
 	}
 
-	err = ensureMsgAuthZ([]sdk.Msg{m}, signer)
+	err = k.ensureMsgAuthZ([]sdk.Msg{m}, signer)
 	if err != nil {
 		return "", err
 	}
 	// Validate the message
-	err = m.ValidateBasic()
-	if err != nil {
-		return "", cosmossdkerrors.Wrap(err, "validation failed")
-	}
+	//err = m.ValidateBasic()
+	//if err != nil {
+	//	return "", errorsmod.Wrap(err, "validation failed")
+	//}
 
 	k.Logger(ctx).Info("Run", "msg", m)
 
 	handler := k.Router.Handler(m)
 	if handler == nil {
-		return "", cosmossdkerrors.Wrapf(types.MsgError, "no message handler found for %q", sdk.MsgTypeURL(m))
+		return "", errorsmod.Wrapf(types.MsgError, "no message handler found for %q", sdk.MsgTypeURL(m))
 	}
 
 	r, err := handler(ctx, m)
 	if err != nil {
-		return "", cosmossdkerrors.Wrapf(err, "handler error")
+		return "", errorsmod.Wrapf(err, "handler error")
 	}
 
 	if r == nil {
-		return "", cosmossdkerrors.Wrapf(types.MsgError, "no result for %q", sdk.MsgTypeURL(m))
+		return "", errorsmod.Wrapf(types.MsgError, "no result for %q", sdk.MsgTypeURL(m))
 	}
 
 	ctx.EventManager().EmitEvents(r.GetEvents())
 	// marshal the result
 	resbz, err := k.cdc.MarshalJSON(r)
 	if err != nil {
-		return "", cosmossdkerrors.Wrapf(types.MsgError, "could not marshal result: %v", err)
+		return "", errorsmod.Wrapf(types.MsgError, "could not marshal result: %v", err)
 	}
 
 	res = string(resbz)
@@ -266,12 +270,12 @@ func (k Keeper) HandleQuery(ctx sdk.Context, method string, json_args string) (s
 	if k.Querier == nil {
 		k.Logger(ctx).Error("Querier not found")
 
-		return "", cosmossdkerrors.Wrapf(types.QueryError, "no querier defined for module %s", types.ModuleName)
+		return "", errorsmod.Wrapf(types.QueryError, "no querier defined for module %s", types.ModuleName)
 	}
 	handler := k.Querier.Route(method)
 	if handler == nil {
 		k.Logger(ctx).Error("Handler not found", "method", method)
-		return "", cosmossdkerrors.Wrapf(types.QueryError, "no query handler found for %s", method)
+		return "", errorsmod.Wrapf(types.QueryError, "no query handler found for %s", method)
 	}
 
 	// access the k.Querier private serviceDesc array
@@ -313,13 +317,13 @@ func (k Keeper) HandleQuery(ctx sdk.Context, method string, json_args string) (s
 				// Marshal protoInput to bytes.
 				protoInputBytes, err := k.cdc.Marshal(protoInput)
 				if err != nil {
-					return "", cosmossdkerrors.Wrapf(types.ErrRun, "could not marshal protoInput: %#v", err)
+					return "", errorsmod.Wrapf(types.ErrRun, "could not marshal protoInput: %#v", err)
 				}
 				// Create the request
 				request := abci.RequestQuery{Data: protoInputBytes}
 
 				// Execute the handler
-				response, err := handler(ctx, request)
+				response, err := handler(ctx, &request)
 				if err != nil {
 					k.Logger(ctx).Error("Error executing handler", "error", err)
 					return "", fmt.Errorf("error executing handler %#v error: %v", protoInput, err)
@@ -355,14 +359,23 @@ func (k Keeper) HandleQuery(ctx sdk.Context, method string, json_args string) (s
 
 // ensureMsgAuthZ checks that if a message requires signers that all of them
 // are equal to the given account address of script.
-func ensureMsgAuthZ(msgs []sdk.Msg, signer string) error {
+func (k Keeper) ensureMsgAuthZ(msgs []sdk.Msg, signer string) error {
 	// In practice, GetSigners() should return a non-empty array without
 	// duplicates.
+	address, err := k.accKeeper.AddressCodec().StringToBytes(signer)
+	if err != nil {
+		return err
+	}
+
 	for i := range msgs {
 
-		for _, acct := range msgs[i].GetSigners() {
-			if signer != acct.String() {
-				return cosmossdkerrors.Wrapf(sdkerrors.ErrUnauthorized, "msg [%d] does not have authorization; expected [%s], got [%s]", i, signer, acct.String())
+		signers, _, err := k.cdc.GetMsgV1Signers(msgs[i])
+		if err != nil {
+			return err
+		}
+		for _, acct := range signers {
+			if !bytes.Equal(address, acct) {
+				return errorsmod.Wrapf(sdkerrors.ErrUnauthorized, "msg [%d] does not have authorization; expected [%s], got [%s]", i, signer, acct)
 			}
 		}
 	}
@@ -443,18 +456,18 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 	k.currentDepth += 1
 
 	if k.currentDepth > 3 {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Maximum Run recusion depth")
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "Maximum Run recusion depth")
 	}
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	//resolvedIndex := k.nameskeeper.ResolveIndex(ctx, scriptCtx.Index)
 	//if resolvedIndex == "" {
-	//	return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("Script at address %v not set or expired", scriptCtx.Index))
+	//	return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("Script at address %v not set or expired", scriptCtx.Index))
 	//}
 	resolvedAddress := scriptCtx.ScriptAddress
 
 	// Run attached messages
-	if err := ensureMsgAuthZ(scriptCtx.Messages, resolvedAddress); err != nil {
+	if err := k.ensureMsgAuthZ(scriptCtx.Messages, resolvedAddress); err != nil {
 		return nil, err
 	}
 	// print the messages
@@ -516,13 +529,13 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 			if !isFound {
 				// This shouldn't happen
 				fmt.Println(fmt.Sprintf("Script at address really %v not set", resolvedAddress))
-				return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, fmt.Sprintf("Script at address really %v not set", resolvedAddress))
+				return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, fmt.Sprintf("Script at address really %v not set", resolvedAddress))
 			}
 		}
 	}
 	if scriptCtx.CallerAddress != valFound.Address {
 		if scriptCtx.ExtraCode != "" {
-			return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, fmt.Sprintf("ExtraLines forbidden: Script.Address %v != Sender %v", valFound.Address, scriptCtx.CallerAddress))
+			return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, fmt.Sprintf("ExtraLines forbidden: Script.Address %v != Sender %v", valFound.Address, scriptCtx.CallerAddress))
 		}
 	}
 
@@ -591,7 +604,7 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 	)
 	if (runErr != nil) && (raiseRunErr == true) {
 		fmt.Printf("Output: %s\n", out)
-		return nil, sdkerrors.Wrapf(types.ScriptError, "%s on col: %v line:%v \nOutput:\n%s", evalResult.Exception.Msg, evalResult.Exception.Lineno, evalResult.Exception.Col, response)
+		return nil, errorsmod.Wrapf(types.ScriptError, "%s on col: %v line:%v \nOutput:\n%s", evalResult.Exception.Msg, evalResult.Exception.Lineno, evalResult.Exception.Col, response)
 	}
 
 	return &EvalScriptResponse{Response: response}, nil
@@ -599,8 +612,8 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 
 func handleRunRecovery(r interface{}, sdkCtx sdk.Context) error {
 	switch r := r.(type) {
-	case sdk.ErrorOutOfGas:
-		return sdkerrors.Wrapf(sdkerrors.ErrOutOfGas,
+	case storetypes.ErrorOutOfGas:
+		return errorsmod.Wrapf(sdkerrors.ErrOutOfGas,
 			"ErrorOutofGas script out of gas in location: %v; gasWanted: %d, gasUsed: %d",
 			r.Descriptor, sdkCtx.GasMeter().Limit(), sdkCtx.GasMeter().GasConsumed(),
 		)

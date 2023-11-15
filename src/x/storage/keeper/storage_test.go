@@ -1,6 +1,7 @@
 package keeper_test
 
 import (
+	"context"
 	"strconv"
 	"testing"
 
@@ -8,17 +9,15 @@ import (
 	"blit/testutil/nullify"
 	"blit/x/storage/keeper"
 	"blit/x/storage/types"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 )
 
 // Prevent strconv unused error
 var _ = strconv.IntSize
 
-func createNStorage(keeper keeper.Keeper, ctx sdk.Context, n int) []types.Storage {
+func createNStorage(keeper keeper.Keeper, ctx context.Context, n int) []types.Storage {
 	items := make([]types.Storage, n)
 	for i := range items {
-		items[i].Address = strconv.Itoa(i)
 		items[i].Index = strconv.Itoa(i)
 
 		keeper.SetStorage(ctx, items[i])
@@ -31,7 +30,6 @@ func TestStorageGet(t *testing.T) {
 	items := createNStorage(keeper, ctx, 10)
 	for _, item := range items {
 		rst, found := keeper.GetStorage(ctx,
-			item.Address,
 			item.Index,
 		)
 		require.True(t, found)
@@ -46,11 +44,9 @@ func TestStorageRemove(t *testing.T) {
 	items := createNStorage(keeper, ctx, 10)
 	for _, item := range items {
 		keeper.RemoveStorage(ctx,
-			item.Address,
 			item.Index,
 		)
 		_, found := keeper.GetStorage(ctx,
-			item.Address,
 			item.Index,
 		)
 		require.False(t, found)

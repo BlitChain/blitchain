@@ -20,14 +20,14 @@ service Query {
   
   }
   
+  // Get a specific Storage by addres and index
   rpc StorageDetail (QueryStorageDetailRequest) returns (QueryStorageDetailResponse) {
-    option (google.api.http).get = "/blit/storage/storage/{address}/{index}";
+    option (google.api.http).get = "/blit/storage/storage";
   
   }
-
-  // Queries a list of Storage items.
+  // Filters by address and index prefix.
   rpc FilterStorage (QueryFilterStorageRequest) returns (QueryFilterStorageResponse) {
-    option (google.api.http).get = "/blit/storage/storage";
+    option (google.api.http).get = "/blit/storage/filter";
   
   }
 }

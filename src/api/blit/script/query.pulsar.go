@@ -808,25 +808,25 @@ func (x *fastReflection_QueryParamsResponse) ProtoMethods() *protoiface.Methods 
 }
 
 var (
-	md_QueryGetScriptRequest         protoreflect.MessageDescriptor
-	fd_QueryGetScriptRequest_address protoreflect.FieldDescriptor
+	md_QueryScriptRequest         protoreflect.MessageDescriptor
+	fd_QueryScriptRequest_address protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_blit_script_query_proto_init()
-	md_QueryGetScriptRequest = File_blit_script_query_proto.Messages().ByName("QueryGetScriptRequest")
-	fd_QueryGetScriptRequest_address = md_QueryGetScriptRequest.Fields().ByName("address")
+	md_QueryScriptRequest = File_blit_script_query_proto.Messages().ByName("QueryScriptRequest")
+	fd_QueryScriptRequest_address = md_QueryScriptRequest.Fields().ByName("address")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryGetScriptRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryScriptRequest)(nil)
 
-type fastReflection_QueryGetScriptRequest QueryGetScriptRequest
+type fastReflection_QueryScriptRequest QueryScriptRequest
 
-func (x *QueryGetScriptRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryGetScriptRequest)(x)
+func (x *QueryScriptRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryScriptRequest)(x)
 }
 
-func (x *QueryGetScriptRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryScriptRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_blit_script_query_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -838,43 +838,43 @@ func (x *QueryGetScriptRequest) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryGetScriptRequest_messageType fastReflection_QueryGetScriptRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryGetScriptRequest_messageType{}
+var _fastReflection_QueryScriptRequest_messageType fastReflection_QueryScriptRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryScriptRequest_messageType{}
 
-type fastReflection_QueryGetScriptRequest_messageType struct{}
+type fastReflection_QueryScriptRequest_messageType struct{}
 
-func (x fastReflection_QueryGetScriptRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryGetScriptRequest)(nil)
+func (x fastReflection_QueryScriptRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryScriptRequest)(nil)
 }
-func (x fastReflection_QueryGetScriptRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryGetScriptRequest)
+func (x fastReflection_QueryScriptRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryScriptRequest)
 }
-func (x fastReflection_QueryGetScriptRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryGetScriptRequest
+func (x fastReflection_QueryScriptRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryScriptRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryGetScriptRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryGetScriptRequest
+func (x *fastReflection_QueryScriptRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryScriptRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryGetScriptRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryGetScriptRequest_messageType
+func (x *fastReflection_QueryScriptRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryScriptRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryGetScriptRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryGetScriptRequest)
+func (x *fastReflection_QueryScriptRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryScriptRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryGetScriptRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryGetScriptRequest)(x)
+func (x *fastReflection_QueryScriptRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryScriptRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -882,10 +882,10 @@ func (x *fastReflection_QueryGetScriptRequest) Interface() protoreflect.ProtoMes
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryGetScriptRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryScriptRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.Address != "" {
 		value := protoreflect.ValueOfString(x.Address)
-		if !f(fd_QueryGetScriptRequest_address, value) {
+		if !f(fd_QueryScriptRequest_address, value) {
 			return
 		}
 	}
@@ -902,15 +902,15 @@ func (x *fastReflection_QueryGetScriptRequest) Range(f func(protoreflect.FieldDe
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryGetScriptRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryScriptRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptRequest.address":
+	case "blit.script.QueryScriptRequest.address":
 		return x.Address != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -920,15 +920,15 @@ func (x *fastReflection_QueryGetScriptRequest) Has(fd protoreflect.FieldDescript
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryGetScriptRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryScriptRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptRequest.address":
+	case "blit.script.QueryScriptRequest.address":
 		x.Address = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -938,16 +938,16 @@ func (x *fastReflection_QueryGetScriptRequest) Clear(fd protoreflect.FieldDescri
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryGetScriptRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "blit.script.QueryGetScriptRequest.address":
+	case "blit.script.QueryScriptRequest.address":
 		value := x.Address
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -961,15 +961,15 @@ func (x *fastReflection_QueryGetScriptRequest) Get(descriptor protoreflect.Field
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryGetScriptRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryScriptRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptRequest.address":
+	case "blit.script.QueryScriptRequest.address":
 		x.Address = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -983,40 +983,40 @@ func (x *fastReflection_QueryGetScriptRequest) Set(fd protoreflect.FieldDescript
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryGetScriptRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptRequest.address":
-		panic(fmt.Errorf("field address of message blit.script.QueryGetScriptRequest is not mutable"))
+	case "blit.script.QueryScriptRequest.address":
+		panic(fmt.Errorf("field address of message blit.script.QueryScriptRequest is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryGetScriptRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptRequest.address":
+	case "blit.script.QueryScriptRequest.address":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryGetScriptRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryScriptRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryGetScriptRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryScriptRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1024,7 +1024,7 @@ func (x *fastReflection_QueryGetScriptRequest) WhichOneof(d protoreflect.OneofDe
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryGetScriptRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryScriptRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1035,7 +1035,7 @@ func (x *fastReflection_QueryGetScriptRequest) GetUnknown() protoreflect.RawFiel
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryGetScriptRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryScriptRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1047,7 +1047,7 @@ func (x *fastReflection_QueryGetScriptRequest) SetUnknown(fields protoreflect.Ra
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryGetScriptRequest) IsValid() bool {
+func (x *fastReflection_QueryScriptRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -1057,9 +1057,9 @@ func (x *fastReflection_QueryGetScriptRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryGetScriptRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryScriptRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryGetScriptRequest)
+		x := input.Message.Interface().(*QueryScriptRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1085,7 +1085,7 @@ func (x *fastReflection_QueryGetScriptRequest) ProtoMethods() *protoiface.Method
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryGetScriptRequest)
+		x := input.Message.Interface().(*QueryScriptRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1122,7 +1122,7 @@ func (x *fastReflection_QueryGetScriptRequest) ProtoMethods() *protoiface.Method
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryGetScriptRequest)
+		x := input.Message.Interface().(*QueryScriptRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1154,10 +1154,10 @@ func (x *fastReflection_QueryGetScriptRequest) ProtoMethods() *protoiface.Method
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryGetScriptRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryScriptRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryGetScriptRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryScriptRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -1228,25 +1228,25 @@ func (x *fastReflection_QueryGetScriptRequest) ProtoMethods() *protoiface.Method
 }
 
 var (
-	md_QueryGetScriptResponse        protoreflect.MessageDescriptor
-	fd_QueryGetScriptResponse_script protoreflect.FieldDescriptor
+	md_QueryScriptResponse        protoreflect.MessageDescriptor
+	fd_QueryScriptResponse_script protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_blit_script_query_proto_init()
-	md_QueryGetScriptResponse = File_blit_script_query_proto.Messages().ByName("QueryGetScriptResponse")
-	fd_QueryGetScriptResponse_script = md_QueryGetScriptResponse.Fields().ByName("script")
+	md_QueryScriptResponse = File_blit_script_query_proto.Messages().ByName("QueryScriptResponse")
+	fd_QueryScriptResponse_script = md_QueryScriptResponse.Fields().ByName("script")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryGetScriptResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryScriptResponse)(nil)
 
-type fastReflection_QueryGetScriptResponse QueryGetScriptResponse
+type fastReflection_QueryScriptResponse QueryScriptResponse
 
-func (x *QueryGetScriptResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryGetScriptResponse)(x)
+func (x *QueryScriptResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryScriptResponse)(x)
 }
 
-func (x *QueryGetScriptResponse) slowProtoReflect() protoreflect.Message {
+func (x *QueryScriptResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_blit_script_query_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1258,43 +1258,43 @@ func (x *QueryGetScriptResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryGetScriptResponse_messageType fastReflection_QueryGetScriptResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryGetScriptResponse_messageType{}
+var _fastReflection_QueryScriptResponse_messageType fastReflection_QueryScriptResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryScriptResponse_messageType{}
 
-type fastReflection_QueryGetScriptResponse_messageType struct{}
+type fastReflection_QueryScriptResponse_messageType struct{}
 
-func (x fastReflection_QueryGetScriptResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryGetScriptResponse)(nil)
+func (x fastReflection_QueryScriptResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryScriptResponse)(nil)
 }
-func (x fastReflection_QueryGetScriptResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryGetScriptResponse)
+func (x fastReflection_QueryScriptResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryScriptResponse)
 }
-func (x fastReflection_QueryGetScriptResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryGetScriptResponse
+func (x fastReflection_QueryScriptResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryScriptResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryGetScriptResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryGetScriptResponse
+func (x *fastReflection_QueryScriptResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryScriptResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryGetScriptResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryGetScriptResponse_messageType
+func (x *fastReflection_QueryScriptResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryScriptResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryGetScriptResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryGetScriptResponse)
+func (x *fastReflection_QueryScriptResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryScriptResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryGetScriptResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryGetScriptResponse)(x)
+func (x *fastReflection_QueryScriptResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryScriptResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1302,10 +1302,10 @@ func (x *fastReflection_QueryGetScriptResponse) Interface() protoreflect.ProtoMe
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryGetScriptResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryScriptResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.Script != nil {
 		value := protoreflect.ValueOfMessage(x.Script.ProtoReflect())
-		if !f(fd_QueryGetScriptResponse_script, value) {
+		if !f(fd_QueryScriptResponse_script, value) {
 			return
 		}
 	}
@@ -1322,15 +1322,15 @@ func (x *fastReflection_QueryGetScriptResponse) Range(f func(protoreflect.FieldD
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryGetScriptResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryScriptResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptResponse.script":
+	case "blit.script.QueryScriptResponse.script":
 		return x.Script != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1340,15 +1340,15 @@ func (x *fastReflection_QueryGetScriptResponse) Has(fd protoreflect.FieldDescrip
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryGetScriptResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryScriptResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptResponse.script":
+	case "blit.script.QueryScriptResponse.script":
 		x.Script = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1358,16 +1358,16 @@ func (x *fastReflection_QueryGetScriptResponse) Clear(fd protoreflect.FieldDescr
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryGetScriptResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "blit.script.QueryGetScriptResponse.script":
+	case "blit.script.QueryScriptResponse.script":
 		value := x.Script
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1381,15 +1381,15 @@ func (x *fastReflection_QueryGetScriptResponse) Get(descriptor protoreflect.Fiel
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryGetScriptResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryScriptResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptResponse.script":
+	case "blit.script.QueryScriptResponse.script":
 		x.Script = value.Message().Interface().(*Script)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1403,44 +1403,44 @@ func (x *fastReflection_QueryGetScriptResponse) Set(fd protoreflect.FieldDescrip
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryGetScriptResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptResponse.script":
+	case "blit.script.QueryScriptResponse.script":
 		if x.Script == nil {
 			x.Script = new(Script)
 		}
 		return protoreflect.ValueOfMessage(x.Script.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryGetScriptResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.script.QueryGetScriptResponse.script":
+	case "blit.script.QueryScriptResponse.script":
 		m := new(Script)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryGetScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryGetScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryGetScriptResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryScriptResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryGetScriptResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryScriptResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1448,7 +1448,7 @@ func (x *fastReflection_QueryGetScriptResponse) WhichOneof(d protoreflect.OneofD
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryGetScriptResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryScriptResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1459,7 +1459,7 @@ func (x *fastReflection_QueryGetScriptResponse) GetUnknown() protoreflect.RawFie
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryGetScriptResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryScriptResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1471,7 +1471,7 @@ func (x *fastReflection_QueryGetScriptResponse) SetUnknown(fields protoreflect.R
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryGetScriptResponse) IsValid() bool {
+func (x *fastReflection_QueryScriptResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -1481,9 +1481,9 @@ func (x *fastReflection_QueryGetScriptResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryGetScriptResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryScriptResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryGetScriptResponse)
+		x := input.Message.Interface().(*QueryScriptResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1509,7 +1509,7 @@ func (x *fastReflection_QueryGetScriptResponse) ProtoMethods() *protoiface.Metho
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryGetScriptResponse)
+		x := input.Message.Interface().(*QueryScriptResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1553,7 +1553,7 @@ func (x *fastReflection_QueryGetScriptResponse) ProtoMethods() *protoiface.Metho
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryGetScriptResponse)
+		x := input.Message.Interface().(*QueryScriptResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1585,10 +1585,10 @@ func (x *fastReflection_QueryGetScriptResponse) ProtoMethods() *protoiface.Metho
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryGetScriptResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryScriptResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryGetScriptResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryScriptResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -1663,25 +1663,25 @@ func (x *fastReflection_QueryGetScriptResponse) ProtoMethods() *protoiface.Metho
 }
 
 var (
-	md_QueryAllScriptRequest            protoreflect.MessageDescriptor
-	fd_QueryAllScriptRequest_pagination protoreflect.FieldDescriptor
+	md_QueryScriptsRequest            protoreflect.MessageDescriptor
+	fd_QueryScriptsRequest_pagination protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_blit_script_query_proto_init()
-	md_QueryAllScriptRequest = File_blit_script_query_proto.Messages().ByName("QueryAllScriptRequest")
-	fd_QueryAllScriptRequest_pagination = md_QueryAllScriptRequest.Fields().ByName("pagination")
+	md_QueryScriptsRequest = File_blit_script_query_proto.Messages().ByName("QueryScriptsRequest")
+	fd_QueryScriptsRequest_pagination = md_QueryScriptsRequest.Fields().ByName("pagination")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryAllScriptRequest)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryScriptsRequest)(nil)
 
-type fastReflection_QueryAllScriptRequest QueryAllScriptRequest
+type fastReflection_QueryScriptsRequest QueryScriptsRequest
 
-func (x *QueryAllScriptRequest) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryAllScriptRequest)(x)
+func (x *QueryScriptsRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryScriptsRequest)(x)
 }
 
-func (x *QueryAllScriptRequest) slowProtoReflect() protoreflect.Message {
+func (x *QueryScriptsRequest) slowProtoReflect() protoreflect.Message {
 	mi := &file_blit_script_query_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1693,43 +1693,43 @@ func (x *QueryAllScriptRequest) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryAllScriptRequest_messageType fastReflection_QueryAllScriptRequest_messageType
-var _ protoreflect.MessageType = fastReflection_QueryAllScriptRequest_messageType{}
+var _fastReflection_QueryScriptsRequest_messageType fastReflection_QueryScriptsRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryScriptsRequest_messageType{}
 
-type fastReflection_QueryAllScriptRequest_messageType struct{}
+type fastReflection_QueryScriptsRequest_messageType struct{}
 
-func (x fastReflection_QueryAllScriptRequest_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryAllScriptRequest)(nil)
+func (x fastReflection_QueryScriptsRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryScriptsRequest)(nil)
 }
-func (x fastReflection_QueryAllScriptRequest_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryAllScriptRequest)
+func (x fastReflection_QueryScriptsRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryScriptsRequest)
 }
-func (x fastReflection_QueryAllScriptRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllScriptRequest
+func (x fastReflection_QueryScriptsRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryScriptsRequest
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryAllScriptRequest) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllScriptRequest
+func (x *fastReflection_QueryScriptsRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryScriptsRequest
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryAllScriptRequest) Type() protoreflect.MessageType {
-	return _fastReflection_QueryAllScriptRequest_messageType
+func (x *fastReflection_QueryScriptsRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryScriptsRequest_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryAllScriptRequest) New() protoreflect.Message {
-	return new(fastReflection_QueryAllScriptRequest)
+func (x *fastReflection_QueryScriptsRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryScriptsRequest)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryAllScriptRequest) Interface() protoreflect.ProtoMessage {
-	return (*QueryAllScriptRequest)(x)
+func (x *fastReflection_QueryScriptsRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryScriptsRequest)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -1737,10 +1737,10 @@ func (x *fastReflection_QueryAllScriptRequest) Interface() protoreflect.ProtoMes
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryAllScriptRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryScriptsRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if x.Pagination != nil {
 		value := protoreflect.ValueOfMessage(x.Pagination.ProtoReflect())
-		if !f(fd_QueryAllScriptRequest_pagination, value) {
+		if !f(fd_QueryScriptsRequest_pagination, value) {
 			return
 		}
 	}
@@ -1757,15 +1757,15 @@ func (x *fastReflection_QueryAllScriptRequest) Range(f func(protoreflect.FieldDe
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryAllScriptRequest) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryScriptsRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptRequest.pagination":
+	case "blit.script.QueryScriptsRequest.pagination":
 		return x.Pagination != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1775,15 +1775,15 @@ func (x *fastReflection_QueryAllScriptRequest) Has(fd protoreflect.FieldDescript
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllScriptRequest) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryScriptsRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptRequest.pagination":
+	case "blit.script.QueryScriptsRequest.pagination":
 		x.Pagination = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1793,16 +1793,16 @@ func (x *fastReflection_QueryAllScriptRequest) Clear(fd protoreflect.FieldDescri
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryAllScriptRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptsRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "blit.script.QueryAllScriptRequest.pagination":
+	case "blit.script.QueryScriptsRequest.pagination":
 		value := x.Pagination
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptRequest does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsRequest does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -1816,15 +1816,15 @@ func (x *fastReflection_QueryAllScriptRequest) Get(descriptor protoreflect.Field
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllScriptRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryScriptsRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptRequest.pagination":
+	case "blit.script.QueryScriptsRequest.pagination":
 		x.Pagination = value.Message().Interface().(*v1beta1.PageRequest)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -1838,44 +1838,44 @@ func (x *fastReflection_QueryAllScriptRequest) Set(fd protoreflect.FieldDescript
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllScriptRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptsRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptRequest.pagination":
+	case "blit.script.QueryScriptsRequest.pagination":
 		if x.Pagination == nil {
 			x.Pagination = new(v1beta1.PageRequest)
 		}
 		return protoreflect.ValueOfMessage(x.Pagination.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryAllScriptRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptsRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptRequest.pagination":
+	case "blit.script.QueryScriptsRequest.pagination":
 		m := new(v1beta1.PageRequest)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptRequest"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsRequest"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptRequest does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsRequest does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryAllScriptRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryScriptsRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryAllScriptRequest", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryScriptsRequest", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -1883,7 +1883,7 @@ func (x *fastReflection_QueryAllScriptRequest) WhichOneof(d protoreflect.OneofDe
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryAllScriptRequest) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryScriptsRequest) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -1894,7 +1894,7 @@ func (x *fastReflection_QueryAllScriptRequest) GetUnknown() protoreflect.RawFiel
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllScriptRequest) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryScriptsRequest) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -1906,7 +1906,7 @@ func (x *fastReflection_QueryAllScriptRequest) SetUnknown(fields protoreflect.Ra
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryAllScriptRequest) IsValid() bool {
+func (x *fastReflection_QueryScriptsRequest) IsValid() bool {
 	return x != nil
 }
 
@@ -1916,9 +1916,9 @@ func (x *fastReflection_QueryAllScriptRequest) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryAllScriptRequest) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryScriptsRequest) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryAllScriptRequest)
+		x := input.Message.Interface().(*QueryScriptsRequest)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1944,7 +1944,7 @@ func (x *fastReflection_QueryAllScriptRequest) ProtoMethods() *protoiface.Method
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllScriptRequest)
+		x := input.Message.Interface().(*QueryScriptsRequest)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -1988,7 +1988,7 @@ func (x *fastReflection_QueryAllScriptRequest) ProtoMethods() *protoiface.Method
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllScriptRequest)
+		x := input.Message.Interface().(*QueryScriptsRequest)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2020,10 +2020,10 @@ func (x *fastReflection_QueryAllScriptRequest) ProtoMethods() *protoiface.Method
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllScriptRequest: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryScriptsRequest: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllScriptRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryScriptsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -2097,79 +2097,79 @@ func (x *fastReflection_QueryAllScriptRequest) ProtoMethods() *protoiface.Method
 	}
 }
 
-var _ protoreflect.List = (*_QueryAllScriptResponse_1_list)(nil)
+var _ protoreflect.List = (*_QueryScriptsResponse_1_list)(nil)
 
-type _QueryAllScriptResponse_1_list struct {
+type _QueryScriptsResponse_1_list struct {
 	list *[]*Script
 }
 
-func (x *_QueryAllScriptResponse_1_list) Len() int {
+func (x *_QueryScriptsResponse_1_list) Len() int {
 	if x.list == nil {
 		return 0
 	}
 	return len(*x.list)
 }
 
-func (x *_QueryAllScriptResponse_1_list) Get(i int) protoreflect.Value {
+func (x *_QueryScriptsResponse_1_list) Get(i int) protoreflect.Value {
 	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
 }
 
-func (x *_QueryAllScriptResponse_1_list) Set(i int, value protoreflect.Value) {
+func (x *_QueryScriptsResponse_1_list) Set(i int, value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*Script)
 	(*x.list)[i] = concreteValue
 }
 
-func (x *_QueryAllScriptResponse_1_list) Append(value protoreflect.Value) {
+func (x *_QueryScriptsResponse_1_list) Append(value protoreflect.Value) {
 	valueUnwrapped := value.Message()
 	concreteValue := valueUnwrapped.Interface().(*Script)
 	*x.list = append(*x.list, concreteValue)
 }
 
-func (x *_QueryAllScriptResponse_1_list) AppendMutable() protoreflect.Value {
+func (x *_QueryScriptsResponse_1_list) AppendMutable() protoreflect.Value {
 	v := new(Script)
 	*x.list = append(*x.list, v)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_QueryAllScriptResponse_1_list) Truncate(n int) {
+func (x *_QueryScriptsResponse_1_list) Truncate(n int) {
 	for i := n; i < len(*x.list); i++ {
 		(*x.list)[i] = nil
 	}
 	*x.list = (*x.list)[:n]
 }
 
-func (x *_QueryAllScriptResponse_1_list) NewElement() protoreflect.Value {
+func (x *_QueryScriptsResponse_1_list) NewElement() protoreflect.Value {
 	v := new(Script)
 	return protoreflect.ValueOfMessage(v.ProtoReflect())
 }
 
-func (x *_QueryAllScriptResponse_1_list) IsValid() bool {
+func (x *_QueryScriptsResponse_1_list) IsValid() bool {
 	return x.list != nil
 }
 
 var (
-	md_QueryAllScriptResponse            protoreflect.MessageDescriptor
-	fd_QueryAllScriptResponse_script     protoreflect.FieldDescriptor
-	fd_QueryAllScriptResponse_pagination protoreflect.FieldDescriptor
+	md_QueryScriptsResponse            protoreflect.MessageDescriptor
+	fd_QueryScriptsResponse_script     protoreflect.FieldDescriptor
+	fd_QueryScriptsResponse_pagination protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_blit_script_query_proto_init()
-	md_QueryAllScriptResponse = File_blit_script_query_proto.Messages().ByName("QueryAllScriptResponse")
-	fd_QueryAllScriptResponse_script = md_QueryAllScriptResponse.Fields().ByName("script")
-	fd_QueryAllScriptResponse_pagination = md_QueryAllScriptResponse.Fields().ByName("pagination")
+	md_QueryScriptsResponse = File_blit_script_query_proto.Messages().ByName("QueryScriptsResponse")
+	fd_QueryScriptsResponse_script = md_QueryScriptsResponse.Fields().ByName("script")
+	fd_QueryScriptsResponse_pagination = md_QueryScriptsResponse.Fields().ByName("pagination")
 }
 
-var _ protoreflect.Message = (*fastReflection_QueryAllScriptResponse)(nil)
+var _ protoreflect.Message = (*fastReflection_QueryScriptsResponse)(nil)
 
-type fastReflection_QueryAllScriptResponse QueryAllScriptResponse
+type fastReflection_QueryScriptsResponse QueryScriptsResponse
 
-func (x *QueryAllScriptResponse) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_QueryAllScriptResponse)(x)
+func (x *QueryScriptsResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryScriptsResponse)(x)
 }
 
-func (x *QueryAllScriptResponse) slowProtoReflect() protoreflect.Message {
+func (x *QueryScriptsResponse) slowProtoReflect() protoreflect.Message {
 	mi := &file_blit_script_query_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2181,43 +2181,43 @@ func (x *QueryAllScriptResponse) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_QueryAllScriptResponse_messageType fastReflection_QueryAllScriptResponse_messageType
-var _ protoreflect.MessageType = fastReflection_QueryAllScriptResponse_messageType{}
+var _fastReflection_QueryScriptsResponse_messageType fastReflection_QueryScriptsResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryScriptsResponse_messageType{}
 
-type fastReflection_QueryAllScriptResponse_messageType struct{}
+type fastReflection_QueryScriptsResponse_messageType struct{}
 
-func (x fastReflection_QueryAllScriptResponse_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_QueryAllScriptResponse)(nil)
+func (x fastReflection_QueryScriptsResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryScriptsResponse)(nil)
 }
-func (x fastReflection_QueryAllScriptResponse_messageType) New() protoreflect.Message {
-	return new(fastReflection_QueryAllScriptResponse)
+func (x fastReflection_QueryScriptsResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryScriptsResponse)
 }
-func (x fastReflection_QueryAllScriptResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllScriptResponse
+func (x fastReflection_QueryScriptsResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryScriptsResponse
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_QueryAllScriptResponse) Descriptor() protoreflect.MessageDescriptor {
-	return md_QueryAllScriptResponse
+func (x *fastReflection_QueryScriptsResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryScriptsResponse
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_QueryAllScriptResponse) Type() protoreflect.MessageType {
-	return _fastReflection_QueryAllScriptResponse_messageType
+func (x *fastReflection_QueryScriptsResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryScriptsResponse_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_QueryAllScriptResponse) New() protoreflect.Message {
-	return new(fastReflection_QueryAllScriptResponse)
+func (x *fastReflection_QueryScriptsResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryScriptsResponse)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_QueryAllScriptResponse) Interface() protoreflect.ProtoMessage {
-	return (*QueryAllScriptResponse)(x)
+func (x *fastReflection_QueryScriptsResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryScriptsResponse)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -2225,16 +2225,16 @@ func (x *fastReflection_QueryAllScriptResponse) Interface() protoreflect.ProtoMe
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_QueryAllScriptResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+func (x *fastReflection_QueryScriptsResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
 	if len(x.Script) != 0 {
-		value := protoreflect.ValueOfList(&_QueryAllScriptResponse_1_list{list: &x.Script})
-		if !f(fd_QueryAllScriptResponse_script, value) {
+		value := protoreflect.ValueOfList(&_QueryScriptsResponse_1_list{list: &x.Script})
+		if !f(fd_QueryScriptsResponse_script, value) {
 			return
 		}
 	}
 	if x.Pagination != nil {
 		value := protoreflect.ValueOfMessage(x.Pagination.ProtoReflect())
-		if !f(fd_QueryAllScriptResponse_pagination, value) {
+		if !f(fd_QueryScriptsResponse_pagination, value) {
 			return
 		}
 	}
@@ -2251,17 +2251,17 @@ func (x *fastReflection_QueryAllScriptResponse) Range(f func(protoreflect.FieldD
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_QueryAllScriptResponse) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_QueryScriptsResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptResponse.script":
+	case "blit.script.QueryScriptsResponse.script":
 		return len(x.Script) != 0
-	case "blit.script.QueryAllScriptResponse.pagination":
+	case "blit.script.QueryScriptsResponse.pagination":
 		return x.Pagination != nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2271,17 +2271,17 @@ func (x *fastReflection_QueryAllScriptResponse) Has(fd protoreflect.FieldDescrip
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllScriptResponse) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_QueryScriptsResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptResponse.script":
+	case "blit.script.QueryScriptsResponse.script":
 		x.Script = nil
-	case "blit.script.QueryAllScriptResponse.pagination":
+	case "blit.script.QueryScriptsResponse.pagination":
 		x.Pagination = nil
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2291,22 +2291,22 @@ func (x *fastReflection_QueryAllScriptResponse) Clear(fd protoreflect.FieldDescr
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_QueryAllScriptResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptsResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "blit.script.QueryAllScriptResponse.script":
+	case "blit.script.QueryScriptsResponse.script":
 		if len(x.Script) == 0 {
-			return protoreflect.ValueOfList(&_QueryAllScriptResponse_1_list{})
+			return protoreflect.ValueOfList(&_QueryScriptsResponse_1_list{})
 		}
-		listValue := &_QueryAllScriptResponse_1_list{list: &x.Script}
+		listValue := &_QueryScriptsResponse_1_list{list: &x.Script}
 		return protoreflect.ValueOfList(listValue)
-	case "blit.script.QueryAllScriptResponse.pagination":
+	case "blit.script.QueryScriptsResponse.pagination":
 		value := x.Pagination
 		return protoreflect.ValueOfMessage(value.ProtoReflect())
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptResponse does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsResponse does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -2320,19 +2320,19 @@ func (x *fastReflection_QueryAllScriptResponse) Get(descriptor protoreflect.Fiel
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllScriptResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_QueryScriptsResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptResponse.script":
+	case "blit.script.QueryScriptsResponse.script":
 		lv := value.List()
-		clv := lv.(*_QueryAllScriptResponse_1_list)
+		clv := lv.(*_QueryScriptsResponse_1_list)
 		x.Script = *clv.list
-	case "blit.script.QueryAllScriptResponse.pagination":
+	case "blit.script.QueryScriptsResponse.pagination":
 		x.Pagination = value.Message().Interface().(*v1beta1.PageResponse)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -2346,53 +2346,53 @@ func (x *fastReflection_QueryAllScriptResponse) Set(fd protoreflect.FieldDescrip
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllScriptResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptsResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptResponse.script":
+	case "blit.script.QueryScriptsResponse.script":
 		if x.Script == nil {
 			x.Script = []*Script{}
 		}
-		value := &_QueryAllScriptResponse_1_list{list: &x.Script}
+		value := &_QueryScriptsResponse_1_list{list: &x.Script}
 		return protoreflect.ValueOfList(value)
-	case "blit.script.QueryAllScriptResponse.pagination":
+	case "blit.script.QueryScriptsResponse.pagination":
 		if x.Pagination == nil {
 			x.Pagination = new(v1beta1.PageResponse)
 		}
 		return protoreflect.ValueOfMessage(x.Pagination.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_QueryAllScriptResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_QueryScriptsResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.script.QueryAllScriptResponse.script":
+	case "blit.script.QueryScriptsResponse.script":
 		list := []*Script{}
-		return protoreflect.ValueOfList(&_QueryAllScriptResponse_1_list{list: &list})
-	case "blit.script.QueryAllScriptResponse.pagination":
+		return protoreflect.ValueOfList(&_QueryScriptsResponse_1_list{list: &list})
+	case "blit.script.QueryScriptsResponse.pagination":
 		m := new(v1beta1.PageResponse)
 		return protoreflect.ValueOfMessage(m.ProtoReflect())
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryAllScriptResponse"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryScriptsResponse"))
 		}
-		panic(fmt.Errorf("message blit.script.QueryAllScriptResponse does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.script.QueryScriptsResponse does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_QueryAllScriptResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_QueryScriptsResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryAllScriptResponse", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryScriptsResponse", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -2400,7 +2400,7 @@ func (x *fastReflection_QueryAllScriptResponse) WhichOneof(d protoreflect.OneofD
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_QueryAllScriptResponse) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_QueryScriptsResponse) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -2411,7 +2411,7 @@ func (x *fastReflection_QueryAllScriptResponse) GetUnknown() protoreflect.RawFie
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_QueryAllScriptResponse) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_QueryScriptsResponse) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -2423,7 +2423,7 @@ func (x *fastReflection_QueryAllScriptResponse) SetUnknown(fields protoreflect.R
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_QueryAllScriptResponse) IsValid() bool {
+func (x *fastReflection_QueryScriptsResponse) IsValid() bool {
 	return x != nil
 }
 
@@ -2433,9 +2433,9 @@ func (x *fastReflection_QueryAllScriptResponse) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_QueryAllScriptResponse) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_QueryScriptsResponse) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*QueryAllScriptResponse)
+		x := input.Message.Interface().(*QueryScriptsResponse)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2467,7 +2467,7 @@ func (x *fastReflection_QueryAllScriptResponse) ProtoMethods() *protoiface.Metho
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllScriptResponse)
+		x := input.Message.Interface().(*QueryScriptsResponse)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2527,7 +2527,7 @@ func (x *fastReflection_QueryAllScriptResponse) ProtoMethods() *protoiface.Metho
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*QueryAllScriptResponse)
+		x := input.Message.Interface().(*QueryScriptsResponse)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -2559,10 +2559,10 @@ func (x *fastReflection_QueryAllScriptResponse) ProtoMethods() *protoiface.Metho
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllScriptResponse: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryScriptsResponse: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryAllScriptResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryScriptsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
@@ -3574,6 +3574,1230 @@ func (x *fastReflection_QueryWebResponse) ProtoMethods() *protoiface.Methods {
 	}
 }
 
+var (
+	md_QueryEvalRequest                   protoreflect.MessageDescriptor
+	fd_QueryEvalRequest_caller_address    protoreflect.FieldDescriptor
+	fd_QueryEvalRequest_script_address    protoreflect.FieldDescriptor
+	fd_QueryEvalRequest_extra_code        protoreflect.FieldDescriptor
+	fd_QueryEvalRequest_function_name     protoreflect.FieldDescriptor
+	fd_QueryEvalRequest_kwargs            protoreflect.FieldDescriptor
+	fd_QueryEvalRequest_grantee           protoreflect.FieldDescriptor
+	fd_QueryEvalRequest_attached_messages protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_blit_script_query_proto_init()
+	md_QueryEvalRequest = File_blit_script_query_proto.Messages().ByName("QueryEvalRequest")
+	fd_QueryEvalRequest_caller_address = md_QueryEvalRequest.Fields().ByName("caller_address")
+	fd_QueryEvalRequest_script_address = md_QueryEvalRequest.Fields().ByName("script_address")
+	fd_QueryEvalRequest_extra_code = md_QueryEvalRequest.Fields().ByName("extra_code")
+	fd_QueryEvalRequest_function_name = md_QueryEvalRequest.Fields().ByName("function_name")
+	fd_QueryEvalRequest_kwargs = md_QueryEvalRequest.Fields().ByName("kwargs")
+	fd_QueryEvalRequest_grantee = md_QueryEvalRequest.Fields().ByName("grantee")
+	fd_QueryEvalRequest_attached_messages = md_QueryEvalRequest.Fields().ByName("attached_messages")
+}
+
+var _ protoreflect.Message = (*fastReflection_QueryEvalRequest)(nil)
+
+type fastReflection_QueryEvalRequest QueryEvalRequest
+
+func (x *QueryEvalRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryEvalRequest)(x)
+}
+
+func (x *QueryEvalRequest) slowProtoReflect() protoreflect.Message {
+	mi := &file_blit_script_query_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_QueryEvalRequest_messageType fastReflection_QueryEvalRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryEvalRequest_messageType{}
+
+type fastReflection_QueryEvalRequest_messageType struct{}
+
+func (x fastReflection_QueryEvalRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryEvalRequest)(nil)
+}
+func (x fastReflection_QueryEvalRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryEvalRequest)
+}
+func (x fastReflection_QueryEvalRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryEvalRequest
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_QueryEvalRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryEvalRequest
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_QueryEvalRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryEvalRequest_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_QueryEvalRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryEvalRequest)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_QueryEvalRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryEvalRequest)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_QueryEvalRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.CallerAddress != "" {
+		value := protoreflect.ValueOfString(x.CallerAddress)
+		if !f(fd_QueryEvalRequest_caller_address, value) {
+			return
+		}
+	}
+	if x.ScriptAddress != "" {
+		value := protoreflect.ValueOfString(x.ScriptAddress)
+		if !f(fd_QueryEvalRequest_script_address, value) {
+			return
+		}
+	}
+	if x.ExtraCode != "" {
+		value := protoreflect.ValueOfString(x.ExtraCode)
+		if !f(fd_QueryEvalRequest_extra_code, value) {
+			return
+		}
+	}
+	if x.FunctionName != "" {
+		value := protoreflect.ValueOfString(x.FunctionName)
+		if !f(fd_QueryEvalRequest_function_name, value) {
+			return
+		}
+	}
+	if x.Kwargs != "" {
+		value := protoreflect.ValueOfString(x.Kwargs)
+		if !f(fd_QueryEvalRequest_kwargs, value) {
+			return
+		}
+	}
+	if x.Grantee != "" {
+		value := protoreflect.ValueOfString(x.Grantee)
+		if !f(fd_QueryEvalRequest_grantee, value) {
+			return
+		}
+	}
+	if x.AttachedMessages != "" {
+		value := protoreflect.ValueOfString(x.AttachedMessages)
+		if !f(fd_QueryEvalRequest_attached_messages, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_QueryEvalRequest) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalRequest.caller_address":
+		return x.CallerAddress != ""
+	case "blit.script.QueryEvalRequest.script_address":
+		return x.ScriptAddress != ""
+	case "blit.script.QueryEvalRequest.extra_code":
+		return x.ExtraCode != ""
+	case "blit.script.QueryEvalRequest.function_name":
+		return x.FunctionName != ""
+	case "blit.script.QueryEvalRequest.kwargs":
+		return x.Kwargs != ""
+	case "blit.script.QueryEvalRequest.grantee":
+		return x.Grantee != ""
+	case "blit.script.QueryEvalRequest.attached_messages":
+		return x.AttachedMessages != ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalRequest"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryEvalRequest) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalRequest.caller_address":
+		x.CallerAddress = ""
+	case "blit.script.QueryEvalRequest.script_address":
+		x.ScriptAddress = ""
+	case "blit.script.QueryEvalRequest.extra_code":
+		x.ExtraCode = ""
+	case "blit.script.QueryEvalRequest.function_name":
+		x.FunctionName = ""
+	case "blit.script.QueryEvalRequest.kwargs":
+		x.Kwargs = ""
+	case "blit.script.QueryEvalRequest.grantee":
+		x.Grantee = ""
+	case "blit.script.QueryEvalRequest.attached_messages":
+		x.AttachedMessages = ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalRequest"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_QueryEvalRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "blit.script.QueryEvalRequest.caller_address":
+		value := x.CallerAddress
+		return protoreflect.ValueOfString(value)
+	case "blit.script.QueryEvalRequest.script_address":
+		value := x.ScriptAddress
+		return protoreflect.ValueOfString(value)
+	case "blit.script.QueryEvalRequest.extra_code":
+		value := x.ExtraCode
+		return protoreflect.ValueOfString(value)
+	case "blit.script.QueryEvalRequest.function_name":
+		value := x.FunctionName
+		return protoreflect.ValueOfString(value)
+	case "blit.script.QueryEvalRequest.kwargs":
+		value := x.Kwargs
+		return protoreflect.ValueOfString(value)
+	case "blit.script.QueryEvalRequest.grantee":
+		value := x.Grantee
+		return protoreflect.ValueOfString(value)
+	case "blit.script.QueryEvalRequest.attached_messages":
+		value := x.AttachedMessages
+		return protoreflect.ValueOfString(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalRequest"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalRequest does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryEvalRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalRequest.caller_address":
+		x.CallerAddress = value.Interface().(string)
+	case "blit.script.QueryEvalRequest.script_address":
+		x.ScriptAddress = value.Interface().(string)
+	case "blit.script.QueryEvalRequest.extra_code":
+		x.ExtraCode = value.Interface().(string)
+	case "blit.script.QueryEvalRequest.function_name":
+		x.FunctionName = value.Interface().(string)
+	case "blit.script.QueryEvalRequest.kwargs":
+		x.Kwargs = value.Interface().(string)
+	case "blit.script.QueryEvalRequest.grantee":
+		x.Grantee = value.Interface().(string)
+	case "blit.script.QueryEvalRequest.attached_messages":
+		x.AttachedMessages = value.Interface().(string)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalRequest"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryEvalRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalRequest.caller_address":
+		panic(fmt.Errorf("field caller_address of message blit.script.QueryEvalRequest is not mutable"))
+	case "blit.script.QueryEvalRequest.script_address":
+		panic(fmt.Errorf("field script_address of message blit.script.QueryEvalRequest is not mutable"))
+	case "blit.script.QueryEvalRequest.extra_code":
+		panic(fmt.Errorf("field extra_code of message blit.script.QueryEvalRequest is not mutable"))
+	case "blit.script.QueryEvalRequest.function_name":
+		panic(fmt.Errorf("field function_name of message blit.script.QueryEvalRequest is not mutable"))
+	case "blit.script.QueryEvalRequest.kwargs":
+		panic(fmt.Errorf("field kwargs of message blit.script.QueryEvalRequest is not mutable"))
+	case "blit.script.QueryEvalRequest.grantee":
+		panic(fmt.Errorf("field grantee of message blit.script.QueryEvalRequest is not mutable"))
+	case "blit.script.QueryEvalRequest.attached_messages":
+		panic(fmt.Errorf("field attached_messages of message blit.script.QueryEvalRequest is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalRequest"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_QueryEvalRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalRequest.caller_address":
+		return protoreflect.ValueOfString("")
+	case "blit.script.QueryEvalRequest.script_address":
+		return protoreflect.ValueOfString("")
+	case "blit.script.QueryEvalRequest.extra_code":
+		return protoreflect.ValueOfString("")
+	case "blit.script.QueryEvalRequest.function_name":
+		return protoreflect.ValueOfString("")
+	case "blit.script.QueryEvalRequest.kwargs":
+		return protoreflect.ValueOfString("")
+	case "blit.script.QueryEvalRequest.grantee":
+		return protoreflect.ValueOfString("")
+	case "blit.script.QueryEvalRequest.attached_messages":
+		return protoreflect.ValueOfString("")
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalRequest"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_QueryEvalRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryEvalRequest", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_QueryEvalRequest) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryEvalRequest) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_QueryEvalRequest) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_QueryEvalRequest) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*QueryEvalRequest)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.CallerAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ScriptAddress)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ExtraCode)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.FunctionName)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Kwargs)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.Grantee)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.AttachedMessages)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*QueryEvalRequest)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.AttachedMessages) > 0 {
+			i -= len(x.AttachedMessages)
+			copy(dAtA[i:], x.AttachedMessages)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.AttachedMessages)))
+			i--
+			dAtA[i] = 0x42
+		}
+		if len(x.Grantee) > 0 {
+			i -= len(x.Grantee)
+			copy(dAtA[i:], x.Grantee)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Grantee)))
+			i--
+			dAtA[i] = 0x3a
+		}
+		if len(x.Kwargs) > 0 {
+			i -= len(x.Kwargs)
+			copy(dAtA[i:], x.Kwargs)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Kwargs)))
+			i--
+			dAtA[i] = 0x32
+		}
+		if len(x.FunctionName) > 0 {
+			i -= len(x.FunctionName)
+			copy(dAtA[i:], x.FunctionName)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.FunctionName)))
+			i--
+			dAtA[i] = 0x2a
+		}
+		if len(x.ExtraCode) > 0 {
+			i -= len(x.ExtraCode)
+			copy(dAtA[i:], x.ExtraCode)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ExtraCode)))
+			i--
+			dAtA[i] = 0x22
+		}
+		if len(x.ScriptAddress) > 0 {
+			i -= len(x.ScriptAddress)
+			copy(dAtA[i:], x.ScriptAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ScriptAddress)))
+			i--
+			dAtA[i] = 0x1a
+		}
+		if len(x.CallerAddress) > 0 {
+			i -= len(x.CallerAddress)
+			copy(dAtA[i:], x.CallerAddress)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.CallerAddress)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*QueryEvalRequest)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryEvalRequest: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryEvalRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field CallerAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.CallerAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ScriptAddress", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ScriptAddress = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 4:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExtraCode", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ExtraCode = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 5:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field FunctionName", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.FunctionName = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 6:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Kwargs", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Kwargs = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 7:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Grantee", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Grantee = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 8:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field AttachedMessages", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.AttachedMessages = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
+	md_QueryEvalResponse          protoreflect.MessageDescriptor
+	fd_QueryEvalResponse_response protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_blit_script_query_proto_init()
+	md_QueryEvalResponse = File_blit_script_query_proto.Messages().ByName("QueryEvalResponse")
+	fd_QueryEvalResponse_response = md_QueryEvalResponse.Fields().ByName("response")
+}
+
+var _ protoreflect.Message = (*fastReflection_QueryEvalResponse)(nil)
+
+type fastReflection_QueryEvalResponse QueryEvalResponse
+
+func (x *QueryEvalResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryEvalResponse)(x)
+}
+
+func (x *QueryEvalResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_blit_script_query_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_QueryEvalResponse_messageType fastReflection_QueryEvalResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryEvalResponse_messageType{}
+
+type fastReflection_QueryEvalResponse_messageType struct{}
+
+func (x fastReflection_QueryEvalResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryEvalResponse)(nil)
+}
+func (x fastReflection_QueryEvalResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryEvalResponse)
+}
+func (x fastReflection_QueryEvalResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryEvalResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_QueryEvalResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryEvalResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_QueryEvalResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryEvalResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_QueryEvalResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryEvalResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_QueryEvalResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryEvalResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_QueryEvalResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Response != "" {
+		value := protoreflect.ValueOfString(x.Response)
+		if !f(fd_QueryEvalResponse_response, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_QueryEvalResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalResponse.response":
+		return x.Response != ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalResponse"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryEvalResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalResponse.response":
+		x.Response = ""
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalResponse"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_QueryEvalResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "blit.script.QueryEvalResponse.response":
+		value := x.Response
+		return protoreflect.ValueOfString(value)
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalResponse"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryEvalResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalResponse.response":
+		x.Response = value.Interface().(string)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalResponse"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryEvalResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalResponse.response":
+		panic(fmt.Errorf("field response of message blit.script.QueryEvalResponse is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalResponse"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_QueryEvalResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "blit.script.QueryEvalResponse.response":
+		return protoreflect.ValueOfString("")
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.script.QueryEvalResponse"))
+		}
+		panic(fmt.Errorf("message blit.script.QueryEvalResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_QueryEvalResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in blit.script.QueryEvalResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_QueryEvalResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryEvalResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_QueryEvalResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_QueryEvalResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*QueryEvalResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.Response)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*QueryEvalResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.Response) > 0 {
+			i -= len(x.Response)
+			copy(dAtA[i:], x.Response)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Response)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*QueryEvalResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryEvalResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryEvalResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Response", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Response = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
 // Code generated by protoc-gen-go. DO NOT EDIT.
 // versions:
 // 	protoc-gen-go v1.27.0
@@ -3651,7 +4875,7 @@ func (x *QueryParamsResponse) GetParams() *Params {
 	return nil
 }
 
-type QueryGetScriptRequest struct {
+type QueryScriptRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -3659,8 +4883,8 @@ type QueryGetScriptRequest struct {
 	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
 }
 
-func (x *QueryGetScriptRequest) Reset() {
-	*x = QueryGetScriptRequest{}
+func (x *QueryScriptRequest) Reset() {
+	*x = QueryScriptRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_blit_script_query_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3668,25 +4892,25 @@ func (x *QueryGetScriptRequest) Reset() {
 	}
 }
 
-func (x *QueryGetScriptRequest) String() string {
+func (x *QueryScriptRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryGetScriptRequest) ProtoMessage() {}
+func (*QueryScriptRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryGetScriptRequest.ProtoReflect.Descriptor instead.
-func (*QueryGetScriptRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryScriptRequest.ProtoReflect.Descriptor instead.
+func (*QueryScriptRequest) Descriptor() ([]byte, []int) {
 	return file_blit_script_query_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *QueryGetScriptRequest) GetAddress() string {
+func (x *QueryScriptRequest) GetAddress() string {
 	if x != nil {
 		return x.Address
 	}
 	return ""
 }
 
-type QueryGetScriptResponse struct {
+type QueryScriptResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -3694,8 +4918,8 @@ type QueryGetScriptResponse struct {
 	Script *Script `protobuf:"bytes,1,opt,name=script,proto3" json:"script,omitempty"`
 }
 
-func (x *QueryGetScriptResponse) Reset() {
-	*x = QueryGetScriptResponse{}
+func (x *QueryScriptResponse) Reset() {
+	*x = QueryScriptResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_blit_script_query_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3703,25 +4927,25 @@ func (x *QueryGetScriptResponse) Reset() {
 	}
 }
 
-func (x *QueryGetScriptResponse) String() string {
+func (x *QueryScriptResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryGetScriptResponse) ProtoMessage() {}
+func (*QueryScriptResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryGetScriptResponse.ProtoReflect.Descriptor instead.
-func (*QueryGetScriptResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryScriptResponse.ProtoReflect.Descriptor instead.
+func (*QueryScriptResponse) Descriptor() ([]byte, []int) {
 	return file_blit_script_query_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *QueryGetScriptResponse) GetScript() *Script {
+func (x *QueryScriptResponse) GetScript() *Script {
 	if x != nil {
 		return x.Script
 	}
 	return nil
 }
 
-type QueryAllScriptRequest struct {
+type QueryScriptsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -3729,8 +4953,8 @@ type QueryAllScriptRequest struct {
 	Pagination *v1beta1.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
-func (x *QueryAllScriptRequest) Reset() {
-	*x = QueryAllScriptRequest{}
+func (x *QueryScriptsRequest) Reset() {
+	*x = QueryScriptsRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_blit_script_query_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3738,25 +4962,25 @@ func (x *QueryAllScriptRequest) Reset() {
 	}
 }
 
-func (x *QueryAllScriptRequest) String() string {
+func (x *QueryScriptsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryAllScriptRequest) ProtoMessage() {}
+func (*QueryScriptsRequest) ProtoMessage() {}
 
-// Deprecated: Use QueryAllScriptRequest.ProtoReflect.Descriptor instead.
-func (*QueryAllScriptRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryScriptsRequest.ProtoReflect.Descriptor instead.
+func (*QueryScriptsRequest) Descriptor() ([]byte, []int) {
 	return file_blit_script_query_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *QueryAllScriptRequest) GetPagination() *v1beta1.PageRequest {
+func (x *QueryScriptsRequest) GetPagination() *v1beta1.PageRequest {
 	if x != nil {
 		return x.Pagination
 	}
 	return nil
 }
 
-type QueryAllScriptResponse struct {
+type QueryScriptsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -3765,8 +4989,8 @@ type QueryAllScriptResponse struct {
 	Pagination *v1beta1.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
-func (x *QueryAllScriptResponse) Reset() {
-	*x = QueryAllScriptResponse{}
+func (x *QueryScriptsResponse) Reset() {
+	*x = QueryScriptsResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_blit_script_query_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -3774,25 +4998,25 @@ func (x *QueryAllScriptResponse) Reset() {
 	}
 }
 
-func (x *QueryAllScriptResponse) String() string {
+func (x *QueryScriptsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*QueryAllScriptResponse) ProtoMessage() {}
+func (*QueryScriptsResponse) ProtoMessage() {}
 
-// Deprecated: Use QueryAllScriptResponse.ProtoReflect.Descriptor instead.
-func (*QueryAllScriptResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use QueryScriptsResponse.ProtoReflect.Descriptor instead.
+func (*QueryScriptsResponse) Descriptor() ([]byte, []int) {
 	return file_blit_script_query_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *QueryAllScriptResponse) GetScript() []*Script {
+func (x *QueryScriptsResponse) GetScript() []*Script {
 	if x != nil {
 		return x.Script
 	}
 	return nil
 }
 
-func (x *QueryAllScriptResponse) GetPagination() *v1beta1.PageResponse {
+func (x *QueryScriptsResponse) GetPagination() *v1beta1.PageResponse {
 	if x != nil {
 		return x.Pagination
 	}
@@ -3877,6 +5101,124 @@ func (x *QueryWebResponse) GetHttpresponse() string {
 	return ""
 }
 
+type QueryEvalRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CallerAddress    string `protobuf:"bytes,2,opt,name=caller_address,json=callerAddress,proto3" json:"caller_address,omitempty"`
+	ScriptAddress    string `protobuf:"bytes,3,opt,name=script_address,json=scriptAddress,proto3" json:"script_address,omitempty"`
+	ExtraCode        string `protobuf:"bytes,4,opt,name=extra_code,json=extraCode,proto3" json:"extra_code,omitempty"`
+	FunctionName     string `protobuf:"bytes,5,opt,name=function_name,json=functionName,proto3" json:"function_name,omitempty"`
+	Kwargs           string `protobuf:"bytes,6,opt,name=kwargs,proto3" json:"kwargs,omitempty"`
+	Grantee          string `protobuf:"bytes,7,opt,name=grantee,proto3" json:"grantee,omitempty"`
+	AttachedMessages string `protobuf:"bytes,8,opt,name=attached_messages,json=attachedMessages,proto3" json:"attached_messages,omitempty"`
+}
+
+func (x *QueryEvalRequest) Reset() {
+	*x = QueryEvalRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_blit_script_query_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QueryEvalRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryEvalRequest) ProtoMessage() {}
+
+// Deprecated: Use QueryEvalRequest.ProtoReflect.Descriptor instead.
+func (*QueryEvalRequest) Descriptor() ([]byte, []int) {
+	return file_blit_script_query_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *QueryEvalRequest) GetCallerAddress() string {
+	if x != nil {
+		return x.CallerAddress
+	}
+	return ""
+}
+
+func (x *QueryEvalRequest) GetScriptAddress() string {
+	if x != nil {
+		return x.ScriptAddress
+	}
+	return ""
+}
+
+func (x *QueryEvalRequest) GetExtraCode() string {
+	if x != nil {
+		return x.ExtraCode
+	}
+	return ""
+}
+
+func (x *QueryEvalRequest) GetFunctionName() string {
+	if x != nil {
+		return x.FunctionName
+	}
+	return ""
+}
+
+func (x *QueryEvalRequest) GetKwargs() string {
+	if x != nil {
+		return x.Kwargs
+	}
+	return ""
+}
+
+func (x *QueryEvalRequest) GetGrantee() string {
+	if x != nil {
+		return x.Grantee
+	}
+	return ""
+}
+
+func (x *QueryEvalRequest) GetAttachedMessages() string {
+	if x != nil {
+		return x.AttachedMessages
+	}
+	return ""
+}
+
+type QueryEvalResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Response string `protobuf:"bytes,1,opt,name=response,proto3" json:"response,omitempty"`
+}
+
+func (x *QueryEvalResponse) Reset() {
+	*x = QueryEvalResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_blit_script_query_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QueryEvalResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryEvalResponse) ProtoMessage() {}
+
+// Deprecated: Use QueryEvalResponse.ProtoReflect.Descriptor instead.
+func (*QueryEvalResponse) Descriptor() ([]byte, []int) {
+	return file_blit_script_query_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *QueryEvalResponse) GetResponse() string {
+	if x != nil {
+		return x.Response
+	}
+	return ""
+}
+
 var File_blit_script_query_proto protoreflect.FileDescriptor
 
 var file_blit_script_query_proto_rawDesc = []byte{
@@ -3892,92 +5234,109 @@ var file_blit_script_query_proto_rawDesc = []byte{
 	0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x18, 0x62, 0x6c, 0x69, 0x74, 0x2f,
 	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x2e, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x1a, 0x18, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
-	0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x18, 0x62,
-	0x6c, 0x69, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x6d, 0x73, 0x67, 0x72, 0x75,
-	0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x14, 0x0a, 0x12, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x4d, 0x0a,
-	0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x36, 0x0a, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69,
-	0x70, 0x74, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42, 0x09, 0xc8, 0xde, 0x1f, 0x00, 0xa8,
-	0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22, 0x31, 0x0a, 0x15,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22,
-	0x4b, 0x0a, 0x16, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74, 0x53, 0x63, 0x72, 0x69, 0x70,
+	0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x14, 0x0a,
+	0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x22, 0x4d, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61,
+	0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x36, 0x0a, 0x06, 0x70, 0x61,
+	0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x62, 0x6c, 0x69,
+	0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42,
+	0x09, 0xc8, 0xde, 0x1f, 0x00, 0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61,
+	0x6d, 0x73, 0x22, 0x2e, 0x0a, 0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65,
+	0x73, 0x73, 0x22, 0x48, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x63, 0x72, 0x69, 0x70,
 	0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x31, 0x0a, 0x06, 0x73, 0x63, 0x72,
 	0x69, 0x70, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x62, 0x6c, 0x69, 0x74,
 	0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x42, 0x04,
-	0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x22, 0x5f, 0x0a, 0x15,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x46, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x63, 0x6f, 0x73, 0x6d,
-	0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x76, 0x31,
-	0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x52, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x94, 0x01,
-	0x0a, 0x16, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x31, 0x0a, 0x06, 0x73, 0x63, 0x72, 0x69,
-	0x70, 0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e,
-	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x42, 0x04, 0xc8,
-	0xde, 0x1f, 0x00, 0x52, 0x06, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x12, 0x47, 0x0a, 0x0a, 0x70,
-	0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x27, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x71, 0x75,
-	0x65, 0x72, 0x79, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x50, 0x61, 0x67, 0x65,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x52, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x22, 0x4d, 0x0a, 0x0f, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x65, 0x62,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65,
-	0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x12, 0x20, 0x0a, 0x0b, 0x68, 0x74, 0x74, 0x70, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x68, 0x74, 0x74, 0x70, 0x72, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x22, 0x36, 0x0a, 0x10, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x65, 0x62, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x68, 0x74, 0x74, 0x70, 0x72,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x68,
-	0x74, 0x74, 0x70, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xba, 0x04, 0x0a, 0x05,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x68, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12,
-	0x1f, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x20, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51,
-	0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x1b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x15, 0x12, 0x13, 0x2f, 0x62, 0x6c, 0x69,
-	0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12,
-	0x78, 0x0a, 0x06, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x12, 0x22, 0x2e, 0x62, 0x6c, 0x69, 0x74,
-	0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74,
-	0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e,
+	0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x22, 0x5d, 0x0a, 0x13,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x46, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
+	0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x76, 0x31, 0x62, 0x65,
+	0x74, 0x61, 0x31, 0x2e, 0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52,
+	0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x92, 0x01, 0x0a, 0x14,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x31, 0x0a, 0x06, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x2e, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52,
+	0x06, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x12, 0x47, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x63, 0x6f,
+	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e,
+	0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x52, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x22, 0x4d, 0x0a, 0x0f, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x65, 0x62, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x20, 0x0a,
+	0x0b, 0x68, 0x74, 0x74, 0x70, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0b, 0x68, 0x74, 0x74, 0x70, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22,
+	0x36, 0x0a, 0x10, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x65, 0x62, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x68, 0x74, 0x74, 0x70, 0x72, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x68, 0x74, 0x74, 0x70, 0x72,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x83, 0x02, 0x0a, 0x10, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x45, 0x76, 0x61, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x25, 0x0a, 0x0e,
+	0x63, 0x61, 0x6c, 0x6c, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x63, 0x61, 0x6c, 0x6c, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x65, 0x78,
+	0x74, 0x72, 0x61, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
+	0x65, 0x78, 0x74, 0x72, 0x61, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x66, 0x75, 0x6e,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0c, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16,
+	0x0a, 0x06, 0x6b, 0x77, 0x61, 0x72, 0x67, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x6b, 0x77, 0x61, 0x72, 0x67, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x65,
+	0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x65, 0x65,
+	0x12, 0x2b, 0x0a, 0x11, 0x61, 0x74, 0x74, 0x61, 0x63, 0x68, 0x65, 0x64, 0x5f, 0x6d, 0x65, 0x73,
+	0x73, 0x61, 0x67, 0x65, 0x73, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x10, 0x61, 0x74, 0x74,
+	0x61, 0x63, 0x68, 0x65, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x22, 0x2f, 0x0a,
+	0x11, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x76, 0x61, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xae,
+	0x04, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x68, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61,
+	0x6d, 0x73, 0x12, 0x1f, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x15, 0x12, 0x13, 0x2f,
+	0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x70, 0x61, 0x72, 0x61,
+	0x6d, 0x73, 0x12, 0x72, 0x0a, 0x06, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x12, 0x1f, 0x2e, 0x62,
+	0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e,
 	0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72,
-	0x79, 0x47, 0x65, 0x74, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x25, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1f, 0x12, 0x1d, 0x2f, 0x62, 0x6c, 0x69,
-	0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f,
-	0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x12, 0x71, 0x0a, 0x09, 0x53, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x41, 0x6c, 0x6c, 0x12, 0x22, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63,
-	0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x53, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e, 0x62, 0x6c, 0x69,
-	0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c,
-	0x6c, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x1b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x15, 0x12, 0x13, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73,
-	0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x12, 0x64, 0x0a, 0x04,
-	0x45, 0x76, 0x61, 0x6c, 0x12, 0x13, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69,
-	0x70, 0x74, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x75, 0x6e, 0x1a, 0x1b, 0x2e, 0x62, 0x6c, 0x69, 0x74,
-	0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x4d, 0x73, 0x67, 0x52, 0x75, 0x6e, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x2a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x24, 0x22, 0x22,
-	0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x65, 0x76, 0x61,
-	0x6c, 0x2f, 0x7b, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x7d, 0x12, 0x74, 0x0a, 0x03, 0x57, 0x65, 0x62, 0x12, 0x1c, 0x2e, 0x62, 0x6c, 0x69, 0x74,
-	0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x65, 0x62,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73,
-	0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x57, 0x65, 0x62, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x30, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2a, 0x12, 0x28,
-	0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x77, 0x65, 0x62,
-	0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x2f, 0x7b, 0x68, 0x74, 0x74, 0x70,
-	0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x7d, 0x42, 0x88, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d,
-	0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x42, 0x0a, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1c, 0x63, 0x6f, 0x73, 0x6d,
-	0x6f, 0x73, 0x73, 0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x62, 0x6c, 0x69,
-	0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0xa2, 0x02, 0x03, 0x42, 0x53, 0x58, 0xaa, 0x02,
-	0x0b, 0x42, 0x6c, 0x69, 0x74, 0x2e, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0xca, 0x02, 0x0b, 0x42,
-	0x6c, 0x69, 0x74, 0x5c, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0xe2, 0x02, 0x17, 0x42, 0x6c, 0x69,
-	0x74, 0x5c, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0c, 0x42, 0x6c, 0x69, 0x74, 0x3a, 0x3a, 0x53, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x79, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x25, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1f, 0x12, 0x1d, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x7b, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x12, 0x6c, 0x0a, 0x07, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x73, 0x12, 0x20, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x21, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1c, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x16, 0x12, 0x14,
+	0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2f, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x73, 0x12, 0x71, 0x0a, 0x04, 0x45, 0x76, 0x61, 0x6c, 0x12, 0x1d, 0x2e, 0x62,
+	0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x45, 0x76, 0x61, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1e, 0x2e, 0x62, 0x6c,
+	0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45,
+	0x76, 0x61, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x2a, 0x82, 0xd3, 0xe4,
+	0x93, 0x02, 0x24, 0x12, 0x22, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x2f, 0x65, 0x76, 0x61, 0x6c, 0x2f, 0x7b, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x61,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x12, 0x66, 0x0a, 0x03, 0x57, 0x65, 0x62, 0x12, 0x1c,
+	0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x57, 0x65, 0x62, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x62,
+	0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x57, 0x65, 0x62, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x22, 0x82, 0xd3, 0xe4,
+	0x93, 0x02, 0x1c, 0x12, 0x1a, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x2f, 0x77, 0x65, 0x62, 0x2f, 0x7b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x7d, 0x42,
+	0x88, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x1c, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73, 0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0xa2,
+	0x02, 0x03, 0x42, 0x53, 0x58, 0xaa, 0x02, 0x0b, 0x42, 0x6c, 0x69, 0x74, 0x2e, 0x53, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0xca, 0x02, 0x0b, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x53, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0xe2, 0x02, 0x17, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5c,
+	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0c, 0x42, 0x6c,
+	0x69, 0x74, 0x3a, 0x3a, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -3992,38 +5351,38 @@ func file_blit_script_query_proto_rawDescGZIP() []byte {
 	return file_blit_script_query_proto_rawDescData
 }
 
-var file_blit_script_query_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_blit_script_query_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_blit_script_query_proto_goTypes = []interface{}{
-	(*QueryParamsRequest)(nil),     // 0: blit.script.QueryParamsRequest
-	(*QueryParamsResponse)(nil),    // 1: blit.script.QueryParamsResponse
-	(*QueryGetScriptRequest)(nil),  // 2: blit.script.QueryGetScriptRequest
-	(*QueryGetScriptResponse)(nil), // 3: blit.script.QueryGetScriptResponse
-	(*QueryAllScriptRequest)(nil),  // 4: blit.script.QueryAllScriptRequest
-	(*QueryAllScriptResponse)(nil), // 5: blit.script.QueryAllScriptResponse
-	(*QueryWebRequest)(nil),        // 6: blit.script.QueryWebRequest
-	(*QueryWebResponse)(nil),       // 7: blit.script.QueryWebResponse
-	(*Params)(nil),                 // 8: blit.script.Params
-	(*Script)(nil),                 // 9: blit.script.Script
-	(*v1beta1.PageRequest)(nil),    // 10: cosmos.base.query.v1beta1.PageRequest
-	(*v1beta1.PageResponse)(nil),   // 11: cosmos.base.query.v1beta1.PageResponse
-	(*MsgRun)(nil),                 // 12: blit.script.MsgRun
-	(*MsgRunResponse)(nil),         // 13: blit.script.MsgRunResponse
+	(*QueryParamsRequest)(nil),   // 0: blit.script.QueryParamsRequest
+	(*QueryParamsResponse)(nil),  // 1: blit.script.QueryParamsResponse
+	(*QueryScriptRequest)(nil),   // 2: blit.script.QueryScriptRequest
+	(*QueryScriptResponse)(nil),  // 3: blit.script.QueryScriptResponse
+	(*QueryScriptsRequest)(nil),  // 4: blit.script.QueryScriptsRequest
+	(*QueryScriptsResponse)(nil), // 5: blit.script.QueryScriptsResponse
+	(*QueryWebRequest)(nil),      // 6: blit.script.QueryWebRequest
+	(*QueryWebResponse)(nil),     // 7: blit.script.QueryWebResponse
+	(*QueryEvalRequest)(nil),     // 8: blit.script.QueryEvalRequest
+	(*QueryEvalResponse)(nil),    // 9: blit.script.QueryEvalResponse
+	(*Params)(nil),               // 10: blit.script.Params
+	(*Script)(nil),               // 11: blit.script.Script
+	(*v1beta1.PageRequest)(nil),  // 12: cosmos.base.query.v1beta1.PageRequest
+	(*v1beta1.PageResponse)(nil), // 13: cosmos.base.query.v1beta1.PageResponse
 }
 var file_blit_script_query_proto_depIdxs = []int32{
-	8,  // 0: blit.script.QueryParamsResponse.params:type_name -> blit.script.Params
-	9,  // 1: blit.script.QueryGetScriptResponse.script:type_name -> blit.script.Script
-	10, // 2: blit.script.QueryAllScriptRequest.pagination:type_name -> cosmos.base.query.v1beta1.PageRequest
-	9,  // 3: blit.script.QueryAllScriptResponse.script:type_name -> blit.script.Script
-	11, // 4: blit.script.QueryAllScriptResponse.pagination:type_name -> cosmos.base.query.v1beta1.PageResponse
+	10, // 0: blit.script.QueryParamsResponse.params:type_name -> blit.script.Params
+	11, // 1: blit.script.QueryScriptResponse.script:type_name -> blit.script.Script
+	12, // 2: blit.script.QueryScriptsRequest.pagination:type_name -> cosmos.base.query.v1beta1.PageRequest
+	11, // 3: blit.script.QueryScriptsResponse.script:type_name -> blit.script.Script
+	13, // 4: blit.script.QueryScriptsResponse.pagination:type_name -> cosmos.base.query.v1beta1.PageResponse
 	0,  // 5: blit.script.Query.Params:input_type -> blit.script.QueryParamsRequest
-	2,  // 6: blit.script.Query.Script:input_type -> blit.script.QueryGetScriptRequest
-	4,  // 7: blit.script.Query.ScriptAll:input_type -> blit.script.QueryAllScriptRequest
-	12, // 8: blit.script.Query.Eval:input_type -> blit.script.MsgRun
+	2,  // 6: blit.script.Query.Script:input_type -> blit.script.QueryScriptRequest
+	4,  // 7: blit.script.Query.Scripts:input_type -> blit.script.QueryScriptsRequest
+	8,  // 8: blit.script.Query.Eval:input_type -> blit.script.QueryEvalRequest
 	6,  // 9: blit.script.Query.Web:input_type -> blit.script.QueryWebRequest
 	1,  // 10: blit.script.Query.Params:output_type -> blit.script.QueryParamsResponse
-	3,  // 11: blit.script.Query.Script:output_type -> blit.script.QueryGetScriptResponse
-	5,  // 12: blit.script.Query.ScriptAll:output_type -> blit.script.QueryAllScriptResponse
-	13, // 13: blit.script.Query.Eval:output_type -> blit.script.MsgRunResponse
+	3,  // 11: blit.script.Query.Script:output_type -> blit.script.QueryScriptResponse
+	5,  // 12: blit.script.Query.Scripts:output_type -> blit.script.QueryScriptsResponse
+	9,  // 13: blit.script.Query.Eval:output_type -> blit.script.QueryEvalResponse
 	7,  // 14: blit.script.Query.Web:output_type -> blit.script.QueryWebResponse
 	10, // [10:15] is the sub-list for method output_type
 	5,  // [5:10] is the sub-list for method input_type
@@ -4039,7 +5398,6 @@ func file_blit_script_query_proto_init() {
 	}
 	file_blit_script_params_proto_init()
 	file_blit_script_script_proto_init()
-	file_blit_script_msgrun_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_blit_script_query_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryParamsRequest); i {
@@ -4066,7 +5424,7 @@ func file_blit_script_query_proto_init() {
 			}
 		}
 		file_blit_script_query_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryGetScriptRequest); i {
+			switch v := v.(*QueryScriptRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4078,7 +5436,7 @@ func file_blit_script_query_proto_init() {
 			}
 		}
 		file_blit_script_query_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryGetScriptResponse); i {
+			switch v := v.(*QueryScriptResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4090,7 +5448,7 @@ func file_blit_script_query_proto_init() {
 			}
 		}
 		file_blit_script_query_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryAllScriptRequest); i {
+			switch v := v.(*QueryScriptsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4102,7 +5460,7 @@ func file_blit_script_query_proto_init() {
 			}
 		}
 		file_blit_script_query_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryAllScriptResponse); i {
+			switch v := v.(*QueryScriptsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4137,6 +5495,30 @@ func file_blit_script_query_proto_init() {
 				return nil
 			}
 		}
+		file_blit_script_query_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QueryEvalRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_blit_script_query_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QueryEvalResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -4144,7 +5526,7 @@ func file_blit_script_query_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_blit_script_query_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

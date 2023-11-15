@@ -1,9 +1,9 @@
 package keeper_test
 
 import (
+	"context"
 	"testing"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
 	keepertest "blit/testutil/keeper"
@@ -11,7 +11,7 @@ import (
 	"blit/x/storage/types"
 )
 
-func setupMsgServer(t testing.TB) (keeper.Keeper, types.MsgServer, sdk.Context) {
+func setupMsgServer(t testing.TB) (keeper.Keeper, types.MsgServer, context.Context) {
 	k, ctx := keepertest.StorageKeeper(t)
 	return k, keeper.NewMsgServerImpl(k), ctx
 }
