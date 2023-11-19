@@ -28,6 +28,7 @@ def update_config_file(config_path, updates):
 
         # Update values in the TOML config
         for key, value in updates.items():
+            print(f"Updating {config_path}: {key}: {value}")
             keys = key.split('.')
             d = config
             for k in keys[:-1]:
@@ -87,6 +88,15 @@ def main():
     # Update the config file
     config_path = os.path.join(HOME_DIR, "config", "config.toml")
     update_config_file(config_path, updates)
+
+    app_config_path = os.path.join(HOME_DIR, "config", "app.toml")
+    update_config_file(app_config_path, {
+        'state-sync.enable': True,
+        'minimum-gas-prices': '0.0ublit',
+        'api.enable': True,
+        'api.swagger': True,
+    })
+
 
 if __name__ == "__main__":
     main()

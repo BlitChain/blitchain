@@ -70,10 +70,12 @@ RUN pyenv install --patch < patch
 COPY --chown=user:user blitvm/requirements.txt ./blitvm/requirements.txt
 RUN python -m pip install --user -r ./blitvm/requirements.txt
 COPY --chown=user:user ./blitvm ./blitvm
+COPY --chown=user:user ./scripts/ ./scripts
+COPY --chown=user:user ./Makefile .
 
-COPY --from=0 --chown=user:user /app/blitd ./blitd
+COPY --from=0 --chown=user:user /app/blitd ./bin/blitd
 
-CMD ["./blitd", "start"]
+CMD ["./bin/blitd", "start"]
 
 EXPOSE 1317
 EXPOSE 26657
