@@ -31,7 +31,14 @@ Docker Installation (recommended)
 
 ### Build Container and connect to testnet
 
-Build the Blit container
+Make sure `BLIT_VERSION` is set from above.
+
+Option 1: Pull the container
+```bash
+$ docker compose pull
+```
+
+Options 2: Build the Blit container
 
 ```bash
 $ docker compose build
