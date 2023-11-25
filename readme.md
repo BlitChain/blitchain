@@ -7,6 +7,25 @@ Set the Blit version (testnet) as an environment variable. It will be used in th
 $ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
 ```
 
+# Quick Start
+
+To hit the ground running paste this in your terminal. Requires docker to be installed.
+
+```bash
+$ docker run --init -it --rm \
+    -v ~/.blit:/home/user/.blit \
+    -p 26656:26656 \
+    -p 26657:26657 \
+    -p 1317:1317 \
+    -p 9090:9090 \
+    blitchain/blitchain:$BLIT_VERSION \
+    /bin/bash -c './bin/blitd init my_node_name ; make testnet start'
+```
+
+# The long way
+
+To get the code and build from source.
+
 ## Get the Code
 Clone the repo for the first time.
 ```
@@ -33,14 +52,7 @@ $ git checkout --recurse-submodule $BLIT_VERSION
 
 Make sure `BLIT_VERSION` is set from above.
 
-You have 2 options for getting the container: pulling or building.
-
-### Option 1 (recommended): Pull the container from Docker Hub
-```bash
-$ docker compose pull
-```
-
-### Option 2: Build the Blit container from source
+### Build the Blit container from source
 
 ```bash
 $ docker compose build
