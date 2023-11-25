@@ -1,5 +1,12 @@
 # Blit
 
+## Set the Current Version
+Set the Blit version (testnet) as an environment variable. It will be used in the rest of the commands.
+
+```bash
+$ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
+```
+
 ## Get the Code
 Clone the repo for the first time.
 ```
@@ -16,31 +23,24 @@ $ cd blitchain
 $ git fetch origin $BLIT_VERSION:$BLIT_VERSION --depth 1
 $ git checkout --recurse-submodule $BLIT_VERSION
 ```
-## Docker Installation (recommended)
 
-Set the Blit version (testnet) as an environment variable
-
-```bash
-$ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
-```
+## Run with Docker (recommended)
 
 ### Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-### Build Container and connect to testnet
-
 Make sure `BLIT_VERSION` is set from above.
 
 You have 2 options for getting the container: pulling or building.
 
-#### Option 1 (recommended): Pull the container from Docker Hub
+### Option 1 (recommended): Pull the container from Docker Hub
 ```bash
 $ docker compose pull
 ```
 
-#### Option 2: Build the Blit container from source
+### Option 2: Build the Blit container from source
 
 ```bash
 $ docker compose build
