@@ -1,11 +1,71 @@
 # Blit
 
-Manual Installation
+
+# Get the code
+Set the version of Blit as an environment variable
+
+```bash
+$ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
+```
+
+Clone the repo for the first time.
+```
+git clone -b $BLIT_VERSION --depth=1  --recursive  https://github.com/BlitChain/blitchain
+```
+
+Or fetch and checkout the version.
+
+```bash
+$ cd blitchain
+$ git fetch origin $BLIT_VERSION:$BLIT_VERSION --depth 1
+$ git checkout $BLIT_VERSION
+```
+
+Docker Installation (recommended)
 -------------------
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+### Build Container and connect to testnet
+
+Build the Blit container
+
+```bash
+$ docker compose build
+```
+
+Initialize your node with and replace `$MY_MONIKOR` with your node name
+
+```bash
+$ docker compose run blit ./bin/blitd init $MY_MONIKOR
+```
+
+Update config to connect to the testnet
+
+```bash
+$ docker compose run blit make testnet
+```
+
+Start syncing the testnet
+
+```bash
+$ docker compose up blit
+```
+
+Manual Installation
+------------------
 
 Follow the steps below to manually install and build the project:
 
-### 1\. Install Dependencies
+### Prerequisites
+
+- [Pyenv](https://github.com/pyenv/pyenv)
+- [Goenv](https://github.com/go-nv/goenv)
+
+### Install Dependencies
 
 First, you'll need to install some dependencies. On a Debian-based system, you can do this with the following command:
 
@@ -33,43 +93,8 @@ sudo apt-get update -y && sudo apt-get install -y \
     dnsutils
 ```
 
-Also install Go from the [Offical Docs](https://go.dev/dl/) or using goenv
 
-
-
-```
-curl -OL https://go.dev/dl/go1.20.3.linux-amd64.tar.gz
-sudo tar -C /usr/local -xvf ./go1.20.3.linux-amd64.tar.gz
-
-echo '
-export GOPATH=$HOME/go
-export GOROOT=/usr/local/go
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:/usr/local/go/bin:$GOBIN' >> ~/.bashrc
-```
-
-### 3\. Install Pyenv
-
-Similarly, for managing Python versions, you can use `pyenv`. Here's how to install it:
-
-```bash
-git clone --depth=1 https://github.com/pyenv/pyenv.git ~/.pyenv
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
-source ~/.bashrc
-```
-
-### 4\. Clone the Repository
-
-Now, clone the Blit repository to your local machine:
-
-```bash
-git clone --depth=1  --recursive  https://github.com/BlitChain/blitchain
-cd blitchain
-```
-
-### 5\. Pyenv build with Python Patch
+### Pyenv build with Python Patch
 
 To build the patched version of Python in `.python-version` run:
 
@@ -77,7 +102,7 @@ To build the patched version of Python in `.python-version` run:
 pyenv install --patch < patch
 ```
 
-### 6\. Install Python Requirements
+###  Install Python Requirements
 
 Now install the required Python packages using pip:
 
@@ -88,8 +113,13 @@ python -m pip install -r ./blitvm/requirements.txt
 
 Now, you should have all the necessary dependencies installed and have built the project. You can start `blitd` with the following command:
 
+### Install the proper Goversion
 
-### 7\. Build blitd
+```bash
+$ goenv install
+```
+
+###  Build blitd
 
 Now you need to build `blitd` from the source. First, ensure you have the right version of Go installed by checking the `.go-version` file in the project. Then run:
 
@@ -106,9 +136,9 @@ make build
 ```
 
 
-## Connect to the Testnet and start the node
+## Configure to connect to the Testnet
 ```
-make testnet start
+make testnet 
 ```
 
 ## Configure
@@ -137,4 +167,11 @@ enabled-unsafe-cors = true
 [rpc]
 laddr = "tcp://127.0.0.1:26657"
 cors_allowed_origins = [ "*" ]
+```
+
+## Start the node
+
+Start syncing the testnet
+```bash
+$ make start
 ```
