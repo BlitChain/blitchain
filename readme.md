@@ -55,8 +55,9 @@ Start syncing the testnet
 $ docker compose up blit
 ```
 
-> [!NOTE for Docker Desktop]  
-> You may need to set the host from `localhost` to `0.0.0.0` in ~/.blit/config/app.yaml in order to acceess the node services
+|:exclamation:  Note for Docker Machine  |
+|:-----------------------------------------|
+| You may need to set the host from `localhost` to `0.0.0.0` in `~/.blit/config/app.yaml` in order to acceess the node services. Docker machine runs the containers in a VM and binding to `localhost` is overly restrictive in this case. |
 
 
 Manual Installation
