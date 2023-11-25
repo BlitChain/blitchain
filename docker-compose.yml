@@ -4,9 +4,7 @@ services:
   blit:
     build: 
       context: .
-    image: blitchain/blitchain:${TAG-dev}
-    environment:
-      - TAG
+    image: blitchain/blitchain:${BLIT_VERSION-dev}
     ports: 
       - "26656-26657:26656-26657"
       - "1317:1317"
