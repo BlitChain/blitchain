@@ -14,10 +14,10 @@ To hit the ground running paste this in your terminal. Requires docker to be ins
 ```bash
 $ docker run --init -it --rm \
     -v ~/.blit:/home/user/.blit \
-    -p 26656:26656 \
-    -p 26657:26657 \
-    -p 1317:1317 \
-    -p 9090:9090 \
+    -p 127.0.0.1:26656:26656 \
+    -p 127.0.0.1:26657:26657 \
+    -p 127.0.0.1:1317:1317 \
+    -p 127.0.0.1:9090:9090 \
     blitchain/blitchain:$BLIT_VERSION \
     /bin/bash -c './bin/blitd init my_node_name ; make testnet start'
 ```
