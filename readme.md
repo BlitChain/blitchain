@@ -1,5 +1,21 @@
 # Blit
 
+## Get the Code
+Clone the repo for the first time.
+```
+$ git clone -b $BLIT_VERSION --depth=1  --recursive  https://github.com/BlitChain/blitchain
+$ cd blitchain
+```
+
+_Or_ fetch and checkout the version of the existing repo.
+
+Note: Remember to sync submodules!
+
+```bash
+$ cd blitchain
+$ git fetch origin $BLIT_VERSION:$BLIT_VERSION --depth 1
+$ git checkout --recurse-submodule $BLIT_VERSION
+```
 ## Docker Installation (recommended)
 
 Set the Blit version (testnet) as an environment variable
@@ -17,7 +33,7 @@ $ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint
 
 Make sure `BLIT_VERSION` is set from above.
 
-You have 2 options for getting the container, pulling or building.
+You have 2 options for getting the container: pulling or building.
 
 #### Option 1 (recommended): Pull the container from Docker Hub
 ```bash
@@ -26,23 +42,6 @@ $ docker compose pull
 
 #### Option 2: Build the Blit container from source
 
-Clone the repo for the first time.
-```
-$ git clone -b $BLIT_VERSION --depth=1  --recursive  https://github.com/BlitChain/blitchain
-$ cd blitchain
-```
-
-_Or_ fetch and checkout the version of the existing repo.
-
-Note: Remember to sync submodules!
-
-```bash
-$ cd blitchain
-$ git fetch origin $BLIT_VERSION:$BLIT_VERSION --depth 1
-$ git checkout --recurse-submodule $BLIT_VERSION
-```
-
-Now you can uild the container
 ```bash
 $ docker compose build
 ```
