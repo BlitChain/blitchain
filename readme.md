@@ -18,7 +18,7 @@ Or fetch and checkout the version.
 ```bash
 $ cd blitchain
 $ git fetch origin $BLIT_VERSION:$BLIT_VERSION --depth 1
-$ git checkout $BLIT_VERSION
+$ git checkout --recurse-submodule $BLIT_VERSION
 ```
 
 Docker Installation (recommended)
