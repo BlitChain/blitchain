@@ -7,6 +7,10 @@ Set the Blit version (testnet) as an environment variable. It will be used in th
 $ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
 ```
 
+|:exclamation:  Note for Docker Machine  |
+|:-----------------------------------------|
+| You may need to set the host from `localhost` to `0.0.0.0` in `~/.blit/config/app.yaml` in order to acceess the node services. Docker machine runs the containers in a VM and binding to `localhost` is overly restrictive in this case. |
+
 # Quick Start
 
 To hit the ground running paste this in your terminal. Requires docker to be installed.
@@ -76,10 +80,6 @@ $ docker compose run --rm blit make testnet
 ```bash
 $ docker compose up blit
 ```
-
-|:exclamation:  Note for Docker Machine  |
-|:-----------------------------------------|
-| You may need to set the host from `localhost` to `0.0.0.0` in `~/.blit/config/app.yaml` in order to acceess the node services. Docker machine runs the containers in a VM and binding to `localhost` is overly restrictive in this case. |
 
 -------
 
