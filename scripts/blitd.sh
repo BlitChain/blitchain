@@ -4,7 +4,7 @@
 IMAGE_NAME="blitchain/blitchain:${TAG:-dev}"
 
 # Mapping the daemon home directory from host to container
-DAEMON_HOME_MAP="${DEAMON_HOME}:/home/user/.blit"
+DAEMON_HOME_MAP="${DEAMON_HOME-$HOME/.blit}:/home/user/.blit"
 
 # Collect all arguments for the blitd command
 BLITD_ARGS="$@"
@@ -29,4 +29,4 @@ exec docker run -it --rm \
     -v $DAEMON_HOME_MAP \
     -p $P2P_26656:26656 -p $JSONRPC_26657:26657 -p $REST_1317:1317 -p $GRPC_9090:9090 \
     $IMAGE_NAME \
-    ./blitd $BLITD_ARGS
+    ./bin/blitd $BLITD_ARGS
