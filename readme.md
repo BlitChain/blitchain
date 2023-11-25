@@ -1,28 +1,12 @@
 # Blit
 
+## Docker Installation (recommended)
 
-# Get the code
-Set the version of Blit as an environment variable
+Set the Blit version (testnet) as an environment variable
 
 ```bash
 $ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
 ```
-
-Clone the repo for the first time.
-```
-git clone -b $BLIT_VERSION --depth=1  --recursive  https://github.com/BlitChain/blitchain
-```
-
-Or fetch and checkout the version.
-
-```bash
-$ cd blitchain
-$ git fetch origin $BLIT_VERSION:$BLIT_VERSION --depth 1
-$ git checkout --recurse-submodule $BLIT_VERSION
-```
-
-Docker Installation (recommended)
--------------------
 
 ### Prerequisites
 
@@ -33,30 +17,50 @@ Docker Installation (recommended)
 
 Make sure `BLIT_VERSION` is set from above.
 
-Option 1: Pull the container
+You have 2 options for getting the container, pulling or building.
+
+#### Option 1 (recommended): Pull the container from Docker Hub
 ```bash
 $ docker compose pull
 ```
 
-Options 2: Build the Blit container
+#### Option 2: Build the Blit container from source
 
+Clone the repo for the first time.
+```
+$ git clone -b $BLIT_VERSION --depth=1  --recursive  https://github.com/BlitChain/blitchain
+$ cd blitchain
+```
+
+_Or_ fetch and checkout the version of the existing repo.
+
+Note: Remember to sync submodules!
+
+```bash
+$ cd blitchain
+$ git fetch origin $BLIT_VERSION:$BLIT_VERSION --depth 1
+$ git checkout --recurse-submodule $BLIT_VERSION
+```
+
+Now you can uild the container
 ```bash
 $ docker compose build
 ```
 
+### Initialize the node
 Initialize your node with and replace `$MY_MONIKOR` with your node name
 
 ```bash
-$ docker compose run blit ./bin/blitd init $MY_MONIKOR
+$ docker compose run --rm blit ./bin/blitd init $MY_MONIKOR
 ```
 
 Update config to connect to the testnet
 
 ```bash
-$ docker compose run blit make testnet
+$ docker compose run --rm blit make testnet
 ```
 
-Start syncing the testnet
+### Start syncing the testnet
 
 ```bash
 $ docker compose up blit
@@ -66,9 +70,9 @@ $ docker compose up blit
 |:-----------------------------------------|
 | You may need to set the host from `localhost` to `0.0.0.0` in `~/.blit/config/app.yaml` in order to acceess the node services. Docker machine runs the containers in a VM and binding to `localhost` is overly restrictive in this case. |
 
+-------
 
-Manual Installation
-------------------
+## Manual Installation
 
 Follow the steps below to manually install and build the project:
 
@@ -148,9 +152,16 @@ make build
 ```
 
 
-## Configure to connect to the Testnet
+### Configure to connect to the Testnet
 ```
 make testnet 
+```
+
+### Start the node
+
+Start syncing the testnet
+```bash
+$ make start
 ```
 
 ## Configure
@@ -179,11 +190,4 @@ enabled-unsafe-cors = true
 [rpc]
 laddr = "tcp://127.0.0.1:26657"
 cors_allowed_origins = [ "*" ]
-```
-
-## Start the node
-
-Start syncing the testnet
-```bash
-$ make start
 ```
