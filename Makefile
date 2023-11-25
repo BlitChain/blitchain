@@ -32,4 +32,4 @@ build:
 
 
 start:
-	./bin/blitd start
+	exec ./bin/blitd start
