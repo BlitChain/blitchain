@@ -30,18 +30,6 @@ build:
 		./cmd/blitd 
 
 
-install:
-	@cd ./src && \
-	export GIT_VERSION=`git symbolic-ref -q --short HEAD || git describe --tags --exact-match 2> /dev/null   || git rev-parse --short HEAD` && \
-	export GIT_COMMIT=`git rev-parse HEAD` && \
-	go install -mod=readonly \
-		-ldflags "-X github.com/cosmos/cosmos-sdk/version.Name=blit \
-		-X github.com/cosmos/cosmos-sdk/version.AppName=blitd \
-		-X github.com/cosmos/cosmos-sdk/version.Version=$${GIT_VERSION} \
-		-X github.com/cosmos/cosmos-sdk/version.Commit=$${GIT_COMMIT}" \
-		-trimpath \
-		./cmd/blitd
-
 
 start:
 	./bin/blitd start

@@ -1,9 +1,27 @@
-FROM golang:bookworm
+FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN apt-get update -y \
+    && apt-get install -y \
+	make \
+    wget \
+	build-essential \
+	git \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app/
+
+ENV HOME  /root
+ENV GOENV_ROOT "$HOME/.goenv"
+
+RUN git clone https://github.com/go-nv/goenv.git $GOENV_ROOT
+ENV PATH "$GOENV_ROOT/shims:$GOENV_ROOT/bin:$PATH"
+
 COPY .go-version .
+
+RUN goenv install 
+
 COPY src/go.mod src/go.mod
 COPY src/go.sum src/go.sum
 COPY cosmos-sdk cosmos-sdk
@@ -11,19 +29,11 @@ COPY cosmos-sdk cosmos-sdk
 RUN cd src && go mod download -x
 
 COPY src src
+COPY Makefile Makefile
 
-RUN GOWORK=off cd src && go build \
-        -mod=readonly \
-        -ldflags \
-            "-X github.com/cosmos/cosmos-sdk/version.Name="blit" \
-            -X github.com/cosmos/cosmos-sdk/version.AppName="blitd" \
-            -X github.com/cosmos/cosmos-sdk/version.Version=${GIT_VERSION} \
-            -X github.com/cosmos/cosmos-sdk/version.Commit=${GIT_COMMIT} \
-            -X github.com/cosmos/cosmos-sdk/version.BuildTags=${BUILD_TAGS} \
-            -w -s -linkmode=external -extldflags '-Wl,-z,muldefs -static'" \
-        -trimpath \
-        -o ../blitd \
-        ./cmd/blitd
+COPY .git .git
+
+RUN make build
 
 FROM debian:bookworm-slim
 
@@ -73,7 +83,7 @@ COPY --chown=user:user ./blitvm ./blitvm
 COPY --chown=user:user ./scripts/ ./scripts
 COPY --chown=user:user ./Makefile .
 
-COPY --from=0 --chown=user:user /app/blitd ./bin/blitd
+COPY --from=0 --chown=user:user /app/bin/blitd ./bin/blitd
 
 CMD ["./bin/blitd", "start"]
 
