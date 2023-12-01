@@ -1,9 +1,39 @@
 # Blit
 
+## Set the Current Version
+Set the Blit version (testnet) as an environment variable. It will be used in the rest of the commands.
+
+```bash
+$ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
+```
+
+|:exclamation:  Note for Docker Machine  |
+|:-----------------------------------------|
+| You may need to set the host from `localhost` to `0.0.0.0` in `~/.blit/config/app.yaml` in order to acceess the node services. Docker machine runs the containers in a VM and binding to `localhost` is overly restrictive in this case. |
+
+# Quick Start
+
+To hit the ground running paste this in your terminal. Requires docker to be installed.
+
+```bash
+$ docker run --init -it --rm \
+    -v ~/.blit:/home/user/.blit \
+    -p 127.0.0.1:26656:26656 \
+    -p 127.0.0.1:26657:26657 \
+    -p 127.0.0.1:1317:1317 \
+    -p 127.0.0.1:9090:9090 \
+    blitchain/blitchain:$BLIT_VERSION \
+    /bin/bash -c './bin/blitd init my_node_name ; make testnet start'
+```
+
+# The long way
+
+To get the code and build from source.
+
 ## Get the Code
 Clone the repo for the first time.
 ```
-$ git clone -b $BLIT_VERSION --depth=1  --recursive  https://github.com/BlitChain/blitchain
+$ git clone -b $BLIT_VERSION --recursive  https://github.com/BlitChain/blitchain
 $ cd blitchain
 ```
 
@@ -13,34 +43,20 @@ Note: Remember to sync submodules!
 
 ```bash
 $ cd blitchain
-$ git fetch origin $BLIT_VERSION:$BLIT_VERSION --depth 1
+$ git fetch origin $BLIT_VERSION:$BLIT_VERSION
 $ git checkout --recurse-submodule $BLIT_VERSION
 ```
-## Docker Installation (recommended)
 
-Set the Blit version (testnet) as an environment variable
-
-```bash
-$ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
-```
+## Run with Docker (recommended)
 
 ### Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-### Build Container and connect to testnet
-
 Make sure `BLIT_VERSION` is set from above.
 
-You have 2 options for getting the container: pulling or building.
-
-#### Option 1 (recommended): Pull the container from Docker Hub
-```bash
-$ docker compose pull
-```
-
-#### Option 2: Build the Blit container from source
+### Build the Blit container from source
 
 ```bash
 $ docker compose build
@@ -64,10 +80,6 @@ $ docker compose run --rm blit make testnet
 ```bash
 $ docker compose up blit
 ```
-
-|:exclamation:  Note for Docker Machine  |
-|:-----------------------------------------|
-| You may need to set the host from `localhost` to `0.0.0.0` in `~/.blit/config/app.yaml` in order to acceess the node services. Docker machine runs the containers in a VM and binding to `localhost` is overly restrictive in this case. |
 
 -------
 
