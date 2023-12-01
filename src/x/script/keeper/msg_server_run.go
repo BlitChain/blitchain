@@ -28,7 +28,7 @@ func (k msgServer) Run(goCtx context.Context, msg *types.MsgRun) (*types.MsgRunR
 
 		// Prevent looping
 		originalGrantee := sdk.MustAccAddressFromBech32(msg.Grantee)
-		msg.Grantee = ""
+		msg.Grantee = msg.CallerAddress
 		execMsg := authz.NewMsgExec(
 			originalGrantee,
 			[]sdk.Msg{msg},

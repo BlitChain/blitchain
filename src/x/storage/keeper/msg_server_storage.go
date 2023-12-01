@@ -18,7 +18,7 @@ func (k msgServer) CreateStorage(goCtx context.Context, msg *types.MsgCreateStor
 
 		// Prevent looping
 		originalGrantee := sdk.MustAccAddressFromBech32(msg.Grantee)
-		msg.Grantee = ""
+		msg.Grantee = msg.Address
 		execMsg := authz.NewMsgExec(
 			originalGrantee,
 			[]sdk.Msg{msg},
@@ -66,7 +66,7 @@ func (k msgServer) UpdateStorage(goCtx context.Context, msg *types.MsgUpdateStor
 
 		// Prevent looping
 		originalGrantee := sdk.MustAccAddressFromBech32(msg.Grantee)
-		msg.Grantee = ""
+		msg.Grantee = msg.Address
 		execMsg := authz.NewMsgExec(
 			originalGrantee,
 			[]sdk.Msg{msg},
@@ -108,7 +108,7 @@ func (k msgServer) DeleteStorage(goCtx context.Context, msg *types.MsgDeleteStor
 
 		// Prevent looping
 		originalGrantee := sdk.MustAccAddressFromBech32(msg.Grantee)
-		msg.Grantee = ""
+		msg.Grantee = msg.Address
 		execMsg := authz.NewMsgExec(
 			originalGrantee,
 			[]sdk.Msg{msg},
