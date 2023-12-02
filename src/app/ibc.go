@@ -1,25 +1,33 @@
 package app
 
 import (
+	"cosmossdk.io/client/v2/autocli"
 	storetypes "cosmossdk.io/store/types"
+	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	govv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
+	"github.com/cosmos/ibc-go/modules/capability"
 	capabilitykeeper "github.com/cosmos/ibc-go/modules/capability/keeper"
 	capabilitytypes "github.com/cosmos/ibc-go/modules/capability/types"
+	icamodule "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts"
 	icacontroller "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/controller"
 	icacontrollerkeeper "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/controller/keeper"
 	icacontrollertypes "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/controller/types"
 	icahost "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/host"
 	icahostkeeper "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/host/keeper"
 	icahosttypes "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/host/types"
+	icatypes "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/types"
 	ibcfee "github.com/cosmos/ibc-go/v8/modules/apps/29-fee"
 	ibcfeekeeper "github.com/cosmos/ibc-go/v8/modules/apps/29-fee/keeper"
 	ibcfeetypes "github.com/cosmos/ibc-go/v8/modules/apps/29-fee/types"
 	ibctransfer "github.com/cosmos/ibc-go/v8/modules/apps/transfer"
 	ibctransferkeeper "github.com/cosmos/ibc-go/v8/modules/apps/transfer/keeper"
 	ibctransfertypes "github.com/cosmos/ibc-go/v8/modules/apps/transfer/types"
+	ibc "github.com/cosmos/ibc-go/v8/modules/core"
+	ibcclienttypes "github.com/cosmos/ibc-go/v8/modules/core/02-client/types"
+	ibcconnectiontypes "github.com/cosmos/ibc-go/v8/modules/core/03-connection/types"
 	porttypes "github.com/cosmos/ibc-go/v8/modules/core/05-port/types"
 	ibcexported "github.com/cosmos/ibc-go/v8/modules/core/exported"
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
@@ -28,6 +36,7 @@ import (
 	// this line is used by starport scaffolding # ibc/app/import
 )
 
+// registerIBCModules register IBC keepers and non dependency inject modules.
 func (app *App) registerIBCModules() {
 	// set up non depinject support modules store keys
 	if err := app.RegisterStores(
@@ -43,15 +52,13 @@ func (app *App) registerIBCModules() {
 		panic(err)
 	}
 
-	// set params subspaces
-	for _, m := range []string{
-		ibctransfertypes.ModuleName,
-		ibcexported.ModuleName,
-		icahosttypes.SubModuleName,
-		icacontrollertypes.SubModuleName,
-	} {
-		app.ParamsKeeper.Subspace(m)
-	}
+	// register the key tables for legacy param subspaces
+	keyTable := ibcclienttypes.ParamKeyTable()
+	keyTable.RegisterParamSet(&ibcconnectiontypes.Params{})
+	app.ParamsKeeper.Subspace(ibcexported.ModuleName).WithKeyTable(keyTable)
+	app.ParamsKeeper.Subspace(ibctransfertypes.ModuleName).WithKeyTable(ibctransfertypes.ParamKeyTable())
+	app.ParamsKeeper.Subspace(icacontrollertypes.SubModuleName).WithKeyTable(icacontrollertypes.ParamKeyTable())
+	app.ParamsKeeper.Subspace(icahosttypes.SubModuleName).WithKeyTable(icahosttypes.ParamKeyTable())
 
 	// add capability keeper and ScopeToModule for ibc module
 	app.CapabilityKeeper = capabilitykeeper.NewKeeper(
@@ -153,12 +160,38 @@ func (app *App) registerIBCModules() {
 
 	app.IBCKeeper.SetRouter(ibcRouter)
 
-	// register additional types
-	ibctm.AppModuleBasic{}.RegisterInterfaces(app.interfaceRegistry)
-	solomachine.AppModuleBasic{}.RegisterInterfaces(app.interfaceRegistry)
-
 	app.ScopedIBCKeeper = scopedIBCKeeper
 	app.ScopedIBCTransferKeeper = scopedIBCTransferKeeper
 	app.ScopedICAHostKeeper = scopedICAHostKeeper
 	app.ScopedICAControllerKeeper = scopedICAControllerKeeper
+
+	// register IBC modules
+	if err := app.RegisterModules(
+		ibc.NewAppModule(app.IBCKeeper),
+		ibctransfer.NewAppModule(app.TransferKeeper),
+		ibcfee.NewAppModule(app.IBCFeeKeeper),
+		icamodule.NewAppModule(&app.ICAControllerKeeper, &app.ICAHostKeeper),
+		capability.NewAppModule(app.appCodec, *app.CapabilityKeeper, false),
+		ibctm.AppModule{},
+		solomachine.AppModule{},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// AddIBCModuleManager adds the missing IBC modules into the module manager.
+func AddIBCModuleManager(moduleManager module.BasicManager, autoCliOpts autocli.AppOptions) {
+	moduleManager[ibcexported.ModuleName] = ibc.AppModule{}
+	moduleManager[ibctransfertypes.ModuleName] = ibctransfer.AppModule{}
+	moduleManager[ibcfeetypes.ModuleName] = ibcfee.AppModule{}
+	moduleManager[icatypes.ModuleName] = icamodule.AppModule{}
+	moduleManager[capabilitytypes.ModuleName] = capability.AppModule{}
+	moduleManager[ibctm.ModuleName] = ibctm.AppModule{}
+
+	autoCliOpts.Modules[ibcexported.ModuleName] = ibc.AppModule{}
+	autoCliOpts.Modules[ibctransfertypes.ModuleName] = ibctransfer.AppModule{}
+	autoCliOpts.Modules[ibcfeetypes.ModuleName] = ibcfee.AppModule{}
+	autoCliOpts.Modules[icatypes.ModuleName] = icamodule.AppModule{}
+	autoCliOpts.Modules[capabilitytypes.ModuleName] = capability.AppModule{}
+	autoCliOpts.Modules[ibctm.ModuleName] = ibctm.AppModule{}
 }

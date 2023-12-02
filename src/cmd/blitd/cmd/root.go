@@ -56,6 +56,11 @@ func NewRootCmd() *cobra.Command {
 		panic(err)
 	}
 
+	// Since the IBC modules don't support dependency injection, we need to
+	// manually add the modules to the basic manager on the client side.
+	// This needs to be removed after IBC supports App Wiring.
+	app.AddIBCModuleManager(moduleBasicManager, autoCliOpts)
+
 	rootCmd := &cobra.Command{
 		Use:           app.Name + "d",
 		Short:         "Start blit node",

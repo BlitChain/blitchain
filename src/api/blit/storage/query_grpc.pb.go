@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName     = "/blit.storage.Query/Params"
-	Query_Storage_FullMethodName    = "/blit.storage.Query/Storage"
-	Query_StorageAll_FullMethodName = "/blit.storage.Query/StorageAll"
+	Query_Params_FullMethodName        = "/blit.storage.Query/Params"
+	Query_StorageDetail_FullMethodName = "/blit.storage.Query/StorageDetail"
+	Query_FilterStorage_FullMethodName = "/blit.storage.Query/FilterStorage"
 )
 
 // QueryClient is the client API for Query service.
@@ -30,9 +30,10 @@ const (
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
-	// Queries a list of Storage items.
-	Storage(ctx context.Context, in *QueryGetStorageRequest, opts ...grpc.CallOption) (*QueryGetStorageResponse, error)
-	StorageAll(ctx context.Context, in *QueryAllStorageRequest, opts ...grpc.CallOption) (*QueryAllStorageResponse, error)
+	// Get a specific Storage by addres and index
+	StorageDetail(ctx context.Context, in *QueryStorageDetailRequest, opts ...grpc.CallOption) (*QueryStorageDetailResponse, error)
+	// Filters by address and index prefix.
+	FilterStorage(ctx context.Context, in *QueryFilterStorageRequest, opts ...grpc.CallOption) (*QueryFilterStorageResponse, error)
 }
 
 type queryClient struct {
@@ -52,18 +53,18 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
-func (c *queryClient) Storage(ctx context.Context, in *QueryGetStorageRequest, opts ...grpc.CallOption) (*QueryGetStorageResponse, error) {
-	out := new(QueryGetStorageResponse)
-	err := c.cc.Invoke(ctx, Query_Storage_FullMethodName, in, out, opts...)
+func (c *queryClient) StorageDetail(ctx context.Context, in *QueryStorageDetailRequest, opts ...grpc.CallOption) (*QueryStorageDetailResponse, error) {
+	out := new(QueryStorageDetailResponse)
+	err := c.cc.Invoke(ctx, Query_StorageDetail_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *queryClient) StorageAll(ctx context.Context, in *QueryAllStorageRequest, opts ...grpc.CallOption) (*QueryAllStorageResponse, error) {
-	out := new(QueryAllStorageResponse)
-	err := c.cc.Invoke(ctx, Query_StorageAll_FullMethodName, in, out, opts...)
+func (c *queryClient) FilterStorage(ctx context.Context, in *QueryFilterStorageRequest, opts ...grpc.CallOption) (*QueryFilterStorageResponse, error) {
+	out := new(QueryFilterStorageResponse)
+	err := c.cc.Invoke(ctx, Query_FilterStorage_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,9 +77,10 @@ func (c *queryClient) StorageAll(ctx context.Context, in *QueryAllStorageRequest
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
-	// Queries a list of Storage items.
-	Storage(context.Context, *QueryGetStorageRequest) (*QueryGetStorageResponse, error)
-	StorageAll(context.Context, *QueryAllStorageRequest) (*QueryAllStorageResponse, error)
+	// Get a specific Storage by addres and index
+	StorageDetail(context.Context, *QueryStorageDetailRequest) (*QueryStorageDetailResponse, error)
+	// Filters by address and index prefix.
+	FilterStorage(context.Context, *QueryFilterStorageRequest) (*QueryFilterStorageResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -89,11 +91,11 @@ type UnimplementedQueryServer struct {
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
 }
-func (UnimplementedQueryServer) Storage(context.Context, *QueryGetStorageRequest) (*QueryGetStorageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Storage not implemented")
+func (UnimplementedQueryServer) StorageDetail(context.Context, *QueryStorageDetailRequest) (*QueryStorageDetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StorageDetail not implemented")
 }
-func (UnimplementedQueryServer) StorageAll(context.Context, *QueryAllStorageRequest) (*QueryAllStorageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StorageAll not implemented")
+func (UnimplementedQueryServer) FilterStorage(context.Context, *QueryFilterStorageRequest) (*QueryFilterStorageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FilterStorage not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -126,38 +128,38 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_Storage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryGetStorageRequest)
+func _Query_StorageDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryStorageDetailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).Storage(ctx, in)
+		return srv.(QueryServer).StorageDetail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Query_Storage_FullMethodName,
+		FullMethod: Query_StorageDetail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Storage(ctx, req.(*QueryGetStorageRequest))
+		return srv.(QueryServer).StorageDetail(ctx, req.(*QueryStorageDetailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_StorageAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryAllStorageRequest)
+func _Query_FilterStorage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryFilterStorageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QueryServer).StorageAll(ctx, in)
+		return srv.(QueryServer).FilterStorage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Query_StorageAll_FullMethodName,
+		FullMethod: Query_FilterStorage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).StorageAll(ctx, req.(*QueryAllStorageRequest))
+		return srv.(QueryServer).FilterStorage(ctx, req.(*QueryFilterStorageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -174,12 +176,12 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Query_Params_Handler,
 		},
 		{
-			MethodName: "Storage",
-			Handler:    _Query_Storage_Handler,
+			MethodName: "StorageDetail",
+			Handler:    _Query_StorageDetail_Handler,
 		},
 		{
-			MethodName: "StorageAll",
-			Handler:    _Query_StorageAll_Handler,
+			MethodName: "FilterStorage",
+			Handler:    _Query_FilterStorage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

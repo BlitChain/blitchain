@@ -67,8 +67,8 @@ import (
 
 	blitmodulekeeper "blit/x/blit/keeper"
 	scriptkeeper "blit/x/script/keeper"
-
 	storagemodulekeeper "blit/x/storage/keeper"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"blit/docs"
@@ -131,10 +131,10 @@ type App struct {
 	ScopedICAControllerKeeper capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
 
+	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 	BlitKeeper    blitmodulekeeper.Keeper
 	ScriptKeeper  scriptkeeper.Keeper
 	StorageKeeper storagemodulekeeper.Keeper
-	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
 	sm *module.SimulationManager
@@ -196,15 +196,15 @@ func New(
 		appConfig = depinject.Configs(
 			AppConfig(),
 			depinject.Supply(
-				// supply the application options
+				// Supply the application options
 				appOpts,
 				// Supply with IBC keeper getter for the IBC modules with App Wiring.
 				// The IBC Keeper cannot be passed because it has not been initiated yet.
 				// Passing the getter, the app IBC Keeper will always be accessible.
-				// This needs to be removed after IBC supported App Wiring.
+				// This needs to be removed after IBC supports App Wiring.
 				app.GetIBCKeeper,
 				app.GetCapabilityScopedKeeper,
-				// supply the logger
+				// Supply the logger
 				logger,
 
 				// ADVANCED CONFIGURATION
@@ -271,10 +271,10 @@ func New(
 		&app.GroupKeeper,
 		&app.ConsensusParamsKeeper,
 		&app.CircuitBreakerKeeper,
+		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 		&app.BlitKeeper,
 		&app.ScriptKeeper,
 		&app.StorageKeeper,
-		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)
 	}
@@ -349,7 +349,7 @@ func New(
 	// However, when registering a module manually (i.e. that does not support app wiring), the module version map
 	// must be set manually as follow. The upgrade module will de-duplicate the module version map.
 	//
-	// app.SetInitChainer(func(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
+	// app.SetInitChainer(func(ctx sdk.Context, req *abci.RequestInitChain) (*abci.ResponseInitChain, error) {
 	// 	app.UpgradeKeeper.SetModuleVersionMap(ctx, app.ModuleManager.GetVersionMap())
 	// 	return app.App.InitChainer(ctx, req)
 	// })
@@ -379,8 +379,7 @@ func (app *App) AppCodec() codec.Codec {
 
 // GetKey returns the KVStoreKey for the provided store key.
 func (app *App) GetKey(storeKey string) *storetypes.KVStoreKey {
-	sk := app.UnsafeFindStoreKey(storeKey)
-	kvStoreKey, ok := sk.(*storetypes.KVStoreKey)
+	kvStoreKey, ok := app.UnsafeFindStoreKey(storeKey).(*storetypes.KVStoreKey)
 	if !ok {
 		return nil
 	}
@@ -425,6 +424,7 @@ func (app *App) SimulationManager() *module.SimulationManager {
 func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
 	clientCtx := apiSvr.ClientCtx
 	nodeservice.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
+
 	app.App.RegisterAPIRoutes(apiSvr, apiConfig)
 	// register swagger API in app.go so that other applications can override easily
 	if err := server.RegisterSwaggerAPI(apiSvr.ClientCtx, apiSvr.Router, apiConfig.Swagger); err != nil {
@@ -459,10 +459,10 @@ func catchAllMiddleware(next http.Handler) http.Handler {
 		}
 
 		//if address == "" {
-		//	address, err = DigBlitAddress(host)
-		//	if err != nil {
-		//		fmt.Println(w, "Failed to dig blit address", err)
-		//	}
+		//      address, err = DigBlitAddress(host)
+		//      if err != nil {
+		//              fmt.Println(w, "Failed to dig blit address", err)
+		//      }
 		//}
 
 		// Let the handler process the request
@@ -490,8 +490,8 @@ func catchAllMiddleware(next http.Handler) http.Handler {
 			//convert to json string
 			//jsonEnviron, err := json.Marshal(environ)
 			//if err != nil {
-			//	http.Error(w, "Failed to json marshal environ", http.StatusInternalServerError)
-			//	return
+			//      http.Error(w, "Failed to json marshal environ", http.StatusInternalServerError)
+			//      return
 			//}
 
 			values := newReq.URL.Query()
