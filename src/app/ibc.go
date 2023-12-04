@@ -194,6 +194,10 @@ func AddIBCModuleManager(moduleManager module.BasicManager, interfaceRegistry co
 	ibcfeetypes.RegisterInterfaces(interfaceRegistry)
 	icatypes.RegisterInterfaces(interfaceRegistry)
 	ibctm.RegisterInterfaces(interfaceRegistry)
+	icacontrollertypes.RegisterInterfaces(interfaceRegistry)
+	icahosttypes.RegisterInterfaces(interfaceRegistry)
+	ibcclienttypes.RegisterInterfaces(interfaceRegistry)
+	ibcconnectiontypes.RegisterInterfaces(interfaceRegistry)
 
 	moduleManager[ibcexported.ModuleName] = ibc.AppModule{}
 	moduleManager[ibctransfertypes.ModuleName] = ibctransfer.AppModule{}
