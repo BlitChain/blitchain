@@ -1,8 +1,11 @@
 package app
 
 import (
+	"fmt"
+
 	"cosmossdk.io/client/v2/autocli"
 	storetypes "cosmossdk.io/store/types"
+	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
@@ -31,6 +34,7 @@ import (
 	porttypes "github.com/cosmos/ibc-go/v8/modules/core/05-port/types"
 	ibcexported "github.com/cosmos/ibc-go/v8/modules/core/exported"
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
+	ibccoretypes "github.com/cosmos/ibc-go/v8/modules/core/types"
 	solomachine "github.com/cosmos/ibc-go/v8/modules/light-clients/06-solomachine"
 	ibctm "github.com/cosmos/ibc-go/v8/modules/light-clients/07-tendermint"
 	// this line is used by starport scaffolding # ibc/app/import
@@ -39,6 +43,7 @@ import (
 // registerIBCModules register IBC keepers and non dependency inject modules.
 func (app *App) registerIBCModules() {
 	// set up non depinject support modules store keys
+	fmt.Println("registerIBCModules")
 	if err := app.RegisterStores(
 		storetypes.NewKVStoreKey(capabilitytypes.StoreKey),
 		storetypes.NewKVStoreKey(ibcexported.StoreKey),
@@ -165,6 +170,9 @@ func (app *App) registerIBCModules() {
 	app.ScopedICAHostKeeper = scopedICAHostKeeper
 	app.ScopedICAControllerKeeper = scopedICAControllerKeeper
 
+}
+
+func (app *App) AppRegisterIBCModules() {
 	// register IBC modules
 	if err := app.RegisterModules(
 		ibc.NewAppModule(app.IBCKeeper),
@@ -180,14 +188,22 @@ func (app *App) registerIBCModules() {
 }
 
 // AddIBCModuleManager adds the missing IBC modules into the module manager.
-func AddIBCModuleManager(moduleManager module.BasicManager, autoCliOpts autocli.AppOptions) {
+func AddIBCModuleManager(moduleManager module.BasicManager, interfaceRegistry codectypes.InterfaceRegistry) {
+	ibccoretypes.RegisterInterfaces(interfaceRegistry)
+	ibctransfertypes.RegisterInterfaces(interfaceRegistry)
+	ibcfeetypes.RegisterInterfaces(interfaceRegistry)
+	icatypes.RegisterInterfaces(interfaceRegistry)
+	ibctm.RegisterInterfaces(interfaceRegistry)
+
 	moduleManager[ibcexported.ModuleName] = ibc.AppModule{}
 	moduleManager[ibctransfertypes.ModuleName] = ibctransfer.AppModule{}
 	moduleManager[ibcfeetypes.ModuleName] = ibcfee.AppModule{}
 	moduleManager[icatypes.ModuleName] = icamodule.AppModule{}
 	moduleManager[capabilitytypes.ModuleName] = capability.AppModule{}
 	moduleManager[ibctm.ModuleName] = ibctm.AppModule{}
+}
 
+func AddAutoCliModules(autoCliOpts autocli.AppOptions) {
 	autoCliOpts.Modules[ibcexported.ModuleName] = ibc.AppModule{}
 	autoCliOpts.Modules[ibctransfertypes.ModuleName] = ibctransfer.AppModule{}
 	autoCliOpts.Modules[ibcfeetypes.ModuleName] = ibcfee.AppModule{}
