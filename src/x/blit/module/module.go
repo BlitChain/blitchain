@@ -17,12 +17,10 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/spf13/cobra"
 
 	// this line is used by starport scaffolding # 1
 
 	modulev1 "blit/api/blit/blit/module"
-	"blit/x/blit/client/cli"
 	"blit/x/blit/keeper"
 	"blit/x/blit/types"
 )
@@ -87,18 +85,6 @@ func (AppModuleBasic) RegisterGRPCGatewayRoutes(clientCtx client.Context, mux *r
 	if err := types.RegisterQueryHandlerClient(context.Background(), mux, types.NewQueryClient(clientCtx)); err != nil {
 		panic(err)
 	}
-}
-
-// GetTxCmd returns the root Tx command for the module. The subcommands of
-// this root command are used by end-users to generate new transactions
-// containing messages defined in the module.
-func (a AppModuleBasic) GetTxCmd() *cobra.Command {
-	return cli.GetTxCmd()
-}
-
-// GetQueryCmd returns the root query command for the module. The subcommands of this root command are used by end-users to generate new queries to the subset of the state defined by the module
-func (AppModuleBasic) GetQueryCmd() *cobra.Command {
-	return cli.GetQueryCmd()
 }
 
 // ----------------------------------------------------------------------------
@@ -186,7 +172,7 @@ func init() {
 	)
 }
 
-type BlitInputs struct {
+type ModuleInputs struct {
 	depinject.In
 
 	StoreService store.KVStoreService
@@ -198,14 +184,14 @@ type BlitInputs struct {
 	BankKeeper    types.BankKeeper
 }
 
-type BlitOutputs struct {
+type ModuleOutputs struct {
 	depinject.Out
 
 	BlitKeeper keeper.Keeper
 	Module     appmodule.AppModule
 }
 
-func ProvideModule(in BlitInputs) BlitOutputs {
+func ProvideModule(in ModuleInputs) ModuleOutputs {
 	// default to governance authority if not provided
 	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
 	if in.Config.Authority != "" {
@@ -224,5 +210,5 @@ func ProvideModule(in BlitInputs) BlitOutputs {
 		in.BankKeeper,
 	)
 
-	return BlitOutputs{BlitKeeper: k, Module: m}
+	return ModuleOutputs{BlitKeeper: k, Module: m}
 }

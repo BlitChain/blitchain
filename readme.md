@@ -33,18 +33,17 @@ To get the code and build from source.
 ## Get the Code
 Clone the repo for the first time.
 ```
-$ git clone -b $BLIT_VERSION --recursive  https://github.com/BlitChain/blitchain
+$ git clone -b $BLIT_VERSION  https://github.com/BlitChain/blitchain
 $ cd blitchain
 ```
 
 _Or_ fetch and checkout the version of the existing repo.
 
-Note: Remember to sync submodules!
 
 ```bash
 $ cd blitchain
 $ git fetch origin $BLIT_VERSION:$BLIT_VERSION
-$ git checkout --recurse-submodule $BLIT_VERSION
+$ git checkout $BLIT_VERSION
 ```
 
 ## Run with Docker (recommended)
