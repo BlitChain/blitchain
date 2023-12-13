@@ -9,13 +9,14 @@ $ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint
 
 |:exclamation:  Note for Docker Machine  |
 |:-----------------------------------------|
-| You may need to set the host from `localhost` to `0.0.0.0` in `~/.blit/config/app.yaml` in order to acceess the node services. Docker machine runs the containers in a VM and binding to `localhost` is overly restrictive in this case. |
+| You may need to change the host from `localhost` to `0.0.0.0` in `~/.blit/config/app.yaml` in order to acceess the node services. Docker machine runs the containers in a VM and binding to `localhost` is overly restrictive in this case. |
 
 # Quick Start
 
-To hit the ground running paste this in your terminal. Requires docker to be installed.
+To hit the ground running paste this in your terminal. Requires docker to be installed. Use the `$BLIT_VERSION` environment variable set above.
 
 ```bash
+$ docker pull blitchain/blitchain:$BLIT_VERSION
 $ docker run --init -it --rm \
     -v ~/.blit:/home/user/.blit \
     -p 127.0.0.1:26656:26656 \
