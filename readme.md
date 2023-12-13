@@ -16,8 +16,8 @@ $ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint
 To hit the ground running paste this in your terminal. Requires docker to be installed. Use the `$BLIT_VERSION` environment variable set above.
 
 ```bash
-$ docker pull blitchain/blitchain:$BLIT_VERSION
 $ docker run --init -it --rm \
+    --pull always \
     -v ~/.blit:/home/user/.blit \
     -p 127.0.0.1:26656:26656 \
     -p 127.0.0.1:26657:26657 \
