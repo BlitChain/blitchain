@@ -24,7 +24,6 @@ RUN goenv install
 
 COPY src/go.mod src/go.mod
 COPY src/go.sum src/go.sum
-COPY cosmos-sdk cosmos-sdk
 
 RUN cd src && go mod download -x
 
