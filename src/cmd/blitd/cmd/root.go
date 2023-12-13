@@ -59,6 +59,8 @@ func NewRootCmd() *cobra.Command {
 	// Since the IBC modules don't support dependency injection, we need to
 	// manually add the modules to the basic manager on the client side.
 	// This needs to be removed after IBC supports App Wiring.
+	app.AddIBCModuleManager(moduleBasicManager, clientCtx.InterfaceRegistry)
+	app.AddAutoCliModules(autoCliOpts)
 
 	rootCmd := &cobra.Command{
 		Use:           app.Name + "d",
@@ -110,8 +112,6 @@ func NewRootCmd() *cobra.Command {
 
 	initRootCmd(rootCmd, clientCtx.TxConfig, clientCtx.InterfaceRegistry, clientCtx.Codec, moduleBasicManager)
 
-	app.AddIBCModuleManager(moduleBasicManager, clientCtx.InterfaceRegistry)
-	app.AddAutoCliModules(autoCliOpts)
 	overwriteFlagDefaults(rootCmd, map[string]string{
 		flags.FlagChainID:        strings.ReplaceAll(app.Name, "-", ""),
 		flags.FlagKeyringBackend: "test",
