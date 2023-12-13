@@ -82,7 +82,7 @@ func (k msgServer) UpdateScript(goCtx context.Context, msg *types.MsgUpdateScrip
 		msg.Address,
 	)
 
-	if msg.Grantee != "" && msg.Grantee != msg.Address {
+	if msg.Grantee != msg.Address {
 
 		// Prevent looping
 		originalGrantee := sdk.MustAccAddressFromBech32(msg.Grantee)

@@ -7,8 +7,11 @@ import (
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 
 	"blit/x/blit/types"
+
+	authzKeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
 )
 
 type (
@@ -20,6 +23,12 @@ type (
 		// the address capable of executing a MsgUpdateParams message. Typically, this
 		// should be the x/gov module account.
 		authority string
+
+		authzKeeper authzKeeper.Keeper
+		// the bank keeper
+		bankKeeper bankkeeper.Keeper
+		// the account keeper
+		accountKeeper types.AccountKeeper
 	}
 )
 
@@ -28,6 +37,9 @@ func NewKeeper(
 	storeService store.KVStoreService,
 	logger log.Logger,
 	authority string,
+	authzKeeper authzKeeper.Keeper,
+	accountKeeper types.AccountKeeper,
+	bankKeeper bankkeeper.Keeper,
 
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
@@ -39,6 +51,10 @@ func NewKeeper(
 		storeService: storeService,
 		authority:    authority,
 		logger:       logger,
+		authzKeeper:  authzKeeper,
+
+		bankKeeper:    bankKeeper,
+		accountKeeper: accountKeeper,
 	}
 }
 

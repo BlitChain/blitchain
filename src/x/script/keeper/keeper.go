@@ -358,7 +358,7 @@ func (k Keeper) HandleQuery(ctx sdk.Context, method string, json_args string) (s
 }
 
 // ensureMsgAuthZ checks that if a message requires signers that all of them
-// are equal to the given account address of script.
+// are equal to the given signer/grantee calling the script.
 func (k Keeper) ensureMsgAuthZ(msgs []sdk.Msg, signer string) error {
 	// In practice, GetSigners() should return a non-empty array without
 	// duplicates.
@@ -447,7 +447,7 @@ func (k Keeper) EvalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 		k.Logger(ctx).Info(fmt.Sprintf("last defer, resp: %+v  err: %+v", resp, err))
 	}()
 
-	resp, err = k.evalScript(sdk.WrapSDKContext(cachedCtx), scriptCtx, raiseRunErr)
+	resp, err = k.evalScript(cachedCtx, scriptCtx, raiseRunErr)
 	ctx.GasMeter().ConsumeGas(cachedCtx.GasMeter().GasConsumed(), "EvalScript gas")
 	return
 }
@@ -467,7 +467,7 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 	resolvedAddress := scriptCtx.ScriptAddress
 
 	// Run attached messages
-	if err := k.ensureMsgAuthZ(scriptCtx.Messages, resolvedAddress); err != nil {
+	if err := k.ensureMsgAuthZ(scriptCtx.Messages, scriptCtx.CallerAddress); err != nil {
 		return nil, err
 	}
 	// print the messages

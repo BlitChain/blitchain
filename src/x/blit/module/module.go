@@ -15,7 +15,10 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	authzKeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
+	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
+
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
 	// this line is used by starport scaffolding # 1
@@ -97,14 +100,14 @@ type AppModule struct {
 
 	keeper        keeper.Keeper
 	accountKeeper types.AccountKeeper
-	bankKeeper    types.BankKeeper
+	bankKeeper    bankkeeper.Keeper
 }
 
 func NewAppModule(
 	cdc codec.Codec,
 	keeper keeper.Keeper,
 	accountKeeper types.AccountKeeper,
-	bankKeeper types.BankKeeper,
+	bankKeeper bankkeeper.Keeper,
 ) AppModule {
 	return AppModule{
 		AppModuleBasic: NewAppModuleBasic(cdc),
@@ -181,7 +184,8 @@ type ModuleInputs struct {
 	Logger       log.Logger
 
 	AccountKeeper types.AccountKeeper
-	BankKeeper    types.BankKeeper
+	BankKeeper    bankkeeper.Keeper
+	AuthzKeeper   authzKeeper.Keeper
 }
 
 type ModuleOutputs struct {
@@ -202,6 +206,9 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.StoreService,
 		in.Logger,
 		authority.String(),
+		in.AuthzKeeper,
+		in.AccountKeeper,
+		in.BankKeeper,
 	)
 	m := NewAppModule(
 		in.Cdc,

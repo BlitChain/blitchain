@@ -10,7 +10,7 @@ import (
 
 func CmdFilterStorage() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "filter-storage --address [address] --filter-prefix [filter prefix]",
+		Use:   "filter-storage --filter-address [address] --filter-prefix [filter prefix]",
 		Short: "Filter storage by address and/or prefix",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			argAddress, _ := cmd.Flags().GetString("filter-address")

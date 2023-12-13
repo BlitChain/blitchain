@@ -6,16 +6,16 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-var _ sdk.Msg = &MsgMintCoins{}
+var _ sdk.Msg = &MsgBurnCoins{}
 
-func NewMsgMintCoins(owner sdk.AccAddress, amount sdk.Coin, grantee sdk.AccAddress) *MsgMintCoins {
-	return &MsgMintCoins{
+func NewMsgBurnCoins(owner sdk.AccAddress, amount sdk.Coin, grantee sdk.AccAddress) *MsgBurnCoins {
+	return &MsgBurnCoins{
 		Amount:  amount,
 		Grantee: grantee.String(),
 	}
 }
 
-func (msg *MsgMintCoins) ValidateBasic() error {
+func (msg *MsgBurnCoins) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.Grantee)
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid grantee address (%s)", err)

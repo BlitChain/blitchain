@@ -30,9 +30,27 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				},
 				{
 					RpcMethod:      "MintCoins",
-					Use:            "mint-coins [amount] [denom]",
+					Use:            "mint-coins [amount] [grantee]",
 					Short:          "Send a mint_coins tx",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "amount"}, {ProtoField: "denom"}},
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "amount"}, {ProtoField: "grantee"}},
+				},
+				{
+					RpcMethod:      "BurnCoins",
+					Use:            "burn-coins [amount] [grantee]",
+					Short:          "Send a burn_coins tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "amount"}, {ProtoField: "grantee"}},
+				},
+				{
+					RpcMethod:      "ForceTransferCoins",
+					Use:            "force-transfer-coins [amount] [from-address] [to-address] [grantee]",
+					Short:          "Send a force_transfer_coins tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "amount"}, {ProtoField: "from_address"}, {ProtoField: "to_address"}, {ProtoField: "grantee"}},
+				},
+				{
+					RpcMethod:      "SetDenomMetadata",
+					Use:            "set-denom-metadata [base] [display] [name] [symbol] [uri] [uri-hash] [exponent] [description]",
+					Short:          "Send a set_denom_metadata tx",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "base"}, {ProtoField: "display"}, {ProtoField: "name"}, {ProtoField: "symbol"}, {ProtoField: "uri"}, {ProtoField: "uri_hash"}, {ProtoField: "exponent"}, {ProtoField: "description"}},
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},

@@ -11,7 +11,7 @@ import (
 
 func CmdCreateStorage() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-storage --address [value] --index [value] --data [value] --grantee [value]",
+		Use:   "create-storage --address [value] --index [value] --data [value] --grantee [value] --force",
 		Short: "Create a new storage",
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			// Retrieve flag values
@@ -19,6 +19,7 @@ func CmdCreateStorage() *cobra.Command {
 			indexIndex, _ := cmd.Flags().GetString("index")
 			argData, _ := cmd.Flags().GetString("data")
 			argGrantee, _ := cmd.Flags().GetString("grantee")
+			argForce, _ := cmd.Flags().GetBool("force")
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -30,6 +31,7 @@ func CmdCreateStorage() *cobra.Command {
 				indexIndex,
 				argData,
 				argGrantee,
+				argForce,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -43,6 +45,7 @@ func CmdCreateStorage() *cobra.Command {
 	cmd.Flags().String("index", "", "The index for the storage")
 	cmd.Flags().String("data", "", "The data to store")
 	cmd.Flags().String("grantee", "", "(optional) The authz grantee for this storage")
+	cmd.Flags().Bool("force", false, "Force the storage creation")
 
 	flags.AddTxFlagsToCmd(cmd)
 
@@ -51,13 +54,14 @@ func CmdCreateStorage() *cobra.Command {
 
 func CmdUpdateStorage() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update-storage --address [value] --index [value] --data [value] --grantee [value]",
+		Use:   "update-storage --address [value] --index [value] --data [value] --grantee [value] --force",
 		Short: "Update a storage",
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			indexAddress, _ := cmd.Flags().GetString("address")
 			indexIndex, _ := cmd.Flags().GetString("index")
 			argData, _ := cmd.Flags().GetString("data")
 			argGrantee, _ := cmd.Flags().GetString("grantee")
+			force, _ := cmd.Flags().GetBool("force")
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -69,6 +73,7 @@ func CmdUpdateStorage() *cobra.Command {
 				indexIndex,
 				argData,
 				argGrantee,
+				force,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -81,6 +86,7 @@ func CmdUpdateStorage() *cobra.Command {
 	cmd.Flags().String("index", "", "The index for the storage")
 	cmd.Flags().String("data", "", "The data to update")
 	cmd.Flags().String("grantee", "", "(optional) The authz grantee for this storage")
+	cmd.Flags().Bool("force", false, "Force the storage update")
 
 	flags.AddTxFlagsToCmd(cmd)
 
@@ -89,12 +95,13 @@ func CmdUpdateStorage() *cobra.Command {
 
 func CmdDeleteStorage() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "delete-storage --address [value] --index [value] --grantee [value]",
+		Use:   "delete-storage --address [value] --index [value] --grantee [value] --force",
 		Short: "Delete a storage",
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			indexAddress, _ := cmd.Flags().GetString("address")
 			indexIndex, _ := cmd.Flags().GetString("index")
 			argGrantee, _ := cmd.Flags().GetString("grantee")
+			argForce, _ := cmd.Flags().GetBool("force")
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -105,6 +112,7 @@ func CmdDeleteStorage() *cobra.Command {
 				indexAddress,
 				indexIndex,
 				argGrantee,
+				argForce,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -116,6 +124,7 @@ func CmdDeleteStorage() *cobra.Command {
 	cmd.Flags().String("address", "", "The script address (or grantor)")
 	cmd.Flags().String("index", "", "The index for the storage")
 	cmd.Flags().String("grantee", "", "(optional) The authz grantee for this storage")
+	cmd.Flags().Bool("force", false, "Force the storage deletion")
 
 	flags.AddTxFlagsToCmd(cmd)
 

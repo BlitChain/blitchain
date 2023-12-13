@@ -1,8 +1,6 @@
 package app
 
 import (
-	"fmt"
-
 	"cosmossdk.io/client/v2/autocli"
 	storetypes "cosmossdk.io/store/types"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -43,7 +41,6 @@ import (
 // registerIBCModules register IBC keepers and non dependency inject modules.
 func (app *App) registerIBCModules() {
 	// set up non depinject support modules store keys
-	fmt.Println("registerIBCModules")
 	if err := app.RegisterStores(
 		storetypes.NewKVStoreKey(capabilitytypes.StoreKey),
 		storetypes.NewKVStoreKey(ibcexported.StoreKey),

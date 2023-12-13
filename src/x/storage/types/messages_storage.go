@@ -13,13 +13,14 @@ func NewMsgCreateStorage(
 	index string,
 	data string,
 	grantee string,
-
+	force bool,
 ) *MsgCreateStorage {
 	return &MsgCreateStorage{
 		Address: address,
 		Index:   index,
 		Data:    data,
 		Grantee: grantee,
+		Force:   force,
 	}
 }
 
@@ -44,13 +45,14 @@ func NewMsgUpdateStorage(
 	index string,
 	data string,
 	grantee string,
-
+	force bool,
 ) *MsgUpdateStorage {
 	return &MsgUpdateStorage{
 		Address: address,
 		Index:   index,
 		Data:    data,
 		Grantee: grantee,
+		Force:   force,
 	}
 }
 
@@ -76,12 +78,13 @@ func NewMsgDeleteStorage(
 	address string,
 	index string,
 	grantee string,
-
+	force bool,
 ) *MsgDeleteStorage {
 	return &MsgDeleteStorage{
 		Address: address,
 		Index:   index,
 		Grantee: grantee,
+		Force:   force,
 	}
 }
 

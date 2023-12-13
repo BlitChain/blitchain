@@ -113,3 +113,18 @@ func (rpcservice *RpcService) Gaslimit(_ *http.Request, msg *GasLimitRequest, re
 	}
 	return nil
 }
+
+// Emit Event from the script
+type EmitEventRequest struct {
+	Key   string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+type EmitEventResponse struct {
+}
+
+func (rpcservice *RpcService) EmitEvent(_ *http.Request, msg *EmitEventRequest, response *EmitEventResponse) (err error) {
+	ctx := sdk.UnwrapSDKContext(rpcservice.goCtx)
+	ctx.EventManager().EmitEvent(sdk.NewEvent(rpcservice.ScriptAddress, sdk.NewAttribute(msg.Key, msg.Value)))
+	return nil
+}

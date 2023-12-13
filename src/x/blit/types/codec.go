@@ -11,6 +11,15 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgMintCoins{},
 	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgBurnCoins{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgForceTransferCoins{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgSetDenomMetadata{},
+	)
 	// this line is used by starport scaffolding # 3
 
 	registry.RegisterImplementations((*sdk.Msg)(nil),

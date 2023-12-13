@@ -3,6 +3,7 @@ syntax = "proto3";
 package blit.blit;
 
 import "amino/amino.proto";
+import "cosmos/base/v1beta1/coin.proto";
 import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
@@ -16,8 +17,11 @@ service Msg {
   
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
-  rpc UpdateParams (MsgUpdateParams) returns (MsgUpdateParamsResponse);
-  rpc MintCoins    (MsgMintCoins   ) returns (MsgMintCoinsResponse   );
+  rpc UpdateParams       (MsgUpdateParams      ) returns (MsgUpdateParamsResponse      );
+  rpc MintCoins          (MsgMintCoins         ) returns (MsgMintCoinsResponse         );
+  rpc BurnCoins          (MsgBurnCoins         ) returns (MsgBurnCoinsResponse         );
+  rpc ForceTransferCoins (MsgForceTransferCoins) returns (MsgForceTransferCoinsResponse);
+  rpc SetDenomMetadata   (MsgSetDenomMetadata  ) returns (MsgSetDenomMetadataResponse  );
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -38,11 +42,43 @@ message MsgUpdateParams {
 message MsgUpdateParamsResponse {}
 
 message MsgMintCoins {
-  option (cosmos.msg.v1.signer) = "creator";
-  string creator = 1;
-  string amount  = 2;
-  string denom   = 3;
+  option (cosmos.msg.v1.signer) = "grantee";
+  cosmos.base.v1beta1.Coin amount  = 1 [(gogoproto.nullable)  = false                 , (amino.dont_omitempty) = true];
+  string                   grantee = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
 }
 
 message MsgMintCoinsResponse {}
+
+message MsgBurnCoins {
+  option (cosmos.msg.v1.signer) = "grantee";
+  cosmos.base.v1beta1.Coin amount  = 1 [(gogoproto.nullable)  = false                 , (amino.dont_omitempty) = true];
+  string                   grantee = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
+}
+
+message MsgBurnCoinsResponse {}
+
+message MsgForceTransferCoins {
+  option (cosmos.msg.v1.signer) = "grantee";
+  cosmos.base.v1beta1.Coin amount       = 1 [(gogoproto.nullable)  = false                 , (amino.dont_omitempty) = true];
+  string                   from_address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
+  string                   to_address   = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
+  string                   grantee      = 4 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
+}
+
+message MsgForceTransferCoinsResponse {}
+
+message MsgSetDenomMetadata {
+  option (cosmos.msg.v1.signer) = "authority";
+  string authority = 1;
+  string base      = 2;
+  string display   = 3;
+  string name      = 4;
+  string symbol    = 5;
+  string uri       = 6;
+  string uri_hash  = 7;
+  uint32 exponent  = 8;
+  string description = 9;
+}
+
+message MsgSetDenomMetadataResponse {}
 

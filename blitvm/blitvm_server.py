@@ -99,6 +99,8 @@ def get_module_dict():
     import decimal
     import hashlib
     import html
+    import http
+    import math
     import mimetypes
     import pathlib
     import random
@@ -192,6 +194,11 @@ def get_module_dict():
         "html": {"escape": html.escape, "unescape": html.unescape},
         "io": {"StringIO": io.StringIO, "BytesIO": io.BytesIO},
         "hashlib": {"sha1": hashlib.sha1, "sha256": hashlib.sha256},
+        "http": {
+            "cookies": {
+                "SimpleCookie": http.cookies.SimpleCookie,
+            }
+        },
         "typing": {
             "Callable": typing.Callable,
             "Any": typing.Any,
@@ -228,6 +235,49 @@ def get_module_dict():
             "uniform": random.uniform,
         },
         "re2": re2_dict,
+        "math": {
+            "ceil": math.ceil,
+            "copysign": math.copysign,
+            "fabs": math.fabs,
+            "factorial": math.factorial,
+            "floor": math.floor,
+            "fmod": math.fmod,
+            "fsum": math.fsum,
+            "gcd": math.gcd,
+            "isclose": math.isclose,
+            "isfinite": math.isfinite,
+            "isinf": math.isinf,
+            "isnan": math.isnan,
+            "isqrt": math.isqrt,
+            "lcm": math.lcm,
+            "modf": math.modf,
+            "remainder": math.remainder,
+            "trunc": math.trunc,
+            "ulp": math.ulp,
+            "log": math.log,
+            "log1p": math.log1p,
+            "log2": math.log2,
+            "log10": math.log10,
+            "sqrt": math.sqrt,
+            "acos": math.acos,
+            "asin": math.asin,
+            "atan": math.atan,
+            "atan2": math.atan2,
+            "cos": math.cos,
+            "dist": math.dist,
+            "hypot": math.hypot,
+            "sin": math.sin,
+            "tan": math.tan,
+            "degrees": math.degrees,
+            "radians": math.radians,
+            "gamma": math.gamma,
+            "lgamma": math.lgamma,
+            "pi": math.pi,
+            "e": math.e,
+            "tau": math.tau,
+            "inf": math.inf,
+            "nan": math.nan,
+        },
     }
 
     def walk(node):
@@ -400,6 +450,20 @@ def build_sandbox(port, caller_address, script_address, block_info, json_msgs, j
         return _chain("Query", method=method, json_args=json.dumps(params))
 
     @allow_blit_func
+    def emit_event(key=None, value=None, **kwargs):
+        """
+        Emits an event to the blockchain
+        """
+        if key is None and value is None:
+            assert len(kwargs) == 1, AssertionError("only one key value pair allowed")
+            key, value = list(kwargs.items())[0]
+        else:
+            assert len(kwargs) == 0, AssertionError("only one key value pair allowed")
+        assert isinstance(key, str), AssertionError("key must be a string")
+        assert isinstance(value, str), AssertionError("value must be a string")
+        return _chain("EmitEvent", key=key, value=value)
+
+    @allow_blit_func
     def get_gas_consumed():
         """
         The total amount of gas consumed so far.
@@ -509,6 +573,7 @@ def build_sandbox(port, caller_address, script_address, block_info, json_msgs, j
     module_dict["blit"] = {
         "_chain": _chain,
         "_send_msg": _send_msg,
+        "emit_event": emit_event,
         "send_query": send_query,
         "get_gas_consumed": get_gas_consumed,
         "get_gas_limit": get_gas_limit,
