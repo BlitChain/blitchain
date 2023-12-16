@@ -7,7 +7,10 @@ UPGRADE_HEIGHT=$2 # unused
 
 rm -rf  $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME
 
-git clone --depth 1 --branch $UPGRADE_NAME https://github.com/BlitChain/blitchain.git $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME && \
-  cd $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME && 
-  exec make build
+git clone --depth 1 --branch $UPGRADE_NAME https://github.com/BlitChain/blitchain.git $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME
+cd $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME
+goenv install
+pyenv install
+python -m pip install -r ./blitvm/requirements.txt
 
+exec make build
