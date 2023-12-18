@@ -213,7 +213,7 @@ Steps
 Update your package lists and install the necessary tools.
 
 ```bash
-$ apt update && apt install git jq make wget
+sudo apt update && sudo apt install git jq make wget
 ```
 
 ### 2\. Install GoEnv
@@ -221,42 +221,42 @@ $ apt update && apt install git jq make wget
 Set up GoEnv to manage Go versions.
 
 ```bash
-$ git clone https://github.com/go-nv/goenv.git ~/.goenv
+git clone https://github.com/go-nv/goenv.git ~/.goenv
 
-$ echo 'export GOENV_ROOT="$HOME/.goenv"' >> ~/.bashrc
-$ echo 'export PATH="$GOENV_ROOT/bin:$PATH"' >> ~/.bashrc
-$ echo 'eval "$(goenv init -)"' >> ~/.bashrc
-$ echo 'export PATH="$GOROOT/bin:$PATH"' >> ~/.bashrc
-$ echo 'export PATH="$PATH:$GOPATH/bin"' >> ~/.bashrc
+echo 'export GOENV_ROOT="$HOME/.goenv"' >> ~/.bashrc
+echo 'export PATH="$GOENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(goenv init -)"' >> ~/.bashrc
+echo 'export PATH="$GOROOT/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="$PATH:$GOPATH/bin"' >> ~/.bashrc
 
 # Reload bash configuration
-$ source ~/.bashrc
+source ~/.bashrc
 ```
 ### 3\. Install Go
 
 Install and set the global Go version (e.g., 1.21.5).
 
 ```bash
-$ goenv install 1.21.5
-$ goenv global 1.21.5
+goenv install 1.21.5
+goenv global 1.21.5
 ```
 
 ### 4\. Install Cosmovisor
 
 Install Cosmovisor for managing blockchain daemon upgrades.
 
-bashCopy code
-
-`$ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest`
+```
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+```
 
 ### 5\. Install PyEnv and Dependencies
 
 Set up PyEnv for Python version management.
 
 ```bash
-sudo apt update && sudo apt install build-essential libssl-dev zlib1g-dev\
-libbz2-dev libreadline-dev libsqlite3-dev curl\
-libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+sudo apt update && sudo apt install build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev curl \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev libre2-dev
 
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
@@ -272,20 +272,79 @@ source ~/.bashrc
 
 Prepare Cosmovisor and Systemd to run the BlitChain daemon.
 
-```bash
-$ sudo apt install libre2-dev
-$ export DAEMON_HOME=$HOME/.blit
-$ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
-$ mkdir -p $DAEMON_HOME/cosmovisor/
-$ curl https://raw.githubusercontent.com/BlitChain/blitchain/33530e0/scripts/cosmovisor-preupgrade.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
-$ bash $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh $BLIT_VERSION
-$ ln -s $DAEMON_HOME/cosmovisor/upgrades/$BLIT_VERSION $DAEMON_HOME/cosmovisor/current
-$ cd $DAEMON_HOME/cosmovisor/current
-$ ./bin/blitd init my_node_name # replace 'my_node_name' with your desired node name
-$ make testnet
+|:exclamation:  Note for running a node  |
+|:-----------------------------------------|
+| To start the node you MUST use `$DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. |
 
-# Create a Systemd service for BlitChain
-$ sudo tee /etc/systemd/system/blit-cosmovisor.service > /dev/null <<EOF
+```bash
+
+# The current Blitchain version
+export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
+echo $BLIT_VERSION
+
+# This is the normal location 
+export DAEMON_HOME=$HOME/.blit
+
+# Prepare Cosmovisor
+mkdir -p $DAEMON_HOME/cosmovisor/
+```
+
+
+#### (option 1) Get the pre-upgrade helper that pulls the Docker containter
+Write your choice of upgrade helper to `$DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh`
+
+```bash
+curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
+```
+#### (option 2) Get the pre-upgrade helper that builds from source
+```bash
+curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-build-from-source.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
+```
+
+#### Set up the current Blitchain version
+```bash
+# Run cosmovisor-preupgrade.sh
+bash $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh $BLIT_VERSION
+ln -s $DAEMON_HOME/cosmovisor/upgrades/$BLIT_VERSION $DAEMON_HOME/cosmovisor/current
+
+# Link the binary for global access
+sudo ln -s $DAEMON_HOME/cosmovisor/current/bin/blitd /usr/local/bin/blitd
+
+# Clear the binary cache
+hash -r
+```
+
+#### Initialize your node if you haven't already. 
+Replace 'my_node_name' with your desired node name. 
+
+If you chose **option 1** and are running blitd with Docker:
+```
+docker run -it --rm \
+    -u $(id -u):$(id -g) \
+    -v $DAEMON_HOME:/home/user/.blit \
+    blitchain/blitchain:$BLIT_VERSION \
+    ./bin/blitd init my_node_name
+
+docker run -it --rm \
+    -u $(id -u):$(id -g) \
+    -v $DAEMON_HOME:/home/user/.blit \
+    blitchain/blitchain:$BLIT_VERSION \
+    make testnet
+```
+
+If you chose **option 2** and are running blitd from source:
+```bash
+cd $DAEMON_HOME/cosmovisor/current/
+./bin/blitd init my_node_name
+
+make testnet
+```
+
+
+#### Create the Systemd service for Blitchain
+
+```bash
+sudo tee /etc/systemd/system/blit-cosmovisor.service > /dev/null <<EOF
 [Unit]
 Description=Blitchain Daemon
 After=network-online.target
@@ -318,16 +377,11 @@ EOF
 Enable and start the BlitChain service, and check its status.
 
 ```bash
-$ sudo -S systemctl daemon-reload
-$ sudo -S systemctl enable blit-cosmovisor
-$ sudo -S systemctl start blit-cosmovisor
-$ sudo service blit-cosmovisor status
+sudo -S systemctl daemon-reload
+sudo -S systemctl enable blit-cosmovisor
+sudo -S systemctl start blit-cosmovisor
+sudo service blit-cosmovisor status
  
 # Monitor the logs
-$ journalctl -f
+journalctl -f
 ```
-
-Notes
------
-
--   Replace `my_node_name` with your desired node name in the `blitd init` command.
