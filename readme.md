@@ -243,7 +243,7 @@ This will pull the pre build Docker container to run blitd. It is still possible
 See: https://github.com/BlitChain/blitchain/blob/develop/scripts/cosmovisor-preupgrade-pull-docker.sh#L10-L50
 
 ```bash
-curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
+curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-pull-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
 ```
 
 ## 5. Set up the current Blitchain version
