@@ -157,11 +157,9 @@ make build
 
 ### Init the node
 
-
 ```
 ./bin/blitd init $MY_MONIKER 
 ```
-
 
 ### Configure to connect to the Testnet
 ```
@@ -169,6 +167,10 @@ make testnet
 ```
 
 ### Start the node
+
+|:exclamation:  Note for running a node  |
+|:-----------------------------------------|
+| When **starting** the node you MUST use `$DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. |
 
 Start syncing the testnet
 ```bash
@@ -269,9 +271,6 @@ source ~/.bashrc
 
 Prepare Cosmovisor and Systemd to run the BlitChain daemon.
 
-|:exclamation:  Note for running a node  |
-|:-----------------------------------------|
-| To start the node you MUST use `$DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. |
 
 ```bash
 
@@ -294,6 +293,12 @@ Write your choice of upgrade helper to `$DAEMON_HOME/cosmovisor/cosmovisor-preup
 curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
 ```
 ### (option 2) Get the pre-upgrade helper that builds from source
+
+|:exclamation:  Note for running a node  |
+|:-----------------------------------------|
+| When **starting** the node you MUST use `$DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. |
+
+
 ```bash
 curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-build-from-source.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
 ```
