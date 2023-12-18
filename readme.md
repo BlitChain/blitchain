@@ -205,7 +205,124 @@ laddr = "tcp://127.0.0.1:26657"
 cors_allowed_origins = [ "*" ]
 ```
 
-# Systemd + Cosmovisor
+
+# Systemd + Cosmovisor + Docker
+
+## 1. Install Docker
+
+[https://docs.docker.com/engine/install/debian/](https://docs.docker.com/engine/install/debian/)
+
+## 2. Install Cosmovisor
+
+Install Cosmovisor for managing blockchain daemon upgrades.
+
+```
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+```
+
+## 3. Set Up Cosmovisor and Systemd for BlitChain
+
+Prepare Cosmovisor and Systemd to run the BlitChain daemon.
+
+```bash
+
+# The current Blitchain version
+export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
+echo $BLIT_VERSION
+
+# This is the normal location 
+export DAEMON_HOME=$HOME/.blit
+
+# Prepare Cosmovisor
+mkdir -p $DAEMON_HOME/cosmovisor/
+```
+
+## 4. Get up the pre-upgrade helper
+
+This will pull the pre build Docker container to run blitd. It is still possible to use `$ blitd` directly with the shell script that is a wrapper around the container.
+See: https://github.com/BlitChain/blitchain/blob/develop/scripts/cosmovisor-preupgrade-pull-docker.sh#L10-L50
+
+```bash
+curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
+```
+
+## 5. Set up the current Blitchain version
+```bash
+# Run cosmovisor-preupgrade.sh
+bash $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh $BLIT_VERSION
+ln -s $DAEMON_HOME/cosmovisor/upgrades/$BLIT_VERSION $DAEMON_HOME/cosmovisor/current
+
+# Link the binary for global access
+sudo ln -s $DAEMON_HOME/cosmovisor/current/bin/blitd /usr/local/bin/blitd
+
+# Clear the binary cache
+hash -r
+```
+
+## 6. Initialize your node if you haven't already. 
+Replace 'my_node_name' with your desired node name. 
+
+If you chose **option 1** and are running blitd with Docker run the commands int he container to initialize the node and set the config for the testnet.
+```
+docker run -it --rm \
+    -u $(id -u):$(id -g) \
+    -v $DAEMON_HOME:/home/user/.blit \
+    blitchain/blitchain:$BLIT_VERSION \
+    ./bin/blitd init my_node_name
+
+docker run -it --rm \
+    -u $(id -u):$(id -g) \
+    -v $DAEMON_HOME:/home/user/.blit \
+    blitchain/blitchain:$BLIT_VERSION \
+    make testnet
+```
+
+## 7. Create the Systemd service for Blitchain
+
+```bash
+sudo tee /etc/systemd/system/blit-cosmovisor.service > /dev/null <<EOF
+[Unit]
+Description=Blitchain Daemon
+After=network-online.target
+
+[Service]
+User=$USER
+ExecStart=$(goenv which cosmovisor) run start
+Restart=always
+RestartSec=3
+Environment="DAEMON_HOME=$DAEMON_HOME"
+Environment="DAEMON_NAME=blitd"
+Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
+Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
+Environment=DAEMON_POLL_INTERVAL=1s
+Environment=DAEMON_LOG_BUFFER_SIZE=512
+Environment=DAEMON_PREUPGRADE_MAX_RETRIES=10
+Environment=COSMOVISOR_CUSTOM_PREUPGRADE=cosmovisor-preupgrade.sh
+WorkingDirectory=$DAEMON_HOME/cosmovisor/current/
+Environment=PATH=$HOME/.pyenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+LimitNOFILE=infinity
+LimitNPROC=infinity
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+## 8. Start and Monitor the Service
+
+Enable and start the BlitChain service, and check its status.
+
+```bash
+sudo -S systemctl daemon-reload
+sudo -S systemctl enable blit-cosmovisor
+sudo -S systemctl start blit-cosmovisor
+sudo service blit-cosmovisor status
+ 
+# Monitor the logs
+journalctl -f
+```
+
+# Systemd + Cosmovisor + Build from Source
 
 ## 1. Update Packages and Install Dependencies
 
@@ -286,17 +403,7 @@ mkdir -p $DAEMON_HOME/cosmovisor/
 ```
 
 ## 7. Get up the pre-upgrade helper
-Write your choice of upgrade helper to `$DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh`
-
-### (option 1) Get the pre-upgrade helper that pulls the Docker containter
-This will pull the pre build Docker container. It is still possible to use `$ blitd` directly with the shell script that is a wrapper around the container.
-See: https://github.com/BlitChain/blitchain/blob/develop/scripts/cosmovisor-preupgrade-pull-docker.sh#L10-L50
-
-```bash
-curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
-```
-### (option 2) Get the pre-upgrade helper that builds from source
-This will build every upgrade locally and link it globally.
+This will build every upgrade from source locally.
 
 |:exclamation:  Note for running a node  |
 |:-----------------------------------------|
@@ -322,22 +429,6 @@ hash -r
 ## 9. Initialize your node if you haven't already. 
 Replace 'my_node_name' with your desired node name. 
 
-If you chose **option 1** and are running blitd with Docker run the commands int he container to initialize the node and set the config for the testnet.
-```
-docker run -it --rm \
-    -u $(id -u):$(id -g) \
-    -v $DAEMON_HOME:/home/user/.blit \
-    blitchain/blitchain:$BLIT_VERSION \
-    ./bin/blitd init my_node_name
-
-docker run -it --rm \
-    -u $(id -u):$(id -g) \
-    -v $DAEMON_HOME:/home/user/.blit \
-    blitchain/blitchain:$BLIT_VERSION \
-    make testnet
-```
-
-If you chose **option 2** and are running blitd from source init the node and set up the config for the testnet.
 ```bash
 cd $DAEMON_HOME/cosmovisor/current/
 ./bin/blitd init my_node_name
