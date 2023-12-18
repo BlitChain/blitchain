@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"os"
 	"strings"
 
@@ -163,6 +164,10 @@ func ProvideClientContext(
 }
 
 func ProvideKeyring(clientCtx client.Context, addressCodec address.Codec) (clientv2keyring.Keyring, error) {
+	if clientCtx.Keyring == nil {
+		return nil, errors.New("keyring is not initialized in client context, it could be a permission issue with blit config directory and the user running the binary")
+	}
+
 	kb, err := client.NewKeyringFromBackend(clientCtx, clientCtx.Keyring.Backend())
 	if err != nil {
 		return nil, err
