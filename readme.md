@@ -170,7 +170,7 @@ make testnet
 
 |:exclamation:  Note for running a node  |
 |:-----------------------------------------|
-| When **starting** the node you MUST use `$DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. |
+| When **starting** the node you MUST use `$ $DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. When using the binary as a client you can use the globally linked `$ blitd` |
 
 Start syncing the testnet
 ```bash
@@ -285,19 +285,22 @@ export DAEMON_HOME=$HOME/.blit
 mkdir -p $DAEMON_HOME/cosmovisor/
 ```
 
+## Get up the pre-upgrade helper
+Write your choice of upgrade helper to `$DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh`
 
 ### (option 1) Get the pre-upgrade helper that pulls the Docker containter
-Write your choice of upgrade helper to `$DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh`
+This will pull the pre build Docker container. It is still possible to use `$ blitd` directly with the shell script that is a wrapper around the container.
+See: https://github.com/BlitChain/blitchain/blob/develop/scripts/cosmovisor-preupgrade-pull-docker.sh#L10-L50
 
 ```bash
 curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
 ```
 ### (option 2) Get the pre-upgrade helper that builds from source
+This will build every upgrade locally and link it globally.
 
 |:exclamation:  Note for running a node  |
 |:-----------------------------------------|
-| When **starting** the node you MUST use `$DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. |
-
+| When **starting** the node you MUST use `$ $DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. When using the binary as a client you can use the globally linked `$ blitd` |
 
 ```bash
 curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-build-from-source.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
@@ -319,7 +322,7 @@ hash -r
 ### Initialize your node if you haven't already. 
 Replace 'my_node_name' with your desired node name. 
 
-If you chose **option 1** and are running blitd with Docker:
+If you chose **option 1** and are running blitd with Docker run the commands int he container to initialize the node and set the config for the testnet.
 ```
 docker run -it --rm \
     -u $(id -u):$(id -g) \
@@ -334,7 +337,7 @@ docker run -it --rm \
     make testnet
 ```
 
-If you chose **option 2** and are running blitd from source:
+If you chose **option 2** and are running blitd from source init the node and set up the config for the testnet.
 ```bash
 cd $DAEMON_HOME/cosmovisor/current/
 ./bin/blitd init my_node_name
