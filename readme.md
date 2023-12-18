@@ -285,17 +285,17 @@ export DAEMON_HOME=$HOME/.blit
 mkdir -p $DAEMON_HOME/cosmovisor/
 ```
 
-### 7. Get up the pre-upgrade helper
+## 7. Get up the pre-upgrade helper
 Write your choice of upgrade helper to `$DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh`
 
-#### (option 1) Get the pre-upgrade helper that pulls the Docker containter
+### (option 1) Get the pre-upgrade helper that pulls the Docker containter
 This will pull the pre build Docker container. It is still possible to use `$ blitd` directly with the shell script that is a wrapper around the container.
 See: https://github.com/BlitChain/blitchain/blob/develop/scripts/cosmovisor-preupgrade-pull-docker.sh#L10-L50
 
 ```bash
 curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
 ```
-#### (option 2) Get the pre-upgrade helper that builds from source
+### (option 2) Get the pre-upgrade helper that builds from source
 This will build every upgrade locally and link it globally.
 
 |:exclamation:  Note for running a node  |
@@ -306,7 +306,7 @@ This will build every upgrade locally and link it globally.
 curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-build-from-source.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
 ```
 
-### 8. Set up the current Blitchain version
+## 8. Set up the current Blitchain version
 ```bash
 # Run cosmovisor-preupgrade.sh
 bash $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh $BLIT_VERSION
@@ -319,7 +319,7 @@ sudo ln -s $DAEMON_HOME/cosmovisor/current/bin/blitd /usr/local/bin/blitd
 hash -r
 ```
 
-### 9. Initialize your node if you haven't already. 
+## 9. Initialize your node if you haven't already. 
 Replace 'my_node_name' with your desired node name. 
 
 If you chose **option 1** and are running blitd with Docker run the commands int he container to initialize the node and set the config for the testnet.
@@ -346,7 +346,7 @@ make testnet
 ```
 
 
-### 10. Create the Systemd service for Blitchain
+## 10. Create the Systemd service for Blitchain
 
 ```bash
 sudo tee /etc/systemd/system/blit-cosmovisor.service > /dev/null <<EOF
