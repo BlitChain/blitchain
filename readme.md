@@ -285,17 +285,17 @@ export DAEMON_HOME=$HOME/.blit
 mkdir -p $DAEMON_HOME/cosmovisor/
 ```
 
-## Get up the pre-upgrade helper
+### Get up the pre-upgrade helper
 Write your choice of upgrade helper to `$DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh`
 
-### (option 1) Get the pre-upgrade helper that pulls the Docker containter
+#### (option 1) Get the pre-upgrade helper that pulls the Docker containter
 This will pull the pre build Docker container. It is still possible to use `$ blitd` directly with the shell script that is a wrapper around the container.
 See: https://github.com/BlitChain/blitchain/blob/develop/scripts/cosmovisor-preupgrade-pull-docker.sh#L10-L50
 
 ```bash
 curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
 ```
-### (option 2) Get the pre-upgrade helper that builds from source
+#### (option 2) Get the pre-upgrade helper that builds from source
 This will build every upgrade locally and link it globally.
 
 |:exclamation:  Note for running a node  |
