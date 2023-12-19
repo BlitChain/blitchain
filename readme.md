@@ -250,6 +250,7 @@ See: https://github.com/BlitChain/blitchain/blob/develop/scripts/cosmovisor-preu
 
 ```bash
 curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-pull-docker.sh > ./cosmovisor-preupgrade-pull-docker.sh
+chmod +x ./cosmovisor-preupgrade-pull-docker.sh
 ```
 
 ## 5. Set up the current Blitchain version
