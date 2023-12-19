@@ -239,6 +239,8 @@ export DAEMON_HOME=$HOME/.blit
 
 # Prepare Cosmovisor
 mkdir -p $DAEMON_HOME/cosmovisor/
+
+cd $DAEMON_HOME/cosmovisor/
 ```
 
 ## 4. Get up the pre-upgrade helper
@@ -247,13 +249,13 @@ This will pull the pre build Docker container to run blitd. It is still possible
 See: https://github.com/BlitChain/blitchain/blob/develop/scripts/cosmovisor-preupgrade-pull-docker.sh#L10-L50
 
 ```bash
-curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-pull-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade-pull-docker.sh
+curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-pull-docker.sh > ./cosmovisor-preupgrade-pull-docker.sh
 ```
 
 ## 5. Set up the current Blitchain version
 ```bash
 # Run cosmovisor-preupgrade.sh
-bash $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh $BLIT_VERSION
+bash cosmovisor-preupgrade.sh $BLIT_VERSION
 ln -s $DAEMON_HOME/cosmovisor/upgrades/$BLIT_VERSION $DAEMON_HOME/cosmovisor/current
 
 # Link the binary for global access
