@@ -255,8 +255,8 @@ chmod +x ./cosmovisor-preupgrade-pull-docker.sh
 
 ## 5. Set up the current Blitchain version
 ```bash
-# Run cosmovisor-preupgrade.sh
-./cosmovisor-preupgrade.sh $BLIT_VERSION
+# Run cosmovisor-preupgrade-pull-docker
+./cosmovisor-preupgrade-pull-docker.sh $BLIT_VERSION
 ln -s $DAEMON_HOME/cosmovisor/upgrades/$BLIT_VERSION $DAEMON_HOME/cosmovisor/current
 
 # Link the binary for global access
