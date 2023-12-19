@@ -14,14 +14,11 @@ tee $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME/bin/blitd > /dev/null <<EOF
 
 set -xe
 
-UPGRADE_NAME=\$1
-UPGRADE_HEIGHT=\$2 # unused
-
 # Docker image name from your docker-compose file
-IMAGE_NAME="blitchain/blitchain:\$UPGRADE_NAME"
+IMAGE_NAME="blitchain/blitchain:$UPGRADE_NAME"
 
 # Mapping the daemon home directory from host to container
-DAEMON_HOME_VOLUME="-v \$DAEMON_HOME:/home/user/.blit"
+DAEMON_HOME_VOLUME="-v $DAEMON_HOME:/home/user/.blit"
 
 # Collect all arguments for the blitd command
 BLITD_ARGS="\$@"
