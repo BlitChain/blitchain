@@ -89,7 +89,10 @@ Follow the steps below to manually install and build the project:
 
 ### Prerequisites
 
+Required
 - [Pyenv](https://github.com/pyenv/pyenv)
+
+Optional but reccomended, you can read `./blitchain/.go-version` and manage the go version manually if you want.
 - [Goenv](https://github.com/go-nv/goenv)
 
 ### Install Dependencies
@@ -142,6 +145,7 @@ Now, you should have all the necessary dependencies installed and have built the
 
 ### Install the proper Goversion
 
+If you are managing the golang versional manually, read `./blitchain/.go-version` for the required version.
 ```bash
 $ goenv install
 ```
@@ -335,6 +339,7 @@ sudo apt update && sudo apt install git jq make wget
 ## 2. Install GoEnv
 
 Set up GoEnv to manage Go versions.
+This is **required** for the automatic upgrades.
 
 ```bash
 git clone https://github.com/go-nv/goenv.git ~/.goenv
@@ -350,8 +355,12 @@ source ~/.bashrc
 ```
 ## 3. Install Go
 
-Install and set the global Go version (e.g., 1.21.5).
+Install Go
 
+From source:
+[https://go.dev/doc/install](https://go.dev/doc/install)
+
+Or with `goenv`:
 ```bash
 goenv install 1.21.5
 goenv global 1.21.5
@@ -368,6 +377,7 @@ go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 ## 5. Install PyEnv and Dependencies
 
 Set up PyEnv for Python version management.
+This is **required** for the automatic upgrades.
 
 ```bash
 sudo apt update && sudo apt install build-essential libssl-dev zlib1g-dev \
@@ -387,7 +397,6 @@ source ~/.bashrc
 ## 6. Set Up Cosmovisor and Systemd for BlitChain
 
 Prepare Cosmovisor and Systemd to run the BlitChain daemon.
-
 
 ```bash
 
