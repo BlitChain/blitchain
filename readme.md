@@ -260,6 +260,7 @@ chmod +x ./cosmovisor-preupgrade-pull-docker.sh
 ln -s $DAEMON_HOME/cosmovisor/upgrades/$BLIT_VERSION $DAEMON_HOME/cosmovisor/current
 
 # Link the binary for global access
+sudo rm /usr/local/bin/blitd
 sudo ln -s $DAEMON_HOME/cosmovisor/current/bin/blitd /usr/local/bin/blitd
 
 # Clear the binary cache
@@ -435,6 +436,7 @@ Link the current version like cosmosvisor requires.
 ln -s $DAEMON_HOME/cosmovisor/upgrades/$BLIT_VERSION $DAEMON_HOME/cosmovisor/current
 
 # Link the binary for global access
+sudo rm /usr/local/bin/blitd
 sudo ln -s $DAEMON_HOME/cosmovisor/current/bin/blitd /usr/local/bin/blitd
 
 # (optional) Clear the binary cache
