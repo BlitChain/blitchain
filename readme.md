@@ -404,6 +404,7 @@ export DAEMON_HOME=$HOME/.blit
 
 # Prepare Cosmovisor
 mkdir -p $DAEMON_HOME/cosmovisor/
+cd $DAEMON_HOME/cosmovisor/
 ```
 
 ## 7. Get up the pre-upgrade helper
@@ -414,19 +415,26 @@ This will build every upgrade from source locally.
 | When **starting** the node you MUST use `$ $DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. When using the binary as a client you can use the globally linked `$ blitd` |
 
 ```bash
-curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-build-from-source.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade-build-from-source.sh
+curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-build-from-source.sh > cosmovisor-preupgrade-build-from-source.sh
+chmod +x ./cosmovisor-preupgrade-build-from-source.sh
 ```
 
 ## 8. Set up the current Blitchain version
+Initialize the cosmovisor directory with the current version. This will take some time.
+
+This will download all the go requirements, python requirements, current Blitchain version and build them all.
 ```bash
-# Run cosmovisor-preupgrade.sh
-bash $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh $BLIT_VERSION
+./cosmovisor-preupgrade-build-from-source.sh $BLIT_VERSION
+```
+
+Link the current version like cosmosvisor requires.
+```bash
 ln -s $DAEMON_HOME/cosmovisor/upgrades/$BLIT_VERSION $DAEMON_HOME/cosmovisor/current
 
 # Link the binary for global access
 sudo ln -s $DAEMON_HOME/cosmovisor/current/bin/blitd /usr/local/bin/blitd
 
-# Clear the binary cache
+# (optional) Clear the binary cache
 hash -r
 ```
 
