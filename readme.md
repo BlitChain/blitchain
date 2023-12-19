@@ -267,10 +267,9 @@ sudo ln -s $DAEMON_HOME/cosmovisor/current/bin/blitd /usr/local/bin/blitd
 hash -r
 ```
 
-## 6. Initialize your node if you haven't already. 
+## 6. Initialize your node
 Replace 'my_node_name' with your desired node name. 
 
-If you chose **option 1** and are running blitd with Docker run the commands int he container to initialize the node and set the config for the testnet.
 ```
 docker run -it --rm \
     -u $(id -u):$(id -g) \
