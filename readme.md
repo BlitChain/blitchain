@@ -355,12 +355,7 @@ source ~/.bashrc
 ```
 ## 3. Install Go
 
-Install Go
 
-From source:
-[https://go.dev/doc/install](https://go.dev/doc/install)
-
-Or with `goenv`:
 ```bash
 goenv install 1.21.5
 goenv global 1.21.5
