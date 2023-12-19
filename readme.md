@@ -247,7 +247,7 @@ This will pull the pre build Docker container to run blitd. It is still possible
 See: https://github.com/BlitChain/blitchain/blob/develop/scripts/cosmovisor-preupgrade-pull-docker.sh#L10-L50
 
 ```bash
-curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-pull-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
+curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-pull-docker.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade-pull-docker.sh
 ```
 
 ## 5. Set up the current Blitchain version
@@ -301,7 +301,7 @@ Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
 Environment=DAEMON_POLL_INTERVAL=1s
 Environment=DAEMON_LOG_BUFFER_SIZE=512
 Environment=DAEMON_PREUPGRADE_MAX_RETRIES=10
-Environment=COSMOVISOR_CUSTOM_PREUPGRADE=cosmovisor-preupgrade.sh
+Environment=COSMOVISOR_CUSTOM_PREUPGRADE=cosmovisor-preupgrade-pull-docker.sh
 WorkingDirectory=$DAEMON_HOME/cosmovisor/current/
 Environment=PATH=$HOME/.pyenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 LimitNOFILE=infinity
@@ -414,7 +414,7 @@ This will build every upgrade from source locally.
 | When **starting** the node you MUST use `$ $DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. When using the binary as a client you can use the globally linked `$ blitd` |
 
 ```bash
-curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-build-from-source.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade.sh
+curl https://raw.githubusercontent.com/BlitChain/blitchain/develop/scripts/cosmovisor-preupgrade-build-from-source.sh > $DAEMON_HOME/cosmovisor/cosmovisor-preupgrade-build-from-source.sh
 ```
 
 ## 8. Set up the current Blitchain version
@@ -461,7 +461,7 @@ Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
 Environment=DAEMON_POLL_INTERVAL=1s
 Environment=DAEMON_LOG_BUFFER_SIZE=512
 Environment=DAEMON_PREUPGRADE_MAX_RETRIES=10
-Environment=COSMOVISOR_CUSTOM_PREUPGRADE=cosmovisor-preupgrade.sh
+Environment=COSMOVISOR_CUSTOM_PREUPGRADE=cosmovisor-preupgrade-build-from-source.sh
 WorkingDirectory=$DAEMON_HOME/cosmovisor/current/
 Environment=PATH=$HOME/.pyenv/shims:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 LimitNOFILE=infinity
