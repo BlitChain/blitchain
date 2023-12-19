@@ -294,7 +294,7 @@ After=network-online.target
 
 [Service]
 User=$USER
-ExecStart=$(which cosmovisor) run start
+ExecStart=$(goenv which cosmovisor) run start
 Restart=always
 RestartSec=3
 Environment="DAEMON_HOME=$DAEMON_HOME"
