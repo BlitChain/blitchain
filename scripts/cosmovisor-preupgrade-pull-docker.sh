@@ -5,6 +5,8 @@ set -xe
 UPGRADE_NAME=$1
 UPGRADE_HEIGHT=$2 # unused
 
+rm -rf  $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME
+
 mkdir -p $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME/bin
 
 tee $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME/bin/blitd > /dev/null <<EOF
