@@ -11,6 +11,7 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -248,6 +249,22 @@ func New(
 			),
 		)
 	)
+
+	// Verify blit-python is installed
+
+	out, runErr := exec.Command(
+		"python3", "-c", "print(object(), end='')",
+	).CombinedOutput()
+
+	if runErr != nil {
+		fmt.Println("Error running blit-python", runErr)
+		os.Exit(42)
+	}
+
+	if string(out) != "<object object at 0x1234>" {
+		fmt.Println("Error: blit-python not found or not installed. Verify that blit-python is installed and in your PATH.")
+		os.Exit(69)
+	}
 
 	if err := depinject.Inject(appConfig,
 		&appBuilder,

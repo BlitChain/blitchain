@@ -3,6 +3,7 @@ version: "3.9"
 services: 
   blit:
     init: true
+    user: "${UID}:${GID}"
     build: 
       context: .
     image: blitchain/blitchain:${BLIT_VERSION-dev}
