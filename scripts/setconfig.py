@@ -95,6 +95,13 @@ def main():
         'minimum-gas-prices': '0.0ublit',
         'api.enable': True,
         'api.swagger': True,
+        'consensus.timeout_propose': '3s',
+        'consensus.timeout_propose_delta': '500ms',
+        'consensus.timeout_prevote': '1s',
+        'consensus.timeout_prevote_delta': '500ms',
+        'consensus.timeout_precommit': '1s',
+        'consensus.timeout_precommit_delta': '500ms',
+        'consensus.timeout_commit': '5s',
     })
 
 
