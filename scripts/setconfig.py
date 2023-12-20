@@ -82,7 +82,14 @@ def main():
         'statesync.trust_height': BLOCK_HEIGHT,
         'statesync.trust_hash': TRUST_HASH,
         'statesync.double_sign_check_height': 1,
-        'statesync.discovery_time': '5s'
+        'statesync.discovery_time': '5s',
+        'consensus.timeout_propose': '3s',
+        'consensus.timeout_propose_delta': '500ms',
+        'consensus.timeout_prevote': '1s',
+        'consensus.timeout_prevote_delta': '500ms',
+        'consensus.timeout_precommit': '1s',
+        'consensus.timeout_precommit_delta': '500ms',
+        'consensus.timeout_commit': '5s',
     }
 
     # Update the config file
@@ -95,13 +102,6 @@ def main():
         'minimum-gas-prices': '0.0ublit',
         'api.enable': True,
         'api.swagger': True,
-        'consensus.timeout_propose': '3s',
-        'consensus.timeout_propose_delta': '500ms',
-        'consensus.timeout_prevote': '1s',
-        'consensus.timeout_prevote_delta': '500ms',
-        'consensus.timeout_precommit': '1s',
-        'consensus.timeout_precommit_delta': '500ms',
-        'consensus.timeout_commit': '5s',
     })
 
 
