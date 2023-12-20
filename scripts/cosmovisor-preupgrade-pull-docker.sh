@@ -42,7 +42,7 @@ if [ -t 0 ]; then
 fi
 
 # Run docker command
-exec docker run --rm \\
+exec docker run --rm  \\
     -u \$(id -u):\$(id -g) \\
     \$TTY_OPTION \\
     \$DAEMON_HOME_VOLUME \\
