@@ -4,7 +4,7 @@
 Set the Blit version (testnet) as an environment variable. It will be used in the rest of the commands.
 
 ```bash
-$ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
+export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
 ```
 
 |:exclamation:  Note for Docker Machine  |
@@ -16,7 +16,7 @@ $ export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint
 To hit the ground running paste this in your terminal. Requires docker to be installed. Use the `$BLIT_VERSION` environment variable set above.
 
 ```bash
-$ docker run --init -it --rm \
+docker run --init -it --rm \
     --pull always \
     -v ~/.blit:/home/user/.blit \
     -p 127.0.0.1:26656:26656 \
@@ -34,17 +34,17 @@ To get the code and build from source.
 ## Get the Code
 Clone the repo for the first time.
 ```
-$ git clone -b $BLIT_VERSION  https://github.com/BlitChain/blitchain
-$ cd blitchain
+git clone -b $BLIT_VERSION  https://github.com/BlitChain/blitchain
+cd blitchain
 ```
 
 _Or_ fetch and checkout the version of the existing repo.
 
 
 ```bash
-$ cd blitchain
-$ git fetch origin $BLIT_VERSION:$BLIT_VERSION
-$ git checkout $BLIT_VERSION
+cd blitchain
+git fetch origin $BLIT_VERSION:$BLIT_VERSION
+git checkout $BLIT_VERSION
 ```
 
 ## Run with Docker (recommended)
@@ -59,26 +59,26 @@ Make sure `BLIT_VERSION` is set from above.
 ### Build the Blit container from source
 
 ```bash
-$ docker compose build
+docker compose build
 ```
 
 ### Initialize the node
 Initialize your node with and replace `$MY_MONIKOR` with your node name
 
 ```bash
-$ docker compose run --rm blit ./bin/blitd init $MY_MONIKOR
+docker compose run --rm blit ./bin/blitd init $MY_MONIKOR
 ```
 
 Update config to connect to the testnet
 
 ```bash
-$ docker compose run --rm blit make testnet
+docker compose run --rm blit make testnet
 ```
 
 ### Start syncing the testnet
 
 ```bash
-$ docker compose up blit
+docker compose up blit
 ```
 
 -------
@@ -147,7 +147,7 @@ Now, you should have all the necessary dependencies installed and have built the
 
 If you are managing the golang versional manually, read `./blitchain/.go-version` for the required version.
 ```bash
-$ goenv install
+goenv install
 ```
 
 ###  Build blitd
@@ -174,11 +174,11 @@ make testnet
 
 |:exclamation:  Note for running a node  |
 |:-----------------------------------------|
-| When **starting** the node you MUST use `$ $DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. When using the binary as a client you can use the globally linked `$ blitd` |
+| When **starting** the node you MUST use `$ $DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. When using the binary as a client you can use the globally linked one like: `$ blitd` |
 
 Start syncing the testnet
 ```bash
-$ make start
+make start
 ```
 
 ## Configure
