@@ -6,7 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"blit/x/script/types"
@@ -102,9 +104,13 @@ func (k Keeper) RunWeb(goCtx context.Context, index string, httpreq string) (val
 		log.Fatal(err)
 	}
 
+	blitvmPath := os.Getenv("BLITVM_PATH")
+	if blitvmPath == "" {
+		blitvmPath = "./blitvm/"
+	}
+
 	cmd := exec.Command(
-		"python3",
-		"./blitvm/blitwsgi.py",
+		"python3", filepath.Join(blitvmPath, "blitwsgi.py"),
 		port,
 		valFound.Address,
 		string(blockInfoJson),

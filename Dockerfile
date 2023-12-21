@@ -75,12 +75,11 @@ COPY --chown=user:user .python-version .
 COPY --chown=user:user patch .
 COPY --chown=user:user blit-python .
 COPY --chown=user:user .python-version .
-RUN pyenv install --patch < patch
 COPY --chown=user:user blitvm/requirements.txt ./blitvm/requirements.txt
-RUN python -m pip install --user -r ./blitvm/requirements.txt
 COPY --chown=user:user ./blitvm ./blitvm
 COPY --chown=user:user ./scripts/ ./scripts
 COPY --chown=user:user ./Makefile .
+RUN make installdeps
 
 COPY --from=0 --chown=user:user /app/bin/blitd ./bin/blitd
 

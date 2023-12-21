@@ -9,8 +9,6 @@ rm -rf  $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME
 
 git clone --depth 1 --branch $UPGRADE_NAME https://github.com/BlitChain/blitchain.git $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME
 cd $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME
-goenv install -f
-pyenv install -f
-python -m pip install -r ./blitvm/requirements.txt
 
-exec make build
+goenv install -s
+exec make installdeps build

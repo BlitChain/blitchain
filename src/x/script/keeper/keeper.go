@@ -7,7 +7,9 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"reflect"
 	"strconv"
 	"strings"
@@ -556,9 +558,13 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 	if err != nil {
 		return nil, err
 	}
+	blitvmPath := os.Getenv("BLITVM_PATH")
+	if blitvmPath == "" {
+		blitvmPath = "./blitvm/"
+	}
 
 	out, runErr := exec.Command(
-		"python3", "./blitvm/blitvm_server.py",
+		"python3", filepath.Join(blitvmPath, "blitvm_server.py"),
 		port,
 		scriptCtx.CallerAddress,
 		valFound.Address,
