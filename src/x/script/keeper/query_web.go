@@ -29,7 +29,7 @@ func (k Keeper) Web(goCtx context.Context, req *types.QueryWebRequest) (*types.Q
 	goCtx = sdk.WrapSDKContext(ctx)
 	val, found := k.RunWeb(goCtx, req.Address, req.Httprequest)
 	if !found {
-		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("Script at address %v not set", req.Address))
+		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("Script at address '%v' not set", req.Address))
 	}
 
 	return &types.QueryWebResponse{Httpresponse: val}, nil

@@ -495,6 +495,7 @@ func catchAllMiddleware(next http.Handler) http.Handler {
 			next.ServeHTTP(rec, r)
 		}
 		notImplemented := rec.Body.String() == "{\"code\":12,\"message\":\"Not Implemented\",\"details\":[]}"
+
 		if notImplemented {
 			newReq := &http.Request{}
 			newReq = newReq.WithContext(r.Context())
@@ -538,19 +539,32 @@ func catchAllMiddleware(next http.Handler) http.Handler {
 				return
 			}
 
+			originalBody := rec.Body.String()
+
 			json.NewDecoder(rec.Body).Decode(&response)
+
+			if response.HTTPResponse == "" {
+				http.Error(w, fmt.Sprintf("Error parsing HTTPResponse: %s", response.Message), http.StatusInternalServerError)
+				return
+			}
 
 			// Decode the base64 encoded response
 			decodedResponse, err := base64.StdEncoding.DecodeString(response.HTTPResponse)
+
 			if err != nil {
 				http.Error(w, "Failed to decode base64 response", http.StatusInternalServerError)
+				return
+			}
+
+			if len(decodedResponse) == 0 {
+				http.Error(w, fmt.Sprintf("Error parsing HTTPResponse: %s", originalBody), http.StatusInternalServerError)
 				return
 			}
 
 			// Write the decoded response
 			err = WriteRawResponse(decodedResponse, w)
 			if err != nil {
-				http.Error(w, "Failed to write raw response", http.StatusInternalServerError)
+				http.Error(w, fmt.Sprintf("Failed to write raw response: %s", err), http.StatusInternalServerError)
 				fmt.Println("Error:", err)
 				fmt.Println("Error:", response.Message)
 			}
