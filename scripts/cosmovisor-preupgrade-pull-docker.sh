@@ -5,6 +5,18 @@ set -xe
 UPGRADE_NAME=$1
 UPGRADE_HEIGHT=$2 # unused
 
+# assert that the daemon home directory is set
+if [ -z "$DAEMON_HOME" ]; then
+    echo "DAEMON_HOME environment variable is not set"
+    exit 1
+fi
+
+# assert that the upgrade name is set
+if [ -z "$UPGRADE_NAME" ]; then
+    echo "UPGRADE_NAME environment variable is not set"
+    exit 1
+fi
+
 rm -rf  $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME
 
 mkdir -p $DAEMON_HOME/cosmovisor/upgrades/$UPGRADE_NAME/bin
