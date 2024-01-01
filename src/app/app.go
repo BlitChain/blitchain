@@ -66,6 +66,8 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 
 	blitmodulekeeper "blit/x/blit/keeper"
+	blit "blit/x/blit/module"
+	blittypes "blit/x/blit/types"
 	scriptkeeper "blit/x/script/keeper"
 	storagemodulekeeper "blit/x/storage/keeper"
 
@@ -98,6 +100,9 @@ type App struct {
 	appCodec          codec.Codec
 	txConfig          client.TxConfig
 	interfaceRegistry codectypes.InterfaceRegistry
+
+	// Blit config
+	BlitConfig blittypes.BlitConfig
 
 	// keepers
 	AccountKeeper         authkeeper.AccountKeeper
@@ -188,8 +193,15 @@ func New(
 	appOpts servertypes.AppOptions,
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) (*App, error) {
+
+	blitConfig, err := blit.ReadBlitConfig(appOpts)
+	if err != nil {
+		panic(fmt.Sprintf("error while reading blit config: %s", err))
+	}
 	var (
-		app        = &App{}
+		app = &App{
+			BlitConfig: blitConfig,
+		}
 		appBuilder *runtime.AppBuilder
 
 		// merge the AppConfig and other configuration in one config
@@ -317,7 +329,6 @@ func New(
 
 	// Register legacy modules
 	app.registerIBCModules()
-	//app.AppRegisterIBCModules()
 
 	// register streaming services
 	if err := app.RegisterStreamingServices(appOpts, app.kvStoreKeys()); err != nil {
@@ -422,11 +433,19 @@ func (app *App) SimulationManager() *module.SimulationManager {
 	return app.sm
 }
 
+// RegisterNodeService registers the node gRPC service on the app gRPC router.
+func (a *App) RegisterNodeService(clientCtx client.Context, cfg config.Config) {
+	nodeservice.RegisterNodeService(clientCtx, a.GRPCQueryRouter(), cfg)
+	blitmodulekeeper.RegisterNodeService(clientCtx, a.GRPCQueryRouter(), cfg)
+}
+
 // RegisterAPIRoutes registers all application module routes with the provided
 // API server.
 func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
+	// log BlitConfig
 	clientCtx := apiSvr.ClientCtx
 	nodeservice.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
+	blitmodulekeeper.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
 
 	app.App.RegisterAPIRoutes(apiSvr, apiConfig)
 	// register swagger API in app.go so that other applications can override easily

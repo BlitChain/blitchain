@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"reflect"
@@ -28,6 +27,7 @@ import (
 	authzKeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
 	"github.com/cosmos/cosmos-sdk/x/group/errors"
 	"github.com/gorilla/mux"
+	"github.com/spf13/viper"
 
 	"blit/x/script/types"
 
@@ -558,11 +558,8 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 	if err != nil {
 		return nil, err
 	}
-	blitvmPath := os.Getenv("BLITVM_PATH")
-	if blitvmPath == "" {
-		blitvmPath = "./blitvm/"
-	}
 
+	blitvmPath := viper.GetString("blit.experimental_blitvm_path")
 	out, runErr := exec.Command(
 		"python3", filepath.Join(blitvmPath, "blitvm_server.py"),
 		port,

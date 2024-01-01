@@ -114,34 +114,134 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
+// ConfigRequest defines the request structure for the Config gRPC query.
+type EndpointsRequest struct {
+}
+
+func (m *EndpointsRequest) Reset()         { *m = EndpointsRequest{} }
+func (m *EndpointsRequest) String() string { return proto.CompactTextString(m) }
+func (*EndpointsRequest) ProtoMessage()    {}
+func (*EndpointsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_799ae533e1c1b49c, []int{2}
+}
+func (m *EndpointsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *EndpointsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_EndpointsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *EndpointsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EndpointsRequest.Merge(m, src)
+}
+func (m *EndpointsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *EndpointsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_EndpointsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EndpointsRequest proto.InternalMessageInfo
+
+// ConfigResponse defines the response structure for the Config gRPC query.
+type EndpointsResponse struct {
+	// api_url is the url of the api service. It can be set with the ENV variable BLIT_PUBLIC_API_URL.
+	ApiUrl string `protobuf:"bytes,1,opt,name=api_url,json=apiUrl,proto3" json:"api_url,omitempty"`
+	// rpc_url is the url of the rpc service. It can be set with the ENV variable BLIT_PUBLIC_RPC_URL.
+	RpcUrl string `protobuf:"bytes,2,opt,name=rpc_url,json=rpcUrl,proto3" json:"rpc_url,omitempty"`
+}
+
+func (m *EndpointsResponse) Reset()         { *m = EndpointsResponse{} }
+func (m *EndpointsResponse) String() string { return proto.CompactTextString(m) }
+func (*EndpointsResponse) ProtoMessage()    {}
+func (*EndpointsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_799ae533e1c1b49c, []int{3}
+}
+func (m *EndpointsResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *EndpointsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_EndpointsResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *EndpointsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EndpointsResponse.Merge(m, src)
+}
+func (m *EndpointsResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *EndpointsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_EndpointsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EndpointsResponse proto.InternalMessageInfo
+
+func (m *EndpointsResponse) GetApiUrl() string {
+	if m != nil {
+		return m.ApiUrl
+	}
+	return ""
+}
+
+func (m *EndpointsResponse) GetRpcUrl() string {
+	if m != nil {
+		return m.RpcUrl
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "blit.blit.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "blit.blit.QueryParamsResponse")
+	proto.RegisterType((*EndpointsRequest)(nil), "blit.blit.EndpointsRequest")
+	proto.RegisterType((*EndpointsResponse)(nil), "blit.blit.EndpointsResponse")
 }
 
 func init() { proto.RegisterFile("blit/blit/query.proto", fileDescriptor_799ae533e1c1b49c) }
 
 var fileDescriptor_799ae533e1c1b49c = []byte{
-	// 289 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4d, 0xca, 0xc9, 0x2c,
-	0xd1, 0x07, 0x13, 0x85, 0xa5, 0xa9, 0x45, 0x95, 0x7a, 0x05, 0x45, 0xf9, 0x25, 0xf9, 0x42, 0x9c,
-	0x20, 0x11, 0x3d, 0x10, 0x21, 0x25, 0x98, 0x98, 0x9b, 0x99, 0x97, 0xaf, 0x0f, 0x26, 0x21, 0xb2,
-	0x52, 0x22, 0xe9, 0xf9, 0xe9, 0xf9, 0x60, 0xa6, 0x3e, 0x88, 0x05, 0x15, 0x95, 0x49, 0xcf, 0xcf,
-	0x4f, 0xcf, 0x49, 0xd5, 0x4f, 0x2c, 0xc8, 0xd4, 0x4f, 0xcc, 0xcb, 0xcb, 0x2f, 0x49, 0x2c, 0xc9,
-	0xcc, 0xcf, 0x2b, 0x86, 0xca, 0x6a, 0x25, 0xe7, 0x17, 0xe7, 0xe6, 0x17, 0xeb, 0x27, 0x25, 0x16,
-	0xa7, 0x42, 0xac, 0xd2, 0x2f, 0x33, 0x4c, 0x4a, 0x2d, 0x49, 0x34, 0xd4, 0x2f, 0x48, 0x4c, 0xcf,
-	0xcc, 0x03, 0x2b, 0x86, 0xaa, 0x15, 0x43, 0x38, 0xaa, 0x20, 0xb1, 0x28, 0x31, 0x17, 0x6a, 0x86,
-	0x92, 0x08, 0x97, 0x50, 0x20, 0x48, 0x67, 0x00, 0x58, 0x30, 0x28, 0xb5, 0xb0, 0x34, 0xb5, 0xb8,
-	0x44, 0xc9, 0x9b, 0x4b, 0x18, 0x45, 0xb4, 0xb8, 0x20, 0x3f, 0xaf, 0x38, 0x55, 0xc8, 0x84, 0x8b,
-	0x0d, 0xa2, 0x59, 0x82, 0x51, 0x81, 0x51, 0x83, 0xdb, 0x48, 0x50, 0x0f, 0xee, 0x27, 0x3d, 0x88,
-	0x52, 0x27, 0xce, 0x13, 0xf7, 0xe4, 0x19, 0x56, 0x3c, 0xdf, 0xa0, 0xc5, 0x18, 0x04, 0x55, 0x6b,
-	0x94, 0xcd, 0xc5, 0x0a, 0x36, 0x4c, 0x28, 0x89, 0x8b, 0x0d, 0xa2, 0x4a, 0x48, 0x16, 0x49, 0x23,
-	0xa6, 0xf5, 0x52, 0x72, 0xb8, 0xa4, 0x21, 0xee, 0x50, 0x92, 0x6c, 0xba, 0xfc, 0x64, 0x32, 0x93,
-	0xb0, 0x90, 0xa0, 0x3e, 0xba, 0xaf, 0x9c, 0xb4, 0x4f, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e,
-	0xf1, 0xc1, 0x23, 0x39, 0xc6, 0x09, 0x8f, 0xe5, 0x18, 0x2e, 0x3c, 0x96, 0x63, 0xb8, 0xf1, 0x58,
-	0x8e, 0x21, 0x4a, 0x10, 0xac, 0xac, 0x02, 0xa2, 0xba, 0xa4, 0xb2, 0x20, 0xb5, 0x38, 0x89, 0x0d,
-	0x1c, 0x06, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x8d, 0xa3, 0x65, 0xdc, 0xb2, 0x01, 0x00,
-	0x00,
+	// 387 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x51, 0x41, 0x6f, 0xda, 0x30,
+	0x18, 0x4d, 0x90, 0x16, 0x14, 0xef, 0xb2, 0x18, 0xb6, 0xb1, 0x8c, 0x65, 0x28, 0xa7, 0x89, 0x49,
+	0xb1, 0x60, 0xfb, 0x05, 0x48, 0x9c, 0x76, 0xd9, 0x98, 0xb8, 0xec, 0x32, 0x39, 0xa9, 0x95, 0x5a,
+	0x0d, 0xb6, 0xb1, 0x0d, 0x2a, 0xd7, 0xfe, 0x82, 0x4a, 0xfd, 0x13, 0x3d, 0xf6, 0x67, 0x70, 0x44,
+	0xea, 0xa5, 0xa7, 0xaa, 0x82, 0x4a, 0xfd, 0x1b, 0x55, 0xec, 0x94, 0x52, 0xda, 0x5e, 0x3e, 0x59,
+	0xef, 0xbd, 0xef, 0xbd, 0xf7, 0x25, 0xe0, 0x7d, 0x5a, 0x50, 0x8d, 0xcc, 0x98, 0xce, 0x88, 0x5c,
+	0x24, 0x42, 0x72, 0xcd, 0xa1, 0x5f, 0x22, 0x49, 0x39, 0xc2, 0x00, 0x4f, 0x28, 0xe3, 0xc8, 0x4c,
+	0xcb, 0x86, 0xcd, 0x9c, 0xe7, 0xdc, 0x3c, 0x51, 0xf9, 0xaa, 0xd0, 0x76, 0xce, 0x79, 0x5e, 0x10,
+	0x84, 0x05, 0x45, 0x98, 0x31, 0xae, 0xb1, 0xa6, 0x9c, 0xa9, 0x8a, 0xed, 0x66, 0x5c, 0x4d, 0xb8,
+	0x42, 0x29, 0x56, 0xc4, 0x46, 0xa1, 0x79, 0x2f, 0x25, 0x1a, 0xf7, 0x90, 0xc0, 0x39, 0x65, 0x46,
+	0x5c, 0x69, 0x3f, 0x3c, 0x96, 0x12, 0x58, 0xe2, 0x49, 0xe5, 0x11, 0x37, 0x01, 0xfc, 0x53, 0x6e,
+	0xfe, 0x36, 0xe0, 0x88, 0x4c, 0x67, 0x44, 0xe9, 0xf8, 0x17, 0x68, 0x3c, 0x41, 0x95, 0xe0, 0x4c,
+	0x11, 0xf8, 0x13, 0x78, 0x76, 0xb9, 0xe5, 0x76, 0xdc, 0x6f, 0x6f, 0xfb, 0x41, 0xb2, 0xbd, 0x29,
+	0xb1, 0xd2, 0x81, 0xbf, 0xbc, 0xfe, 0xea, 0x9c, 0xdf, 0x5d, 0x74, 0xdd, 0x51, 0xa5, 0x8d, 0x21,
+	0x78, 0x37, 0x64, 0x07, 0x82, 0x53, 0xa6, 0xb7, 0x01, 0x43, 0x10, 0xec, 0x60, 0x95, 0xfd, 0x47,
+	0x50, 0xc7, 0x82, 0xfe, 0x9f, 0xc9, 0xc2, 0xf8, 0xfb, 0x23, 0x0f, 0x0b, 0x3a, 0x96, 0x45, 0x49,
+	0x48, 0x91, 0x19, 0xa2, 0x66, 0x09, 0x29, 0xb2, 0xb1, 0x2c, 0xfa, 0x47, 0xe0, 0x8d, 0xe9, 0x09,
+	0x53, 0xe0, 0xd9, 0x02, 0xf0, 0xcb, 0x4e, 0xa7, 0xe7, 0x97, 0x85, 0xd1, 0x6b, 0xb4, 0xed, 0x10,
+	0x7f, 0x3a, 0xb9, 0xbc, 0x3d, 0xab, 0x35, 0x60, 0x80, 0xf6, 0x3f, 0x58, 0x5f, 0x81, 0xfa, 0x5f,
+	0x22, 0xe7, 0x34, 0x23, 0xf0, 0x10, 0xf8, 0xdb, 0xfa, 0xf0, 0xf3, 0x8e, 0xe5, 0xfe, 0xa1, 0x61,
+	0xfb, 0x65, 0xb2, 0x4a, 0xeb, 0x98, 0xb4, 0x10, 0xb6, 0x6c, 0x90, 0xb2, 0xf6, 0x0a, 0x91, 0x07,
+	0xe5, 0xe0, 0xfb, 0x72, 0x1d, 0xb9, 0xab, 0x75, 0xe4, 0xde, 0xac, 0x23, 0xf7, 0x74, 0x13, 0x39,
+	0xab, 0x4d, 0xe4, 0x5c, 0x6d, 0x22, 0xe7, 0x5f, 0x60, 0x56, 0x8e, 0xed, 0xa6, 0x5e, 0x08, 0xa2,
+	0x52, 0xcf, 0xfc, 0xd3, 0x1f, 0xf7, 0x01, 0x00, 0x00, 0xff, 0xff, 0xb6, 0x1d, 0xfa, 0x85, 0x82,
+	0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -226,6 +326,80 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 	Metadata: "blit/blit/query.proto",
 }
 
+// ServiceClient is the client API for Service service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ServiceClient interface {
+	// Config queries for the operator configuration.
+	Endpoints(ctx context.Context, in *EndpointsRequest, opts ...grpc.CallOption) (*EndpointsResponse, error)
+}
+
+type serviceClient struct {
+	cc grpc1.ClientConn
+}
+
+func NewServiceClient(cc grpc1.ClientConn) ServiceClient {
+	return &serviceClient{cc}
+}
+
+func (c *serviceClient) Endpoints(ctx context.Context, in *EndpointsRequest, opts ...grpc.CallOption) (*EndpointsResponse, error) {
+	out := new(EndpointsResponse)
+	err := c.cc.Invoke(ctx, "/blit.blit.Service/Endpoints", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ServiceServer is the server API for Service service.
+type ServiceServer interface {
+	// Config queries for the operator configuration.
+	Endpoints(context.Context, *EndpointsRequest) (*EndpointsResponse, error)
+}
+
+// UnimplementedServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedServiceServer struct {
+}
+
+func (*UnimplementedServiceServer) Endpoints(ctx context.Context, req *EndpointsRequest) (*EndpointsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Endpoints not implemented")
+}
+
+func RegisterServiceServer(s grpc1.Server, srv ServiceServer) {
+	s.RegisterService(&_Service_serviceDesc, srv)
+}
+
+func _Service_Endpoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EndpointsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).Endpoints(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/blit.blit.Service/Endpoints",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).Endpoints(ctx, req.(*EndpointsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Service_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "blit.blit.Service",
+	HandlerType: (*ServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Endpoints",
+			Handler:    _Service_Endpoints_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "blit/blit/query.proto",
+}
+
 func (m *QueryParamsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -282,6 +456,66 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *EndpointsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *EndpointsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *EndpointsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *EndpointsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *EndpointsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *EndpointsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.RpcUrl) > 0 {
+		i -= len(m.RpcUrl)
+		copy(dAtA[i:], m.RpcUrl)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.RpcUrl)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ApiUrl) > 0 {
+		i -= len(m.ApiUrl)
+		copy(dAtA[i:], m.ApiUrl)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.ApiUrl)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -310,6 +544,32 @@ func (m *QueryParamsResponse) Size() (n int) {
 	_ = l
 	l = m.Params.Size()
 	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *EndpointsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *EndpointsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ApiUrl)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	l = len(m.RpcUrl)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
 	return n
 }
 
@@ -430,6 +690,170 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 			if err := m.Params.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *EndpointsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: EndpointsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: EndpointsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *EndpointsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: EndpointsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: EndpointsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ApiUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ApiUrl = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RpcUrl", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RpcUrl = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

@@ -28,6 +28,7 @@ import (
 	"github.com/spf13/viper"
 
 	"blit/app"
+	blit "blit/x/blit/module"
 )
 
 func initRootCmd(
@@ -59,6 +60,7 @@ func initRootCmd(
 
 func addModuleInitFlags(startCmd *cobra.Command) {
 	crisis.AddModuleInitFlags(startCmd)
+	blit.AddModuleInitFlags(startCmd)
 }
 
 // genesisCommand builds genesis-related `blitd genesis` command. Users may provide application specific commands as a parameter

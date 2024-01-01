@@ -12,12 +12,15 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
+	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	authzKeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
+	"github.com/spf13/cast"
+	"github.com/spf13/cobra"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
@@ -39,6 +42,8 @@ var (
 	_ appmodule.HasBeginBlocker = (*AppModule)(nil)
 	_ appmodule.HasEndBlocker   = (*AppModule)(nil)
 )
+
+const ()
 
 // ----------------------------------------------------------------------------
 // AppModuleBasic
@@ -218,4 +223,42 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 	)
 
 	return ModuleOutputs{BlitKeeper: k, Module: m}
+}
+
+// AddModuleInitFlags implements servertypes.ModuleInitFlags interface.
+func AddModuleInitFlags(startCmd *cobra.Command) {
+	defaults := types.DefaultBlitConfig()
+	startCmd.Flags().Bool(types.FlagBlitScriptDebugMode, defaults.ScriptDebugMode, "Debug mode for Blitchain scripts")
+	startCmd.Flags().String(types.FlagPublicBlitRestAPIURL, defaults.PublicRestAPIURL, "Public REST API URL for blitjs")
+	startCmd.Flags().String(types.FlagPublicBlitCometRPCURL, defaults.PublicCometRPCURL, "Public Comet RPC URL for blitjs")
+	startCmd.Flags().String(types.FlagBlitVMPath, defaults.BlitVMPath, "EXPERIMENTAL: Path to blitvm executable")
+
+}
+
+// ReadBlitConfig reads the blit specifig configuration
+func ReadBlitConfig(opts servertypes.AppOptions) (types.BlitConfig, error) {
+	cfg := types.DefaultBlitConfig()
+	var err error
+	if v := opts.Get(types.FlagBlitScriptDebugMode); v != nil {
+		if cfg.ScriptDebugMode, err = cast.ToBoolE(v); err != nil {
+			return cfg, err
+		}
+	}
+	if v := opts.Get(types.FlagPublicBlitRestAPIURL); v != nil {
+		if cfg.PublicRestAPIURL, err = cast.ToStringE(v); err != nil {
+			return cfg, err
+		}
+	}
+	if v := opts.Get(types.FlagPublicBlitCometRPCURL); v != nil {
+		if cfg.PublicCometRPCURL, err = cast.ToStringE(v); err != nil {
+			return cfg, err
+		}
+	}
+	if v := opts.Get(types.FlagBlitVMPath); v != nil {
+		if cfg.BlitVMPath, err = cast.ToStringE(v); err != nil {
+			return cfg, err
+		}
+	}
+
+	return cfg, nil
 }

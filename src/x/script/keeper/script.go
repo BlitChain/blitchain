@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -17,6 +16,7 @@ import (
 	storetypes "cosmossdk.io/store/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/spf13/viper"
 )
 
 // SetScript set a specific script in the store from its index
@@ -104,10 +104,7 @@ func (k Keeper) RunWeb(goCtx context.Context, index string, httpreq string) (val
 		log.Fatal(err)
 	}
 
-	blitvmPath := os.Getenv("BLITVM_PATH")
-	if blitvmPath == "" {
-		blitvmPath = "./blitvm/"
-	}
+	blitvmPath := viper.GetString("blit.experimental_blitvm_path")
 
 	cmd := exec.Command(
 		"python3", filepath.Join(blitvmPath, "blitwsgi.py"),
