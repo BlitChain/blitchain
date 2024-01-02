@@ -1,10 +1,10 @@
 # Blit
 
 ## Set the Current Version
-Set the Blit version (testnet) as an environment variable. It will be used in the rest of the commands.
+Set the Blit version as an environment variable. It will be used in the rest of the commands.
 
 ```bash
-export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
+export BLIT_VERSION=$(curl https://blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
 ```
 
 |:exclamation:  Note for Docker Machine  |
@@ -24,7 +24,7 @@ docker run --init -it --rm \
     -p 127.0.0.1:1317:1317 \
     -p 127.0.0.1:9090:9090 \
     blitchain/blitchain:$BLIT_VERSION \
-    /bin/bash -c './bin/blitd init my_node_name ; make testnet start'
+    /bin/bash -c './bin/blitd init my_node_name ; make mainnet start'
 ```
 
 # The long way
@@ -69,13 +69,13 @@ Initialize your node with and replace `$MY_MONIKOR` with your node name
 docker compose run --rm blit ./bin/blitd init $MY_MONIKOR
 ```
 
-Update config to connect to the testnet
+Update config to connect to the mainnet
 
 ```bash
-docker compose run --rm blit make testnet
+docker compose run --rm blit make mainnet
 ```
 
-### Start syncing the testnet
+### Start syncing the mainnet
 
 ```bash
 docker compose up blit
@@ -165,9 +165,9 @@ make build
 ./bin/blitd init $MY_MONIKER 
 ```
 
-### Configure to connect to the Testnet
+### Configure to connect to the mainnet
 ```
-make testnet 
+make mainnet 
 ```
 
 ### Start the node
@@ -176,7 +176,7 @@ make testnet
 |:-----------------------------------------|
 | When **starting** the node you MUST use `$ $DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. When using the binary as a client you can use the globally linked one like: `$ blitd` |
 
-Start syncing the testnet
+Start syncing the mainnet
 ```bash
 make start
 ```
@@ -231,7 +231,7 @@ Prepare Cosmovisor and Systemd to run the BlitChain daemon.
 ```bash
 
 # The current Blitchain version
-export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
+export BLIT_VERSION=$(curl http://mainnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
 echo $BLIT_VERSION
 
 # This is the normal location 
@@ -281,7 +281,7 @@ docker run -it --rm \
     -u $(id -u):$(id -g) \
     -v $DAEMON_HOME:/home/user/.blit \
     blitchain/blitchain:$BLIT_VERSION \
-    make testnet
+    make mainnet
 ```
 
 ## 7. Create the Systemd service for Blitchain
@@ -360,8 +360,8 @@ source ~/.bashrc
 
 
 ```bash
-goenv install 1.21.5
-goenv global 1.21.5
+goenv install 1.21.3
+goenv global 1.21.3
 ```
 
 ## 4. Install Cosmovisor
@@ -399,7 +399,7 @@ Prepare Cosmovisor and Systemd to run the BlitChain daemon.
 ```bash
 
 # The current Blitchain version
-export BLIT_VERSION=$(curl http://testnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
+export BLIT_VERSION=$(curl http://mainnet.blitchain.net/cosmos/base/tendermint/v1beta1/node_info | jq -r .application_version.version)
 echo $BLIT_VERSION
 
 # This is the normal location 
@@ -433,13 +433,6 @@ This will download all the go requirements, python requirements, current Blitcha
 Link the current version like cosmosvisor requires.
 ```bash
 ln -s $DAEMON_HOME/cosmovisor/upgrades/$BLIT_VERSION $DAEMON_HOME/cosmovisor/current
-
-# Link the binary for global access
-sudo rm /usr/local/bin/blitd
-sudo ln -s $DAEMON_HOME/cosmovisor/current/bin/blitd /usr/local/bin/blitd
-
-# (optional) Clear the binary cache
-hash -r
 ```
 
 ## 9. Initialize your node if you haven't already. 
@@ -449,11 +442,13 @@ Replace 'my_node_name' with your desired node name.
 cd $DAEMON_HOME/cosmovisor/current/
 ./bin/blitd init my_node_name
 
-make testnet
+make mainnet
 ```
 
 
 ## 10. Create the Systemd service for Blitchain
+
+Note: Make sure `$DAEMON_HOME` and `$HOME` are still properly set.
 
 ```bash
 sudo tee /etc/systemd/system/blit-cosmovisor.service > /dev/null <<EOF

@@ -3,6 +3,8 @@
 testnet:
 	NODE_IP="149.248.76.117" python ./scripts/setconfig.py
 
+mainnet:
+	NODE_IP="172.104.250.57" python ./scripts/setconfig.py
 
 installdeps:
 	pyenv install -s --patch < patch
