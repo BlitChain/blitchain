@@ -794,6 +794,8 @@ blitlang.WHITELIST_FUNCTIONS.update(
         # wsgi
         "wsgiref.handlers.BaseHandler.start_response",
         "wsgiref.handlers.BaseHandler.write",
+        # Simple Cookie
+        "SimpleCookie.get",
     ]
 )
 
