@@ -10,7 +10,7 @@ const (
 	FlagBlitScriptDebugMode   = "blit.script_debug_mode"
 	FlagPublicBlitRestAPIURL  = "blit.public_rest_api_url"
 	FlagPublicBlitCometRPCURL = "blit.public_comet_rpc_url"
-	FlagBlitVMPath            = "blit.experimental_blitvm_path"
+	FlagBlitVMPath            = "blit.blitvm_path"
 )
 
 // BlitConfig is the extra config required for wasm
@@ -50,8 +50,8 @@ script_debug_mode = %v
 public_rest_api_url = "%s"
 # Public Comet RPC URL for blitjs
 public_comet_rpc_url = "%s"
-# EXPERIMENTAL: Path to blitvm executable
-experimental_blitvm_path = "%s"
+# Path to blitvm executable
+blitvm_path = "%s"
 
 `, c.ScriptDebugMode, c.PublicRestAPIURL, c.PublicCometRPCURL, c.BlitVMPath)
 }

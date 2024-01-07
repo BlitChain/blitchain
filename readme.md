@@ -180,18 +180,18 @@ make mainnet
 Set as a runtime flag, assuming you checked out and built it in your home directory
 
 ```
-blitd start --blit.experimental_blitvm_path /home/[username]/blitchain/blitvm
+blitd start --blit.blitvm_path /home/[username]/blitchain/blitvm
 ```
 
 or set in `~/.blit/config/app.toml`
 ```
 [blit]
-  experimental_blitvm_path = /home/[username]/blitchain/blitvm"
+  blitvm_path = /home/[username]/blitchain/blitvm"
 ```
 
 or in an env var
 ```
-BLITD_BLIT_EXPERIMENTAL_BLITVM_PATH=/home/[username]/blitchain/blitvm
+BLITD_BLIT_BLITVM_PATH=/home/[username]/blitchain/blitvm
 blitd start
 ```
 

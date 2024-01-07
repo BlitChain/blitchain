@@ -30,6 +30,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 
+	blittypes "blit/x/blit/types"
 	"blit/x/script/types"
 
 	"github.com/gorilla/rpc"
@@ -563,7 +564,7 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 	pyenv_root := os.Getenv("PYENV_ROOT")
 	pythonExe := filepath.Join(pyenv_root, "versions", "blit-python", "bin", "python")
 
-	blitvmPath := viper.GetString("blit.experimental_blitvm_path")
+	blitvmPath := viper.GetString(blittypes.FlagBlitVMPath)
 	out, runErr := exec.Command(
 		pythonExe, filepath.Join(blitvmPath, "blitvm_server.py"),
 		port,

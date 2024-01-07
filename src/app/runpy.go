@@ -1,6 +1,8 @@
 package app
 
 import (
+	blittypes "blit/x/blit/types"
+
 	"fmt"
 	"os"
 	"os/exec"
@@ -11,7 +13,7 @@ import (
 
 func runBlitVmScript(script string) (string, error) {
 
-	blitvmPath := viper.GetString("blit.experimental_blitvm_path")
+	blitvmPath := viper.GetString(blittypes.FlagBlitVMPath)
 	pyenv_root := os.Getenv("PYENV_ROOT")
 	if pyenv_root == "" {
 		fmt.Println("PYENV_ROOT is not set. Please set it to the root of your pyenv installation.")

@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	blittypes "blit/x/blit/types"
 	"blit/x/script/types"
 
 	"cosmossdk.io/store/prefix"
@@ -105,7 +106,7 @@ func (k Keeper) RunWeb(goCtx context.Context, index string, httpreq string) (val
 		log.Fatal(err)
 	}
 
-	blitvmPath := viper.GetString("blit.experimental_blitvm_path")
+	blitvmPath := viper.GetString(blittypes.FlagBlitVMPath)
 	pyenv_root := os.Getenv("PYENV_ROOT")
 	pythonExe := filepath.Join(pyenv_root, "versions", "blit-python", "bin", "python")
 
