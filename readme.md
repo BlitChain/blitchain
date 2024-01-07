@@ -174,7 +174,27 @@ make mainnet
 
 |:exclamation:  Note for running a node  |
 |:-----------------------------------------|
-| When **starting** the node you MUST use `$ $DAEMON_HOME/cosmovisor/current/bin/blitd start` from within the project directory and NOT using the globally linked binary. Otherwise you will get consensus errors. When using the binary as a client you can use the globally linked one like: `$ blitd` |
+| If you install it globally, to run a node you must set the path of blitvm |
+
+
+Blit will check for value in the following priority:
+
+The flag on `blitd`
+```
+blitd start --blit.blitvm_path /path/to/blitchain/blitvm/
+```
+
+or the environment variable
+```
+BLITD_BLIT_BLITVM_PATH=/path/to/blitchain/blitvm/
+blitd start
+```
+
+or set in `~/.blit/config/app.toml`
+```
+[blit]
+blitvm_path = "./blitvm"
+```
 
 Start syncing the mainnet
 ```bash

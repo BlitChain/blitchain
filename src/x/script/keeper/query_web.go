@@ -26,8 +26,7 @@ func (k Keeper) Web(goCtx context.Context, req *types.QueryWebRequest) (*types.Q
 	if ctx.GasMeter().Limit() < 1 || ctx.GasMeter().Limit() > MAX_QUERY_GAS {
 		ctx = ctx.WithGasMeter(storetypes.NewGasMeter(MAX_QUERY_GAS))
 	}
-	goCtx = sdk.WrapSDKContext(ctx)
-	val, found := k.RunWeb(goCtx, req.Address, req.Httprequest)
+	val, found := k.RunWeb(ctx, req.Address, req.Httprequest)
 	if !found {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("Script at address '%v' not set", req.Address))
 	}

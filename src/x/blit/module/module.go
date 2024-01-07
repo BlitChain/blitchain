@@ -231,7 +231,7 @@ func AddModuleInitFlags(startCmd *cobra.Command) {
 	startCmd.Flags().Bool(types.FlagBlitScriptDebugMode, defaults.ScriptDebugMode, "Debug mode for Blitchain scripts")
 	startCmd.Flags().String(types.FlagPublicBlitRestAPIURL, defaults.PublicRestAPIURL, "Public REST API URL for blitjs")
 	startCmd.Flags().String(types.FlagPublicBlitCometRPCURL, defaults.PublicCometRPCURL, "Public Comet RPC URL for blitjs")
-	startCmd.Flags().String(types.FlagBlitVMPath, defaults.BlitVMPath, "EXPERIMENTAL: Path to blitvm executable")
+	startCmd.Flags().String(types.FlagBlitVMPath, defaults.BlitVMPath, "Path to blitvm executable")
 
 }
 
