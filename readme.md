@@ -174,25 +174,26 @@ make mainnet
 
 |:exclamation:  Note for running a node  |
 |:-----------------------------------------|
-| In order to run a node, you must set the path of blitvm for blitd to find if you install it globally |
+| If you install it globally, to run a node you must set the path of blitvm |
 
 
-Set as a runtime flag, assuming you checked out and built it in your home directory
+Blit will check for value in the following priority:
 
+The flag on `blitd`
 ```
-blitd start --blit.blitvm_path /home/[username]/blitchain/blitvm
+blitd start --blit.blitvm_path /path/to/blitchain/blitvm/
+```
+
+or the environment variable
+```
+BLITD_BLIT_BLITVM_PATH=/path/to/blitchain/blitvm/
+blitd start
 ```
 
 or set in `~/.blit/config/app.toml`
 ```
 [blit]
-  blitvm_path = /home/[username]/blitchain/blitvm"
-```
-
-or in an env var
-```
-BLITD_BLIT_BLITVM_PATH=/home/[username]/blitchain/blitvm
-blitd start
+blitvm_path = "./blitvm"
 ```
 
 Start syncing the mainnet
