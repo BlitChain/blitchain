@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"reflect"
@@ -559,9 +560,12 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 		return nil, err
 	}
 
+	pyenv_root := os.Getenv("PYENV_ROOT")
+	pythonExe := filepath.Join(pyenv_root, "versions", "blit-python", "bin", "python")
+
 	blitvmPath := viper.GetString("blit.experimental_blitvm_path")
 	out, runErr := exec.Command(
-		"python3", filepath.Join(blitvmPath, "blitvm_server.py"),
+		pythonExe, filepath.Join(blitvmPath, "blitvm_server.py"),
 		port,
 		scriptCtx.CallerAddress,
 		valFound.Address,

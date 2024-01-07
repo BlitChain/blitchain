@@ -3,25 +3,30 @@ package app
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
+
+	"github.com/spf13/viper"
 )
 
 func ensure() {
-	// Verify blit-python is installed
 
-	blitvmPath := os.Getenv("BLITVM_PATH")
-	if blitvmPath == "" {
-		blitvmPath = "./blitvm/"
-	}
-
-	out, runErr := exec.Command(
-		"python3", filepath.Join(blitvmPath, "ensure_blitvm.py"),
-	).CombinedOutput()
+	out, runErr := runBlitVmScript("ensure_blitvm.py")
 
 	if runErr != nil {
-		fmt.Println("Error running ensure_blitvm.", runErr, string(out))
-		fmt.Printf("BLITVM_PATH: %s\n", blitvmPath)
+		blitvmPath := viper.GetString("blit.experimental_blitvm_path")
+
+		fmt.Println("Error running ensure_blitvm:", runErr, out)
+		fmt.Printf("blit.experimental_blitvm_path: %s\n", blitvmPath)
+		// if blitvmPath is relative, it's relative to the current working directory
+		if !filepath.IsAbs(blitvmPath) {
+			cwd, err := os.Getwd()
+			if err != nil {
+				fmt.Println("Error getting current working directory.", err)
+			} else {
+				fmt.Printf("current working directory: %s\nnormalized: %s\n", cwd, filepath.Join(cwd, blitvmPath))
+			}
+		}
+
 		os.Exit(42)
 	}
 
