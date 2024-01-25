@@ -8,6 +8,7 @@ import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "blit/blit/params.proto";
+import "blit/blit/task.proto";
 
 option go_package = "blit/x/blit/types";
 
@@ -22,6 +23,9 @@ service Msg {
   rpc BurnCoins          (MsgBurnCoins         ) returns (MsgBurnCoinsResponse         );
   rpc ForceTransferCoins (MsgForceTransferCoins) returns (MsgForceTransferCoinsResponse);
   rpc SetDenomMetadata   (MsgSetDenomMetadata  ) returns (MsgSetDenomMetadataResponse  );
+  rpc CreateTask         (MsgCreateTask        ) returns (MsgCreateTaskResponse        );
+  rpc UpdateTask         (MsgUpdateTask        ) returns (MsgUpdateTaskResponse        );
+  rpc DeleteTask         (MsgDeleteTask        ) returns (MsgDeleteTaskResponse        );
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -69,16 +73,68 @@ message MsgForceTransferCoinsResponse {}
 
 message MsgSetDenomMetadata {
   option (cosmos.msg.v1.signer) = "authority";
-  string authority = 1;
-  string base      = 2;
-  string display   = 3;
-  string name      = 4;
-  string symbol    = 5;
-  string uri       = 6;
-  string uri_hash  = 7;
-  uint32 exponent  = 8;
+  string authority   = 1;
+  string base        = 2;
+  string display     = 3;
+  string name        = 4;
+  string symbol      = 5;
+  string uri         = 6;
+  string uri_hash    = 7;
+  uint32 exponent    = 8;
   string description = 9;
 }
 
 message MsgSetDenomMetadataResponse {}
+
+message MsgCreateTask {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator             =  1;
+  string index               =  2;
+  int32  taskId              =  3;
+  int32  totalRunCount       =  4;
+  string nextTaskResultIndex =  5;
+  string activateOn          =  6;
+  string expireOn            =  7;
+  string interval            =  8;
+  int32  maxRuns             =  9;
+  bool   disableOnError      = 10;
+  bool   enabled             = 11;
+  int32  gasLimit            = 12;
+  string gasPrice            = 13;
+  string messagesMo          = 14;
+  string dule                = 15;
+  string blit                = 16;
+}
+
+message MsgCreateTaskResponse {}
+
+message MsgUpdateTask {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator             =  1;
+  string index               =  2;
+  int32  taskId              =  3;
+  int32  totalRunCount       =  4;
+  string nextTaskResultIndex =  5;
+  string activateOn          =  6;
+  string expireOn            =  7;
+  string interval            =  8;
+  int32  maxRuns             =  9;
+  bool   disableOnError      = 10;
+  bool   enabled             = 11;
+  int32  gasLimit            = 12;
+  string gasPrice            = 13;
+  string messagesMo          = 14;
+  string dule                = 15;
+  string blit                = 16;
+}
+
+message MsgUpdateTaskResponse {}
+
+message MsgDeleteTask {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  string index   = 2;
+}
+
+message MsgDeleteTaskResponse {}
 

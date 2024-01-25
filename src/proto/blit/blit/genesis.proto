@@ -1,17 +1,19 @@
 syntax = "proto3";
+
 package blit.blit;
 
 import "amino/amino.proto";
 import "gogoproto/gogo.proto";
 import "blit/blit/params.proto";
+import "blit/blit/task.proto";
 
 option go_package = "blit/x/blit/types";
 
 // GenesisState defines the blit module's genesis state.
 message GenesisState {
+  
   // params defines all the parameters of the module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+           Params params   = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Task   taskList = 2 [(gogoproto.nullable) = false] ;
 }
+

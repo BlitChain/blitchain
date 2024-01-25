@@ -1,17 +1,17 @@
 package keeper
 
 import (
+	"blit/x/blit/types"
 	"fmt"
+	"time"
 
+	"cosmossdk.io/collections"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
-
-	"blit/x/blit/types"
-
 	authzKeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
+	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 )
 
 type (
@@ -29,6 +29,16 @@ type (
 		bankKeeper bankkeeper.Keeper
 		// the account keeper
 		accountKeeper types.AccountKeeper
+
+		Schema collections.Schema
+		// Tasks key: taskID | value: Task
+		Tasks collections.Map[uint64, types.Task]
+		// TaskResults key: taskID | value: TaskResult
+		TaskResults collections.Map[uint64, types.TaskResult]
+		// PendingTasks key: scheduledTime+taskID | value: taskID
+		PendingTasks collections.Map[collections.Pair[time.Time, uint64], uint64]
+		// TaskID is a counter for tasks. It tracks the next task ID to be issued.
+		TaskID collections.Sequence
 	}
 )
 

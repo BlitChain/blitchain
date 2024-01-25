@@ -6,6 +6,7 @@ const (
 	defaultScriptDebugMode   = false
 	defaultPublicRestAPIURL  = "http://localhost:1317"
 	defaultPublicCometRPCURL = "http://localhost:26657"
+	DefaultBlitVMPath        = "./blitvm"
 
 	FlagBlitScriptDebugMode   = "blit.script_debug_mode"
 	FlagPublicBlitRestAPIURL  = "blit.public_rest_api_url"
@@ -27,7 +28,7 @@ func DefaultBlitConfig() BlitConfig {
 		ScriptDebugMode:   defaultScriptDebugMode,
 		PublicRestAPIURL:  defaultPublicRestAPIURL,
 		PublicCometRPCURL: defaultPublicCometRPCURL,
-		BlitVMPath:        "./blitvm",
+		BlitVMPath:        DefaultBlitVMPath,
 	}
 }
 

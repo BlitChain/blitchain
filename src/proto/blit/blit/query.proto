@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package blit.blit;
 
 import "amino/amino.proto";
@@ -6,45 +7,75 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "blit/blit/params.proto";
+import "blit/blit/task.proto";
 
 option go_package = "blit/x/blit/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/blit/blit/params";
+  
+  }
+  
+  // Queries a list of Task items.
+  rpc Task    (QueryGetTaskRequest) returns (QueryGetTaskResponse) {
+    option (google.api.http).get = "/blit/blit/task/{index}";
+  
+  }
+  rpc TaskAll (QueryAllTaskRequest) returns (QueryAllTaskResponse) {
+    option (google.api.http).get = "/blit/blit/task";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
 // Service defines the gRPC querier service for node related queries.
 service Service {
+  
   // Config queries for the operator configuration.
-  rpc Endpoints(EndpointsRequest) returns (EndpointsResponse) {
+  rpc Endpoints (EndpointsRequest) returns (EndpointsResponse) {
     option (google.api.http).get = "/blit/services/endpoints";
+  
   }
 }
-
 // ConfigRequest defines the request structure for the Config gRPC query.
 message EndpointsRequest {}
 
 // ConfigResponse defines the response structure for the Config gRPC query.
 message EndpointsResponse {
+  
   // api_url is the url of the api service. It can be set with the ENV variable BLIT_PUBLIC_API_URL.
   string api_url = 1;
+  
   // rpc_url is the url of the rpc service. It can be set with the ENV variable BLIT_PUBLIC_RPC_URL.
   string rpc_url = 2;
+}
+
+message QueryGetTaskRequest {
+  string index = 1;
+}
+
+message QueryGetTaskResponse {
+  Task task = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllTaskRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllTaskResponse {
+  repeated Task                                   task       = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

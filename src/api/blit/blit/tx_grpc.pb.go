@@ -24,6 +24,9 @@ const (
 	Msg_BurnCoins_FullMethodName          = "/blit.blit.Msg/BurnCoins"
 	Msg_ForceTransferCoins_FullMethodName = "/blit.blit.Msg/ForceTransferCoins"
 	Msg_SetDenomMetadata_FullMethodName   = "/blit.blit.Msg/SetDenomMetadata"
+	Msg_CreateTask_FullMethodName         = "/blit.blit.Msg/CreateTask"
+	Msg_UpdateTask_FullMethodName         = "/blit.blit.Msg/UpdateTask"
+	Msg_DeleteTask_FullMethodName         = "/blit.blit.Msg/DeleteTask"
 )
 
 // MsgClient is the client API for Msg service.
@@ -37,6 +40,9 @@ type MsgClient interface {
 	BurnCoins(ctx context.Context, in *MsgBurnCoins, opts ...grpc.CallOption) (*MsgBurnCoinsResponse, error)
 	ForceTransferCoins(ctx context.Context, in *MsgForceTransferCoins, opts ...grpc.CallOption) (*MsgForceTransferCoinsResponse, error)
 	SetDenomMetadata(ctx context.Context, in *MsgSetDenomMetadata, opts ...grpc.CallOption) (*MsgSetDenomMetadataResponse, error)
+	CreateTask(ctx context.Context, in *MsgCreateTask, opts ...grpc.CallOption) (*MsgCreateTaskResponse, error)
+	UpdateTask(ctx context.Context, in *MsgUpdateTask, opts ...grpc.CallOption) (*MsgUpdateTaskResponse, error)
+	DeleteTask(ctx context.Context, in *MsgDeleteTask, opts ...grpc.CallOption) (*MsgDeleteTaskResponse, error)
 }
 
 type msgClient struct {
@@ -92,6 +98,33 @@ func (c *msgClient) SetDenomMetadata(ctx context.Context, in *MsgSetDenomMetadat
 	return out, nil
 }
 
+func (c *msgClient) CreateTask(ctx context.Context, in *MsgCreateTask, opts ...grpc.CallOption) (*MsgCreateTaskResponse, error) {
+	out := new(MsgCreateTaskResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateTask(ctx context.Context, in *MsgUpdateTask, opts ...grpc.CallOption) (*MsgUpdateTaskResponse, error) {
+	out := new(MsgUpdateTaskResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteTask(ctx context.Context, in *MsgDeleteTask, opts ...grpc.CallOption) (*MsgDeleteTaskResponse, error) {
+	out := new(MsgDeleteTaskResponse)
+	err := c.cc.Invoke(ctx, Msg_DeleteTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -103,6 +136,9 @@ type MsgServer interface {
 	BurnCoins(context.Context, *MsgBurnCoins) (*MsgBurnCoinsResponse, error)
 	ForceTransferCoins(context.Context, *MsgForceTransferCoins) (*MsgForceTransferCoinsResponse, error)
 	SetDenomMetadata(context.Context, *MsgSetDenomMetadata) (*MsgSetDenomMetadataResponse, error)
+	CreateTask(context.Context, *MsgCreateTask) (*MsgCreateTaskResponse, error)
+	UpdateTask(context.Context, *MsgUpdateTask) (*MsgUpdateTaskResponse, error)
+	DeleteTask(context.Context, *MsgDeleteTask) (*MsgDeleteTaskResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -124,6 +160,15 @@ func (UnimplementedMsgServer) ForceTransferCoins(context.Context, *MsgForceTrans
 }
 func (UnimplementedMsgServer) SetDenomMetadata(context.Context, *MsgSetDenomMetadata) (*MsgSetDenomMetadataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetDenomMetadata not implemented")
+}
+func (UnimplementedMsgServer) CreateTask(context.Context, *MsgCreateTask) (*MsgCreateTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTask not implemented")
+}
+func (UnimplementedMsgServer) UpdateTask(context.Context, *MsgUpdateTask) (*MsgUpdateTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTask not implemented")
+}
+func (UnimplementedMsgServer) DeleteTask(context.Context, *MsgDeleteTask) (*MsgDeleteTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -228,6 +273,60 @@ func _Msg_SetDenomMetadata_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateTask)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateTask(ctx, req.(*MsgCreateTask))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateTask)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateTask(ctx, req.(*MsgUpdateTask))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteTask)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeleteTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteTask(ctx, req.(*MsgDeleteTask))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -254,6 +353,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetDenomMetadata",
 			Handler:    _Msg_SetDenomMetadata_Handler,
+		},
+		{
+			MethodName: "CreateTask",
+			Handler:    _Msg_CreateTask_Handler,
+		},
+		{
+			MethodName: "UpdateTask",
+			Handler:    _Msg_UpdateTask_Handler,
+		},
+		{
+			MethodName: "DeleteTask",
+			Handler:    _Msg_DeleteTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

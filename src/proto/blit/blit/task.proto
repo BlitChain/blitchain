@@ -1,0 +1,24 @@
+syntax = "proto3";
+package blit.blit;
+
+option go_package = "blit/x/blit/types";
+
+message Task {
+  string index = 1; 
+  int32 taskId = 2; 
+  int32 totalRunCount = 3; 
+  string nextTaskResultIndex = 4; 
+  string activateOn = 5; 
+  string expireOn = 6; 
+  string interval = 7; 
+  int32 maxRuns = 8; 
+  bool disableOnError = 9; 
+  bool enabled = 10; 
+  int32 gasLimit = 11; 
+  string gasPrice = 12; 
+  string messagesMo = 13; 
+  string dule = 14; 
+  string blit = 15; 
+  string creator = 16;
+}
+
