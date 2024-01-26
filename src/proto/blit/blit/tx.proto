@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package blit.blit;
 
+import "google/protobuf/any.proto";
 import "amino/amino.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "cosmos/msg/v1/msg.proto";
@@ -9,6 +10,7 @@ import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "blit/blit/params.proto";
 import "blit/blit/task.proto";
+import "blit/blit/task_result.proto";
 
 option go_package = "blit/x/blit/types";
 
@@ -26,6 +28,9 @@ service Msg {
   rpc CreateTask         (MsgCreateTask        ) returns (MsgCreateTaskResponse        );
   rpc UpdateTask         (MsgUpdateTask        ) returns (MsgUpdateTaskResponse        );
   rpc DeleteTask         (MsgDeleteTask        ) returns (MsgDeleteTaskResponse        );
+  rpc CreateTaskResult   (MsgCreateTaskResult  ) returns (MsgCreateTaskResultResponse  );
+  rpc UpdateTaskResult   (MsgUpdateTaskResult  ) returns (MsgUpdateTaskResultResponse  );
+  rpc DeleteTaskResult   (MsgDeleteTaskResult  ) returns (MsgDeleteTaskResultResponse  );
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -89,43 +94,34 @@ message MsgSetDenomMetadataResponse {}
 message MsgCreateTask {
   option (cosmos.msg.v1.signer) = "creator";
   string creator             =  1;
-  string index               =  2;
-  int32  taskId              =  3;
-  int32  totalRunCount       =  4;
-  string nextTaskResultIndex =  5;
-  string activateOn          =  6;
-  string expireOn            =  7;
-  string interval            =  8;
-  int32  maxRuns             =  9;
-  bool   disableOnError      = 10;
-  bool   enabled             = 11;
-  int32  gasLimit            = 12;
-  string gasPrice            = 13;
-  string messagesMo          = 14;
-  string dule                = 15;
-  string blit                = 16;
+  string activate_after = 2; 
+  string expire_after = 3; 
+  string interval = 4; 
+  int32 max_runs = 5; 
+  bool disable_on_error = 6; 
+  bool enabled = 7; 
+  int32 gas_limit = 8; 
+  string gas_price = 9; 
+  repeated google.protobuf.Any messages = 10;
 }
 
-message MsgCreateTaskResponse {}
+message MsgCreateTaskResponse {
+  uint64 id = 1;
+}
 
 message MsgUpdateTask {
   option (cosmos.msg.v1.signer) = "creator";
   string creator             =  1;
-  string index               =  2;
-  int32  taskId              =  3;
-  int32  totalRunCount       =  4;
-  string nextTaskResultIndex =  5;
-  string activateOn          =  6;
-  string expireOn            =  7;
-  string interval            =  8;
-  int32  maxRuns             =  9;
-  bool   disableOnError      = 10;
-  bool   enabled             = 11;
-  int32  gasLimit            = 12;
-  string gasPrice            = 13;
-  string messagesMo          = 14;
-  string dule                = 15;
-  string blit                = 16;
+  uint64 id               =  2;
+  string activate_after = 5; 
+  string expire_after = 6; 
+  string interval = 7; 
+  int32 max_runs = 8; 
+  bool disable_on_error = 9; 
+  bool enabled = 10; 
+  int32 gas_limit = 11; 
+  string gas_price = 12; 
+  repeated google.protobuf.Any messages = 13;
 }
 
 message MsgUpdateTaskResponse {}
@@ -133,8 +129,36 @@ message MsgUpdateTaskResponse {}
 message MsgDeleteTask {
   option (cosmos.msg.v1.signer) = "creator";
   string creator = 1;
-  string index   = 2;
+  uint64 id   = 2;
 }
 
 message MsgDeleteTaskResponse {}
+
+message MsgCreateTaskResult {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator    = 1;
+  string index      = 2;
+  int32  status     = 3;
+  string executedOn = 4;
+}
+
+message MsgCreateTaskResultResponse {}
+
+message MsgUpdateTaskResult {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator    = 1;
+  string index      = 2;
+  int32  status     = 3;
+  string executedOn = 4;
+}
+
+message MsgUpdateTaskResultResponse {}
+
+message MsgDeleteTaskResult {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  string index     = 2;
+}
+
+message MsgDeleteTaskResultResponse {}
 

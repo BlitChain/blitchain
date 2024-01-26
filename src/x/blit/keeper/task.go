@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"blit/x/blit/types"
+
 	"cosmossdk.io/store/prefix"
 	storetypes "cosmossdk.io/store/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
@@ -15,21 +16,21 @@ func (k Keeper) SetTask(ctx context.Context, task types.Task) {
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.TaskKeyPrefix))
 	b := k.cdc.MustMarshal(&task)
 	store.Set(types.TaskKey(
-		task.Index,
+		task.Id,
 	), b)
 }
 
 // GetTask returns a task from its index
 func (k Keeper) GetTask(
 	ctx context.Context,
-	index string,
+	id uint64,
 
 ) (val types.Task, found bool) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.TaskKeyPrefix))
 
 	b := store.Get(types.TaskKey(
-		index,
+		id,
 	))
 	if b == nil {
 		return val, false
@@ -42,13 +43,13 @@ func (k Keeper) GetTask(
 // RemoveTask removes a task from the store
 func (k Keeper) RemoveTask(
 	ctx context.Context,
-	index string,
+	id uint64,
 
 ) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.TaskKeyPrefix))
 	store.Delete(types.TaskKey(
-		index,
+		id,
 	))
 }
 

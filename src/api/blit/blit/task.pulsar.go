@@ -7,50 +7,92 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoiface "google.golang.org/protobuf/runtime/protoiface"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	anypb "google.golang.org/protobuf/types/known/anypb"
 	io "io"
 	reflect "reflect"
 	sync "sync"
 )
 
+var _ protoreflect.List = (*_Task_13_list)(nil)
+
+type _Task_13_list struct {
+	list *[]*anypb.Any
+}
+
+func (x *_Task_13_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_Task_13_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_Task_13_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*anypb.Any)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_Task_13_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*anypb.Any)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_Task_13_list) AppendMutable() protoreflect.Value {
+	v := new(anypb.Any)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_Task_13_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_Task_13_list) NewElement() protoreflect.Value {
+	v := new(anypb.Any)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_Task_13_list) IsValid() bool {
+	return x.list != nil
+}
+
 var (
-	md_Task                     protoreflect.MessageDescriptor
-	fd_Task_index               protoreflect.FieldDescriptor
-	fd_Task_taskId              protoreflect.FieldDescriptor
-	fd_Task_totalRunCount       protoreflect.FieldDescriptor
-	fd_Task_nextTaskResultIndex protoreflect.FieldDescriptor
-	fd_Task_activateOn          protoreflect.FieldDescriptor
-	fd_Task_expireOn            protoreflect.FieldDescriptor
-	fd_Task_interval            protoreflect.FieldDescriptor
-	fd_Task_maxRuns             protoreflect.FieldDescriptor
-	fd_Task_disableOnError      protoreflect.FieldDescriptor
-	fd_Task_enabled             protoreflect.FieldDescriptor
-	fd_Task_gasLimit            protoreflect.FieldDescriptor
-	fd_Task_gasPrice            protoreflect.FieldDescriptor
-	fd_Task_messagesMo          protoreflect.FieldDescriptor
-	fd_Task_dule                protoreflect.FieldDescriptor
-	fd_Task_blit                protoreflect.FieldDescriptor
-	fd_Task_creator             protoreflect.FieldDescriptor
+	md_Task                  protoreflect.MessageDescriptor
+	fd_Task_creator          protoreflect.FieldDescriptor
+	fd_Task_id               protoreflect.FieldDescriptor
+	fd_Task_activate_after   protoreflect.FieldDescriptor
+	fd_Task_expire_after     protoreflect.FieldDescriptor
+	fd_Task_interval         protoreflect.FieldDescriptor
+	fd_Task_max_runs         protoreflect.FieldDescriptor
+	fd_Task_disable_on_error protoreflect.FieldDescriptor
+	fd_Task_enabled          protoreflect.FieldDescriptor
+	fd_Task_gas_limit        protoreflect.FieldDescriptor
+	fd_Task_gas_price        protoreflect.FieldDescriptor
+	fd_Task_messages         protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_blit_blit_task_proto_init()
 	md_Task = File_blit_blit_task_proto.Messages().ByName("Task")
-	fd_Task_index = md_Task.Fields().ByName("index")
-	fd_Task_taskId = md_Task.Fields().ByName("taskId")
-	fd_Task_totalRunCount = md_Task.Fields().ByName("totalRunCount")
-	fd_Task_nextTaskResultIndex = md_Task.Fields().ByName("nextTaskResultIndex")
-	fd_Task_activateOn = md_Task.Fields().ByName("activateOn")
-	fd_Task_expireOn = md_Task.Fields().ByName("expireOn")
-	fd_Task_interval = md_Task.Fields().ByName("interval")
-	fd_Task_maxRuns = md_Task.Fields().ByName("maxRuns")
-	fd_Task_disableOnError = md_Task.Fields().ByName("disableOnError")
-	fd_Task_enabled = md_Task.Fields().ByName("enabled")
-	fd_Task_gasLimit = md_Task.Fields().ByName("gasLimit")
-	fd_Task_gasPrice = md_Task.Fields().ByName("gasPrice")
-	fd_Task_messagesMo = md_Task.Fields().ByName("messagesMo")
-	fd_Task_dule = md_Task.Fields().ByName("dule")
-	fd_Task_blit = md_Task.Fields().ByName("blit")
 	fd_Task_creator = md_Task.Fields().ByName("creator")
+	fd_Task_id = md_Task.Fields().ByName("id")
+	fd_Task_activate_after = md_Task.Fields().ByName("activate_after")
+	fd_Task_expire_after = md_Task.Fields().ByName("expire_after")
+	fd_Task_interval = md_Task.Fields().ByName("interval")
+	fd_Task_max_runs = md_Task.Fields().ByName("max_runs")
+	fd_Task_disable_on_error = md_Task.Fields().ByName("disable_on_error")
+	fd_Task_enabled = md_Task.Fields().ByName("enabled")
+	fd_Task_gas_limit = md_Task.Fields().ByName("gas_limit")
+	fd_Task_gas_price = md_Task.Fields().ByName("gas_price")
+	fd_Task_messages = md_Task.Fields().ByName("messages")
 }
 
 var _ protoreflect.Message = (*fastReflection_Task)(nil)
@@ -118,39 +160,27 @@ func (x *fastReflection_Task) Interface() protoreflect.ProtoMessage {
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_Task) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Index != "" {
-		value := protoreflect.ValueOfString(x.Index)
-		if !f(fd_Task_index, value) {
+	if x.Creator != "" {
+		value := protoreflect.ValueOfString(x.Creator)
+		if !f(fd_Task_creator, value) {
 			return
 		}
 	}
-	if x.TaskId != int32(0) {
-		value := protoreflect.ValueOfInt32(x.TaskId)
-		if !f(fd_Task_taskId, value) {
+	if x.Id != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.Id)
+		if !f(fd_Task_id, value) {
 			return
 		}
 	}
-	if x.TotalRunCount != int32(0) {
-		value := protoreflect.ValueOfInt32(x.TotalRunCount)
-		if !f(fd_Task_totalRunCount, value) {
+	if x.ActivateAfter != "" {
+		value := protoreflect.ValueOfString(x.ActivateAfter)
+		if !f(fd_Task_activate_after, value) {
 			return
 		}
 	}
-	if x.NextTaskResultIndex != "" {
-		value := protoreflect.ValueOfString(x.NextTaskResultIndex)
-		if !f(fd_Task_nextTaskResultIndex, value) {
-			return
-		}
-	}
-	if x.ActivateOn != "" {
-		value := protoreflect.ValueOfString(x.ActivateOn)
-		if !f(fd_Task_activateOn, value) {
-			return
-		}
-	}
-	if x.ExpireOn != "" {
-		value := protoreflect.ValueOfString(x.ExpireOn)
-		if !f(fd_Task_expireOn, value) {
+	if x.ExpireAfter != "" {
+		value := protoreflect.ValueOfString(x.ExpireAfter)
+		if !f(fd_Task_expire_after, value) {
 			return
 		}
 	}
@@ -162,13 +192,13 @@ func (x *fastReflection_Task) Range(f func(protoreflect.FieldDescriptor, protore
 	}
 	if x.MaxRuns != int32(0) {
 		value := protoreflect.ValueOfInt32(x.MaxRuns)
-		if !f(fd_Task_maxRuns, value) {
+		if !f(fd_Task_max_runs, value) {
 			return
 		}
 	}
 	if x.DisableOnError != false {
 		value := protoreflect.ValueOfBool(x.DisableOnError)
-		if !f(fd_Task_disableOnError, value) {
+		if !f(fd_Task_disable_on_error, value) {
 			return
 		}
 	}
@@ -180,37 +210,19 @@ func (x *fastReflection_Task) Range(f func(protoreflect.FieldDescriptor, protore
 	}
 	if x.GasLimit != int32(0) {
 		value := protoreflect.ValueOfInt32(x.GasLimit)
-		if !f(fd_Task_gasLimit, value) {
+		if !f(fd_Task_gas_limit, value) {
 			return
 		}
 	}
 	if x.GasPrice != "" {
 		value := protoreflect.ValueOfString(x.GasPrice)
-		if !f(fd_Task_gasPrice, value) {
+		if !f(fd_Task_gas_price, value) {
 			return
 		}
 	}
-	if x.MessagesMo != "" {
-		value := protoreflect.ValueOfString(x.MessagesMo)
-		if !f(fd_Task_messagesMo, value) {
-			return
-		}
-	}
-	if x.Dule != "" {
-		value := protoreflect.ValueOfString(x.Dule)
-		if !f(fd_Task_dule, value) {
-			return
-		}
-	}
-	if x.Blit != "" {
-		value := protoreflect.ValueOfString(x.Blit)
-		if !f(fd_Task_blit, value) {
-			return
-		}
-	}
-	if x.Creator != "" {
-		value := protoreflect.ValueOfString(x.Creator)
-		if !f(fd_Task_creator, value) {
+	if len(x.Messages) != 0 {
+		value := protoreflect.ValueOfList(&_Task_13_list{list: &x.Messages})
+		if !f(fd_Task_messages, value) {
 			return
 		}
 	}
@@ -229,38 +241,28 @@ func (x *fastReflection_Task) Range(f func(protoreflect.FieldDescriptor, protore
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_Task) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "blit.blit.Task.index":
-		return x.Index != ""
-	case "blit.blit.Task.taskId":
-		return x.TaskId != int32(0)
-	case "blit.blit.Task.totalRunCount":
-		return x.TotalRunCount != int32(0)
-	case "blit.blit.Task.nextTaskResultIndex":
-		return x.NextTaskResultIndex != ""
-	case "blit.blit.Task.activateOn":
-		return x.ActivateOn != ""
-	case "blit.blit.Task.expireOn":
-		return x.ExpireOn != ""
+	case "blit.blit.Task.creator":
+		return x.Creator != ""
+	case "blit.blit.Task.id":
+		return x.Id != uint64(0)
+	case "blit.blit.Task.activate_after":
+		return x.ActivateAfter != ""
+	case "blit.blit.Task.expire_after":
+		return x.ExpireAfter != ""
 	case "blit.blit.Task.interval":
 		return x.Interval != ""
-	case "blit.blit.Task.maxRuns":
+	case "blit.blit.Task.max_runs":
 		return x.MaxRuns != int32(0)
-	case "blit.blit.Task.disableOnError":
+	case "blit.blit.Task.disable_on_error":
 		return x.DisableOnError != false
 	case "blit.blit.Task.enabled":
 		return x.Enabled != false
-	case "blit.blit.Task.gasLimit":
+	case "blit.blit.Task.gas_limit":
 		return x.GasLimit != int32(0)
-	case "blit.blit.Task.gasPrice":
+	case "blit.blit.Task.gas_price":
 		return x.GasPrice != ""
-	case "blit.blit.Task.messagesMo":
-		return x.MessagesMo != ""
-	case "blit.blit.Task.dule":
-		return x.Dule != ""
-	case "blit.blit.Task.blit":
-		return x.Blit != ""
-	case "blit.blit.Task.creator":
-		return x.Creator != ""
+	case "blit.blit.Task.messages":
+		return len(x.Messages) != 0
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.Task"))
@@ -277,38 +279,28 @@ func (x *fastReflection_Task) Has(fd protoreflect.FieldDescriptor) bool {
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Task) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "blit.blit.Task.index":
-		x.Index = ""
-	case "blit.blit.Task.taskId":
-		x.TaskId = int32(0)
-	case "blit.blit.Task.totalRunCount":
-		x.TotalRunCount = int32(0)
-	case "blit.blit.Task.nextTaskResultIndex":
-		x.NextTaskResultIndex = ""
-	case "blit.blit.Task.activateOn":
-		x.ActivateOn = ""
-	case "blit.blit.Task.expireOn":
-		x.ExpireOn = ""
+	case "blit.blit.Task.creator":
+		x.Creator = ""
+	case "blit.blit.Task.id":
+		x.Id = uint64(0)
+	case "blit.blit.Task.activate_after":
+		x.ActivateAfter = ""
+	case "blit.blit.Task.expire_after":
+		x.ExpireAfter = ""
 	case "blit.blit.Task.interval":
 		x.Interval = ""
-	case "blit.blit.Task.maxRuns":
+	case "blit.blit.Task.max_runs":
 		x.MaxRuns = int32(0)
-	case "blit.blit.Task.disableOnError":
+	case "blit.blit.Task.disable_on_error":
 		x.DisableOnError = false
 	case "blit.blit.Task.enabled":
 		x.Enabled = false
-	case "blit.blit.Task.gasLimit":
+	case "blit.blit.Task.gas_limit":
 		x.GasLimit = int32(0)
-	case "blit.blit.Task.gasPrice":
+	case "blit.blit.Task.gas_price":
 		x.GasPrice = ""
-	case "blit.blit.Task.messagesMo":
-		x.MessagesMo = ""
-	case "blit.blit.Task.dule":
-		x.Dule = ""
-	case "blit.blit.Task.blit":
-		x.Blit = ""
-	case "blit.blit.Task.creator":
-		x.Creator = ""
+	case "blit.blit.Task.messages":
+		x.Messages = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.Task"))
@@ -325,54 +317,42 @@ func (x *fastReflection_Task) Clear(fd protoreflect.FieldDescriptor) {
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_Task) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "blit.blit.Task.index":
-		value := x.Index
+	case "blit.blit.Task.creator":
+		value := x.Creator
 		return protoreflect.ValueOfString(value)
-	case "blit.blit.Task.taskId":
-		value := x.TaskId
-		return protoreflect.ValueOfInt32(value)
-	case "blit.blit.Task.totalRunCount":
-		value := x.TotalRunCount
-		return protoreflect.ValueOfInt32(value)
-	case "blit.blit.Task.nextTaskResultIndex":
-		value := x.NextTaskResultIndex
+	case "blit.blit.Task.id":
+		value := x.Id
+		return protoreflect.ValueOfUint64(value)
+	case "blit.blit.Task.activate_after":
+		value := x.ActivateAfter
 		return protoreflect.ValueOfString(value)
-	case "blit.blit.Task.activateOn":
-		value := x.ActivateOn
-		return protoreflect.ValueOfString(value)
-	case "blit.blit.Task.expireOn":
-		value := x.ExpireOn
+	case "blit.blit.Task.expire_after":
+		value := x.ExpireAfter
 		return protoreflect.ValueOfString(value)
 	case "blit.blit.Task.interval":
 		value := x.Interval
 		return protoreflect.ValueOfString(value)
-	case "blit.blit.Task.maxRuns":
+	case "blit.blit.Task.max_runs":
 		value := x.MaxRuns
 		return protoreflect.ValueOfInt32(value)
-	case "blit.blit.Task.disableOnError":
+	case "blit.blit.Task.disable_on_error":
 		value := x.DisableOnError
 		return protoreflect.ValueOfBool(value)
 	case "blit.blit.Task.enabled":
 		value := x.Enabled
 		return protoreflect.ValueOfBool(value)
-	case "blit.blit.Task.gasLimit":
+	case "blit.blit.Task.gas_limit":
 		value := x.GasLimit
 		return protoreflect.ValueOfInt32(value)
-	case "blit.blit.Task.gasPrice":
+	case "blit.blit.Task.gas_price":
 		value := x.GasPrice
 		return protoreflect.ValueOfString(value)
-	case "blit.blit.Task.messagesMo":
-		value := x.MessagesMo
-		return protoreflect.ValueOfString(value)
-	case "blit.blit.Task.dule":
-		value := x.Dule
-		return protoreflect.ValueOfString(value)
-	case "blit.blit.Task.blit":
-		value := x.Blit
-		return protoreflect.ValueOfString(value)
-	case "blit.blit.Task.creator":
-		value := x.Creator
-		return protoreflect.ValueOfString(value)
+	case "blit.blit.Task.messages":
+		if len(x.Messages) == 0 {
+			return protoreflect.ValueOfList(&_Task_13_list{})
+		}
+		listValue := &_Task_13_list{list: &x.Messages}
+		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.Task"))
@@ -393,38 +373,30 @@ func (x *fastReflection_Task) Get(descriptor protoreflect.FieldDescriptor) proto
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Task) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "blit.blit.Task.index":
-		x.Index = value.Interface().(string)
-	case "blit.blit.Task.taskId":
-		x.TaskId = int32(value.Int())
-	case "blit.blit.Task.totalRunCount":
-		x.TotalRunCount = int32(value.Int())
-	case "blit.blit.Task.nextTaskResultIndex":
-		x.NextTaskResultIndex = value.Interface().(string)
-	case "blit.blit.Task.activateOn":
-		x.ActivateOn = value.Interface().(string)
-	case "blit.blit.Task.expireOn":
-		x.ExpireOn = value.Interface().(string)
+	case "blit.blit.Task.creator":
+		x.Creator = value.Interface().(string)
+	case "blit.blit.Task.id":
+		x.Id = value.Uint()
+	case "blit.blit.Task.activate_after":
+		x.ActivateAfter = value.Interface().(string)
+	case "blit.blit.Task.expire_after":
+		x.ExpireAfter = value.Interface().(string)
 	case "blit.blit.Task.interval":
 		x.Interval = value.Interface().(string)
-	case "blit.blit.Task.maxRuns":
+	case "blit.blit.Task.max_runs":
 		x.MaxRuns = int32(value.Int())
-	case "blit.blit.Task.disableOnError":
+	case "blit.blit.Task.disable_on_error":
 		x.DisableOnError = value.Bool()
 	case "blit.blit.Task.enabled":
 		x.Enabled = value.Bool()
-	case "blit.blit.Task.gasLimit":
+	case "blit.blit.Task.gas_limit":
 		x.GasLimit = int32(value.Int())
-	case "blit.blit.Task.gasPrice":
+	case "blit.blit.Task.gas_price":
 		x.GasPrice = value.Interface().(string)
-	case "blit.blit.Task.messagesMo":
-		x.MessagesMo = value.Interface().(string)
-	case "blit.blit.Task.dule":
-		x.Dule = value.Interface().(string)
-	case "blit.blit.Task.blit":
-		x.Blit = value.Interface().(string)
-	case "blit.blit.Task.creator":
-		x.Creator = value.Interface().(string)
+	case "blit.blit.Task.messages":
+		lv := value.List()
+		clv := lv.(*_Task_13_list)
+		x.Messages = *clv.list
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.Task"))
@@ -445,38 +417,32 @@ func (x *fastReflection_Task) Set(fd protoreflect.FieldDescriptor, value protore
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_Task) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.blit.Task.index":
-		panic(fmt.Errorf("field index of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.taskId":
-		panic(fmt.Errorf("field taskId of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.totalRunCount":
-		panic(fmt.Errorf("field totalRunCount of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.nextTaskResultIndex":
-		panic(fmt.Errorf("field nextTaskResultIndex of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.activateOn":
-		panic(fmt.Errorf("field activateOn of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.expireOn":
-		panic(fmt.Errorf("field expireOn of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.interval":
-		panic(fmt.Errorf("field interval of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.maxRuns":
-		panic(fmt.Errorf("field maxRuns of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.disableOnError":
-		panic(fmt.Errorf("field disableOnError of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.enabled":
-		panic(fmt.Errorf("field enabled of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.gasLimit":
-		panic(fmt.Errorf("field gasLimit of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.gasPrice":
-		panic(fmt.Errorf("field gasPrice of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.messagesMo":
-		panic(fmt.Errorf("field messagesMo of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.dule":
-		panic(fmt.Errorf("field dule of message blit.blit.Task is not mutable"))
-	case "blit.blit.Task.blit":
-		panic(fmt.Errorf("field blit of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.messages":
+		if x.Messages == nil {
+			x.Messages = []*anypb.Any{}
+		}
+		value := &_Task_13_list{list: &x.Messages}
+		return protoreflect.ValueOfList(value)
 	case "blit.blit.Task.creator":
 		panic(fmt.Errorf("field creator of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.id":
+		panic(fmt.Errorf("field id of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.activate_after":
+		panic(fmt.Errorf("field activate_after of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.expire_after":
+		panic(fmt.Errorf("field expire_after of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.interval":
+		panic(fmt.Errorf("field interval of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.max_runs":
+		panic(fmt.Errorf("field max_runs of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.disable_on_error":
+		panic(fmt.Errorf("field disable_on_error of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.enabled":
+		panic(fmt.Errorf("field enabled of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.gas_limit":
+		panic(fmt.Errorf("field gas_limit of message blit.blit.Task is not mutable"))
+	case "blit.blit.Task.gas_price":
+		panic(fmt.Errorf("field gas_price of message blit.blit.Task is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.Task"))
@@ -490,38 +456,29 @@ func (x *fastReflection_Task) Mutable(fd protoreflect.FieldDescriptor) protorefl
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_Task) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.blit.Task.index":
+	case "blit.blit.Task.creator":
 		return protoreflect.ValueOfString("")
-	case "blit.blit.Task.taskId":
-		return protoreflect.ValueOfInt32(int32(0))
-	case "blit.blit.Task.totalRunCount":
-		return protoreflect.ValueOfInt32(int32(0))
-	case "blit.blit.Task.nextTaskResultIndex":
+	case "blit.blit.Task.id":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "blit.blit.Task.activate_after":
 		return protoreflect.ValueOfString("")
-	case "blit.blit.Task.activateOn":
-		return protoreflect.ValueOfString("")
-	case "blit.blit.Task.expireOn":
+	case "blit.blit.Task.expire_after":
 		return protoreflect.ValueOfString("")
 	case "blit.blit.Task.interval":
 		return protoreflect.ValueOfString("")
-	case "blit.blit.Task.maxRuns":
+	case "blit.blit.Task.max_runs":
 		return protoreflect.ValueOfInt32(int32(0))
-	case "blit.blit.Task.disableOnError":
+	case "blit.blit.Task.disable_on_error":
 		return protoreflect.ValueOfBool(false)
 	case "blit.blit.Task.enabled":
 		return protoreflect.ValueOfBool(false)
-	case "blit.blit.Task.gasLimit":
+	case "blit.blit.Task.gas_limit":
 		return protoreflect.ValueOfInt32(int32(0))
-	case "blit.blit.Task.gasPrice":
+	case "blit.blit.Task.gas_price":
 		return protoreflect.ValueOfString("")
-	case "blit.blit.Task.messagesMo":
-		return protoreflect.ValueOfString("")
-	case "blit.blit.Task.dule":
-		return protoreflect.ValueOfString("")
-	case "blit.blit.Task.blit":
-		return protoreflect.ValueOfString("")
-	case "blit.blit.Task.creator":
-		return protoreflect.ValueOfString("")
+	case "blit.blit.Task.messages":
+		list := []*anypb.Any{}
+		return protoreflect.ValueOfList(&_Task_13_list{list: &list})
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.Task"))
@@ -591,25 +548,18 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		l = len(x.Index)
+		l = len(x.Creator)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if x.TaskId != 0 {
-			n += 1 + runtime.Sov(uint64(x.TaskId))
+		if x.Id != 0 {
+			n += 1 + runtime.Sov(uint64(x.Id))
 		}
-		if x.TotalRunCount != 0 {
-			n += 1 + runtime.Sov(uint64(x.TotalRunCount))
-		}
-		l = len(x.NextTaskResultIndex)
+		l = len(x.ActivateAfter)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.ActivateOn)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.ExpireOn)
+		l = len(x.ExpireAfter)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
@@ -633,21 +583,11 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		l = len(x.MessagesMo)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Dule)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Blit)
-		if l > 0 {
-			n += 1 + l + runtime.Sov(uint64(l))
-		}
-		l = len(x.Creator)
-		if l > 0 {
-			n += 2 + l + runtime.Sov(uint64(l))
+		if len(x.Messages) > 0 {
+			for _, e := range x.Messages {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
 		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
@@ -678,35 +618,21 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if len(x.Creator) > 0 {
-			i -= len(x.Creator)
-			copy(dAtA[i:], x.Creator)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
-			i--
-			dAtA[i] = 0x1
-			i--
-			dAtA[i] = 0x82
-		}
-		if len(x.Blit) > 0 {
-			i -= len(x.Blit)
-			copy(dAtA[i:], x.Blit)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Blit)))
-			i--
-			dAtA[i] = 0x7a
-		}
-		if len(x.Dule) > 0 {
-			i -= len(x.Dule)
-			copy(dAtA[i:], x.Dule)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Dule)))
-			i--
-			dAtA[i] = 0x72
-		}
-		if len(x.MessagesMo) > 0 {
-			i -= len(x.MessagesMo)
-			copy(dAtA[i:], x.MessagesMo)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.MessagesMo)))
-			i--
-			dAtA[i] = 0x6a
+		if len(x.Messages) > 0 {
+			for iNdEx := len(x.Messages) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.Messages[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0x6a
+			}
 		}
 		if len(x.GasPrice) > 0 {
 			i -= len(x.GasPrice)
@@ -752,41 +678,29 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 			i--
 			dAtA[i] = 0x3a
 		}
-		if len(x.ExpireOn) > 0 {
-			i -= len(x.ExpireOn)
-			copy(dAtA[i:], x.ExpireOn)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ExpireOn)))
+		if len(x.ExpireAfter) > 0 {
+			i -= len(x.ExpireAfter)
+			copy(dAtA[i:], x.ExpireAfter)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ExpireAfter)))
 			i--
 			dAtA[i] = 0x32
 		}
-		if len(x.ActivateOn) > 0 {
-			i -= len(x.ActivateOn)
-			copy(dAtA[i:], x.ActivateOn)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ActivateOn)))
+		if len(x.ActivateAfter) > 0 {
+			i -= len(x.ActivateAfter)
+			copy(dAtA[i:], x.ActivateAfter)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ActivateAfter)))
 			i--
 			dAtA[i] = 0x2a
 		}
-		if len(x.NextTaskResultIndex) > 0 {
-			i -= len(x.NextTaskResultIndex)
-			copy(dAtA[i:], x.NextTaskResultIndex)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.NextTaskResultIndex)))
-			i--
-			dAtA[i] = 0x22
-		}
-		if x.TotalRunCount != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.TotalRunCount))
-			i--
-			dAtA[i] = 0x18
-		}
-		if x.TaskId != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.TaskId))
+		if x.Id != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.Id))
 			i--
 			dAtA[i] = 0x10
 		}
-		if len(x.Index) > 0 {
-			i -= len(x.Index)
-			copy(dAtA[i:], x.Index)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Index)))
+		if len(x.Creator) > 0 {
+			i -= len(x.Creator)
+			copy(dAtA[i:], x.Creator)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -841,7 +755,7 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 			switch fieldNum {
 			case 1:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Index", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
 				}
 				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
@@ -869,13 +783,13 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.Index = string(dAtA[iNdEx:postIndex])
+				x.Creator = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			case 2:
 				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TaskId", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 				}
-				x.TaskId = 0
+				x.Id = 0
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -885,65 +799,14 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					x.TaskId |= int32(b&0x7F) << shift
+					x.Id |= uint64(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-			case 3:
-				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TotalRunCount", wireType)
-				}
-				x.TotalRunCount = 0
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					x.TotalRunCount |= int32(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-			case 4:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field NextTaskResultIndex", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.NextTaskResultIndex = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
 			case 5:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ActivateOn", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ActivateAfter", wireType)
 				}
 				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
@@ -971,11 +834,11 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.ActivateOn = string(dAtA[iNdEx:postIndex])
+				x.ActivateAfter = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			case 6:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExpireOn", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExpireAfter", wireType)
 				}
 				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
@@ -1003,7 +866,7 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.ExpireOn = string(dAtA[iNdEx:postIndex])
+				x.ExpireAfter = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			case 7:
 				if wireType != 2 {
@@ -1149,9 +1012,9 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 				iNdEx = postIndex
 			case 13:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field MessagesMo", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Messages", wireType)
 				}
-				var stringLen uint64
+				var msglen int
 				for shift := uint(0); ; shift += 7 {
 					if shift >= 64 {
 						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
@@ -1161,119 +1024,25 @@ func (x *fastReflection_Task) ProtoMethods() *protoiface.Methods {
 					}
 					b := dAtA[iNdEx]
 					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
+					msglen |= int(b&0x7F) << shift
 					if b < 0x80 {
 						break
 					}
 				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
+				if msglen < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
-				postIndex := iNdEx + intStringLen
+				postIndex := iNdEx + msglen
 				if postIndex < 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
 				}
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.MessagesMo = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 14:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Dule", wireType)
+				x.Messages = append(x.Messages, &anypb.Any{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Messages[len(x.Messages)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Dule = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 15:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Blit", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Blit = string(dAtA[iNdEx:postIndex])
-				iNdEx = postIndex
-			case 16:
-				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
-				}
-				var stringLen uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					stringLen |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				intStringLen := int(stringLen)
-				if intStringLen < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				postIndex := iNdEx + intStringLen
-				if postIndex < 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
-				}
-				if postIndex > l {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-				}
-				x.Creator = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
@@ -1323,27 +1092,23 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Tasks are like cron jobs that can be scheduled to run at a specific time or interval.
 type Task struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Index               string `protobuf:"bytes,1,opt,name=index,proto3" json:"index,omitempty"`
-	TaskId              int32  `protobuf:"varint,2,opt,name=taskId,proto3" json:"taskId,omitempty"`
-	TotalRunCount       int32  `protobuf:"varint,3,opt,name=totalRunCount,proto3" json:"totalRunCount,omitempty"`
-	NextTaskResultIndex string `protobuf:"bytes,4,opt,name=nextTaskResultIndex,proto3" json:"nextTaskResultIndex,omitempty"`
-	ActivateOn          string `protobuf:"bytes,5,opt,name=activateOn,proto3" json:"activateOn,omitempty"`
-	ExpireOn            string `protobuf:"bytes,6,opt,name=expireOn,proto3" json:"expireOn,omitempty"`
-	Interval            string `protobuf:"bytes,7,opt,name=interval,proto3" json:"interval,omitempty"`
-	MaxRuns             int32  `protobuf:"varint,8,opt,name=maxRuns,proto3" json:"maxRuns,omitempty"`
-	DisableOnError      bool   `protobuf:"varint,9,opt,name=disableOnError,proto3" json:"disableOnError,omitempty"`
-	Enabled             bool   `protobuf:"varint,10,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	GasLimit            int32  `protobuf:"varint,11,opt,name=gasLimit,proto3" json:"gasLimit,omitempty"`
-	GasPrice            string `protobuf:"bytes,12,opt,name=gasPrice,proto3" json:"gasPrice,omitempty"`
-	MessagesMo          string `protobuf:"bytes,13,opt,name=messagesMo,proto3" json:"messagesMo,omitempty"`
-	Dule                string `protobuf:"bytes,14,opt,name=dule,proto3" json:"dule,omitempty"`
-	Blit                string `protobuf:"bytes,15,opt,name=blit,proto3" json:"blit,omitempty"`
-	Creator             string `protobuf:"bytes,16,opt,name=creator,proto3" json:"creator,omitempty"`
+	Creator        string       `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Id             uint64       `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
+	ActivateAfter  string       `protobuf:"bytes,5,opt,name=activate_after,json=activateAfter,proto3" json:"activate_after,omitempty"`
+	ExpireAfter    string       `protobuf:"bytes,6,opt,name=expire_after,json=expireAfter,proto3" json:"expire_after,omitempty"`
+	Interval       string       `protobuf:"bytes,7,opt,name=interval,proto3" json:"interval,omitempty"`
+	MaxRuns        int32        `protobuf:"varint,8,opt,name=max_runs,json=maxRuns,proto3" json:"max_runs,omitempty"`
+	DisableOnError bool         `protobuf:"varint,9,opt,name=disable_on_error,json=disableOnError,proto3" json:"disable_on_error,omitempty"`
+	Enabled        bool         `protobuf:"varint,10,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	GasLimit       int32        `protobuf:"varint,11,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty"`
+	GasPrice       string       `protobuf:"bytes,12,opt,name=gas_price,json=gasPrice,proto3" json:"gas_price,omitempty"`
+	Messages       []*anypb.Any `protobuf:"bytes,13,rep,name=messages,proto3" json:"messages,omitempty"`
 }
 
 func (x *Task) Reset() {
@@ -1366,44 +1131,30 @@ func (*Task) Descriptor() ([]byte, []int) {
 	return file_blit_blit_task_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Task) GetIndex() string {
+func (x *Task) GetCreator() string {
 	if x != nil {
-		return x.Index
+		return x.Creator
 	}
 	return ""
 }
 
-func (x *Task) GetTaskId() int32 {
+func (x *Task) GetId() uint64 {
 	if x != nil {
-		return x.TaskId
+		return x.Id
 	}
 	return 0
 }
 
-func (x *Task) GetTotalRunCount() int32 {
+func (x *Task) GetActivateAfter() string {
 	if x != nil {
-		return x.TotalRunCount
-	}
-	return 0
-}
-
-func (x *Task) GetNextTaskResultIndex() string {
-	if x != nil {
-		return x.NextTaskResultIndex
+		return x.ActivateAfter
 	}
 	return ""
 }
 
-func (x *Task) GetActivateOn() string {
+func (x *Task) GetExpireAfter() string {
 	if x != nil {
-		return x.ActivateOn
-	}
-	return ""
-}
-
-func (x *Task) GetExpireOn() string {
-	if x != nil {
-		return x.ExpireOn
+		return x.ExpireAfter
 	}
 	return ""
 }
@@ -1450,32 +1201,11 @@ func (x *Task) GetGasPrice() string {
 	return ""
 }
 
-func (x *Task) GetMessagesMo() string {
+func (x *Task) GetMessages() []*anypb.Any {
 	if x != nil {
-		return x.MessagesMo
+		return x.Messages
 	}
-	return ""
-}
-
-func (x *Task) GetDule() string {
-	if x != nil {
-		return x.Dule
-	}
-	return ""
-}
-
-func (x *Task) GetBlit() string {
-	if x != nil {
-		return x.Blit
-	}
-	return ""
-}
-
-func (x *Task) GetCreator() string {
-	if x != nil {
-		return x.Creator
-	}
-	return ""
+	return nil
 }
 
 var File_blit_blit_task_proto protoreflect.FileDescriptor
@@ -1483,45 +1213,39 @@ var File_blit_blit_task_proto protoreflect.FileDescriptor
 var file_blit_blit_task_proto_rawDesc = []byte{
 	0x0a, 0x14, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x74, 0x61, 0x73, 0x6b,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x09, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x62, 0x6c, 0x69,
-	0x74, 0x22, 0xda, 0x03, 0x0a, 0x04, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x14, 0x0a, 0x05, 0x69, 0x6e,
-	0x64, 0x65, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x69, 0x6e, 0x64, 0x65, 0x78,
-	0x12, 0x16, 0x0a, 0x06, 0x74, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05,
-	0x52, 0x06, 0x74, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x12, 0x24, 0x0a, 0x0d, 0x74, 0x6f, 0x74, 0x61,
-	0x6c, 0x52, 0x75, 0x6e, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52,
-	0x0d, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x52, 0x75, 0x6e, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x30,
-	0x0a, 0x13, 0x6e, 0x65, 0x78, 0x74, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
-	0x49, 0x6e, 0x64, 0x65, 0x78, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x13, 0x6e, 0x65, 0x78,
-	0x74, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x49, 0x6e, 0x64, 0x65, 0x78,
-	0x12, 0x1e, 0x0a, 0x0a, 0x61, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x4f, 0x6e, 0x18, 0x05,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x4f, 0x6e,
-	0x12, 0x1a, 0x0a, 0x08, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x4f, 0x6e, 0x18, 0x06, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x08, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x4f, 0x6e, 0x12, 0x1a, 0x0a, 0x08,
-	0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
-	0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x61, 0x78, 0x52,
-	0x75, 0x6e, 0x73, 0x18, 0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x6d, 0x61, 0x78, 0x52, 0x75,
-	0x6e, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x64, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x4f, 0x6e, 0x45,
+	0x74, 0x1a, 0x19, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2f, 0x61, 0x6e, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xe1, 0x02, 0x0a,
+	0x04, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x12,
+	0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x12,
+	0x25, 0x0a, 0x0e, 0x61, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x5f, 0x61, 0x66, 0x74, 0x65,
+	0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x61, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74,
+	0x65, 0x41, 0x66, 0x74, 0x65, 0x72, 0x12, 0x21, 0x0a, 0x0c, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65,
+	0x5f, 0x61, 0x66, 0x74, 0x65, 0x72, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x65, 0x78,
+	0x70, 0x69, 0x72, 0x65, 0x41, 0x66, 0x74, 0x65, 0x72, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x6e, 0x74,
+	0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6e, 0x74,
+	0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x19, 0x0a, 0x08, 0x6d, 0x61, 0x78, 0x5f, 0x72, 0x75, 0x6e,
+	0x73, 0x18, 0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x6d, 0x61, 0x78, 0x52, 0x75, 0x6e, 0x73,
+	0x12, 0x28, 0x0a, 0x10, 0x64, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x6f, 0x6e, 0x5f, 0x65,
 	0x72, 0x72, 0x6f, 0x72, 0x18, 0x09, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0e, 0x64, 0x69, 0x73, 0x61,
 	0x62, 0x6c, 0x65, 0x4f, 0x6e, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x65, 0x6e,
 	0x61, 0x62, 0x6c, 0x65, 0x64, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x65, 0x6e, 0x61,
-	0x62, 0x6c, 0x65, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x67, 0x61, 0x73, 0x4c, 0x69, 0x6d, 0x69, 0x74,
-	0x18, 0x0b, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x67, 0x61, 0x73, 0x4c, 0x69, 0x6d, 0x69, 0x74,
-	0x12, 0x1a, 0x0a, 0x08, 0x67, 0x61, 0x73, 0x50, 0x72, 0x69, 0x63, 0x65, 0x18, 0x0c, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x08, 0x67, 0x61, 0x73, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x1e, 0x0a, 0x0a,
-	0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x4d, 0x6f, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0a, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x4d, 0x6f, 0x12, 0x12, 0x0a, 0x04,
-	0x64, 0x75, 0x6c, 0x65, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x64, 0x75, 0x6c, 0x65,
-	0x12, 0x12, 0x0a, 0x04, 0x62, 0x6c, 0x69, 0x74, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x62, 0x6c, 0x69, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x18,
-	0x10, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x42, 0x7b,
-	0x0a, 0x0d, 0x63, 0x6f, 0x6d, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x42,
-	0x09, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x63, 0x6f,
-	0x73, 0x6d, 0x6f, 0x73, 0x73, 0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x62,
-	0x6c, 0x69, 0x74, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0xa2, 0x02, 0x03, 0x42, 0x42, 0x58, 0xaa, 0x02,
-	0x09, 0x42, 0x6c, 0x69, 0x74, 0x2e, 0x42, 0x6c, 0x69, 0x74, 0xca, 0x02, 0x09, 0x42, 0x6c, 0x69,
-	0x74, 0x5c, 0x42, 0x6c, 0x69, 0x74, 0xe2, 0x02, 0x15, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c,
-	0x69, 0x74, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02,
-	0x0a, 0x42, 0x6c, 0x69, 0x74, 0x3a, 0x3a, 0x42, 0x6c, 0x69, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x62, 0x6c, 0x65, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x67, 0x61, 0x73, 0x5f, 0x6c, 0x69, 0x6d, 0x69,
+	0x74, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x67, 0x61, 0x73, 0x4c, 0x69, 0x6d, 0x69,
+	0x74, 0x12, 0x1b, 0x0a, 0x09, 0x67, 0x61, 0x73, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x0c,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x67, 0x61, 0x73, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x30,
+	0x0a, 0x08, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x18, 0x0d, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x14, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x41, 0x6e, 0x79, 0x52, 0x08, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73,
+	0x42, 0x7b, 0x0a, 0x0d, 0x63, 0x6f, 0x6d, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x62, 0x6c, 0x69,
+	0x74, 0x42, 0x09, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a,
+	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73, 0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69,
+	0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0xa2, 0x02, 0x03, 0x42, 0x42, 0x58,
+	0xaa, 0x02, 0x09, 0x42, 0x6c, 0x69, 0x74, 0x2e, 0x42, 0x6c, 0x69, 0x74, 0xca, 0x02, 0x09, 0x42,
+	0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c, 0x69, 0x74, 0xe2, 0x02, 0x15, 0x42, 0x6c, 0x69, 0x74, 0x5c,
+	0x42, 0x6c, 0x69, 0x74, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0xea, 0x02, 0x0a, 0x42, 0x6c, 0x69, 0x74, 0x3a, 0x3a, 0x42, 0x6c, 0x69, 0x74, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1538,14 +1262,16 @@ func file_blit_blit_task_proto_rawDescGZIP() []byte {
 
 var file_blit_blit_task_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_blit_blit_task_proto_goTypes = []interface{}{
-	(*Task)(nil), // 0: blit.blit.Task
+	(*Task)(nil),      // 0: blit.blit.Task
+	(*anypb.Any)(nil), // 1: google.protobuf.Any
 }
 var file_blit_blit_task_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: blit.blit.Task.messages:type_name -> google.protobuf.Any
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_blit_blit_task_proto_init() }

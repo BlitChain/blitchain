@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"blit/x/blit/types"
+
 	"cosmossdk.io/store/prefix"
 	"github.com/cosmos/cosmos-sdk/runtime"
 	"github.com/cosmos/cosmos-sdk/types/query"
@@ -45,7 +46,7 @@ func (k Keeper) Task(ctx context.Context, req *types.QueryGetTaskRequest) (*type
 
 	val, found := k.GetTask(
 		ctx,
-		req.Index,
+		req.Id,
 	)
 	if !found {
 		return nil, status.Error(codes.NotFound, "not found")

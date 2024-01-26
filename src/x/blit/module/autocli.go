@@ -1,9 +1,9 @@
 package blit
 
 import (
-	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
-
 	modulev1 "blit/api/blit/blit"
+
+	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.
@@ -26,6 +26,17 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					RpcMethod:      "Task",
 					Use:            "show-task [id]",
 					Short:          "Shows a Task",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+				},
+				{
+					RpcMethod: "TaskResultAll",
+					Use:       "list-task-result",
+					Short:     "List all TaskResult",
+				},
+				{
+					RpcMethod:      "TaskResult",
+					Use:            "show-task-result [index]",
+					Short:          "Shows a TaskResult",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}},
 				},
 				// this line is used by ignite scaffolding # autocli/query
@@ -64,21 +75,62 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "base"}, {ProtoField: "display"}, {ProtoField: "name"}, {ProtoField: "symbol"}, {ProtoField: "uri"}, {ProtoField: "uri_hash"}, {ProtoField: "exponent"}, {ProtoField: "description"}},
 				},
 				{
-					RpcMethod:      "CreateTask",
-					Use:            "create-task [index] [taskId] [totalRunCount] [nextTaskResultIndex] [activateOn] [expireOn] [interval] [maxRuns] [disableOnError] [enabled] [gasLimit] [gasPrice] [messagesMo] [dule] [blit]",
-					Short:          "Create a new Task",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "taskId"}, {ProtoField: "totalRunCount"}, {ProtoField: "nextTaskResultIndex"}, {ProtoField: "activateOn"}, {ProtoField: "expireOn"}, {ProtoField: "interval"}, {ProtoField: "maxRuns"}, {ProtoField: "disableOnError"}, {ProtoField: "enabled"}, {ProtoField: "gasLimit"}, {ProtoField: "gasPrice"}, {ProtoField: "messagesMo"}, {ProtoField: "dule"}, {ProtoField: "blit"}},
+					RpcMethod: "CreateTask",
+					Use:       "create-task [creator] [activate_after] [expire_after] [interval] [max_runs] [disable_on_error] [enabled] [gas_limit] [gas_price] [messages]",
+					Short:     "Create a new Task",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "creator"},
+						{ProtoField: "activate_after"},
+						{ProtoField: "expire_after"},
+						{ProtoField: "interval"},
+						{ProtoField: "max_runs"},
+						{ProtoField: "disable_on_error"},
+						{ProtoField: "enabled"},
+						{ProtoField: "gas_limit"},
+						{ProtoField: "gas_price"},
+						{ProtoField: "messages"},
+					},
 				},
 				{
-					RpcMethod:      "UpdateTask",
-					Use:            "update-task [index] [taskId] [totalRunCount] [nextTaskResultIndex] [activateOn] [expireOn] [interval] [maxRuns] [disableOnError] [enabled] [gasLimit] [gasPrice] [messagesMo] [dule] [blit]",
-					Short:          "Update Task",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "taskId"}, {ProtoField: "totalRunCount"}, {ProtoField: "nextTaskResultIndex"}, {ProtoField: "activateOn"}, {ProtoField: "expireOn"}, {ProtoField: "interval"}, {ProtoField: "maxRuns"}, {ProtoField: "disableOnError"}, {ProtoField: "enabled"}, {ProtoField: "gasLimit"}, {ProtoField: "gasPrice"}, {ProtoField: "messagesMo"}, {ProtoField: "dule"}, {ProtoField: "blit"}},
+					RpcMethod: "UpdateTask",
+					Use:       "update-task [id] [creator] [activate_after] [expire_after] [interval] [max_runs] [disable_on_error] [enabled] [gas_limit] [gas_price] [messages]",
+					Short:     "Update Task",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
+						{ProtoField: "id"},
+						{ProtoField: "creator"},
+						{ProtoField: "activate_after"},
+						{ProtoField: "expire_after"},
+						{ProtoField: "interval"},
+						{ProtoField: "max_runs"},
+						{ProtoField: "disable_on_error"},
+						{ProtoField: "enabled"},
+						{ProtoField: "gas_limit"},
+						{ProtoField: "gas_price"},
+						{ProtoField: "messages"},
+					},
 				},
 				{
 					RpcMethod:      "DeleteTask",
-					Use:            "delete-task [index]",
+					Use:            "delete-task [id]",
 					Short:          "Delete Task",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+				},
+				{
+					RpcMethod:      "CreateTaskResult",
+					Use:            "create-task-result [index] [status] [executedOn]",
+					Short:          "Create a new TaskResult",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "status"}, {ProtoField: "executedOn"}},
+				},
+				{
+					RpcMethod:      "UpdateTaskResult",
+					Use:            "update-task-result [index] [status] [executedOn]",
+					Short:          "Update TaskResult",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "status"}, {ProtoField: "executedOn"}},
+				},
+				{
+					RpcMethod:      "DeleteTaskResult",
+					Use:            "delete-task-result [index]",
+					Short:          "Delete TaskResult",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}},
 				},
 				// this line is used by ignite scaffolding # autocli/tx

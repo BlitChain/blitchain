@@ -4,47 +4,41 @@ import (
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	sdktx "github.com/cosmos/cosmos-sdk/types/tx"
 )
 
 var _ sdk.Msg = &MsgCreateTask{}
 
 func NewMsgCreateTask(
 	creator string,
-	index string,
-	taskId int32,
-	totalRunCount int32,
-	nextTaskResultIndex string,
-	activateOn string,
-	expireOn string,
+	activateAfter string,
+	expireAfter string,
 	interval string,
 	maxRuns int32,
 	disableOnError bool,
 	enabled bool,
 	gasLimit int32,
 	gasPrice string,
-	messagesMo string,
-	dule string,
-	blit string,
+	messages []sdk.Msg,
 
-) *MsgCreateTask {
-	return &MsgCreateTask{
-		Creator:             creator,
-		Index:               index,
-		TaskId:              taskId,
-		TotalRunCount:       totalRunCount,
-		NextTaskResultIndex: nextTaskResultIndex,
-		ActivateOn:          activateOn,
-		ExpireOn:            expireOn,
-		Interval:            interval,
-		MaxRuns:             maxRuns,
-		DisableOnError:      disableOnError,
-		Enabled:             enabled,
-		GasLimit:            gasLimit,
-		GasPrice:            gasPrice,
-		MessagesMo:          messagesMo,
-		Dule:                dule,
-		Blit:                blit,
+) (*MsgCreateTask, error) {
+	anys, err := sdktx.SetMsgs(messages)
+	if err != nil {
+		return nil, err
 	}
+
+	return &MsgCreateTask{
+		Creator:        creator,
+		ActivateAfter:  activateAfter,
+		ExpireAfter:    expireAfter,
+		Interval:       interval,
+		MaxRuns:        maxRuns,
+		DisableOnError: disableOnError,
+		Enabled:        enabled,
+		GasLimit:       gasLimit,
+		GasPrice:       gasPrice,
+		Messages:       anys,
+	}, nil
 }
 
 func (msg *MsgCreateTask) ValidateBasic() error {
@@ -59,41 +53,36 @@ var _ sdk.Msg = &MsgUpdateTask{}
 
 func NewMsgUpdateTask(
 	creator string,
-	index string,
-	taskId int32,
-	totalRunCount int32,
-	nextTaskResultIndex string,
-	activateOn string,
-	expireOn string,
+	id uint64,
+	activateAfter string,
+	expireAfter string,
 	interval string,
 	maxRuns int32,
 	disableOnError bool,
 	enabled bool,
 	gasLimit int32,
 	gasPrice string,
-	messagesMo string,
-	dule string,
-	blit string,
+	messages []sdk.Msg,
 
-) *MsgUpdateTask {
-	return &MsgUpdateTask{
-		Creator:             creator,
-		Index:               index,
-		TaskId:              taskId,
-		TotalRunCount:       totalRunCount,
-		NextTaskResultIndex: nextTaskResultIndex,
-		ActivateOn:          activateOn,
-		ExpireOn:            expireOn,
-		Interval:            interval,
-		MaxRuns:             maxRuns,
-		DisableOnError:      disableOnError,
-		Enabled:             enabled,
-		GasLimit:            gasLimit,
-		GasPrice:            gasPrice,
-		MessagesMo:          messagesMo,
-		Dule:                dule,
-		Blit:                blit,
+) (*MsgUpdateTask, error) {
+	anys, err := sdktx.SetMsgs(messages)
+	if err != nil {
+		return nil, err
 	}
+
+	return &MsgUpdateTask{
+		Creator:        creator,
+		Id:             id,
+		ActivateAfter:  activateAfter,
+		ExpireAfter:    expireAfter,
+		Interval:       interval,
+		MaxRuns:        maxRuns,
+		DisableOnError: disableOnError,
+		Enabled:        enabled,
+		GasLimit:       gasLimit,
+		GasPrice:       gasPrice,
+		Messages:       anys,
+	}, nil
 }
 
 func (msg *MsgUpdateTask) ValidateBasic() error {
@@ -108,12 +97,12 @@ var _ sdk.Msg = &MsgDeleteTask{}
 
 func NewMsgDeleteTask(
 	creator string,
-	index string,
+	id uint64,
 
 ) *MsgDeleteTask {
 	return &MsgDeleteTask{
 		Creator: creator,
-		Index:   index,
+		Id:      id,
 	}
 }
 

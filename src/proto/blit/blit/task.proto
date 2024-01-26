@@ -1,24 +1,21 @@
 syntax = "proto3";
 package blit.blit;
 
+import "google/protobuf/any.proto";
+
 option go_package = "blit/x/blit/types";
 
+// Tasks are like cron jobs that can be scheduled to run at a specific time or interval.
 message Task {
-  string index = 1; 
-  int32 taskId = 2; 
-  int32 totalRunCount = 3; 
-  string nextTaskResultIndex = 4; 
-  string activateOn = 5; 
-  string expireOn = 6; 
+  string creator             =  1;
+  uint64 id = 2;
+  string activate_after = 5; 
+  string expire_after = 6; 
   string interval = 7; 
-  int32 maxRuns = 8; 
-  bool disableOnError = 9; 
+  int32 max_runs = 8; 
+  bool disable_on_error = 9; 
   bool enabled = 10; 
-  int32 gasLimit = 11; 
-  string gasPrice = 12; 
-  string messagesMo = 13; 
-  string dule = 14; 
-  string blit = 15; 
-  string creator = 16;
+  int32 gas_limit = 11; 
+  string gas_price = 12; 
+  repeated google.protobuf.Any messages = 13;
 }
-

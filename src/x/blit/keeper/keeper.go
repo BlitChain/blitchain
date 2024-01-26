@@ -56,7 +56,9 @@ func NewKeeper(
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
 	}
 
-	return Keeper{
+	sb := collections.NewSchemaBuilder(storeService)
+
+	k := Keeper{
 		cdc:          cdc,
 		storeService: storeService,
 		authority:    authority,
@@ -65,7 +67,18 @@ func NewKeeper(
 
 		bankKeeper:    bankKeeper,
 		accountKeeper: accountKeeper,
+
+		// 		Proposals:              collections.NewMap(sb, types.ProposalsKeyPrefix, "proposals", collections.Uint64Key, codec.CollValue[v1.Proposal](cdc)),
+		Tasks:  collections.NewMap(sb, types.TasksKeyPrefix, "tasks", collections.Uint64Key, codec.CollValue[types.Task](cdc)),
+		TaskID: collections.NewSequence(sb, types.TaskIDKey, "taskID"),
 	}
+	schema, err := sb.Build()
+	if err != nil {
+		panic(err)
+	}
+	k.Schema = schema
+	return k
+
 }
 
 // GetAuthority returns the module's authority.

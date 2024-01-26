@@ -27,6 +27,9 @@ const (
 	Msg_CreateTask_FullMethodName         = "/blit.blit.Msg/CreateTask"
 	Msg_UpdateTask_FullMethodName         = "/blit.blit.Msg/UpdateTask"
 	Msg_DeleteTask_FullMethodName         = "/blit.blit.Msg/DeleteTask"
+	Msg_CreateTaskResult_FullMethodName   = "/blit.blit.Msg/CreateTaskResult"
+	Msg_UpdateTaskResult_FullMethodName   = "/blit.blit.Msg/UpdateTaskResult"
+	Msg_DeleteTaskResult_FullMethodName   = "/blit.blit.Msg/DeleteTaskResult"
 )
 
 // MsgClient is the client API for Msg service.
@@ -43,6 +46,9 @@ type MsgClient interface {
 	CreateTask(ctx context.Context, in *MsgCreateTask, opts ...grpc.CallOption) (*MsgCreateTaskResponse, error)
 	UpdateTask(ctx context.Context, in *MsgUpdateTask, opts ...grpc.CallOption) (*MsgUpdateTaskResponse, error)
 	DeleteTask(ctx context.Context, in *MsgDeleteTask, opts ...grpc.CallOption) (*MsgDeleteTaskResponse, error)
+	CreateTaskResult(ctx context.Context, in *MsgCreateTaskResult, opts ...grpc.CallOption) (*MsgCreateTaskResultResponse, error)
+	UpdateTaskResult(ctx context.Context, in *MsgUpdateTaskResult, opts ...grpc.CallOption) (*MsgUpdateTaskResultResponse, error)
+	DeleteTaskResult(ctx context.Context, in *MsgDeleteTaskResult, opts ...grpc.CallOption) (*MsgDeleteTaskResultResponse, error)
 }
 
 type msgClient struct {
@@ -125,6 +131,33 @@ func (c *msgClient) DeleteTask(ctx context.Context, in *MsgDeleteTask, opts ...g
 	return out, nil
 }
 
+func (c *msgClient) CreateTaskResult(ctx context.Context, in *MsgCreateTaskResult, opts ...grpc.CallOption) (*MsgCreateTaskResultResponse, error) {
+	out := new(MsgCreateTaskResultResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateTaskResult_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateTaskResult(ctx context.Context, in *MsgUpdateTaskResult, opts ...grpc.CallOption) (*MsgUpdateTaskResultResponse, error) {
+	out := new(MsgUpdateTaskResultResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateTaskResult_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteTaskResult(ctx context.Context, in *MsgDeleteTaskResult, opts ...grpc.CallOption) (*MsgDeleteTaskResultResponse, error) {
+	out := new(MsgDeleteTaskResultResponse)
+	err := c.cc.Invoke(ctx, Msg_DeleteTaskResult_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -139,6 +172,9 @@ type MsgServer interface {
 	CreateTask(context.Context, *MsgCreateTask) (*MsgCreateTaskResponse, error)
 	UpdateTask(context.Context, *MsgUpdateTask) (*MsgUpdateTaskResponse, error)
 	DeleteTask(context.Context, *MsgDeleteTask) (*MsgDeleteTaskResponse, error)
+	CreateTaskResult(context.Context, *MsgCreateTaskResult) (*MsgCreateTaskResultResponse, error)
+	UpdateTaskResult(context.Context, *MsgUpdateTaskResult) (*MsgUpdateTaskResultResponse, error)
+	DeleteTaskResult(context.Context, *MsgDeleteTaskResult) (*MsgDeleteTaskResultResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -169,6 +205,15 @@ func (UnimplementedMsgServer) UpdateTask(context.Context, *MsgUpdateTask) (*MsgU
 }
 func (UnimplementedMsgServer) DeleteTask(context.Context, *MsgDeleteTask) (*MsgDeleteTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
+}
+func (UnimplementedMsgServer) CreateTaskResult(context.Context, *MsgCreateTaskResult) (*MsgCreateTaskResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTaskResult not implemented")
+}
+func (UnimplementedMsgServer) UpdateTaskResult(context.Context, *MsgUpdateTaskResult) (*MsgUpdateTaskResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTaskResult not implemented")
+}
+func (UnimplementedMsgServer) DeleteTaskResult(context.Context, *MsgDeleteTaskResult) (*MsgDeleteTaskResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTaskResult not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -327,6 +372,60 @@ func _Msg_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateTaskResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateTaskResult)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateTaskResult(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateTaskResult_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateTaskResult(ctx, req.(*MsgCreateTaskResult))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateTaskResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateTaskResult)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateTaskResult(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateTaskResult_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateTaskResult(ctx, req.(*MsgUpdateTaskResult))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteTaskResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteTaskResult)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteTaskResult(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeleteTaskResult_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteTaskResult(ctx, req.(*MsgDeleteTaskResult))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -365,6 +464,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteTask",
 			Handler:    _Msg_DeleteTask_Handler,
+		},
+		{
+			MethodName: "CreateTaskResult",
+			Handler:    _Msg_CreateTaskResult_Handler,
+		},
+		{
+			MethodName: "UpdateTaskResult",
+			Handler:    _Msg_UpdateTaskResult_Handler,
+		},
+		{
+			MethodName: "DeleteTaskResult",
+			Handler:    _Msg_DeleteTaskResult_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

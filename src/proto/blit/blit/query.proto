@@ -8,6 +8,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "blit/blit/params.proto";
 import "blit/blit/task.proto";
+import "blit/blit/task_result.proto";
 
 option go_package = "blit/x/blit/types";
 
@@ -22,11 +23,21 @@ service Query {
   
   // Queries a list of Task items.
   rpc Task    (QueryGetTaskRequest) returns (QueryGetTaskResponse) {
-    option (google.api.http).get = "/blit/blit/task/{index}";
+    option (google.api.http).get = "/blit/blit/task/{id}";
   
   }
   rpc TaskAll (QueryAllTaskRequest) returns (QueryAllTaskResponse) {
     option (google.api.http).get = "/blit/blit/task";
+  
+  }
+  
+  // Queries a list of TaskResult items.
+  rpc TaskResult    (QueryGetTaskResultRequest) returns (QueryGetTaskResultResponse) {
+    option (google.api.http).get = "/blit/blit/task_result/{index}";
+  
+  }
+  rpc TaskResultAll (QueryAllTaskResultRequest) returns (QueryAllTaskResultResponse) {
+    option (google.api.http).get = "/blit/blit/task_result";
   
   }
 }
@@ -63,7 +74,7 @@ message EndpointsResponse {
 }
 
 message QueryGetTaskRequest {
-  string index = 1;
+  uint64 id = 1;
 }
 
 message QueryGetTaskResponse {
@@ -76,6 +87,23 @@ message QueryAllTaskRequest {
 
 message QueryAllTaskResponse {
   repeated Task                                   task       = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetTaskResultRequest {
+  string index = 1;
+}
+
+message QueryGetTaskResultResponse {
+  TaskResult taskResult = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllTaskResultRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllTaskResultResponse {
+  repeated TaskResult                             taskResult = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

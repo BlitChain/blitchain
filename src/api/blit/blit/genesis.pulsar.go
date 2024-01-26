@@ -65,10 +65,62 @@ func (x *_GenesisState_2_list) IsValid() bool {
 	return x.list != nil
 }
 
+var _ protoreflect.List = (*_GenesisState_3_list)(nil)
+
+type _GenesisState_3_list struct {
+	list *[]*TaskResult
+}
+
+func (x *_GenesisState_3_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_GenesisState_3_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_GenesisState_3_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*TaskResult)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_GenesisState_3_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*TaskResult)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_GenesisState_3_list) AppendMutable() protoreflect.Value {
+	v := new(TaskResult)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_GenesisState_3_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_GenesisState_3_list) NewElement() protoreflect.Value {
+	v := new(TaskResult)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_GenesisState_3_list) IsValid() bool {
+	return x.list != nil
+}
+
 var (
-	md_GenesisState          protoreflect.MessageDescriptor
-	fd_GenesisState_params   protoreflect.FieldDescriptor
-	fd_GenesisState_taskList protoreflect.FieldDescriptor
+	md_GenesisState                protoreflect.MessageDescriptor
+	fd_GenesisState_params         protoreflect.FieldDescriptor
+	fd_GenesisState_taskList       protoreflect.FieldDescriptor
+	fd_GenesisState_taskResultList protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -76,6 +128,7 @@ func init() {
 	md_GenesisState = File_blit_blit_genesis_proto.Messages().ByName("GenesisState")
 	fd_GenesisState_params = md_GenesisState.Fields().ByName("params")
 	fd_GenesisState_taskList = md_GenesisState.Fields().ByName("taskList")
+	fd_GenesisState_taskResultList = md_GenesisState.Fields().ByName("taskResultList")
 }
 
 var _ protoreflect.Message = (*fastReflection_GenesisState)(nil)
@@ -155,6 +208,12 @@ func (x *fastReflection_GenesisState) Range(f func(protoreflect.FieldDescriptor,
 			return
 		}
 	}
+	if len(x.TaskResultList) != 0 {
+		value := protoreflect.ValueOfList(&_GenesisState_3_list{list: &x.TaskResultList})
+		if !f(fd_GenesisState_taskResultList, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -174,6 +233,8 @@ func (x *fastReflection_GenesisState) Has(fd protoreflect.FieldDescriptor) bool 
 		return x.Params != nil
 	case "blit.blit.GenesisState.taskList":
 		return len(x.TaskList) != 0
+	case "blit.blit.GenesisState.taskResultList":
+		return len(x.TaskResultList) != 0
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.GenesisState"))
@@ -194,6 +255,8 @@ func (x *fastReflection_GenesisState) Clear(fd protoreflect.FieldDescriptor) {
 		x.Params = nil
 	case "blit.blit.GenesisState.taskList":
 		x.TaskList = nil
+	case "blit.blit.GenesisState.taskResultList":
+		x.TaskResultList = nil
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.GenesisState"))
@@ -218,6 +281,12 @@ func (x *fastReflection_GenesisState) Get(descriptor protoreflect.FieldDescripto
 			return protoreflect.ValueOfList(&_GenesisState_2_list{})
 		}
 		listValue := &_GenesisState_2_list{list: &x.TaskList}
+		return protoreflect.ValueOfList(listValue)
+	case "blit.blit.GenesisState.taskResultList":
+		if len(x.TaskResultList) == 0 {
+			return protoreflect.ValueOfList(&_GenesisState_3_list{})
+		}
+		listValue := &_GenesisState_3_list{list: &x.TaskResultList}
 		return protoreflect.ValueOfList(listValue)
 	default:
 		if descriptor.IsExtension() {
@@ -245,6 +314,10 @@ func (x *fastReflection_GenesisState) Set(fd protoreflect.FieldDescriptor, value
 		lv := value.List()
 		clv := lv.(*_GenesisState_2_list)
 		x.TaskList = *clv.list
+	case "blit.blit.GenesisState.taskResultList":
+		lv := value.List()
+		clv := lv.(*_GenesisState_3_list)
+		x.TaskResultList = *clv.list
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.GenesisState"))
@@ -276,6 +349,12 @@ func (x *fastReflection_GenesisState) Mutable(fd protoreflect.FieldDescriptor) p
 		}
 		value := &_GenesisState_2_list{list: &x.TaskList}
 		return protoreflect.ValueOfList(value)
+	case "blit.blit.GenesisState.taskResultList":
+		if x.TaskResultList == nil {
+			x.TaskResultList = []*TaskResult{}
+		}
+		value := &_GenesisState_3_list{list: &x.TaskResultList}
+		return protoreflect.ValueOfList(value)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.GenesisState"))
@@ -295,6 +374,9 @@ func (x *fastReflection_GenesisState) NewField(fd protoreflect.FieldDescriptor) 
 	case "blit.blit.GenesisState.taskList":
 		list := []*Task{}
 		return protoreflect.ValueOfList(&_GenesisState_2_list{list: &list})
+	case "blit.blit.GenesisState.taskResultList":
+		list := []*TaskResult{}
+		return protoreflect.ValueOfList(&_GenesisState_3_list{list: &list})
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.GenesisState"))
@@ -374,6 +456,12 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 				n += 1 + l + runtime.Sov(uint64(l))
 			}
 		}
+		if len(x.TaskResultList) > 0 {
+			for _, e := range x.TaskResultList {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -402,6 +490,22 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if len(x.TaskResultList) > 0 {
+			for iNdEx := len(x.TaskResultList) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.TaskResultList[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0x1a
+			}
 		}
 		if len(x.TaskList) > 0 {
 			for iNdEx := len(x.TaskList) - 1; iNdEx >= 0; iNdEx-- {
@@ -552,6 +656,40 @@ func (x *fastReflection_GenesisState) ProtoMethods() *protoiface.Methods {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
 				}
 				iNdEx = postIndex
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TaskResultList", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.TaskResultList = append(x.TaskResultList, &TaskResult{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.TaskResultList[len(x.TaskResultList)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -607,8 +745,9 @@ type GenesisState struct {
 	unknownFields protoimpl.UnknownFields
 
 	// params defines all the parameters of the module.
-	Params   *Params `protobuf:"bytes,1,opt,name=params,proto3" json:"params,omitempty"`
-	TaskList []*Task `protobuf:"bytes,2,rep,name=taskList,proto3" json:"taskList,omitempty"`
+	Params         *Params       `protobuf:"bytes,1,opt,name=params,proto3" json:"params,omitempty"`
+	TaskList       []*Task       `protobuf:"bytes,2,rep,name=taskList,proto3" json:"taskList,omitempty"`
+	TaskResultList []*TaskResult `protobuf:"bytes,3,rep,name=taskResultList,proto3" json:"taskResultList,omitempty"`
 }
 
 func (x *GenesisState) Reset() {
@@ -645,6 +784,13 @@ func (x *GenesisState) GetTaskList() []*Task {
 	return nil
 }
 
+func (x *GenesisState) GetTaskResultList() []*TaskResult {
+	if x != nil {
+		return x.TaskResultList
+	}
+	return nil
+}
+
 var File_blit_blit_genesis_proto protoreflect.FileDescriptor
 
 var file_blit_blit_genesis_proto_rawDesc = []byte{
@@ -655,23 +801,29 @@ var file_blit_blit_genesis_proto_rawDesc = []byte{
 	0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x16, 0x62,
 	0x6c, 0x69, 0x74, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x14, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x62, 0x6c, 0x69, 0x74,
-	0x2f, 0x74, 0x61, 0x73, 0x6b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x77, 0x0a, 0x0c, 0x47,
-	0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x34, 0x0a, 0x06, 0x70,
-	0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x62, 0x6c,
-	0x69, 0x74, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42, 0x09,
-	0xc8, 0xde, 0x1f, 0x00, 0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x12, 0x31, 0x0a, 0x08, 0x74, 0x61, 0x73, 0x6b, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x02, 0x20,
-	0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e,
-	0x54, 0x61, 0x73, 0x6b, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x08, 0x74, 0x61, 0x73, 0x6b,
-	0x4c, 0x69, 0x73, 0x74, 0x42, 0x7e, 0x0a, 0x0d, 0x63, 0x6f, 0x6d, 0x2e, 0x62, 0x6c, 0x69, 0x74,
-	0x2e, 0x62, 0x6c, 0x69, 0x74, 0x42, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x50, 0x72,
-	0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73, 0x64, 0x6b,
-	0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x62, 0x6c, 0x69,
-	0x74, 0xa2, 0x02, 0x03, 0x42, 0x42, 0x58, 0xaa, 0x02, 0x09, 0x42, 0x6c, 0x69, 0x74, 0x2e, 0x42,
-	0x6c, 0x69, 0x74, 0xca, 0x02, 0x09, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c, 0x69, 0x74, 0xe2,
-	0x02, 0x15, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0a, 0x42, 0x6c, 0x69, 0x74, 0x3a, 0x3a,
-	0x42, 0x6c, 0x69, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2f, 0x74, 0x61, 0x73, 0x6b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1b, 0x62, 0x6c, 0x69,
+	0x74, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x74, 0x61, 0x73, 0x6b, 0x5f, 0x72, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xbc, 0x01, 0x0a, 0x0c, 0x47, 0x65, 0x6e,
+	0x65, 0x73, 0x69, 0x73, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x34, 0x0a, 0x06, 0x70, 0x61, 0x72,
+	0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x62, 0x6c, 0x69, 0x74,
+	0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x42, 0x09, 0xc8, 0xde,
+	0x1f, 0x00, 0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52, 0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12,
+	0x31, 0x0a, 0x08, 0x74, 0x61, 0x73, 0x6b, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x0f, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x54, 0x61,
+	0x73, 0x6b, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x08, 0x74, 0x61, 0x73, 0x6b, 0x4c, 0x69,
+	0x73, 0x74, 0x12, 0x43, 0x0a, 0x0e, 0x74, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
+	0x4c, 0x69, 0x73, 0x74, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x62, 0x6c, 0x69,
+	0x74, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0e, 0x74, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x7e, 0x0a, 0x0d, 0x63, 0x6f, 0x6d, 0x2e, 0x62,
+	0x6c, 0x69, 0x74, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x42, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69,
+	0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73,
+	0x73, 0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f,
+	0x62, 0x6c, 0x69, 0x74, 0xa2, 0x02, 0x03, 0x42, 0x42, 0x58, 0xaa, 0x02, 0x09, 0x42, 0x6c, 0x69,
+	0x74, 0x2e, 0x42, 0x6c, 0x69, 0x74, 0xca, 0x02, 0x09, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c,
+	0x69, 0x74, 0xe2, 0x02, 0x15, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x47,
+	0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0a, 0x42, 0x6c, 0x69,
+	0x74, 0x3a, 0x3a, 0x42, 0x6c, 0x69, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -691,15 +843,17 @@ var file_blit_blit_genesis_proto_goTypes = []interface{}{
 	(*GenesisState)(nil), // 0: blit.blit.GenesisState
 	(*Params)(nil),       // 1: blit.blit.Params
 	(*Task)(nil),         // 2: blit.blit.Task
+	(*TaskResult)(nil),   // 3: blit.blit.TaskResult
 }
 var file_blit_blit_genesis_proto_depIdxs = []int32{
 	1, // 0: blit.blit.GenesisState.params:type_name -> blit.blit.Params
 	2, // 1: blit.blit.GenesisState.taskList:type_name -> blit.blit.Task
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	3, // 2: blit.blit.GenesisState.taskResultList:type_name -> blit.blit.TaskResult
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_blit_blit_genesis_proto_init() }
@@ -709,6 +863,7 @@ func file_blit_blit_genesis_proto_init() {
 	}
 	file_blit_blit_params_proto_init()
 	file_blit_blit_task_proto_init()
+	file_blit_blit_task_result_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_blit_blit_genesis_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GenesisState); i {
