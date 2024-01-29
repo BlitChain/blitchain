@@ -30,6 +30,14 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
+		FutureTaskList: []types.FutureTask{
+			{
+				Index: "0",
+			},
+			{
+				Index: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -43,5 +51,6 @@ func TestGenesis(t *testing.T) {
 
 	require.ElementsMatch(t, genesisState.TaskList, got.TaskList)
 	require.ElementsMatch(t, genesisState.TaskResultList, got.TaskResultList)
+	require.ElementsMatch(t, genesisState.FutureTaskList, got.FutureTaskList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

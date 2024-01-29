@@ -35,8 +35,19 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				},
 				{
 					RpcMethod:      "TaskResult",
-					Use:            "show-task-result [index]",
+					Use:            "show-task-result [id]",
 					Short:          "Shows a TaskResult",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+				},
+				{
+					RpcMethod: "FutureTaskAll",
+					Use:       "list-future-task",
+					Short:     "List all FutureTask",
+				},
+				{
+					RpcMethod:      "FutureTask",
+					Use:            "show-future-task [index]",
+					Short:          "Shows a FutureTask",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}},
 				},
 				// this line is used by ignite scaffolding # autocli/query
@@ -76,8 +87,11 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				},
 				{
 					RpcMethod: "CreateTask",
-					Use:       "create-task [creator] [activate_after] [expire_after] [interval] [max_runs] [disable_on_error] [enabled] [gas_limit] [gas_price] [messages]",
+					Use:       "create-task [creator] [activate_after] [expire_after] [interval] [max_runs] [disable_on_error] [enabled] [gas_limit] [gas_price]",
 					Short:     "Create a new Task",
+					FlagOptions: map[string]*autocliv1.FlagOptions{
+						"messages": {Name: "message"},
+					},
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{
 						{ProtoField: "creator"},
 						{ProtoField: "activate_after"},
@@ -88,7 +102,6 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 						{ProtoField: "enabled"},
 						{ProtoField: "gas_limit"},
 						{ProtoField: "gas_price"},
-						{ProtoField: "messages"},
 					},
 				},
 				{
@@ -117,20 +130,38 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				},
 				{
 					RpcMethod:      "CreateTaskResult",
-					Use:            "create-task-result [index] [status] [executedOn]",
+					Use:            "create-task-result [id] [executed_on]",
 					Short:          "Create a new TaskResult",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "status"}, {ProtoField: "executedOn"}},
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}, {ProtoField: "executed_on"}},
 				},
 				{
 					RpcMethod:      "UpdateTaskResult",
-					Use:            "update-task-result [index] [status] [executedOn]",
+					Use:            "update-task-result [id] [executed_on]",
 					Short:          "Update TaskResult",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "status"}, {ProtoField: "executedOn"}},
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}, {ProtoField: "executed_on"}},
 				},
 				{
 					RpcMethod:      "DeleteTaskResult",
-					Use:            "delete-task-result [index]",
+					Use:            "delete-task-result [id]",
 					Short:          "Delete TaskResult",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+				},
+				{
+					RpcMethod:      "CreateFutureTask",
+					Use:            "create-future-task [index] [scheduled_on] [task_id]",
+					Short:          "Create a new FutureTask",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "scheduled_on"}, {ProtoField: "task_id"}},
+				},
+				{
+					RpcMethod:      "UpdateFutureTask",
+					Use:            "update-future-task [index] [scheduled_on] [task_id]",
+					Short:          "Update FutureTask",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}, {ProtoField: "scheduled_on"}, {ProtoField: "task_id"}},
+				},
+				{
+					RpcMethod:      "DeleteFutureTask",
+					Use:            "delete-future-task [index]",
+					Short:          "Delete FutureTask",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}},
 				},
 				// this line is used by ignite scaffolding # autocli/tx

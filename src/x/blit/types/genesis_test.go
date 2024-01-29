@@ -38,6 +38,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "1",
 					},
 				},
+				FutureTaskList: []types.FutureTask{
+					{
+						Index: "0",
+					},
+					{
+						Index: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -60,6 +68,20 @@ func TestGenesisState_Validate(t *testing.T) {
 			desc: "duplicated taskResult",
 			genState: &types.GenesisState{
 				TaskResultList: []types.TaskResult{
+					{
+						Index: "0",
+					},
+					{
+						Index: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated futureTask",
+			genState: &types.GenesisState{
+				FutureTaskList: []types.FutureTask{
 					{
 						Index: "0",
 					},

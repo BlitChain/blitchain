@@ -12,6 +12,7 @@ func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		TaskList:       []Task{},
 		TaskResultList: []TaskResult{},
+		FutureTaskList: []FutureTask{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -34,11 +35,21 @@ func (gs GenesisState) Validate() error {
 	taskResultIndexMap := make(map[string]struct{})
 
 	for _, elem := range gs.TaskResultList {
-		index := string(TaskResultKey(elem.Index))
+		index := string(TaskResultKey(elem.Id))
 		if _, ok := taskResultIndexMap[index]; ok {
 			return fmt.Errorf("duplicated index for taskResult")
 		}
 		taskResultIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in futureTask
+	futureTaskIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.FutureTaskList {
+		index := string(FutureTaskKey(elem.Index))
+		if _, ok := futureTaskIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for futureTask")
+		}
+		futureTaskIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

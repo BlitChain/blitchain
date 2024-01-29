@@ -7,6 +7,7 @@ import "gogoproto/gogo.proto";
 import "blit/blit/params.proto";
 import "blit/blit/task.proto";
 import "blit/blit/task_result.proto";
+import "blit/blit/future_task.proto";
 
 option go_package = "blit/x/blit/types";
 
@@ -17,5 +18,6 @@ message GenesisState {
            Params     params         = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
   repeated Task       taskList       = 2 [(gogoproto.nullable) = false] ;
   repeated TaskResult taskResultList = 3 [(gogoproto.nullable) = false] ;
+  repeated FutureTask futureTaskList = 4 [(gogoproto.nullable) = false] ;
 }
 

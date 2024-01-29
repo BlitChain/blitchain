@@ -35,6 +35,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteTaskResult int = 100
 
+	opWeightMsgCreateFutureTask = "op_weight_msg_future_task"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateFutureTask int = 100
+
+	opWeightMsgUpdateFutureTask = "op_weight_msg_future_task"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateFutureTask int = 100
+
+	opWeightMsgDeleteFutureTask = "op_weight_msg_future_task"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteFutureTask int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -47,6 +59,16 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	blitGenesis := types.GenesisState{
 		Params: types.DefaultParams(),
 		TaskResultList: []types.TaskResult{
+			{
+				Creator: sample.AccAddress(),
+				Id:      0,
+			},
+			{
+				Creator: sample.AccAddress(),
+				Id:      1,
+			},
+		},
+		FutureTaskList: []types.FutureTask{
 			{
 				Creator: sample.AccAddress(),
 				Index:   "0",
@@ -106,6 +128,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		blitsimulation.SimulateMsgDeleteTaskResult(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgCreateFutureTask int
+	simState.AppParams.GetOrGenerate(opWeightMsgCreateFutureTask, &weightMsgCreateFutureTask, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateFutureTask = defaultWeightMsgCreateFutureTask
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateFutureTask,
+		blitsimulation.SimulateMsgCreateFutureTask(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateFutureTask int
+	simState.AppParams.GetOrGenerate(opWeightMsgUpdateFutureTask, &weightMsgUpdateFutureTask, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateFutureTask = defaultWeightMsgUpdateFutureTask
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateFutureTask,
+		blitsimulation.SimulateMsgUpdateFutureTask(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteFutureTask int
+	simState.AppParams.GetOrGenerate(opWeightMsgDeleteFutureTask, &weightMsgDeleteFutureTask, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteFutureTask = defaultWeightMsgDeleteFutureTask
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteFutureTask,
+		blitsimulation.SimulateMsgDeleteFutureTask(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -135,6 +190,30 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgDeleteTaskResult,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				blitsimulation.SimulateMsgDeleteTaskResult(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgCreateFutureTask,
+			defaultWeightMsgCreateFutureTask,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				blitsimulation.SimulateMsgCreateFutureTask(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgUpdateFutureTask,
+			defaultWeightMsgUpdateFutureTask,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				blitsimulation.SimulateMsgUpdateFutureTask(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgDeleteFutureTask,
+			defaultWeightMsgDeleteFutureTask,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				blitsimulation.SimulateMsgDeleteFutureTask(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"blit/x/blit/types"
+
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -15,7 +16,7 @@ func (k msgServer) CreateTaskResult(goCtx context.Context, msg *types.MsgCreateT
 	// Check if the value already exists
 	_, isFound := k.GetTaskResult(
 		ctx,
-		msg.Index,
+		msg.Id,
 	)
 	if isFound {
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
@@ -23,8 +24,7 @@ func (k msgServer) CreateTaskResult(goCtx context.Context, msg *types.MsgCreateT
 
 	var taskResult = types.TaskResult{
 		Creator:    msg.Creator,
-		Index:      msg.Index,
-		Status:     msg.Status,
+		Id:         msg.Id,
 		ExecutedOn: msg.ExecutedOn,
 	}
 
@@ -41,7 +41,7 @@ func (k msgServer) UpdateTaskResult(goCtx context.Context, msg *types.MsgUpdateT
 	// Check if the value exists
 	valFound, isFound := k.GetTaskResult(
 		ctx,
-		msg.Index,
+		msg.Id,
 	)
 	if !isFound {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
@@ -54,8 +54,7 @@ func (k msgServer) UpdateTaskResult(goCtx context.Context, msg *types.MsgUpdateT
 
 	var taskResult = types.TaskResult{
 		Creator:    msg.Creator,
-		Index:      msg.Index,
-		Status:     msg.Status,
+		Id:         msg.Id,
 		ExecutedOn: msg.ExecutedOn,
 	}
 
@@ -70,7 +69,7 @@ func (k msgServer) DeleteTaskResult(goCtx context.Context, msg *types.MsgDeleteT
 	// Check if the value exists
 	valFound, isFound := k.GetTaskResult(
 		ctx,
-		msg.Index,
+		msg.Id,
 	)
 	if !isFound {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
@@ -83,7 +82,7 @@ func (k msgServer) DeleteTaskResult(goCtx context.Context, msg *types.MsgDeleteT
 
 	k.RemoveTaskResult(
 		ctx,
-		msg.Index,
+		msg.Id,
 	)
 
 	return &types.MsgDeleteTaskResultResponse{}, nil

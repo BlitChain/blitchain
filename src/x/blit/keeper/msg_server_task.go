@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"fmt"
 
 	"blit/x/blit/types"
 
@@ -12,6 +13,9 @@ import (
 
 func (k msgServer) CreateTask(goCtx context.Context, msg *types.MsgCreateTask) (*types.MsgCreateTaskResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	// log foos
+	fmt.Printf("CreateTask: %v\n", msg)
 
 	taskId, err := k.TaskID.Next(ctx)
 	if err != nil {

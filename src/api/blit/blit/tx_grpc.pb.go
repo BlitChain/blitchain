@@ -30,6 +30,9 @@ const (
 	Msg_CreateTaskResult_FullMethodName   = "/blit.blit.Msg/CreateTaskResult"
 	Msg_UpdateTaskResult_FullMethodName   = "/blit.blit.Msg/UpdateTaskResult"
 	Msg_DeleteTaskResult_FullMethodName   = "/blit.blit.Msg/DeleteTaskResult"
+	Msg_CreateFutureTask_FullMethodName   = "/blit.blit.Msg/CreateFutureTask"
+	Msg_UpdateFutureTask_FullMethodName   = "/blit.blit.Msg/UpdateFutureTask"
+	Msg_DeleteFutureTask_FullMethodName   = "/blit.blit.Msg/DeleteFutureTask"
 )
 
 // MsgClient is the client API for Msg service.
@@ -49,6 +52,9 @@ type MsgClient interface {
 	CreateTaskResult(ctx context.Context, in *MsgCreateTaskResult, opts ...grpc.CallOption) (*MsgCreateTaskResultResponse, error)
 	UpdateTaskResult(ctx context.Context, in *MsgUpdateTaskResult, opts ...grpc.CallOption) (*MsgUpdateTaskResultResponse, error)
 	DeleteTaskResult(ctx context.Context, in *MsgDeleteTaskResult, opts ...grpc.CallOption) (*MsgDeleteTaskResultResponse, error)
+	CreateFutureTask(ctx context.Context, in *MsgCreateFutureTask, opts ...grpc.CallOption) (*MsgCreateFutureTaskResponse, error)
+	UpdateFutureTask(ctx context.Context, in *MsgUpdateFutureTask, opts ...grpc.CallOption) (*MsgUpdateFutureTaskResponse, error)
+	DeleteFutureTask(ctx context.Context, in *MsgDeleteFutureTask, opts ...grpc.CallOption) (*MsgDeleteFutureTaskResponse, error)
 }
 
 type msgClient struct {
@@ -158,6 +164,33 @@ func (c *msgClient) DeleteTaskResult(ctx context.Context, in *MsgDeleteTaskResul
 	return out, nil
 }
 
+func (c *msgClient) CreateFutureTask(ctx context.Context, in *MsgCreateFutureTask, opts ...grpc.CallOption) (*MsgCreateFutureTaskResponse, error) {
+	out := new(MsgCreateFutureTaskResponse)
+	err := c.cc.Invoke(ctx, Msg_CreateFutureTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateFutureTask(ctx context.Context, in *MsgUpdateFutureTask, opts ...grpc.CallOption) (*MsgUpdateFutureTaskResponse, error) {
+	out := new(MsgUpdateFutureTaskResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateFutureTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteFutureTask(ctx context.Context, in *MsgDeleteFutureTask, opts ...grpc.CallOption) (*MsgDeleteFutureTaskResponse, error) {
+	out := new(MsgDeleteFutureTaskResponse)
+	err := c.cc.Invoke(ctx, Msg_DeleteFutureTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -175,6 +208,9 @@ type MsgServer interface {
 	CreateTaskResult(context.Context, *MsgCreateTaskResult) (*MsgCreateTaskResultResponse, error)
 	UpdateTaskResult(context.Context, *MsgUpdateTaskResult) (*MsgUpdateTaskResultResponse, error)
 	DeleteTaskResult(context.Context, *MsgDeleteTaskResult) (*MsgDeleteTaskResultResponse, error)
+	CreateFutureTask(context.Context, *MsgCreateFutureTask) (*MsgCreateFutureTaskResponse, error)
+	UpdateFutureTask(context.Context, *MsgUpdateFutureTask) (*MsgUpdateFutureTaskResponse, error)
+	DeleteFutureTask(context.Context, *MsgDeleteFutureTask) (*MsgDeleteFutureTaskResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -214,6 +250,15 @@ func (UnimplementedMsgServer) UpdateTaskResult(context.Context, *MsgUpdateTaskRe
 }
 func (UnimplementedMsgServer) DeleteTaskResult(context.Context, *MsgDeleteTaskResult) (*MsgDeleteTaskResultResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTaskResult not implemented")
+}
+func (UnimplementedMsgServer) CreateFutureTask(context.Context, *MsgCreateFutureTask) (*MsgCreateFutureTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateFutureTask not implemented")
+}
+func (UnimplementedMsgServer) UpdateFutureTask(context.Context, *MsgUpdateFutureTask) (*MsgUpdateFutureTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFutureTask not implemented")
+}
+func (UnimplementedMsgServer) DeleteFutureTask(context.Context, *MsgDeleteFutureTask) (*MsgDeleteFutureTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFutureTask not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -426,6 +471,60 @@ func _Msg_DeleteTaskResult_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateFutureTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateFutureTask)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateFutureTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_CreateFutureTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateFutureTask(ctx, req.(*MsgCreateFutureTask))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateFutureTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateFutureTask)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateFutureTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateFutureTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateFutureTask(ctx, req.(*MsgUpdateFutureTask))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteFutureTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteFutureTask)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteFutureTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_DeleteFutureTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteFutureTask(ctx, req.(*MsgDeleteFutureTask))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -476,6 +575,18 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteTaskResult",
 			Handler:    _Msg_DeleteTaskResult_Handler,
+		},
+		{
+			MethodName: "CreateFutureTask",
+			Handler:    _Msg_CreateFutureTask_Handler,
+		},
+		{
+			MethodName: "UpdateFutureTask",
+			Handler:    _Msg_UpdateFutureTask_Handler,
+		},
+		{
+			MethodName: "DeleteFutureTask",
+			Handler:    _Msg_DeleteFutureTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

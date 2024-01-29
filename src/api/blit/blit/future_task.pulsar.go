@@ -13,30 +13,32 @@ import (
 )
 
 var (
-	md_TaskResult             protoreflect.MessageDescriptor
-	fd_TaskResult_id          protoreflect.FieldDescriptor
-	fd_TaskResult_executed_on protoreflect.FieldDescriptor
-	fd_TaskResult_creator     protoreflect.FieldDescriptor
+	md_FutureTask              protoreflect.MessageDescriptor
+	fd_FutureTask_index        protoreflect.FieldDescriptor
+	fd_FutureTask_scheduled_on protoreflect.FieldDescriptor
+	fd_FutureTask_task_id      protoreflect.FieldDescriptor
+	fd_FutureTask_creator      protoreflect.FieldDescriptor
 )
 
 func init() {
-	file_blit_blit_task_result_proto_init()
-	md_TaskResult = File_blit_blit_task_result_proto.Messages().ByName("TaskResult")
-	fd_TaskResult_id = md_TaskResult.Fields().ByName("id")
-	fd_TaskResult_executed_on = md_TaskResult.Fields().ByName("executed_on")
-	fd_TaskResult_creator = md_TaskResult.Fields().ByName("creator")
+	file_blit_blit_future_task_proto_init()
+	md_FutureTask = File_blit_blit_future_task_proto.Messages().ByName("FutureTask")
+	fd_FutureTask_index = md_FutureTask.Fields().ByName("index")
+	fd_FutureTask_scheduled_on = md_FutureTask.Fields().ByName("scheduled_on")
+	fd_FutureTask_task_id = md_FutureTask.Fields().ByName("task_id")
+	fd_FutureTask_creator = md_FutureTask.Fields().ByName("creator")
 }
 
-var _ protoreflect.Message = (*fastReflection_TaskResult)(nil)
+var _ protoreflect.Message = (*fastReflection_FutureTask)(nil)
 
-type fastReflection_TaskResult TaskResult
+type fastReflection_FutureTask FutureTask
 
-func (x *TaskResult) ProtoReflect() protoreflect.Message {
-	return (*fastReflection_TaskResult)(x)
+func (x *FutureTask) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_FutureTask)(x)
 }
 
-func (x *TaskResult) slowProtoReflect() protoreflect.Message {
-	mi := &file_blit_blit_task_result_proto_msgTypes[0]
+func (x *FutureTask) slowProtoReflect() protoreflect.Message {
+	mi := &file_blit_blit_future_task_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -47,43 +49,43 @@ func (x *TaskResult) slowProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-var _fastReflection_TaskResult_messageType fastReflection_TaskResult_messageType
-var _ protoreflect.MessageType = fastReflection_TaskResult_messageType{}
+var _fastReflection_FutureTask_messageType fastReflection_FutureTask_messageType
+var _ protoreflect.MessageType = fastReflection_FutureTask_messageType{}
 
-type fastReflection_TaskResult_messageType struct{}
+type fastReflection_FutureTask_messageType struct{}
 
-func (x fastReflection_TaskResult_messageType) Zero() protoreflect.Message {
-	return (*fastReflection_TaskResult)(nil)
+func (x fastReflection_FutureTask_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_FutureTask)(nil)
 }
-func (x fastReflection_TaskResult_messageType) New() protoreflect.Message {
-	return new(fastReflection_TaskResult)
+func (x fastReflection_FutureTask_messageType) New() protoreflect.Message {
+	return new(fastReflection_FutureTask)
 }
-func (x fastReflection_TaskResult_messageType) Descriptor() protoreflect.MessageDescriptor {
-	return md_TaskResult
+func (x fastReflection_FutureTask_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_FutureTask
 }
 
 // Descriptor returns message descriptor, which contains only the protobuf
 // type information for the message.
-func (x *fastReflection_TaskResult) Descriptor() protoreflect.MessageDescriptor {
-	return md_TaskResult
+func (x *fastReflection_FutureTask) Descriptor() protoreflect.MessageDescriptor {
+	return md_FutureTask
 }
 
 // Type returns the message type, which encapsulates both Go and protobuf
 // type information. If the Go type information is not needed,
 // it is recommended that the message descriptor be used instead.
-func (x *fastReflection_TaskResult) Type() protoreflect.MessageType {
-	return _fastReflection_TaskResult_messageType
+func (x *fastReflection_FutureTask) Type() protoreflect.MessageType {
+	return _fastReflection_FutureTask_messageType
 }
 
 // New returns a newly allocated and mutable empty message.
-func (x *fastReflection_TaskResult) New() protoreflect.Message {
-	return new(fastReflection_TaskResult)
+func (x *fastReflection_FutureTask) New() protoreflect.Message {
+	return new(fastReflection_FutureTask)
 }
 
 // Interface unwraps the message reflection interface and
 // returns the underlying ProtoMessage interface.
-func (x *fastReflection_TaskResult) Interface() protoreflect.ProtoMessage {
-	return (*TaskResult)(x)
+func (x *fastReflection_FutureTask) Interface() protoreflect.ProtoMessage {
+	return (*FutureTask)(x)
 }
 
 // Range iterates over every populated field in an undefined order,
@@ -91,22 +93,28 @@ func (x *fastReflection_TaskResult) Interface() protoreflect.ProtoMessage {
 // Range returns immediately if f returns false.
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
-func (x *fastReflection_TaskResult) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
-	if x.Id != uint64(0) {
-		value := protoreflect.ValueOfUint64(x.Id)
-		if !f(fd_TaskResult_id, value) {
+func (x *fastReflection_FutureTask) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Index != "" {
+		value := protoreflect.ValueOfString(x.Index)
+		if !f(fd_FutureTask_index, value) {
 			return
 		}
 	}
-	if x.ExecutedOn != "" {
-		value := protoreflect.ValueOfString(x.ExecutedOn)
-		if !f(fd_TaskResult_executed_on, value) {
+	if x.ScheduledOn != "" {
+		value := protoreflect.ValueOfString(x.ScheduledOn)
+		if !f(fd_FutureTask_scheduled_on, value) {
+			return
+		}
+	}
+	if x.TaskId != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.TaskId)
+		if !f(fd_FutureTask_task_id, value) {
 			return
 		}
 	}
 	if x.Creator != "" {
 		value := protoreflect.ValueOfString(x.Creator)
-		if !f(fd_TaskResult_creator, value) {
+		if !f(fd_FutureTask_creator, value) {
 			return
 		}
 	}
@@ -123,19 +131,21 @@ func (x *fastReflection_TaskResult) Range(f func(protoreflect.FieldDescriptor, p
 // In other cases (aside from the nullable cases above),
 // a proto3 scalar field is populated if it contains a non-zero value, and
 // a repeated field is populated if it is non-empty.
-func (x *fastReflection_TaskResult) Has(fd protoreflect.FieldDescriptor) bool {
+func (x *fastReflection_FutureTask) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
-	case "blit.blit.TaskResult.id":
-		return x.Id != uint64(0)
-	case "blit.blit.TaskResult.executed_on":
-		return x.ExecutedOn != ""
-	case "blit.blit.TaskResult.creator":
+	case "blit.blit.FutureTask.index":
+		return x.Index != ""
+	case "blit.blit.FutureTask.scheduled_on":
+		return x.ScheduledOn != ""
+	case "blit.blit.FutureTask.task_id":
+		return x.TaskId != uint64(0)
+	case "blit.blit.FutureTask.creator":
 		return x.Creator != ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.TaskResult"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.FutureTask"))
 		}
-		panic(fmt.Errorf("message blit.blit.TaskResult does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.blit.FutureTask does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -145,19 +155,21 @@ func (x *fastReflection_TaskResult) Has(fd protoreflect.FieldDescriptor) bool {
 // associated with the given field number.
 //
 // Clear is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_TaskResult) Clear(fd protoreflect.FieldDescriptor) {
+func (x *fastReflection_FutureTask) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
-	case "blit.blit.TaskResult.id":
-		x.Id = uint64(0)
-	case "blit.blit.TaskResult.executed_on":
-		x.ExecutedOn = ""
-	case "blit.blit.TaskResult.creator":
+	case "blit.blit.FutureTask.index":
+		x.Index = ""
+	case "blit.blit.FutureTask.scheduled_on":
+		x.ScheduledOn = ""
+	case "blit.blit.FutureTask.task_id":
+		x.TaskId = uint64(0)
+	case "blit.blit.FutureTask.creator":
 		x.Creator = ""
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.TaskResult"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.FutureTask"))
 		}
-		panic(fmt.Errorf("message blit.blit.TaskResult does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.blit.FutureTask does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -167,22 +179,25 @@ func (x *fastReflection_TaskResult) Clear(fd protoreflect.FieldDescriptor) {
 // the default value of a bytes scalar is guaranteed to be a copy.
 // For unpopulated composite types, it returns an empty, read-only view
 // of the value; to obtain a mutable reference, use Mutable.
-func (x *fastReflection_TaskResult) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_FutureTask) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
-	case "blit.blit.TaskResult.id":
-		value := x.Id
-		return protoreflect.ValueOfUint64(value)
-	case "blit.blit.TaskResult.executed_on":
-		value := x.ExecutedOn
+	case "blit.blit.FutureTask.index":
+		value := x.Index
 		return protoreflect.ValueOfString(value)
-	case "blit.blit.TaskResult.creator":
+	case "blit.blit.FutureTask.scheduled_on":
+		value := x.ScheduledOn
+		return protoreflect.ValueOfString(value)
+	case "blit.blit.FutureTask.task_id":
+		value := x.TaskId
+		return protoreflect.ValueOfUint64(value)
+	case "blit.blit.FutureTask.creator":
 		value := x.Creator
 		return protoreflect.ValueOfString(value)
 	default:
 		if descriptor.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.TaskResult"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.FutureTask"))
 		}
-		panic(fmt.Errorf("message blit.blit.TaskResult does not contain field %s", descriptor.FullName()))
+		panic(fmt.Errorf("message blit.blit.FutureTask does not contain field %s", descriptor.FullName()))
 	}
 }
 
@@ -196,19 +211,21 @@ func (x *fastReflection_TaskResult) Get(descriptor protoreflect.FieldDescriptor)
 // empty, read-only value, then it panics.
 //
 // Set is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_TaskResult) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+func (x *fastReflection_FutureTask) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
-	case "blit.blit.TaskResult.id":
-		x.Id = value.Uint()
-	case "blit.blit.TaskResult.executed_on":
-		x.ExecutedOn = value.Interface().(string)
-	case "blit.blit.TaskResult.creator":
+	case "blit.blit.FutureTask.index":
+		x.Index = value.Interface().(string)
+	case "blit.blit.FutureTask.scheduled_on":
+		x.ScheduledOn = value.Interface().(string)
+	case "blit.blit.FutureTask.task_id":
+		x.TaskId = value.Uint()
+	case "blit.blit.FutureTask.creator":
 		x.Creator = value.Interface().(string)
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.TaskResult"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.FutureTask"))
 		}
-		panic(fmt.Errorf("message blit.blit.TaskResult does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.blit.FutureTask does not contain field %s", fd.FullName()))
 	}
 }
 
@@ -222,48 +239,52 @@ func (x *fastReflection_TaskResult) Set(fd protoreflect.FieldDescriptor, value p
 // It panics if the field does not contain a composite type.
 //
 // Mutable is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_TaskResult) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_FutureTask) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.blit.TaskResult.id":
-		panic(fmt.Errorf("field id of message blit.blit.TaskResult is not mutable"))
-	case "blit.blit.TaskResult.executed_on":
-		panic(fmt.Errorf("field executed_on of message blit.blit.TaskResult is not mutable"))
-	case "blit.blit.TaskResult.creator":
-		panic(fmt.Errorf("field creator of message blit.blit.TaskResult is not mutable"))
+	case "blit.blit.FutureTask.index":
+		panic(fmt.Errorf("field index of message blit.blit.FutureTask is not mutable"))
+	case "blit.blit.FutureTask.scheduled_on":
+		panic(fmt.Errorf("field scheduled_on of message blit.blit.FutureTask is not mutable"))
+	case "blit.blit.FutureTask.task_id":
+		panic(fmt.Errorf("field task_id of message blit.blit.FutureTask is not mutable"))
+	case "blit.blit.FutureTask.creator":
+		panic(fmt.Errorf("field creator of message blit.blit.FutureTask is not mutable"))
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.TaskResult"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.FutureTask"))
 		}
-		panic(fmt.Errorf("message blit.blit.TaskResult does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.blit.FutureTask does not contain field %s", fd.FullName()))
 	}
 }
 
 // NewField returns a new value that is assignable to the field
 // for the given descriptor. For scalars, this returns the default value.
 // For lists, maps, and messages, this returns a new, empty, mutable value.
-func (x *fastReflection_TaskResult) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+func (x *fastReflection_FutureTask) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
-	case "blit.blit.TaskResult.id":
-		return protoreflect.ValueOfUint64(uint64(0))
-	case "blit.blit.TaskResult.executed_on":
+	case "blit.blit.FutureTask.index":
 		return protoreflect.ValueOfString("")
-	case "blit.blit.TaskResult.creator":
+	case "blit.blit.FutureTask.scheduled_on":
+		return protoreflect.ValueOfString("")
+	case "blit.blit.FutureTask.task_id":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "blit.blit.FutureTask.creator":
 		return protoreflect.ValueOfString("")
 	default:
 		if fd.IsExtension() {
-			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.TaskResult"))
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: blit.blit.FutureTask"))
 		}
-		panic(fmt.Errorf("message blit.blit.TaskResult does not contain field %s", fd.FullName()))
+		panic(fmt.Errorf("message blit.blit.FutureTask does not contain field %s", fd.FullName()))
 	}
 }
 
 // WhichOneof reports which field within the oneof is populated,
 // returning nil if none are populated.
 // It panics if the oneof descriptor does not belong to this message.
-func (x *fastReflection_TaskResult) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+func (x *fastReflection_FutureTask) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
 	switch d.FullName() {
 	default:
-		panic(fmt.Errorf("%s is not a oneof field in blit.blit.TaskResult", d.FullName()))
+		panic(fmt.Errorf("%s is not a oneof field in blit.blit.FutureTask", d.FullName()))
 	}
 	panic("unreachable")
 }
@@ -271,7 +292,7 @@ func (x *fastReflection_TaskResult) WhichOneof(d protoreflect.OneofDescriptor) p
 // GetUnknown retrieves the entire list of unknown fields.
 // The caller may only mutate the contents of the RawFields
 // if the mutated bytes are stored back into the message with SetUnknown.
-func (x *fastReflection_TaskResult) GetUnknown() protoreflect.RawFields {
+func (x *fastReflection_FutureTask) GetUnknown() protoreflect.RawFields {
 	return x.unknownFields
 }
 
@@ -282,7 +303,7 @@ func (x *fastReflection_TaskResult) GetUnknown() protoreflect.RawFields {
 // An empty RawFields may be passed to clear the fields.
 //
 // SetUnknown is a mutating operation and unsafe for concurrent use.
-func (x *fastReflection_TaskResult) SetUnknown(fields protoreflect.RawFields) {
+func (x *fastReflection_FutureTask) SetUnknown(fields protoreflect.RawFields) {
 	x.unknownFields = fields
 }
 
@@ -294,7 +315,7 @@ func (x *fastReflection_TaskResult) SetUnknown(fields protoreflect.RawFields) {
 // message type, but the details are implementation dependent.
 // Validity is not part of the protobuf data model, and may not
 // be preserved in marshaling or other operations.
-func (x *fastReflection_TaskResult) IsValid() bool {
+func (x *fastReflection_FutureTask) IsValid() bool {
 	return x != nil
 }
 
@@ -304,9 +325,9 @@ func (x *fastReflection_TaskResult) IsValid() bool {
 // The returned methods type is identical to
 // "google.golang.org/protobuf/runtime/protoiface".Methods.
 // Consult the protoiface package documentation for details.
-func (x *fastReflection_TaskResult) ProtoMethods() *protoiface.Methods {
+func (x *fastReflection_FutureTask) ProtoMethods() *protoiface.Methods {
 	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
-		x := input.Message.Interface().(*TaskResult)
+		x := input.Message.Interface().(*FutureTask)
 		if x == nil {
 			return protoiface.SizeOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -318,12 +339,16 @@ func (x *fastReflection_TaskResult) ProtoMethods() *protoiface.Methods {
 		var n int
 		var l int
 		_ = l
-		if x.Id != 0 {
-			n += 1 + runtime.Sov(uint64(x.Id))
-		}
-		l = len(x.ExecutedOn)
+		l = len(x.Index)
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		l = len(x.ScheduledOn)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.TaskId != 0 {
+			n += 1 + runtime.Sov(uint64(x.TaskId))
 		}
 		l = len(x.Creator)
 		if l > 0 {
@@ -339,7 +364,7 @@ func (x *fastReflection_TaskResult) ProtoMethods() *protoiface.Methods {
 	}
 
 	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
-		x := input.Message.Interface().(*TaskResult)
+		x := input.Message.Interface().(*FutureTask)
 		if x == nil {
 			return protoiface.MarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -363,19 +388,26 @@ func (x *fastReflection_TaskResult) ProtoMethods() *protoiface.Methods {
 			copy(dAtA[i:], x.Creator)
 			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
 			i--
-			dAtA[i] = 0x1a
+			dAtA[i] = 0x22
 		}
-		if len(x.ExecutedOn) > 0 {
-			i -= len(x.ExecutedOn)
-			copy(dAtA[i:], x.ExecutedOn)
-			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ExecutedOn)))
+		if x.TaskId != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.TaskId))
+			i--
+			dAtA[i] = 0x18
+		}
+		if len(x.ScheduledOn) > 0 {
+			i -= len(x.ScheduledOn)
+			copy(dAtA[i:], x.ScheduledOn)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.ScheduledOn)))
 			i--
 			dAtA[i] = 0x12
 		}
-		if x.Id != 0 {
-			i = runtime.EncodeVarint(dAtA, i, uint64(x.Id))
+		if len(x.Index) > 0 {
+			i -= len(x.Index)
+			copy(dAtA[i:], x.Index)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Index)))
 			i--
-			dAtA[i] = 0x8
+			dAtA[i] = 0xa
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -388,7 +420,7 @@ func (x *fastReflection_TaskResult) ProtoMethods() *protoiface.Methods {
 		}, nil
 	}
 	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
-		x := input.Message.Interface().(*TaskResult)
+		x := input.Message.Interface().(*FutureTask)
 		if x == nil {
 			return protoiface.UnmarshalOutput{
 				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
@@ -420,34 +452,15 @@ func (x *fastReflection_TaskResult) ProtoMethods() *protoiface.Methods {
 			fieldNum := int32(wire >> 3)
 			wireType := int(wire & 0x7)
 			if wireType == 4 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: TaskResult: wiretype end group for non-group")
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: FutureTask: wiretype end group for non-group")
 			}
 			if fieldNum <= 0 {
-				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: TaskResult: illegal tag %d (wire type %d)", fieldNum, wire)
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: FutureTask: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
 			case 1:
-				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-				}
-				x.Id = 0
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
-					}
-					if iNdEx >= l {
-						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					x.Id |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-			case 2:
 				if wireType != 2 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ExecutedOn", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Index", wireType)
 				}
 				var stringLen uint64
 				for shift := uint(0); ; shift += 7 {
@@ -475,9 +488,60 @@ func (x *fastReflection_TaskResult) ProtoMethods() *protoiface.Methods {
 				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				x.ExecutedOn = string(dAtA[iNdEx:postIndex])
+				x.Index = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field ScheduledOn", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.ScheduledOn = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			case 3:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field TaskId", wireType)
+				}
+				x.TaskId = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.TaskId |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 4:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
 				}
@@ -548,7 +612,7 @@ func (x *fastReflection_TaskResult) ProtoMethods() *protoiface.Methods {
 // versions:
 // 	protoc-gen-go v1.27.0
 // 	protoc        (unknown)
-// source: blit/blit/task_result.proto
+// source: blit/blit/future_task.proto
 
 const (
 	// Verify that this generated code is sufficiently up-to-date.
@@ -557,96 +621,106 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type TaskResult struct {
+type FutureTask struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id         uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	ExecutedOn string `protobuf:"bytes,2,opt,name=executed_on,json=executedOn,proto3" json:"executed_on,omitempty"`
-	Creator    string `protobuf:"bytes,3,opt,name=creator,proto3" json:"creator,omitempty"`
+	Index       string `protobuf:"bytes,1,opt,name=index,proto3" json:"index,omitempty"`
+	ScheduledOn string `protobuf:"bytes,2,opt,name=scheduled_on,json=scheduledOn,proto3" json:"scheduled_on,omitempty"`
+	TaskId      uint64 `protobuf:"varint,3,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	Creator     string `protobuf:"bytes,4,opt,name=creator,proto3" json:"creator,omitempty"`
 }
 
-func (x *TaskResult) Reset() {
-	*x = TaskResult{}
+func (x *FutureTask) Reset() {
+	*x = FutureTask{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_blit_blit_task_result_proto_msgTypes[0]
+		mi := &file_blit_blit_future_task_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *TaskResult) String() string {
+func (x *FutureTask) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TaskResult) ProtoMessage() {}
+func (*FutureTask) ProtoMessage() {}
 
-// Deprecated: Use TaskResult.ProtoReflect.Descriptor instead.
-func (*TaskResult) Descriptor() ([]byte, []int) {
-	return file_blit_blit_task_result_proto_rawDescGZIP(), []int{0}
+// Deprecated: Use FutureTask.ProtoReflect.Descriptor instead.
+func (*FutureTask) Descriptor() ([]byte, []int) {
+	return file_blit_blit_future_task_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TaskResult) GetId() uint64 {
+func (x *FutureTask) GetIndex() string {
 	if x != nil {
-		return x.Id
-	}
-	return 0
-}
-
-func (x *TaskResult) GetExecutedOn() string {
-	if x != nil {
-		return x.ExecutedOn
+		return x.Index
 	}
 	return ""
 }
 
-func (x *TaskResult) GetCreator() string {
+func (x *FutureTask) GetScheduledOn() string {
+	if x != nil {
+		return x.ScheduledOn
+	}
+	return ""
+}
+
+func (x *FutureTask) GetTaskId() uint64 {
+	if x != nil {
+		return x.TaskId
+	}
+	return 0
+}
+
+func (x *FutureTask) GetCreator() string {
 	if x != nil {
 		return x.Creator
 	}
 	return ""
 }
 
-var File_blit_blit_task_result_proto protoreflect.FileDescriptor
+var File_blit_blit_future_task_proto protoreflect.FileDescriptor
 
-var file_blit_blit_task_result_proto_rawDesc = []byte{
-	0x0a, 0x1b, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x74, 0x61, 0x73, 0x6b,
-	0x5f, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x09, 0x62,
-	0x6c, 0x69, 0x74, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x22, 0x57, 0x0a, 0x0a, 0x54, 0x61, 0x73, 0x6b,
-	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74,
-	0x65, 0x64, 0x5f, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x65, 0x78, 0x65,
-	0x63, 0x75, 0x74, 0x65, 0x64, 0x4f, 0x6e, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74,
-	0x6f, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f,
-	0x72, 0x42, 0x81, 0x01, 0x0a, 0x0d, 0x63, 0x6f, 0x6d, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e, 0x62,
-	0x6c, 0x69, 0x74, 0x42, 0x0f, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x50,
-	0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73, 0x64,
-	0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x62, 0x6c,
-	0x69, 0x74, 0xa2, 0x02, 0x03, 0x42, 0x42, 0x58, 0xaa, 0x02, 0x09, 0x42, 0x6c, 0x69, 0x74, 0x2e,
-	0x42, 0x6c, 0x69, 0x74, 0xca, 0x02, 0x09, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c, 0x69, 0x74,
-	0xe2, 0x02, 0x15, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x47, 0x50, 0x42,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0a, 0x42, 0x6c, 0x69, 0x74, 0x3a,
-	0x3a, 0x42, 0x6c, 0x69, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+var file_blit_blit_future_task_proto_rawDesc = []byte{
+	0x0a, 0x1b, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x66, 0x75, 0x74, 0x75,
+	0x72, 0x65, 0x5f, 0x74, 0x61, 0x73, 0x6b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x09, 0x62,
+	0x6c, 0x69, 0x74, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x22, 0x78, 0x0a, 0x0a, 0x46, 0x75, 0x74, 0x75,
+	0x72, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x14, 0x0a, 0x05, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x12, 0x21, 0x0a, 0x0c,
+	0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x64, 0x5f, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0b, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x64, 0x4f, 0x6e, 0x12,
+	0x17, 0x0a, 0x07, 0x74, 0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04,
+	0x52, 0x06, 0x74, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x61,
+	0x74, 0x6f, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74,
+	0x6f, 0x72, 0x42, 0x81, 0x01, 0x0a, 0x0d, 0x63, 0x6f, 0x6d, 0x2e, 0x62, 0x6c, 0x69, 0x74, 0x2e,
+	0x62, 0x6c, 0x69, 0x74, 0x42, 0x0f, 0x46, 0x75, 0x74, 0x75, 0x72, 0x65, 0x54, 0x61, 0x73, 0x6b,
+	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x1a, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73,
+	0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x62, 0x6c, 0x69, 0x74, 0x2f, 0x62,
+	0x6c, 0x69, 0x74, 0xa2, 0x02, 0x03, 0x42, 0x42, 0x58, 0xaa, 0x02, 0x09, 0x42, 0x6c, 0x69, 0x74,
+	0x2e, 0x42, 0x6c, 0x69, 0x74, 0xca, 0x02, 0x09, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c, 0x69,
+	0x74, 0xe2, 0x02, 0x15, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x42, 0x6c, 0x69, 0x74, 0x5c, 0x47, 0x50,
+	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0a, 0x42, 0x6c, 0x69, 0x74,
+	0x3a, 0x3a, 0x42, 0x6c, 0x69, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_blit_blit_task_result_proto_rawDescOnce sync.Once
-	file_blit_blit_task_result_proto_rawDescData = file_blit_blit_task_result_proto_rawDesc
+	file_blit_blit_future_task_proto_rawDescOnce sync.Once
+	file_blit_blit_future_task_proto_rawDescData = file_blit_blit_future_task_proto_rawDesc
 )
 
-func file_blit_blit_task_result_proto_rawDescGZIP() []byte {
-	file_blit_blit_task_result_proto_rawDescOnce.Do(func() {
-		file_blit_blit_task_result_proto_rawDescData = protoimpl.X.CompressGZIP(file_blit_blit_task_result_proto_rawDescData)
+func file_blit_blit_future_task_proto_rawDescGZIP() []byte {
+	file_blit_blit_future_task_proto_rawDescOnce.Do(func() {
+		file_blit_blit_future_task_proto_rawDescData = protoimpl.X.CompressGZIP(file_blit_blit_future_task_proto_rawDescData)
 	})
-	return file_blit_blit_task_result_proto_rawDescData
+	return file_blit_blit_future_task_proto_rawDescData
 }
 
-var file_blit_blit_task_result_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_blit_blit_task_result_proto_goTypes = []interface{}{
-	(*TaskResult)(nil), // 0: blit.blit.TaskResult
+var file_blit_blit_future_task_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_blit_blit_future_task_proto_goTypes = []interface{}{
+	(*FutureTask)(nil), // 0: blit.blit.FutureTask
 }
-var file_blit_blit_task_result_proto_depIdxs = []int32{
+var file_blit_blit_future_task_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
 	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -654,14 +728,14 @@ var file_blit_blit_task_result_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_blit_blit_task_result_proto_init() }
-func file_blit_blit_task_result_proto_init() {
-	if File_blit_blit_task_result_proto != nil {
+func init() { file_blit_blit_future_task_proto_init() }
+func file_blit_blit_future_task_proto_init() {
+	if File_blit_blit_future_task_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_blit_blit_task_result_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TaskResult); i {
+		file_blit_blit_future_task_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FutureTask); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -677,18 +751,18 @@ func file_blit_blit_task_result_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_blit_blit_task_result_proto_rawDesc,
+			RawDescriptor: file_blit_blit_future_task_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_blit_blit_task_result_proto_goTypes,
-		DependencyIndexes: file_blit_blit_task_result_proto_depIdxs,
-		MessageInfos:      file_blit_blit_task_result_proto_msgTypes,
+		GoTypes:           file_blit_blit_future_task_proto_goTypes,
+		DependencyIndexes: file_blit_blit_future_task_proto_depIdxs,
+		MessageInfos:      file_blit_blit_future_task_proto_msgTypes,
 	}.Build()
-	File_blit_blit_task_result_proto = out.File
-	file_blit_blit_task_result_proto_rawDesc = nil
-	file_blit_blit_task_result_proto_goTypes = nil
-	file_blit_blit_task_result_proto_depIdxs = nil
+	File_blit_blit_future_task_proto = out.File
+	file_blit_blit_future_task_proto_rawDesc = nil
+	file_blit_blit_future_task_proto_goTypes = nil
+	file_blit_blit_future_task_proto_depIdxs = nil
 }

@@ -9,6 +9,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "blit/blit/params.proto";
 import "blit/blit/task.proto";
 import "blit/blit/task_result.proto";
+import "blit/blit/future_task.proto";
 
 option go_package = "blit/x/blit/types";
 
@@ -23,21 +24,31 @@ service Query {
   
   // Queries a list of Task items.
   rpc Task    (QueryGetTaskRequest) returns (QueryGetTaskResponse) {
-    option (google.api.http).get = "/blit/blit/task/{id}";
+    option (google.api.http).get = "/blit/blit/task";
   
   }
   rpc TaskAll (QueryAllTaskRequest) returns (QueryAllTaskResponse) {
-    option (google.api.http).get = "/blit/blit/task";
+    option (google.api.http).get = "/blit/blit/all-tasks";
   
   }
   
   // Queries a list of TaskResult items.
   rpc TaskResult    (QueryGetTaskResultRequest) returns (QueryGetTaskResultResponse) {
-    option (google.api.http).get = "/blit/blit/task_result/{index}";
+    option (google.api.http).get = "/blit/blit/task-result";
   
   }
   rpc TaskResultAll (QueryAllTaskResultRequest) returns (QueryAllTaskResultResponse) {
-    option (google.api.http).get = "/blit/blit/task_result";
+    option (google.api.http).get = "/blit/blit/all-task-results";
+  
+  }
+  
+  // Queries a list of FutureTask items.
+  rpc FutureTask    (QueryGetFutureTaskRequest) returns (QueryGetFutureTaskResponse) {
+    option (google.api.http).get = "/blit/blit/future-task";
+  
+  }
+  rpc FutureTaskAll (QueryAllFutureTaskRequest) returns (QueryAllFutureTaskResponse) {
+    option (google.api.http).get = "/blit/blit/all-future-tasks";
   
   }
 }
@@ -91,7 +102,7 @@ message QueryAllTaskResponse {
 }
 
 message QueryGetTaskResultRequest {
-  string index = 1;
+  uint64 id = 1;
 }
 
 message QueryGetTaskResultResponse {
@@ -104,6 +115,23 @@ message QueryAllTaskResultRequest {
 
 message QueryAllTaskResultResponse {
   repeated TaskResult                             taskResult = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetFutureTaskRequest {
+  string index = 1;
+}
+
+message QueryGetFutureTaskResponse {
+  FutureTask futureTask = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllFutureTaskRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllFutureTaskResponse {
+  repeated FutureTask                             futureTask = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

@@ -11,11 +11,11 @@ const (
 
 // TaskResultKey returns the store key to retrieve a TaskResult from the index fields
 func TaskResultKey(
-	index string,
+	id uint64,
 ) []byte {
 	var key []byte
 
-	indexBytes := []byte(index)
+	indexBytes := []byte(string(id))
 	key = append(key, indexBytes...)
 	key = append(key, []byte("/")...)
 

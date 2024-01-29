@@ -24,6 +24,8 @@ const (
 	Query_TaskAll_FullMethodName       = "/blit.blit.Query/TaskAll"
 	Query_TaskResult_FullMethodName    = "/blit.blit.Query/TaskResult"
 	Query_TaskResultAll_FullMethodName = "/blit.blit.Query/TaskResultAll"
+	Query_FutureTask_FullMethodName    = "/blit.blit.Query/FutureTask"
+	Query_FutureTaskAll_FullMethodName = "/blit.blit.Query/FutureTaskAll"
 )
 
 // QueryClient is the client API for Query service.
@@ -38,6 +40,9 @@ type QueryClient interface {
 	// Queries a list of TaskResult items.
 	TaskResult(ctx context.Context, in *QueryGetTaskResultRequest, opts ...grpc.CallOption) (*QueryGetTaskResultResponse, error)
 	TaskResultAll(ctx context.Context, in *QueryAllTaskResultRequest, opts ...grpc.CallOption) (*QueryAllTaskResultResponse, error)
+	// Queries a list of FutureTask items.
+	FutureTask(ctx context.Context, in *QueryGetFutureTaskRequest, opts ...grpc.CallOption) (*QueryGetFutureTaskResponse, error)
+	FutureTaskAll(ctx context.Context, in *QueryAllFutureTaskRequest, opts ...grpc.CallOption) (*QueryAllFutureTaskResponse, error)
 }
 
 type queryClient struct {
@@ -93,6 +98,24 @@ func (c *queryClient) TaskResultAll(ctx context.Context, in *QueryAllTaskResultR
 	return out, nil
 }
 
+func (c *queryClient) FutureTask(ctx context.Context, in *QueryGetFutureTaskRequest, opts ...grpc.CallOption) (*QueryGetFutureTaskResponse, error) {
+	out := new(QueryGetFutureTaskResponse)
+	err := c.cc.Invoke(ctx, Query_FutureTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) FutureTaskAll(ctx context.Context, in *QueryAllFutureTaskRequest, opts ...grpc.CallOption) (*QueryAllFutureTaskResponse, error) {
+	out := new(QueryAllFutureTaskResponse)
+	err := c.cc.Invoke(ctx, Query_FutureTaskAll_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -105,6 +128,9 @@ type QueryServer interface {
 	// Queries a list of TaskResult items.
 	TaskResult(context.Context, *QueryGetTaskResultRequest) (*QueryGetTaskResultResponse, error)
 	TaskResultAll(context.Context, *QueryAllTaskResultRequest) (*QueryAllTaskResultResponse, error)
+	// Queries a list of FutureTask items.
+	FutureTask(context.Context, *QueryGetFutureTaskRequest) (*QueryGetFutureTaskResponse, error)
+	FutureTaskAll(context.Context, *QueryAllFutureTaskRequest) (*QueryAllFutureTaskResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -126,6 +152,12 @@ func (UnimplementedQueryServer) TaskResult(context.Context, *QueryGetTaskResultR
 }
 func (UnimplementedQueryServer) TaskResultAll(context.Context, *QueryAllTaskResultRequest) (*QueryAllTaskResultResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TaskResultAll not implemented")
+}
+func (UnimplementedQueryServer) FutureTask(context.Context, *QueryGetFutureTaskRequest) (*QueryGetFutureTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FutureTask not implemented")
+}
+func (UnimplementedQueryServer) FutureTaskAll(context.Context, *QueryAllFutureTaskRequest) (*QueryAllFutureTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FutureTaskAll not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -230,6 +262,42 @@ func _Query_TaskResultAll_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_FutureTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetFutureTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).FutureTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_FutureTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).FutureTask(ctx, req.(*QueryGetFutureTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_FutureTaskAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllFutureTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).FutureTaskAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_FutureTaskAll_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).FutureTaskAll(ctx, req.(*QueryAllFutureTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -256,6 +324,14 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TaskResultAll",
 			Handler:    _Query_TaskResultAll_Handler,
+		},
+		{
+			MethodName: "FutureTask",
+			Handler:    _Query_FutureTask_Handler,
+		},
+		{
+			MethodName: "FutureTaskAll",
+			Handler:    _Query_FutureTaskAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

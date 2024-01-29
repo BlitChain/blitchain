@@ -1,6 +1,8 @@
 package types
 
 import (
+	fmt "fmt"
+
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -20,8 +22,12 @@ func NewMsgCreateTask(
 	gasLimit int32,
 	gasPrice string,
 	messages []sdk.Msg,
+	foos []string,
 
 ) (*MsgCreateTask, error) {
+
+	// log any foos
+	fmt.Println("foos: ", foos)
 	anys, err := sdktx.SetMsgs(messages)
 	if err != nil {
 		return nil, err

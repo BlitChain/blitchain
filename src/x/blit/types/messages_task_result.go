@@ -10,15 +10,13 @@ var _ sdk.Msg = &MsgCreateTaskResult{}
 
 func NewMsgCreateTaskResult(
 	creator string,
-	index string,
-	status int32,
+	id uint64,
 	executedOn string,
 
 ) *MsgCreateTaskResult {
 	return &MsgCreateTaskResult{
 		Creator:    creator,
-		Index:      index,
-		Status:     status,
+		Id:         id,
 		ExecutedOn: executedOn,
 	}
 }
@@ -35,15 +33,13 @@ var _ sdk.Msg = &MsgUpdateTaskResult{}
 
 func NewMsgUpdateTaskResult(
 	creator string,
-	index string,
-	status int32,
+	id uint64,
 	executedOn string,
 
 ) *MsgUpdateTaskResult {
 	return &MsgUpdateTaskResult{
 		Creator:    creator,
-		Index:      index,
-		Status:     status,
+		Id:         id,
 		ExecutedOn: executedOn,
 	}
 }
@@ -60,12 +56,12 @@ var _ sdk.Msg = &MsgDeleteTaskResult{}
 
 func NewMsgDeleteTaskResult(
 	creator string,
-	index string,
+	id uint64,
 
 ) *MsgDeleteTaskResult {
 	return &MsgDeleteTaskResult{
 		Creator: creator,
-		Index:   index,
+		Id:      id,
 	}
 }
 

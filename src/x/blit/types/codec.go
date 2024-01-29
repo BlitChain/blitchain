@@ -30,6 +30,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgUpdateTaskResult{},
 		&MsgDeleteTaskResult{},
 	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateFutureTask{},
+		&MsgUpdateFutureTask{},
+		&MsgDeleteFutureTask{},
+	)
 	// this line is used by starport scaffolding # 3
 
 	registry.RegisterImplementations((*sdk.Msg)(nil),

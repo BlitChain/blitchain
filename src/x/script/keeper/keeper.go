@@ -512,7 +512,7 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 		sdkEvents := make([]sdk.Event, 0, len(events))
 		for _, event := range events {
 			e := event
-			e.Attributes = append(e.Attributes, abci.EventAttribute{Key: "authz_msg_index", Value: strconv.Itoa(i)})
+			e.Attributes = append(e.Attributes, abci.EventAttribute{Key: "attached_message_index", Value: strconv.Itoa(i)})
 
 			sdkEvents = append(sdkEvents, sdk.Event(e))
 		}

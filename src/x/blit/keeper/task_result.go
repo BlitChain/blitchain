@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"blit/x/blit/types"
+
 	"cosmossdk.io/store/prefix"
 	storetypes "cosmossdk.io/store/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
@@ -15,21 +16,21 @@ func (k Keeper) SetTaskResult(ctx context.Context, taskResult types.TaskResult) 
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.TaskResultKeyPrefix))
 	b := k.cdc.MustMarshal(&taskResult)
 	store.Set(types.TaskResultKey(
-		taskResult.Index,
+		taskResult.Id,
 	), b)
 }
 
 // GetTaskResult returns a taskResult from its index
 func (k Keeper) GetTaskResult(
 	ctx context.Context,
-	index string,
+	id uint64,
 
 ) (val types.TaskResult, found bool) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.TaskResultKeyPrefix))
 
 	b := store.Get(types.TaskResultKey(
-		index,
+		id,
 	))
 	if b == nil {
 		return val, false
@@ -42,13 +43,13 @@ func (k Keeper) GetTaskResult(
 // RemoveTaskResult removes a taskResult from the store
 func (k Keeper) RemoveTaskResult(
 	ctx context.Context,
-	index string,
+	id uint64,
 
 ) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.TaskResultKeyPrefix))
 	store.Delete(types.TaskResultKey(
-		index,
+		id,
 	))
 }
 

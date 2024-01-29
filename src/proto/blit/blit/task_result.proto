@@ -4,9 +4,8 @@ package blit.blit;
 option go_package = "blit/x/blit/types";
 
 message TaskResult {
-  string index = 1; 
-  int32 status = 2; 
-  string executedOn = 3; 
-  string creator = 4;
+  uint64 id = 1; 
+  string executed_on = 2; 
+  string creator = 3;
 }
 

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package blit.blit;
+
+option go_package = "blit/x/blit/types";
+
+message FutureTask {
+  string index = 1; 
+  string scheduled_on = 2; 
+  uint64 task_id = 3; 
+  string creator = 4;
+}
+

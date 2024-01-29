@@ -18,7 +18,7 @@ import (
 // Prevent strconv unused error
 var _ = strconv.IntSize
 
-func SimulateMsgCreateTaskResult(
+func SimulateMsgCreateFutureTask(
 	ak types.AccountKeeper,
 	bk bankkeeper.Keeper,
 	k keeper.Keeper,
@@ -27,15 +27,15 @@ func SimulateMsgCreateTaskResult(
 	) (simtypes.OperationMsg, []simtypes.FutureOperation, error) {
 		simAccount, _ := simtypes.RandomAcc(r, accs)
 
-		i := r.Uint64()
-		msg := &types.MsgCreateTaskResult{
+		i := r.Int()
+		msg := &types.MsgCreateFutureTask{
 			Creator: simAccount.Address.String(),
-			Id:      i,
+			Index:   strconv.Itoa(i),
 		}
 
-		_, found := k.GetTaskResult(ctx, msg.Id)
+		_, found := k.GetFutureTask(ctx, msg.Index)
 		if found {
-			return simtypes.NoOpMsg(types.ModuleName, sdk.MsgTypeURL(msg), "TaskResult already exist"), nil, nil
+			return simtypes.NoOpMsg(types.ModuleName, sdk.MsgTypeURL(msg), "FutureTask already exist"), nil, nil
 		}
 
 		txCtx := simulation.OperationInput{
@@ -55,7 +55,7 @@ func SimulateMsgCreateTaskResult(
 	}
 }
 
-func SimulateMsgUpdateTaskResult(
+func SimulateMsgUpdateFutureTask(
 	ak types.AccountKeeper,
 	bk bankkeeper.Keeper,
 	k keeper.Keeper,
@@ -64,24 +64,24 @@ func SimulateMsgUpdateTaskResult(
 	) (simtypes.OperationMsg, []simtypes.FutureOperation, error) {
 		var (
 			simAccount    = simtypes.Account{}
-			taskResult    = types.TaskResult{}
-			msg           = &types.MsgUpdateTaskResult{}
-			allTaskResult = k.GetAllTaskResult(ctx)
+			futureTask    = types.FutureTask{}
+			msg           = &types.MsgUpdateFutureTask{}
+			allFutureTask = k.GetAllFutureTask(ctx)
 			found         = false
 		)
-		for _, obj := range allTaskResult {
+		for _, obj := range allFutureTask {
 			simAccount, found = FindAccount(accs, obj.Creator)
 			if found {
-				taskResult = obj
+				futureTask = obj
 				break
 			}
 		}
 		if !found {
-			return simtypes.NoOpMsg(types.ModuleName, sdk.MsgTypeURL(msg), "taskResult creator not found"), nil, nil
+			return simtypes.NoOpMsg(types.ModuleName, sdk.MsgTypeURL(msg), "futureTask creator not found"), nil, nil
 		}
 		msg.Creator = simAccount.Address.String()
 
-		msg.Id = taskResult.Id
+		msg.Index = futureTask.Index
 
 		txCtx := simulation.OperationInput{
 			R:               r,
@@ -100,7 +100,7 @@ func SimulateMsgUpdateTaskResult(
 	}
 }
 
-func SimulateMsgDeleteTaskResult(
+func SimulateMsgDeleteFutureTask(
 	ak types.AccountKeeper,
 	bk bankkeeper.Keeper,
 	k keeper.Keeper,
@@ -109,24 +109,24 @@ func SimulateMsgDeleteTaskResult(
 	) (simtypes.OperationMsg, []simtypes.FutureOperation, error) {
 		var (
 			simAccount    = simtypes.Account{}
-			taskResult    = types.TaskResult{}
-			msg           = &types.MsgUpdateTaskResult{}
-			allTaskResult = k.GetAllTaskResult(ctx)
+			futureTask    = types.FutureTask{}
+			msg           = &types.MsgUpdateFutureTask{}
+			allFutureTask = k.GetAllFutureTask(ctx)
 			found         = false
 		)
-		for _, obj := range allTaskResult {
+		for _, obj := range allFutureTask {
 			simAccount, found = FindAccount(accs, obj.Creator)
 			if found {
-				taskResult = obj
+				futureTask = obj
 				break
 			}
 		}
 		if !found {
-			return simtypes.NoOpMsg(types.ModuleName, sdk.MsgTypeURL(msg), "taskResult creator not found"), nil, nil
+			return simtypes.NoOpMsg(types.ModuleName, sdk.MsgTypeURL(msg), "futureTask creator not found"), nil, nil
 		}
 		msg.Creator = simAccount.Address.String()
 
-		msg.Id = taskResult.Id
+		msg.Index = futureTask.Index
 
 		txCtx := simulation.OperationInput{
 			R:               r,
