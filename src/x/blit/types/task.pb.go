@@ -5,17 +5,25 @@ package types
 
 import (
 	fmt "fmt"
-	types "github.com/cosmos/cosmos-sdk/codec/types"
+	_ "github.com/cosmos/cosmos-proto"
+	types1 "github.com/cosmos/cosmos-sdk/codec/types"
+	types "github.com/cosmos/cosmos-sdk/types"
+	_ "github.com/cosmos/gogoproto/gogoproto"
 	proto "github.com/cosmos/gogoproto/proto"
+	github_com_cosmos_gogoproto_types "github.com/cosmos/gogoproto/types"
+	_ "google.golang.org/protobuf/types/known/durationpb"
+	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+	time "time"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+var _ = time.Kitchen
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -23,19 +31,24 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// Tasks are like cron jobs that can be scheduled to run at a specific time or interval.
+// Tasks are like cron jobs that can be scheduled to run at a specific time or
+// interval.
 type Task struct {
-	Creator        string       `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
-	Id             uint64       `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
-	ActivateAfter  string       `protobuf:"bytes,5,opt,name=activate_after,json=activateAfter,proto3" json:"activate_after,omitempty"`
-	ExpireAfter    string       `protobuf:"bytes,6,opt,name=expire_after,json=expireAfter,proto3" json:"expire_after,omitempty"`
-	Interval       string       `protobuf:"bytes,7,opt,name=interval,proto3" json:"interval,omitempty"`
-	MaxRuns        int32        `protobuf:"varint,8,opt,name=max_runs,json=maxRuns,proto3" json:"max_runs,omitempty"`
-	DisableOnError bool         `protobuf:"varint,9,opt,name=disable_on_error,json=disableOnError,proto3" json:"disable_on_error,omitempty"`
-	Enabled        bool         `protobuf:"varint,10,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	GasLimit       int32        `protobuf:"varint,11,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty"`
-	GasPrice       string       `protobuf:"bytes,12,opt,name=gas_price,json=gasPrice,proto3" json:"gas_price,omitempty"`
-	Messages       []*types.Any `protobuf:"bytes,13,rep,name=messages,proto3" json:"messages,omitempty"`
+	Creator        string          `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Id             uint64          `protobuf:"varint,4,opt,name=id,proto3" json:"id,omitempty"`
+	ActivateAfter  time.Time       `protobuf:"bytes,5,opt,name=activate_after,json=activateAfter,proto3,stdtime" json:"activate_after"`
+	ExpireAfter    time.Time       `protobuf:"bytes,6,opt,name=expire_after,json=expireAfter,proto3,stdtime" json:"expire_after"`
+	Interval       time.Duration   `protobuf:"bytes,7,opt,name=interval,proto3,stdduration" json:"interval"`
+	Frequency      time.Duration   `protobuf:"bytes,8,opt,name=frequency,proto3,stdduration" json:"frequency"`
+	MaxRuns        uint64          `protobuf:"varint,9,opt,name=max_runs,json=maxRuns,proto3" json:"max_runs,omitempty"`
+	DisableOnError bool            `protobuf:"varint,10,opt,name=disable_on_error,json=disableOnError,proto3" json:"disable_on_error,omitempty"`
+	Enabled        bool            `protobuf:"varint,11,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	TaskGasLimit   uint64          `protobuf:"varint,12,opt,name=task_gas_limit,json=taskGasLimit,proto3" json:"task_gas_limit,omitempty"`
+	TaskGasFee     types.Coin      `protobuf:"bytes,13,opt,name=task_gas_fee,json=taskGasFee,proto3" json:"task_gas_fee"`
+	Messages       []*types1.Any   `protobuf:"bytes,14,rep,name=messages,proto3" json:"messages,omitempty"`
+	Results        []*types.Result `protobuf:"bytes,15,rep,name=results,proto3" json:"results,omitempty"`
+	LastExecutedOn time.Time       `protobuf:"bytes,16,opt,name=last_executed_on,json=lastExecutedOn,proto3,stdtime" json:"last_executed_on"`
+	ErrorLog       string          `protobuf:"bytes,17,opt,name=error_log,json=errorLog,proto3" json:"error_log,omitempty"`
 }
 
 func (m *Task) Reset()         { *m = Task{} }
@@ -85,28 +98,35 @@ func (m *Task) GetId() uint64 {
 	return 0
 }
 
-func (m *Task) GetActivateAfter() string {
+func (m *Task) GetActivateAfter() time.Time {
 	if m != nil {
 		return m.ActivateAfter
 	}
-	return ""
+	return time.Time{}
 }
 
-func (m *Task) GetExpireAfter() string {
+func (m *Task) GetExpireAfter() time.Time {
 	if m != nil {
 		return m.ExpireAfter
 	}
-	return ""
+	return time.Time{}
 }
 
-func (m *Task) GetInterval() string {
+func (m *Task) GetInterval() time.Duration {
 	if m != nil {
 		return m.Interval
 	}
-	return ""
+	return 0
 }
 
-func (m *Task) GetMaxRuns() int32 {
+func (m *Task) GetFrequency() time.Duration {
+	if m != nil {
+		return m.Frequency
+	}
+	return 0
+}
+
+func (m *Task) GetMaxRuns() uint64 {
 	if m != nil {
 		return m.MaxRuns
 	}
@@ -127,25 +147,46 @@ func (m *Task) GetEnabled() bool {
 	return false
 }
 
-func (m *Task) GetGasLimit() int32 {
+func (m *Task) GetTaskGasLimit() uint64 {
 	if m != nil {
-		return m.GasLimit
+		return m.TaskGasLimit
 	}
 	return 0
 }
 
-func (m *Task) GetGasPrice() string {
+func (m *Task) GetTaskGasFee() types.Coin {
 	if m != nil {
-		return m.GasPrice
+		return m.TaskGasFee
 	}
-	return ""
+	return types.Coin{}
 }
 
-func (m *Task) GetMessages() []*types.Any {
+func (m *Task) GetMessages() []*types1.Any {
 	if m != nil {
 		return m.Messages
 	}
 	return nil
+}
+
+func (m *Task) GetResults() []*types.Result {
+	if m != nil {
+		return m.Results
+	}
+	return nil
+}
+
+func (m *Task) GetLastExecutedOn() time.Time {
+	if m != nil {
+		return m.LastExecutedOn
+	}
+	return time.Time{}
+}
+
+func (m *Task) GetErrorLog() string {
+	if m != nil {
+		return m.ErrorLog
+	}
+	return ""
 }
 
 func init() {
@@ -155,29 +196,45 @@ func init() {
 func init() { proto.RegisterFile("blit/blit/task.proto", fileDescriptor_86be3d8c6b9be697) }
 
 var fileDescriptor_86be3d8c6b9be697 = []byte{
-	// 349 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x3c, 0x91, 0xcd, 0x8a, 0xdb, 0x30,
-	0x10, 0xc7, 0x23, 0x37, 0x1f, 0xb6, 0xf2, 0x41, 0x2b, 0x72, 0x50, 0x52, 0x30, 0x6e, 0xa1, 0x60,
-	0x28, 0x38, 0xa5, 0x7d, 0x82, 0x14, 0xf6, 0xb6, 0xb0, 0x8b, 0xd9, 0xd3, 0x5e, 0xcc, 0x38, 0x56,
-	0x8c, 0x88, 0x2d, 0x1b, 0x49, 0x09, 0xce, 0x5b, 0xec, 0x63, 0xed, 0x31, 0xc7, 0x3d, 0xee, 0x26,
-	0x2f, 0xb2, 0x48, 0x8e, 0x73, 0x19, 0xf8, 0xff, 0xe6, 0xe7, 0xc1, 0x9a, 0xc1, 0xf3, 0xb4, 0xe0,
-	0x7a, 0x65, 0x8b, 0x06, 0xb5, 0x8b, 0x6a, 0x59, 0xe9, 0x8a, 0x78, 0x06, 0x44, 0xa6, 0x2c, 0x17,
-	0x79, 0x55, 0xe5, 0x05, 0x5b, 0xd9, 0x46, 0xba, 0xdf, 0xae, 0x40, 0x1c, 0x5b, 0xeb, 0xe7, 0x87,
-	0x83, 0xfb, 0x4f, 0xa0, 0x76, 0x84, 0xe2, 0xd1, 0x46, 0x32, 0xd0, 0x95, 0xa4, 0x28, 0x40, 0xa1,
-	0x17, 0x77, 0x91, 0xcc, 0xb0, 0xc3, 0x33, 0xea, 0x04, 0x28, 0xec, 0xc7, 0x0e, 0xcf, 0xc8, 0x2f,
-	0x3c, 0x83, 0x8d, 0xe6, 0x07, 0xd0, 0x2c, 0x81, 0xad, 0x66, 0x92, 0x0e, 0xec, 0x07, 0xd3, 0x8e,
-	0xae, 0x0d, 0x24, 0x3f, 0xf0, 0x84, 0x35, 0x35, 0x97, 0x9d, 0x34, 0xb4, 0xd2, 0xb8, 0x65, 0xad,
-	0xb2, 0xc4, 0x2e, 0x17, 0x9a, 0xc9, 0x03, 0x14, 0x74, 0x64, 0xdb, 0xb7, 0x4c, 0x16, 0xd8, 0x2d,
-	0xa1, 0x49, 0xe4, 0x5e, 0x28, 0xea, 0x06, 0x28, 0x1c, 0xc4, 0xa3, 0x12, 0x9a, 0x78, 0x2f, 0x14,
-	0x09, 0xf1, 0xd7, 0x8c, 0x2b, 0x48, 0x0b, 0x96, 0x54, 0x22, 0x61, 0x52, 0x56, 0x92, 0x7a, 0x01,
-	0x0a, 0xdd, 0x78, 0x76, 0xe5, 0x0f, 0xe2, 0xce, 0x50, 0xf3, 0x28, 0x26, 0x0c, 0xc8, 0x28, 0xb6,
-	0x42, 0x17, 0xc9, 0x77, 0xec, 0xe5, 0xa0, 0x92, 0x82, 0x97, 0x5c, 0xd3, 0xb1, 0x9d, 0xef, 0xe6,
-	0xa0, 0xee, 0x4d, 0xee, 0x9a, 0xb5, 0xe4, 0x1b, 0x46, 0x27, 0xed, 0x8f, 0xe5, 0xa0, 0x1e, 0x4d,
-	0x26, 0x7f, 0xb0, 0x5b, 0x32, 0xa5, 0x20, 0x67, 0x8a, 0x4e, 0x83, 0x2f, 0xe1, 0xf8, 0xef, 0x3c,
-	0x6a, 0xf7, 0x1b, 0x75, 0xfb, 0x8d, 0xd6, 0xe2, 0x18, 0xdf, 0xac, 0xff, 0xbf, 0x5f, 0xcf, 0x3e,
-	0x3a, 0x9d, 0x7d, 0xf4, 0x7e, 0xf6, 0xd1, 0xcb, 0xc5, 0xef, 0x9d, 0x2e, 0x7e, 0xef, 0xed, 0xe2,
-	0xf7, 0x9e, 0xbf, 0xd9, 0xa3, 0x35, 0xd7, 0xdb, 0x1d, 0x6b, 0xa6, 0xd2, 0xa1, 0x1d, 0xf2, 0xef,
-	0x33, 0x00, 0x00, 0xff, 0xff, 0x01, 0x11, 0x9c, 0x6b, 0xd5, 0x01, 0x00, 0x00,
+	// 593 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0x41, 0x6f, 0xd3, 0x30,
+	0x14, 0x6e, 0x46, 0x59, 0x53, 0xb7, 0x2b, 0x9b, 0xd5, 0x83, 0xb7, 0x49, 0x59, 0x05, 0x1c, 0x2a,
+	0x21, 0x12, 0x36, 0x6e, 0x5c, 0x50, 0x0b, 0x63, 0x07, 0x26, 0x26, 0x85, 0x9d, 0xb8, 0x44, 0x4e,
+	0xf2, 0x1a, 0x59, 0x4b, 0xec, 0x62, 0x3b, 0x53, 0xfb, 0x0b, 0xb8, 0xee, 0xc8, 0x0f, 0xe1, 0x47,
+	0xec, 0x38, 0x71, 0xe2, 0x04, 0x68, 0xfb, 0x23, 0xc8, 0x4e, 0x32, 0xd8, 0x76, 0x61, 0x17, 0xcb,
+	0xef, 0x7b, 0xdf, 0xf7, 0x3d, 0x3f, 0xfb, 0x19, 0x0d, 0xe3, 0x9c, 0xe9, 0xc0, 0x2e, 0x9a, 0xaa,
+	0x13, 0x7f, 0x2e, 0x85, 0x16, 0xb8, 0x6b, 0x00, 0xdf, 0x2c, 0x5b, 0x4f, 0x12, 0xa1, 0x0a, 0xa1,
+	0x82, 0x98, 0x2a, 0x08, 0x68, 0x9c, 0xb0, 0xe0, 0x74, 0x37, 0x06, 0x4d, 0x77, 0x6d, 0x50, 0xf1,
+	0xb7, 0xbc, 0x4c, 0x88, 0x2c, 0x87, 0xc0, 0x46, 0x71, 0x39, 0x0b, 0xd2, 0x52, 0x52, 0xcd, 0x04,
+	0x6f, 0xf2, 0xff, 0x9a, 0x34, 0xfa, 0x44, 0xb0, 0x26, 0x3f, 0xcc, 0x44, 0x26, 0xec, 0x36, 0x30,
+	0xbb, 0x1a, 0xdd, 0xb9, 0xed, 0xaa, 0x59, 0x01, 0x4a, 0xd3, 0x62, 0x5e, 0x13, 0x36, 0x6f, 0x13,
+	0x28, 0x5f, 0x36, 0xa9, 0xaa, 0x62, 0x54, 0x99, 0x56, 0x41, 0x9d, 0xda, 0xbe, 0xd9, 0x72, 0x24,
+	0x41, 0x95, 0xb9, 0xae, 0x92, 0x8f, 0xbf, 0xac, 0xa2, 0xf6, 0x31, 0x55, 0x27, 0x78, 0x0f, 0x75,
+	0x12, 0x09, 0x54, 0x0b, 0x49, 0x9c, 0x91, 0x33, 0xee, 0x4e, 0xc9, 0xf7, 0x6f, 0xcf, 0x87, 0xb5,
+	0xd1, 0x24, 0x4d, 0x25, 0x28, 0xf5, 0x51, 0x4b, 0xc6, 0xb3, 0xb0, 0x21, 0xe2, 0x01, 0x5a, 0x61,
+	0x29, 0x69, 0x8f, 0x9c, 0x71, 0x3b, 0x5c, 0x61, 0x29, 0x7e, 0x8f, 0x06, 0x34, 0xd1, 0xec, 0x94,
+	0x6a, 0x88, 0xe8, 0x4c, 0x83, 0x24, 0x0f, 0x47, 0xce, 0xb8, 0xb7, 0xb7, 0xe5, 0x57, 0x07, 0xf7,
+	0x9b, 0x83, 0xfb, 0xc7, 0x4d, 0x67, 0x53, 0xf7, 0xfc, 0xe7, 0x4e, 0xeb, 0xec, 0xd7, 0x8e, 0x13,
+	0xae, 0x35, 0xda, 0x89, 0x91, 0xe2, 0x03, 0xd4, 0x87, 0xc5, 0x9c, 0xc9, 0xc6, 0x6a, 0xf5, 0x1e,
+	0x56, 0xbd, 0x4a, 0x59, 0x19, 0xbd, 0x46, 0x2e, 0xe3, 0x1a, 0xe4, 0x29, 0xcd, 0x49, 0xc7, 0x9a,
+	0x6c, 0xde, 0x31, 0x79, 0x5b, 0xbf, 0x5f, 0xe5, 0xf1, 0xd5, 0x78, 0x5c, 0x8b, 0xf0, 0x04, 0x75,
+	0x67, 0x12, 0x3e, 0x97, 0xc0, 0x93, 0x25, 0x71, 0xff, 0xdf, 0xe1, 0xaf, 0x0a, 0x6f, 0x22, 0xb7,
+	0xa0, 0x8b, 0x48, 0x96, 0x5c, 0x91, 0xae, 0xbd, 0xaf, 0x4e, 0x41, 0x17, 0x61, 0xc9, 0x15, 0x1e,
+	0xa3, 0xf5, 0x94, 0x29, 0x1a, 0xe7, 0x10, 0x09, 0x1e, 0x81, 0x94, 0x42, 0x12, 0x34, 0x72, 0xc6,
+	0x6e, 0x38, 0xa8, 0xf1, 0x23, 0xbe, 0x6f, 0x50, 0x4c, 0x50, 0x07, 0xb8, 0x01, 0x52, 0xd2, 0xb3,
+	0x84, 0x26, 0xc4, 0x4f, 0xd1, 0xc0, 0x3e, 0x6d, 0x46, 0x55, 0x94, 0xb3, 0x82, 0x69, 0xd2, 0xb7,
+	0x45, 0xfa, 0x06, 0x3d, 0xa0, 0xea, 0xd0, 0x60, 0x78, 0x82, 0xfa, 0xd7, 0xac, 0x19, 0x00, 0x59,
+	0xab, 0x5b, 0xa9, 0x1f, 0xd9, 0x0c, 0xab, 0x5f, 0x0f, 0xab, 0xff, 0x46, 0x30, 0x3e, 0x6d, 0x9b,
+	0x56, 0x42, 0x54, 0x9b, 0xbc, 0x03, 0xc0, 0x2f, 0x90, 0x5b, 0x80, 0x52, 0x34, 0x03, 0x45, 0x06,
+	0xa3, 0x07, 0xe3, 0xde, 0xde, 0xf0, 0xce, 0x4d, 0x4c, 0xf8, 0x32, 0xbc, 0x66, 0xe1, 0x57, 0xa8,
+	0x53, 0x0d, 0x9c, 0x22, 0x8f, 0xac, 0x60, 0x74, 0xa3, 0x9e, 0xfd, 0x54, 0x4d, 0xd1, 0xd0, 0x12,
+	0xc3, 0x46, 0x80, 0x3f, 0xa0, 0xf5, 0x9c, 0x2a, 0x1d, 0xc1, 0x02, 0x92, 0x52, 0x43, 0x1a, 0x09,
+	0x4e, 0xd6, 0xef, 0x31, 0x06, 0x03, 0xa3, 0xde, 0xaf, 0xc5, 0x47, 0x1c, 0x6f, 0xa3, 0xae, 0xbd,
+	0xdf, 0x28, 0x17, 0x19, 0xd9, 0x30, 0x53, 0x1e, 0xba, 0x16, 0x38, 0x14, 0xd9, 0xf4, 0xd9, 0xf9,
+	0xa5, 0xe7, 0x5c, 0x5c, 0x7a, 0xce, 0xef, 0x4b, 0xcf, 0x39, 0xbb, 0xf2, 0x5a, 0x17, 0x57, 0x5e,
+	0xeb, 0xc7, 0x95, 0xd7, 0xfa, 0xb4, 0x61, 0xff, 0xce, 0xa2, 0xfe, 0x42, 0xcb, 0x39, 0xa8, 0x78,
+	0xd5, 0xd6, 0x7d, 0xf9, 0x27, 0x00, 0x00, 0xff, 0xff, 0x9e, 0x75, 0x37, 0x49, 0x4f, 0x04, 0x00,
+	0x00,
 }
 
 func (m *Task) Marshal() (dAtA []byte, err error) {
@@ -200,6 +257,39 @@ func (m *Task) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.ErrorLog) > 0 {
+		i -= len(m.ErrorLog)
+		copy(dAtA[i:], m.ErrorLog)
+		i = encodeVarintTask(dAtA, i, uint64(len(m.ErrorLog)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x8a
+	}
+	n1, err1 := github_com_cosmos_gogoproto_types.StdTimeMarshalTo(m.LastExecutedOn, dAtA[i-github_com_cosmos_gogoproto_types.SizeOfStdTime(m.LastExecutedOn):])
+	if err1 != nil {
+		return 0, err1
+	}
+	i -= n1
+	i = encodeVarintTask(dAtA, i, uint64(n1))
+	i--
+	dAtA[i] = 0x1
+	i--
+	dAtA[i] = 0x82
+	if len(m.Results) > 0 {
+		for iNdEx := len(m.Results) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Results[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintTask(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x7a
+		}
+	}
 	if len(m.Messages) > 0 {
 		for iNdEx := len(m.Messages) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -211,20 +301,23 @@ func (m *Task) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintTask(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x6a
+			dAtA[i] = 0x72
 		}
 	}
-	if len(m.GasPrice) > 0 {
-		i -= len(m.GasPrice)
-		copy(dAtA[i:], m.GasPrice)
-		i = encodeVarintTask(dAtA, i, uint64(len(m.GasPrice)))
-		i--
-		dAtA[i] = 0x62
+	{
+		size, err := m.TaskGasFee.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintTask(dAtA, i, uint64(size))
 	}
-	if m.GasLimit != 0 {
-		i = encodeVarintTask(dAtA, i, uint64(m.GasLimit))
+	i--
+	dAtA[i] = 0x6a
+	if m.TaskGasLimit != 0 {
+		i = encodeVarintTask(dAtA, i, uint64(m.TaskGasLimit))
 		i--
-		dAtA[i] = 0x58
+		dAtA[i] = 0x60
 	}
 	if m.Enabled {
 		i--
@@ -234,7 +327,7 @@ func (m *Task) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0
 		}
 		i--
-		dAtA[i] = 0x50
+		dAtA[i] = 0x58
 	}
 	if m.DisableOnError {
 		i--
@@ -244,38 +337,49 @@ func (m *Task) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0
 		}
 		i--
-		dAtA[i] = 0x48
+		dAtA[i] = 0x50
 	}
 	if m.MaxRuns != 0 {
 		i = encodeVarintTask(dAtA, i, uint64(m.MaxRuns))
 		i--
-		dAtA[i] = 0x40
+		dAtA[i] = 0x48
 	}
-	if len(m.Interval) > 0 {
-		i -= len(m.Interval)
-		copy(dAtA[i:], m.Interval)
-		i = encodeVarintTask(dAtA, i, uint64(len(m.Interval)))
-		i--
-		dAtA[i] = 0x3a
+	n3, err3 := github_com_cosmos_gogoproto_types.StdDurationMarshalTo(m.Frequency, dAtA[i-github_com_cosmos_gogoproto_types.SizeOfStdDuration(m.Frequency):])
+	if err3 != nil {
+		return 0, err3
 	}
-	if len(m.ExpireAfter) > 0 {
-		i -= len(m.ExpireAfter)
-		copy(dAtA[i:], m.ExpireAfter)
-		i = encodeVarintTask(dAtA, i, uint64(len(m.ExpireAfter)))
-		i--
-		dAtA[i] = 0x32
+	i -= n3
+	i = encodeVarintTask(dAtA, i, uint64(n3))
+	i--
+	dAtA[i] = 0x42
+	n4, err4 := github_com_cosmos_gogoproto_types.StdDurationMarshalTo(m.Interval, dAtA[i-github_com_cosmos_gogoproto_types.SizeOfStdDuration(m.Interval):])
+	if err4 != nil {
+		return 0, err4
 	}
-	if len(m.ActivateAfter) > 0 {
-		i -= len(m.ActivateAfter)
-		copy(dAtA[i:], m.ActivateAfter)
-		i = encodeVarintTask(dAtA, i, uint64(len(m.ActivateAfter)))
-		i--
-		dAtA[i] = 0x2a
+	i -= n4
+	i = encodeVarintTask(dAtA, i, uint64(n4))
+	i--
+	dAtA[i] = 0x3a
+	n5, err5 := github_com_cosmos_gogoproto_types.StdTimeMarshalTo(m.ExpireAfter, dAtA[i-github_com_cosmos_gogoproto_types.SizeOfStdTime(m.ExpireAfter):])
+	if err5 != nil {
+		return 0, err5
 	}
+	i -= n5
+	i = encodeVarintTask(dAtA, i, uint64(n5))
+	i--
+	dAtA[i] = 0x32
+	n6, err6 := github_com_cosmos_gogoproto_types.StdTimeMarshalTo(m.ActivateAfter, dAtA[i-github_com_cosmos_gogoproto_types.SizeOfStdTime(m.ActivateAfter):])
+	if err6 != nil {
+		return 0, err6
+	}
+	i -= n6
+	i = encodeVarintTask(dAtA, i, uint64(n6))
+	i--
+	dAtA[i] = 0x2a
 	if m.Id != 0 {
 		i = encodeVarintTask(dAtA, i, uint64(m.Id))
 		i--
-		dAtA[i] = 0x10
+		dAtA[i] = 0x20
 	}
 	if len(m.Creator) > 0 {
 		i -= len(m.Creator)
@@ -311,18 +415,14 @@ func (m *Task) Size() (n int) {
 	if m.Id != 0 {
 		n += 1 + sovTask(uint64(m.Id))
 	}
-	l = len(m.ActivateAfter)
-	if l > 0 {
-		n += 1 + l + sovTask(uint64(l))
-	}
-	l = len(m.ExpireAfter)
-	if l > 0 {
-		n += 1 + l + sovTask(uint64(l))
-	}
-	l = len(m.Interval)
-	if l > 0 {
-		n += 1 + l + sovTask(uint64(l))
-	}
+	l = github_com_cosmos_gogoproto_types.SizeOfStdTime(m.ActivateAfter)
+	n += 1 + l + sovTask(uint64(l))
+	l = github_com_cosmos_gogoproto_types.SizeOfStdTime(m.ExpireAfter)
+	n += 1 + l + sovTask(uint64(l))
+	l = github_com_cosmos_gogoproto_types.SizeOfStdDuration(m.Interval)
+	n += 1 + l + sovTask(uint64(l))
+	l = github_com_cosmos_gogoproto_types.SizeOfStdDuration(m.Frequency)
+	n += 1 + l + sovTask(uint64(l))
 	if m.MaxRuns != 0 {
 		n += 1 + sovTask(uint64(m.MaxRuns))
 	}
@@ -332,18 +432,28 @@ func (m *Task) Size() (n int) {
 	if m.Enabled {
 		n += 2
 	}
-	if m.GasLimit != 0 {
-		n += 1 + sovTask(uint64(m.GasLimit))
+	if m.TaskGasLimit != 0 {
+		n += 1 + sovTask(uint64(m.TaskGasLimit))
 	}
-	l = len(m.GasPrice)
-	if l > 0 {
-		n += 1 + l + sovTask(uint64(l))
-	}
+	l = m.TaskGasFee.Size()
+	n += 1 + l + sovTask(uint64(l))
 	if len(m.Messages) > 0 {
 		for _, e := range m.Messages {
 			l = e.Size()
 			n += 1 + l + sovTask(uint64(l))
 		}
+	}
+	if len(m.Results) > 0 {
+		for _, e := range m.Results {
+			l = e.Size()
+			n += 1 + l + sovTask(uint64(l))
+		}
+	}
+	l = github_com_cosmos_gogoproto_types.SizeOfStdTime(m.LastExecutedOn)
+	n += 2 + l + sovTask(uint64(l))
+	l = len(m.ErrorLog)
+	if l > 0 {
+		n += 2 + l + sovTask(uint64(l))
 	}
 	return n
 }
@@ -415,7 +525,7 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 			}
 			m.Creator = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 2:
+		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 			}
@@ -438,7 +548,7 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ActivateAfter", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTask
@@ -448,29 +558,30 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthTask
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthTask
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ActivateAfter = string(dAtA[iNdEx:postIndex])
+			if err := github_com_cosmos_gogoproto_types.StdTimeUnmarshal(&m.ActivateAfter, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExpireAfter", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTask
@@ -480,29 +591,30 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthTask
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthTask
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ExpireAfter = string(dAtA[iNdEx:postIndex])
+			if err := github_com_cosmos_gogoproto_types.StdTimeUnmarshal(&m.ExpireAfter, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Interval", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTask
@@ -512,25 +624,59 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthTask
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthTask
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Interval = string(dAtA[iNdEx:postIndex])
+			if err := github_com_cosmos_gogoproto_types.StdDurationUnmarshal(&m.Interval, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Frequency", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTask
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTask
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTask
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := github_com_cosmos_gogoproto_types.StdDurationUnmarshal(&m.Frequency, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field MaxRuns", wireType)
 			}
@@ -544,12 +690,12 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MaxRuns |= int32(b&0x7F) << shift
+				m.MaxRuns |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-		case 9:
+		case 10:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DisableOnError", wireType)
 			}
@@ -569,7 +715,7 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.DisableOnError = bool(v != 0)
-		case 10:
+		case 11:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Enabled", wireType)
 			}
@@ -589,30 +735,11 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.Enabled = bool(v != 0)
-		case 11:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field GasLimit", wireType)
-			}
-			m.GasLimit = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTask
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.GasLimit |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		case 12:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field GasPrice", wireType)
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TaskGasLimit", wireType)
 			}
-			var stringLen uint64
+			m.TaskGasLimit = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowTask
@@ -622,25 +749,45 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				m.TaskGasLimit |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+		case 13:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TaskGasFee", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTask
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
 				return ErrInvalidLengthTask
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthTask
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.GasPrice = string(dAtA[iNdEx:postIndex])
+			if err := m.TaskGasFee.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
-		case 13:
+		case 14:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Messages", wireType)
 			}
@@ -669,10 +816,109 @@ func (m *Task) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Messages = append(m.Messages, &types.Any{})
+			m.Messages = append(m.Messages, &types1.Any{})
 			if err := m.Messages[len(m.Messages)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		case 15:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Results", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTask
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTask
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTask
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Results = append(m.Results, &types.Result{})
+			if err := m.Results[len(m.Results)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 16:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LastExecutedOn", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTask
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTask
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTask
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := github_com_cosmos_gogoproto_types.StdTimeUnmarshal(&m.LastExecutedOn, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 17:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ErrorLog", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTask
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTask
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTask
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ErrorLog = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

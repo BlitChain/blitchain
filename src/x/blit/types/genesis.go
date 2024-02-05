@@ -2,6 +2,8 @@ package types
 
 import (
 	"fmt"
+
+	sdktypes "github.com/cosmos/cosmos-sdk/codec/types"
 )
 
 // DefaultIndex is the default global index
@@ -11,7 +13,6 @@ const DefaultIndex uint64 = 1
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		TaskList:       []Task{},
-		TaskResultList: []TaskResult{},
 		FutureTaskList: []FutureTask{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
@@ -31,21 +32,12 @@ func (gs GenesisState) Validate() error {
 		}
 		taskIndexMap[key] = struct{}{}
 	}
-	// Check for duplicated index in taskResult
-	taskResultIndexMap := make(map[string]struct{})
 
-	for _, elem := range gs.TaskResultList {
-		index := string(TaskResultKey(elem.Id))
-		if _, ok := taskResultIndexMap[index]; ok {
-			return fmt.Errorf("duplicated index for taskResult")
-		}
-		taskResultIndexMap[index] = struct{}{}
-	}
 	// Check for duplicated index in futureTask
 	futureTaskIndexMap := make(map[string]struct{})
 
 	for _, elem := range gs.FutureTaskList {
-		index := string(FutureTaskKey(elem.Index))
+		index := string(FutureTaskKey(elem.Status, elem.ScheduledOn, elem.TaskId, elem.GasPrice))
 		if _, ok := futureTaskIndexMap[index]; ok {
 			return fmt.Errorf("duplicated index for futureTask")
 		}
@@ -54,4 +46,17 @@ func (gs GenesisState) Validate() error {
 	// this line is used by starport scaffolding # genesis/types/validate
 
 	return gs.Params.Validate()
+}
+
+var _ sdktypes.UnpackInterfacesMessage = GenesisState{}
+
+// UnpackInterfaces implements UnpackInterfacesMessage.UnpackInterfaces
+func (data GenesisState) UnpackInterfaces(unpacker sdktypes.AnyUnpacker) error {
+	for _, p := range data.TaskList {
+		err := p.UnpackInterfaces(unpacker)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

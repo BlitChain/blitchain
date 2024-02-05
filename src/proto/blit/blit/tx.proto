@@ -2,9 +2,11 @@ syntax = "proto3";
 
 package blit.blit;
 
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "cosmos/base/v1beta1/coin.proto";
 import "google/protobuf/any.proto";
 import "amino/amino.proto";
-import "cosmos/base/v1beta1/coin.proto";
 import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
@@ -13,41 +15,40 @@ import "blit/blit/task.proto";
 import "blit/blit/task_result.proto";
 import "blit/blit/future_task.proto";
 
+import "blit/blit/timespec.proto";
+
 option go_package = "blit/x/blit/types";
 
 // Msg defines the Msg service.
 service Msg {
   option (cosmos.msg.v1.service) = true;
-  
+
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
-  rpc UpdateParams       (MsgUpdateParams      ) returns (MsgUpdateParamsResponse      );
-  rpc MintCoins          (MsgMintCoins         ) returns (MsgMintCoinsResponse         );
-  rpc BurnCoins          (MsgBurnCoins         ) returns (MsgBurnCoinsResponse         );
-  rpc ForceTransferCoins (MsgForceTransferCoins) returns (MsgForceTransferCoinsResponse);
-  rpc SetDenomMetadata   (MsgSetDenomMetadata  ) returns (MsgSetDenomMetadataResponse  );
-  rpc CreateTask         (MsgCreateTask        ) returns (MsgCreateTaskResponse        );
-  rpc UpdateTask         (MsgUpdateTask        ) returns (MsgUpdateTaskResponse        );
-  rpc DeleteTask         (MsgDeleteTask        ) returns (MsgDeleteTaskResponse        );
-  rpc CreateTaskResult   (MsgCreateTaskResult  ) returns (MsgCreateTaskResultResponse  );
-  rpc UpdateTaskResult   (MsgUpdateTaskResult  ) returns (MsgUpdateTaskResultResponse  );
-  rpc DeleteTaskResult   (MsgDeleteTaskResult  ) returns (MsgDeleteTaskResultResponse  );
-  rpc CreateFutureTask   (MsgCreateFutureTask  ) returns (MsgCreateFutureTaskResponse  );
-  rpc UpdateFutureTask   (MsgUpdateFutureTask  ) returns (MsgUpdateFutureTaskResponse  );
-  rpc DeleteFutureTask   (MsgDeleteFutureTask  ) returns (MsgDeleteFutureTaskResponse  );
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  rpc MintCoins(MsgMintCoins) returns (MsgMintCoinsResponse);
+  rpc BurnCoins(MsgBurnCoins) returns (MsgBurnCoinsResponse);
+  rpc ForceTransferCoins(MsgForceTransferCoins)
+      returns (MsgForceTransferCoinsResponse);
+  rpc SetDenomMetadata(MsgSetDenomMetadata)
+      returns (MsgSetDenomMetadataResponse);
+  rpc CreateTask(MsgCreateTask) returns (MsgCreateTaskResponse);
+  rpc DeleteTask(MsgDeleteTask) returns (MsgDeleteTaskResponse);
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
-  option (cosmos.msg.v1.signer) =                   "authority";
-  option           (amino.name) = "blit/x/blit/MsgUpdateParams";
-  
-  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "blit/x/blit/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless
+  // overwritten).
   string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 
   // params defines the module parameters to update.
-  
+
   // NOTE: All parameters must be supplied.
-  Params params = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  Params params = 2
+      [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
 // MsgUpdateParamsResponse defines the response structure for executing a
@@ -56,40 +57,43 @@ message MsgUpdateParamsResponse {}
 
 message MsgMintCoins {
   option (cosmos.msg.v1.signer) = "grantee";
-  cosmos.base.v1beta1.Coin amount  = 1 [(gogoproto.nullable)  = false                 , (amino.dont_omitempty) = true];
-  string                   grantee = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
+  cosmos.base.v1beta1.Coin amount = 1
+      [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  string grantee = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgMintCoinsResponse {}
 
 message MsgBurnCoins {
   option (cosmos.msg.v1.signer) = "grantee";
-  cosmos.base.v1beta1.Coin amount  = 1 [(gogoproto.nullable)  = false                 , (amino.dont_omitempty) = true];
-  string                   grantee = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
+  cosmos.base.v1beta1.Coin amount = 1
+      [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  string grantee = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgBurnCoinsResponse {}
 
 message MsgForceTransferCoins {
   option (cosmos.msg.v1.signer) = "grantee";
-  cosmos.base.v1beta1.Coin amount       = 1 [(gogoproto.nullable)  = false                 , (amino.dont_omitempty) = true];
-  string                   from_address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
-  string                   to_address   = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
-  string                   grantee      = 4 [(cosmos_proto.scalar) = "cosmos.AddressString"] ;
+  cosmos.base.v1beta1.Coin amount = 1
+      [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  string from_address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string to_address = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string grantee = 4 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgForceTransferCoinsResponse {}
 
 message MsgSetDenomMetadata {
   option (cosmos.msg.v1.signer) = "authority";
-  string authority   = 1;
-  string base        = 2;
-  string display     = 3;
-  string name        = 4;
-  string symbol      = 5;
-  string uri         = 6;
-  string uri_hash    = 7;
-  uint32 exponent    = 8;
+  string authority = 1;
+  string base = 2;
+  string display = 3;
+  string name = 4;
+  string symbol = 5;
+  string uri = 6;
+  string uri_hash = 7;
+  uint32 exponent = 8;
   string description = 9;
 }
 
@@ -97,98 +101,47 @@ message MsgSetDenomMetadataResponse {}
 
 message MsgCreateTask {
   option (cosmos.msg.v1.signer) = "creator";
-           string              creator          =  1;
-           string              activate_after   =  2;
-           string              expire_after     =  3;
-           string              interval         =  4;
-           int32               max_runs         =  5;
-           bool                disable_on_error =  6;
-           bool                enabled          =  7;
-           int32               gas_limit        =  8;
-           string              gas_price        =  9;
-  repeated google.protobuf.Any messages         = 10 [(cosmos_proto.accepts_interface) = "cosmos.base.v1beta1.Msg" ];
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  google.protobuf.Timestamp activate_after = 2 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+  google.protobuf.Timestamp expire_after = 3 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+  google.protobuf.Duration interval = 4 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.stdduration) = true
+  ];
+  google.protobuf.Duration frequency = 5 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.stdduration) = true
+  ];
+  uint64 max_runs = 6;
+  bool disable_on_error = 7;
+  bool enabled = 8;
+  uint64 task_gas_limit = 9;
+ cosmos.base.v1beta1.Coin task_gas_fee = 10 [
+    (gogoproto.nullable)     = false
+  ];
+  repeated google.protobuf.Any messages = 11
+      [(cosmos_proto.accepts_interface) = "cosmos.base.v1beta1.Msg"];
 }
 
 message MsgCreateTaskResponse {
   uint64 id = 1;
 }
 
-message MsgUpdateTask {
-  option (cosmos.msg.v1.signer) = "creator";
-           string              creator          =  1;
-           uint64              id               =  2;
-           string              activate_after   =  5;
-           string              expire_after     =  6;
-           string              interval         =  7;
-           int32               max_runs         =  8;
-           bool                disable_on_error =  9;
-           bool                enabled          = 10;
-           int32               gas_limit        = 11;
-           string              gas_price        = 12;
-  repeated google.protobuf.Any messages         = 13 [(cosmos_proto.accepts_interface) = "cosmos.base.v1beta1.Msg"  ];
-}
-
-message MsgUpdateTaskResponse {}
-
 message MsgDeleteTask {
   option (cosmos.msg.v1.signer) = "creator";
-  string creator = 1;
-  uint64 id      = 2;
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  uint64 id = 2;
 }
 
 message MsgDeleteTaskResponse {}
-
-message MsgCreateTaskResult {
-  option (cosmos.msg.v1.signer) = "creator";
-  string creator    = 1;
-  uint64 id      = 2;
-  string executed_on = 4;
-}
-
-message MsgCreateTaskResultResponse {}
-
-message MsgUpdateTaskResult {
-  option (cosmos.msg.v1.signer) = "creator";
-  string creator    = 1;
-  uint64 id      = 2;
-  string executed_on = 4;
-}
-
-message MsgUpdateTaskResultResponse {}
-
-message MsgDeleteTaskResult {
-  option (cosmos.msg.v1.signer) = "creator";
-  string creator = 1;
-  uint64 id   = 2;
-}
-
-message MsgDeleteTaskResultResponse {}
-
-message MsgCreateFutureTask {
-  option (cosmos.msg.v1.signer) = "creator";
-  string creator     = 1;
-  string index       = 2;
-  string scheduled_on = 3;
-  uint64 task_id      = 4;
-}
-
-message MsgCreateFutureTaskResponse {}
-
-message MsgUpdateFutureTask {
-  option (cosmos.msg.v1.signer) = "creator";
-  string creator     = 1;
-  string index       = 2;
-  string scheduled_on = 3;
-  uint64 task_id      = 4;
-}
-
-message MsgUpdateFutureTaskResponse {}
-
-message MsgDeleteFutureTask {
-  option (cosmos.msg.v1.signer) = "creator";
-  string creator = 1;
-  string index   = 2;
-}
-
-message MsgDeleteFutureTaskResponse {}
 

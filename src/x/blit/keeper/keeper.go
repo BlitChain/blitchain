@@ -3,11 +3,12 @@ package keeper
 import (
 	"blit/x/blit/types"
 	"fmt"
-	"time"
 
 	"cosmossdk.io/collections"
+	"cosmossdk.io/collections/indexes"
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/log"
+	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authzKeeper "github.com/cosmos/cosmos-sdk/x/authz/keeper"
@@ -32,15 +33,34 @@ type (
 
 		Schema collections.Schema
 		// Tasks key: taskID | value: Task
-		Tasks collections.Map[uint64, types.Task]
-		// TaskResults key: taskID | value: TaskResult
-		TaskResults collections.Map[uint64, types.TaskResult]
-		// PendingTasks key: scheduledTime+taskID | value: taskID
-		PendingTasks collections.Map[collections.Pair[time.Time, uint64], uint64]
+		Tasks *collections.IndexedMap[collections.Pair[sdk.AccAddress, uint64], types.Task, TasksIndexes]
+
 		// TaskID is a counter for tasks. It tracks the next task ID to be issued.
 		TaskID collections.Sequence
+
+		FutureTasks collections.Map[string, types.FutureTask]
+
+		Router *baseapp.MsgServiceRouter
 	}
 )
+
+type TasksIndexes struct {
+	Id *indexes.ReversePair[sdk.AccAddress, uint64, types.Task]
+}
+
+func (t TasksIndexes) IndexesList() []collections.Index[collections.Pair[sdk.AccAddress, uint64], types.Task] {
+	return []collections.Index[collections.Pair[sdk.AccAddress, uint64], types.Task]{t.Id}
+}
+
+func newTasksIndexes(sb *collections.SchemaBuilder) TasksIndexes {
+	return TasksIndexes{
+		Id: indexes.NewReversePair[types.Task](
+			sb, types.TaskAddressPrefix, "task_by_address_index",
+			collections.PairKeyCodec(sdk.AccAddressKey, collections.Uint64Key),
+			indexes.WithReversePairUncheckedValue(),
+		),
+	}
+}
 
 func NewKeeper(
 	cdc codec.BinaryCodec,
@@ -50,6 +70,7 @@ func NewKeeper(
 	authzKeeper authzKeeper.Keeper,
 	accountKeeper types.AccountKeeper,
 	bankKeeper bankkeeper.Keeper,
+	router *baseapp.MsgServiceRouter,
 
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
@@ -68,9 +89,13 @@ func NewKeeper(
 		bankKeeper:    bankKeeper,
 		accountKeeper: accountKeeper,
 
-		// 		Proposals:              collections.NewMap(sb, types.ProposalsKeyPrefix, "proposals", collections.Uint64Key, codec.CollValue[v1.Proposal](cdc)),
-		Tasks:  collections.NewMap(sb, types.TasksKeyPrefix, "tasks", collections.Uint64Key, codec.CollValue[types.Task](cdc)),
+		Tasks: collections.NewIndexedMap(sb, types.TasksKeyPrefix, "tasks", collections.PairKeyCodec(sdk.AccAddressKey, collections.Uint64Key), codec.CollValue[types.Task](cdc), newTasksIndexes(sb)),
+
 		TaskID: collections.NewSequence(sb, types.TaskIDKey, "taskID"),
+
+		FutureTasks: collections.NewMap(sb, types.FutureTasksKeyPrefix, "futureTasks", collections.StringKey, codec.CollValue[types.FutureTask](cdc)),
+
+		Router: router,
 	}
 	schema, err := sb.Build()
 	if err != nil {

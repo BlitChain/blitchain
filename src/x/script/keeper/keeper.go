@@ -229,10 +229,10 @@ func (k Keeper) HandleMsg(ctx sdk.Context, jsonMsg string, signer string) (res s
 		return "", err
 	}
 	// Validate the message
-	//err = m.ValidateBasic()
-	//if err != nil {
+	// err = m.ValidateBasic()
+	// if err != nil {
 	//	return "", errorsmod.Wrap(err, "validation failed")
-	//}
+	// }
 
 	k.Logger(ctx).Info("Run", "msg", m)
 

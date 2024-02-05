@@ -1,6 +1,12 @@
 package types
 
-import fmt "fmt"
+import (
+	fmt "fmt"
+
+	sdktypes "github.com/cosmos/cosmos-sdk/codec/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdktx "github.com/cosmos/cosmos-sdk/types/tx"
+)
 
 const (
 	defaultScriptDebugMode   = false
@@ -55,4 +61,18 @@ public_comet_rpc_url = "%s"
 blitvm_path = "%s"
 
 `, c.ScriptDebugMode, c.PublicRestAPIURL, c.PublicCometRPCURL, c.BlitVMPath)
+}
+
+// GetMessages returns the cache values from the MsgExecAuthorized.Msgs if present.
+func (task Task) GetTaskMessages() ([]sdk.Msg, error) {
+	return sdktx.GetMsgs(task.Messages, "task.Messages")
+}
+
+func (task Task) UnpackInterfaces(unpacker sdktypes.AnyUnpacker) error {
+	err := sdktx.UnpackInterfaces(unpacker, task.Messages)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

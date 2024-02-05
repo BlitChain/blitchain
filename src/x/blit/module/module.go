@@ -9,6 +9,7 @@ import (
 	"cosmossdk.io/core/store"
 	"cosmossdk.io/depinject"
 	"cosmossdk.io/log"
+	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -153,8 +154,14 @@ func (AppModule) ConsensusVersion() uint64 { return 1 }
 
 // BeginBlock contains the logic that is automatically triggered at the beginning of each block.
 // The begin block implementation is optional.
-func (am AppModule) BeginBlock(_ context.Context) error {
+func (am AppModule) BeginBlock(ctx context.Context) error {
+	fmt.Println("BeginBlock")
+	err := am.keeper.RunTasks(ctx)
+	if err != nil {
+		return err
+	}
 	return nil
+
 }
 
 // EndBlock contains the logic that is automatically triggered at the end of each block.
@@ -191,6 +198,8 @@ type ModuleInputs struct {
 	AccountKeeper types.AccountKeeper
 	BankKeeper    bankkeeper.Keeper
 	AuthzKeeper   authzKeeper.Keeper
+
+	MsgServiceRouter *baseapp.MsgServiceRouter
 }
 
 type ModuleOutputs struct {
@@ -214,6 +223,7 @@ func ProvideModule(in ModuleInputs) ModuleOutputs {
 		in.AuthzKeeper,
 		in.AccountKeeper,
 		in.BankKeeper,
+		in.MsgServiceRouter,
 	)
 	m := NewAppModule(
 		in.Cdc,

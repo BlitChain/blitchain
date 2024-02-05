@@ -25,14 +25,7 @@ const (
 	Msg_ForceTransferCoins_FullMethodName = "/blit.blit.Msg/ForceTransferCoins"
 	Msg_SetDenomMetadata_FullMethodName   = "/blit.blit.Msg/SetDenomMetadata"
 	Msg_CreateTask_FullMethodName         = "/blit.blit.Msg/CreateTask"
-	Msg_UpdateTask_FullMethodName         = "/blit.blit.Msg/UpdateTask"
 	Msg_DeleteTask_FullMethodName         = "/blit.blit.Msg/DeleteTask"
-	Msg_CreateTaskResult_FullMethodName   = "/blit.blit.Msg/CreateTaskResult"
-	Msg_UpdateTaskResult_FullMethodName   = "/blit.blit.Msg/UpdateTaskResult"
-	Msg_DeleteTaskResult_FullMethodName   = "/blit.blit.Msg/DeleteTaskResult"
-	Msg_CreateFutureTask_FullMethodName   = "/blit.blit.Msg/CreateFutureTask"
-	Msg_UpdateFutureTask_FullMethodName   = "/blit.blit.Msg/UpdateFutureTask"
-	Msg_DeleteFutureTask_FullMethodName   = "/blit.blit.Msg/DeleteFutureTask"
 )
 
 // MsgClient is the client API for Msg service.
@@ -47,14 +40,7 @@ type MsgClient interface {
 	ForceTransferCoins(ctx context.Context, in *MsgForceTransferCoins, opts ...grpc.CallOption) (*MsgForceTransferCoinsResponse, error)
 	SetDenomMetadata(ctx context.Context, in *MsgSetDenomMetadata, opts ...grpc.CallOption) (*MsgSetDenomMetadataResponse, error)
 	CreateTask(ctx context.Context, in *MsgCreateTask, opts ...grpc.CallOption) (*MsgCreateTaskResponse, error)
-	UpdateTask(ctx context.Context, in *MsgUpdateTask, opts ...grpc.CallOption) (*MsgUpdateTaskResponse, error)
 	DeleteTask(ctx context.Context, in *MsgDeleteTask, opts ...grpc.CallOption) (*MsgDeleteTaskResponse, error)
-	CreateTaskResult(ctx context.Context, in *MsgCreateTaskResult, opts ...grpc.CallOption) (*MsgCreateTaskResultResponse, error)
-	UpdateTaskResult(ctx context.Context, in *MsgUpdateTaskResult, opts ...grpc.CallOption) (*MsgUpdateTaskResultResponse, error)
-	DeleteTaskResult(ctx context.Context, in *MsgDeleteTaskResult, opts ...grpc.CallOption) (*MsgDeleteTaskResultResponse, error)
-	CreateFutureTask(ctx context.Context, in *MsgCreateFutureTask, opts ...grpc.CallOption) (*MsgCreateFutureTaskResponse, error)
-	UpdateFutureTask(ctx context.Context, in *MsgUpdateFutureTask, opts ...grpc.CallOption) (*MsgUpdateFutureTaskResponse, error)
-	DeleteFutureTask(ctx context.Context, in *MsgDeleteFutureTask, opts ...grpc.CallOption) (*MsgDeleteFutureTaskResponse, error)
 }
 
 type msgClient struct {
@@ -119,72 +105,9 @@ func (c *msgClient) CreateTask(ctx context.Context, in *MsgCreateTask, opts ...g
 	return out, nil
 }
 
-func (c *msgClient) UpdateTask(ctx context.Context, in *MsgUpdateTask, opts ...grpc.CallOption) (*MsgUpdateTaskResponse, error) {
-	out := new(MsgUpdateTaskResponse)
-	err := c.cc.Invoke(ctx, Msg_UpdateTask_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *msgClient) DeleteTask(ctx context.Context, in *MsgDeleteTask, opts ...grpc.CallOption) (*MsgDeleteTaskResponse, error) {
 	out := new(MsgDeleteTaskResponse)
 	err := c.cc.Invoke(ctx, Msg_DeleteTask_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) CreateTaskResult(ctx context.Context, in *MsgCreateTaskResult, opts ...grpc.CallOption) (*MsgCreateTaskResultResponse, error) {
-	out := new(MsgCreateTaskResultResponse)
-	err := c.cc.Invoke(ctx, Msg_CreateTaskResult_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) UpdateTaskResult(ctx context.Context, in *MsgUpdateTaskResult, opts ...grpc.CallOption) (*MsgUpdateTaskResultResponse, error) {
-	out := new(MsgUpdateTaskResultResponse)
-	err := c.cc.Invoke(ctx, Msg_UpdateTaskResult_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) DeleteTaskResult(ctx context.Context, in *MsgDeleteTaskResult, opts ...grpc.CallOption) (*MsgDeleteTaskResultResponse, error) {
-	out := new(MsgDeleteTaskResultResponse)
-	err := c.cc.Invoke(ctx, Msg_DeleteTaskResult_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) CreateFutureTask(ctx context.Context, in *MsgCreateFutureTask, opts ...grpc.CallOption) (*MsgCreateFutureTaskResponse, error) {
-	out := new(MsgCreateFutureTaskResponse)
-	err := c.cc.Invoke(ctx, Msg_CreateFutureTask_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) UpdateFutureTask(ctx context.Context, in *MsgUpdateFutureTask, opts ...grpc.CallOption) (*MsgUpdateFutureTaskResponse, error) {
-	out := new(MsgUpdateFutureTaskResponse)
-	err := c.cc.Invoke(ctx, Msg_UpdateFutureTask_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) DeleteFutureTask(ctx context.Context, in *MsgDeleteFutureTask, opts ...grpc.CallOption) (*MsgDeleteFutureTaskResponse, error) {
-	out := new(MsgDeleteFutureTaskResponse)
-	err := c.cc.Invoke(ctx, Msg_DeleteFutureTask_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -203,14 +126,7 @@ type MsgServer interface {
 	ForceTransferCoins(context.Context, *MsgForceTransferCoins) (*MsgForceTransferCoinsResponse, error)
 	SetDenomMetadata(context.Context, *MsgSetDenomMetadata) (*MsgSetDenomMetadataResponse, error)
 	CreateTask(context.Context, *MsgCreateTask) (*MsgCreateTaskResponse, error)
-	UpdateTask(context.Context, *MsgUpdateTask) (*MsgUpdateTaskResponse, error)
 	DeleteTask(context.Context, *MsgDeleteTask) (*MsgDeleteTaskResponse, error)
-	CreateTaskResult(context.Context, *MsgCreateTaskResult) (*MsgCreateTaskResultResponse, error)
-	UpdateTaskResult(context.Context, *MsgUpdateTaskResult) (*MsgUpdateTaskResultResponse, error)
-	DeleteTaskResult(context.Context, *MsgDeleteTaskResult) (*MsgDeleteTaskResultResponse, error)
-	CreateFutureTask(context.Context, *MsgCreateFutureTask) (*MsgCreateFutureTaskResponse, error)
-	UpdateFutureTask(context.Context, *MsgUpdateFutureTask) (*MsgUpdateFutureTaskResponse, error)
-	DeleteFutureTask(context.Context, *MsgDeleteFutureTask) (*MsgDeleteFutureTaskResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -236,29 +152,8 @@ func (UnimplementedMsgServer) SetDenomMetadata(context.Context, *MsgSetDenomMeta
 func (UnimplementedMsgServer) CreateTask(context.Context, *MsgCreateTask) (*MsgCreateTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTask not implemented")
 }
-func (UnimplementedMsgServer) UpdateTask(context.Context, *MsgUpdateTask) (*MsgUpdateTaskResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateTask not implemented")
-}
 func (UnimplementedMsgServer) DeleteTask(context.Context, *MsgDeleteTask) (*MsgDeleteTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
-}
-func (UnimplementedMsgServer) CreateTaskResult(context.Context, *MsgCreateTaskResult) (*MsgCreateTaskResultResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateTaskResult not implemented")
-}
-func (UnimplementedMsgServer) UpdateTaskResult(context.Context, *MsgUpdateTaskResult) (*MsgUpdateTaskResultResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateTaskResult not implemented")
-}
-func (UnimplementedMsgServer) DeleteTaskResult(context.Context, *MsgDeleteTaskResult) (*MsgDeleteTaskResultResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteTaskResult not implemented")
-}
-func (UnimplementedMsgServer) CreateFutureTask(context.Context, *MsgCreateFutureTask) (*MsgCreateFutureTaskResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateFutureTask not implemented")
-}
-func (UnimplementedMsgServer) UpdateFutureTask(context.Context, *MsgUpdateFutureTask) (*MsgUpdateFutureTaskResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateFutureTask not implemented")
-}
-func (UnimplementedMsgServer) DeleteFutureTask(context.Context, *MsgDeleteFutureTask) (*MsgDeleteFutureTaskResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteFutureTask not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -381,24 +276,6 @@ func _Msg_CreateTask_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_UpdateTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgUpdateTask)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).UpdateTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_UpdateTask_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).UpdateTask(ctx, req.(*MsgUpdateTask))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Msg_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MsgDeleteTask)
 	if err := dec(in); err != nil {
@@ -413,114 +290,6 @@ func _Msg_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).DeleteTask(ctx, req.(*MsgDeleteTask))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_CreateTaskResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgCreateTaskResult)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).CreateTaskResult(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_CreateTaskResult_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).CreateTaskResult(ctx, req.(*MsgCreateTaskResult))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_UpdateTaskResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgUpdateTaskResult)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).UpdateTaskResult(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_UpdateTaskResult_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).UpdateTaskResult(ctx, req.(*MsgUpdateTaskResult))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_DeleteTaskResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgDeleteTaskResult)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).DeleteTaskResult(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_DeleteTaskResult_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).DeleteTaskResult(ctx, req.(*MsgDeleteTaskResult))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_CreateFutureTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgCreateFutureTask)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).CreateFutureTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_CreateFutureTask_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).CreateFutureTask(ctx, req.(*MsgCreateFutureTask))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_UpdateFutureTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgUpdateFutureTask)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).UpdateFutureTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_UpdateFutureTask_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).UpdateFutureTask(ctx, req.(*MsgUpdateFutureTask))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_DeleteFutureTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgDeleteFutureTask)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).DeleteFutureTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_DeleteFutureTask_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).DeleteFutureTask(ctx, req.(*MsgDeleteFutureTask))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -557,36 +326,8 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_CreateTask_Handler,
 		},
 		{
-			MethodName: "UpdateTask",
-			Handler:    _Msg_UpdateTask_Handler,
-		},
-		{
 			MethodName: "DeleteTask",
 			Handler:    _Msg_DeleteTask_Handler,
-		},
-		{
-			MethodName: "CreateTaskResult",
-			Handler:    _Msg_CreateTaskResult_Handler,
-		},
-		{
-			MethodName: "UpdateTaskResult",
-			Handler:    _Msg_UpdateTaskResult_Handler,
-		},
-		{
-			MethodName: "DeleteTaskResult",
-			Handler:    _Msg_DeleteTaskResult_Handler,
-		},
-		{
-			MethodName: "CreateFutureTask",
-			Handler:    _Msg_CreateFutureTask_Handler,
-		},
-		{
-			MethodName: "UpdateFutureTask",
-			Handler:    _Msg_UpdateFutureTask_Handler,
-		},
-		{
-			MethodName: "DeleteFutureTask",
-			Handler:    _Msg_DeleteFutureTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

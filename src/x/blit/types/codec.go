@@ -22,23 +22,14 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgCreateTask{},
-		&MsgUpdateTask{},
 		&MsgDeleteTask{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgCreateTaskResult{},
-		&MsgUpdateTaskResult{},
-		&MsgDeleteTaskResult{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgCreateFutureTask{},
-		&MsgUpdateFutureTask{},
-		&MsgDeleteFutureTask{},
 	)
 	// this line is used by starport scaffolding # 3
 
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgUpdateParams{},
 	)
+
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
+
 }

@@ -16,8 +16,8 @@ message GenesisState {
   
   // params defines all the parameters of the module.
            Params     params         = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
-  repeated Task       taskList       = 2 [(gogoproto.nullable) = false] ;
-  repeated TaskResult taskResultList = 3 [(gogoproto.nullable) = false] ;
-  repeated FutureTask futureTaskList = 4 [(gogoproto.nullable) = false] ;
+  repeated Task       task_list       = 2 [(gogoproto.nullable) = false] ;
+  repeated FutureTask future_task_list = 4 [(gogoproto.nullable) = false] ;
+  uint64 starting_task_id = 5;
 }
 

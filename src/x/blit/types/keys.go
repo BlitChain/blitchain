@@ -16,11 +16,13 @@ const (
 )
 
 var (
-	ParamsKey             = []byte("p_blit")
-	TasksKeyPrefix        = collections.NewPrefix(0x01) // Prefix for tasks
-	TaskResultsKeyPrefix  = collections.NewPrefix(0x02) // Prefix for task results
-	PendingTasksKeyPrefix = collections.NewPrefix(0x03) // Prefix for pending tasks
-	TaskIDKey             = collections.NewPrefix(0x04) // Prefix for task ID sequence
+	ParamsKey            = []byte("p_blit")
+	TasksKeyPrefix       = collections.NewPrefix(0x01) // Prefix for tasks
+	TaskResultsKeyPrefix = collections.NewPrefix(0x02) // Prefix for task results
+	FutureTasksKeyPrefix = collections.NewPrefix(0x03) // Prefix for pending tasks
+	TaskIDKey            = collections.NewPrefix(0x04) // Prefix for task ID sequence
+	TaskResultIDKey      = collections.NewPrefix(0x05) // Prefix for task result ID sequence
+	TaskAddressPrefix    = collections.NewPrefix(0x06) // Prefix for task by address index
 
 )
 
