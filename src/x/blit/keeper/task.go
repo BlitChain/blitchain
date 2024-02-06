@@ -42,7 +42,16 @@ func (k Keeper) GetTask(ctx context.Context, creator string, id uint64) (types.T
 
 }
 
-func (k Keeper) GetTaskById(ctx context.Context, id uint64) (*types.Task, error) {
+func (k Keeper) GetTaskById(ctx context.Context, id uint64) (task *types.Task, err error) {
+
+	// This is massible ghetto but "key.PrimaryKey()" uses "assertValid()" when getting the primary key
+	// and it panics if the task doesn't exist. So we need to recover from the panic and return an error
+	defer func() {
+		if r := recover(); r != nil {
+			err = status.Error(codes.NotFound, fmt.Sprintf("task with id %d not found", id))
+			task = nil
+		}
+	}()
 	key, err := k.Tasks.Indexes.Id.MatchExact(
 		ctx,
 		id,
@@ -56,12 +65,12 @@ func (k Keeper) GetTaskById(ctx context.Context, id uint64) (*types.Task, error)
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	task, err := k.Tasks.Get(ctx, fullKey)
+	t, err := k.Tasks.Get(ctx, fullKey)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("err gettings task by fullkey", err))
+		fmt.Println(fmt.Sprintf("err gettings task by fullkey %s", err))
 		return nil, status.Error(codes.NotFound, "not found")
 	}
-	return &task, nil
+	return &t, nil
 }
 
 // DeleteTask deletes a task

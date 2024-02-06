@@ -2,7 +2,7 @@ package keeper
 
 import (
 	"context"
-	"fmt"
+	"time"
 
 	"blit/x/blit/types"
 
@@ -15,6 +15,10 @@ import (
 func (k msgServer) CreateTask(goCtx context.Context, msg *types.MsgCreateTask) (*types.MsgCreateTaskResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidAddress, "invalid creator address")
+	}
 	taskId, err := k.TaskID.Next(ctx)
 
 	if err != nil {
@@ -31,22 +35,12 @@ func (k msgServer) CreateTask(goCtx context.Context, msg *types.MsgCreateTask) (
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "expire after must be after activate after")
 	}
 
-	if msg.Interval < 0 {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "interval must be positive")
-	}
-
 	if msg.Messages == nil || len(msg.Messages) == 0 {
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "messages must be non-empty")
 	}
 
-	// XOR frequency and interval must be set
-	if msg.Frequency == 0 && msg.Interval == 0 {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "frequency or interval must be set (not neither)")
-	}
-
-	// XOR frequency and interval must be set
-	if msg.Frequency != 0 && msg.Interval != 0 {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "frequency or interval must be set (not both)")
+	if msg.MinimumInterval.Seconds() < 1 {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "interval must be at least 1 second")
 	}
 
 	if msg.TaskGasLimit < 1 {
@@ -63,18 +57,35 @@ func (k msgServer) CreateTask(goCtx context.Context, msg *types.MsgCreateTask) (
 	}
 
 	var task = &types.Task{
-		Creator:        msg.Creator,
-		Id:             taskId,
-		ActivateAfter:  msg.ActivateAfter,
-		ExpireAfter:    msg.ExpireAfter,
-		Interval:       msg.Interval,
-		Frequency:      msg.Frequency,
-		MaxRuns:        msg.MaxRuns,
-		DisableOnError: msg.DisableOnError,
-		Enabled:        msg.Enabled,
-		TaskGasLimit:   msg.TaskGasLimit,
-		TaskGasFee:     msg.TaskGasFee,
-		Messages:       msg.Messages,
+		Creator:         msg.Creator,
+		Id:              taskId,
+		ActivateAfter:   msg.ActivateAfter,
+		ExpireAfter:     msg.ExpireAfter,
+		MinimumInterval: msg.MinimumInterval,
+		MaxRuns:         msg.MaxRuns,
+		DisableOnError:  msg.DisableOnError,
+		Enabled:         msg.Enabled,
+		TaskGasLimit:    msg.TaskGasLimit,
+		TaskGasFee:      msg.TaskGasFee,
+		Messages:        msg.Messages,
+		TotalRuns:       0,
+	}
+
+	// Calculate gas price from gas fee / gas limit
+	gasPrice := sdk.NewDecCoinsFromCoins((task.TaskGasFee)).QuoDec(math.LegacyNewDec(int64(task.TaskGasLimit)))[0]
+
+	futureTask := &types.FutureTask{
+		TaskId:      task.Id,
+		ScheduledOn: task.ActivateAfter.Truncate(60 * time.Second),
+		Status:      types.FutureTaskStatus_PENDING,
+		GasPrice:    &gasPrice,
+	}
+	futureTaskIndex, err := k.SetFutureTask(ctx, futureTask)
+
+	task.FutureTaskIndex = futureTaskIndex
+
+	if err != nil {
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "failed to set future task")
 	}
 
 	err = k.SetTask(
@@ -84,26 +95,9 @@ func (k msgServer) CreateTask(goCtx context.Context, msg *types.MsgCreateTask) (
 	if err != nil {
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "failed to set task")
 	}
-
-	// Calculate gas price from gas fee / gas limit
-
-	//gasPrice := sdk.NewDecCoinFromCoin(msg.TaskGasFee).Amount.Quo(math.LegacyNewDec(int64(msg.TaskGasLimit)))
-
-	gasPrice := sdk.NewDecCoinsFromCoins((msg.TaskGasFee)).QuoDec(math.LegacyNewDec(int64(msg.TaskGasLimit)))[0]
-
-	futureTask := types.FutureTask{
-		TaskId:      task.Id,
-		ScheduledOn: task.ActivateAfter,
-		Status:      types.FutureTaskStatus_PENDING,
-		GasPrice:    &gasPrice,
-	}
-	index, err := k.SetFutureTask(ctx, futureTask)
-	fmt.Println("index", index)
-	if err != nil {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "failed to set future task")
-	}
-
-	return &types.MsgCreateTaskResponse{}, nil
+	return &types.MsgCreateTaskResponse{
+		Id: taskId,
+	}, nil
 }
 
 func (k msgServer) DeleteTask(goCtx context.Context, msg *types.MsgDeleteTask) (*types.MsgDeleteTaskResponse, error) {

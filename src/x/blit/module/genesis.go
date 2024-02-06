@@ -21,7 +21,7 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	}
 	// Set all the futureTask
 	for _, elem := range genState.FutureTaskList {
-		k.SetFutureTask(ctx, elem)
+		k.SetFutureTask(ctx, &elem)
 	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)

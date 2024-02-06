@@ -21,10 +21,7 @@ message Task {
       [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   google.protobuf.Timestamp expire_after = 6
       [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
-  google.protobuf.Duration interval = 7
-      [(gogoproto.nullable) = false, (gogoproto.stdduration) = true];
-  google.protobuf.Duration frequency = 8
-      [(gogoproto.nullable) = false, (gogoproto.stdduration) = true];
+  google.protobuf.Duration minimum_interval = 7 [(gogoproto.stdduration) = true];
   uint64 max_runs = 9;
   bool disable_on_error = 10;
   bool enabled = 11;
@@ -35,7 +32,9 @@ message Task {
   repeated google.protobuf.Any messages = 14;
   repeated cosmos.base.abci.v1beta1.Result results = 15;
   google.protobuf.Timestamp last_executed_on = 16
-      [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+      [(gogoproto.stdtime) = true];
   string error_log = 17;
+  string future_task_index = 18;
+  uint64 total_runs = 19;
 
 }

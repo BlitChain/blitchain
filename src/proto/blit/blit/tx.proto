@@ -112,14 +112,7 @@ message MsgCreateTask {
     (gogoproto.nullable) = false,
     (amino.dont_omitempty) = true
   ];
-  google.protobuf.Duration interval = 4 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true,
-    (gogoproto.stdduration) = true
-  ];
-  google.protobuf.Duration frequency = 5 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true,
+  google.protobuf.Duration minimum_interval = 4 [
     (gogoproto.stdduration) = true
   ];
   uint64 max_runs = 6;

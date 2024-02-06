@@ -357,9 +357,7 @@ paths:
                     expire_after:
                       type: string
                       format: date-time
-                    interval:
-                      type: string
-                    frequency:
+                    minimum_interval:
                       type: string
                     max_runs:
                       type: string
@@ -828,6 +826,11 @@ paths:
                       format: date-time
                     error_log:
                       type: string
+                    future_task_index:
+                      type: string
+                    total_runs:
+                      type: string
+                      format: uint64
                   description: >-
                     Tasks are like cron jobs that can be scheduled to run at a
                     specific time or
@@ -1590,9 +1593,7 @@ paths:
                   expire_after:
                     type: string
                     format: date-time
-                  interval:
-                    type: string
-                  frequency:
+                  minimum_interval:
                     type: string
                   max_runs:
                     type: string
@@ -2060,6 +2061,11 @@ paths:
                     format: date-time
                   error_log:
                     type: string
+                  future_task_index:
+                    type: string
+                  total_runs:
+                    type: string
+                    format: uint64
                 description: >-
                   Tasks are like cron jobs that can be scheduled to run at a
                   specific time or
@@ -2923,9 +2929,7 @@ paths:
               expire_after:
                 type: string
                 format: date-time
-              interval:
-                type: string
-              frequency:
+              minimum_interval:
                 type: string
               max_runs:
                 type: string
@@ -24896,9 +24900,7 @@ definitions:
             expire_after:
               type: string
               format: date-time
-            interval:
-              type: string
-            frequency:
+            minimum_interval:
               type: string
             max_runs:
               type: string
@@ -25355,6 +25357,11 @@ definitions:
               format: date-time
             error_log:
               type: string
+            future_task_index:
+              type: string
+            total_runs:
+              type: string
+              format: uint64
           description: >-
             Tasks are like cron jobs that can be scheduled to run at a specific
             time or
@@ -25439,9 +25446,7 @@ definitions:
           expire_after:
             type: string
             format: date-time
-          interval:
-            type: string
-          frequency:
+          minimum_interval:
             type: string
           max_runs:
             type: string
@@ -25894,6 +25899,11 @@ definitions:
             format: date-time
           error_log:
             type: string
+          future_task_index:
+            type: string
+          total_runs:
+            type: string
+            format: uint64
         description: >-
           Tasks are like cron jobs that can be scheduled to run at a specific
           time or
@@ -25920,9 +25930,7 @@ definitions:
       expire_after:
         type: string
         format: date-time
-      interval:
-        type: string
-      frequency:
+      minimum_interval:
         type: string
       max_runs:
         type: string
@@ -26361,6 +26369,11 @@ definitions:
         format: date-time
       error_log:
         type: string
+      future_task_index:
+        type: string
+      total_runs:
+        type: string
+        format: uint64
     description: >-
       Tasks are like cron jobs that can be scheduled to run at a specific time
       or
@@ -26757,9 +26770,7 @@ definitions:
       expire_after:
         type: string
         format: date-time
-      interval:
-        type: string
-      frequency:
+      minimum_interval:
         type: string
       max_runs:
         type: string

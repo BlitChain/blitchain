@@ -35,6 +35,7 @@ func FutureTaskKey(
 	taskId uint64,
 	gasPrice *sdk.DecCoin,
 ) []byte {
+
 	var key []byte
 
 	statusBytes := []byte(fmt.Sprint(status))

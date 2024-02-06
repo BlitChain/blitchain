@@ -10,21 +10,23 @@ import (
 
 	"cosmossdk.io/collections"
 	errorsmod "cosmossdk.io/errors"
-	"cosmossdk.io/store/prefix"
+	"cosmossdk.io/math"
 	sdkprefix "cosmossdk.io/store/prefix"
 	storetypes "cosmossdk.io/store/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 )
 
 // SetFutureTask set a specific futureTask in the store from its index
-func (k Keeper) SetFutureTask(ctx context.Context, futureTask types.FutureTask) (string, error) {
+func (k Keeper) SetFutureTask(ctx context.Context, futureTask *types.FutureTask) (string, error) {
+
 	futureTask.Index = string(types.FutureTaskKey(
 		futureTask.Status, futureTask.ScheduledOn, futureTask.TaskId, futureTask.GasPrice,
 	))
 
-	err := k.FutureTasks.Set(ctx, futureTask.Index, futureTask)
+	err := k.FutureTasks.Set(ctx, futureTask.Index, *futureTask)
 	if err != nil {
 		return "", err
 	}
@@ -54,10 +56,13 @@ func (k Keeper) RemoveFutureTask(
 	ctx context.Context,
 	index string,
 
-) {
-	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
-	store := prefix.NewStore(storeAdapter, types.FutureTasksKeyPrefix)
-	store.Delete([]byte(index))
+) error {
+	err := k.FutureTasks.Remove(ctx, index)
+	if err != nil {
+		return err
+	}
+	return nil
+
 }
 
 // GetAllFutureTask returns all futureTask
@@ -76,12 +81,12 @@ func (k Keeper) GetAllFutureTask(ctx context.Context,
 }
 
 // GetCurrentFutureTasks returns all FutureTasks that should be added to pool
-func (k Keeper) GetCurrentFutureTasks(ctx context.Context) (list []types.FutureTask) {
+func (k Keeper) GetCurrentFutureTasks(ctx context.Context) (list []*types.FutureTask) {
 	sdkCtx := sdk.UnwrapSDKContext(ctx)
 
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := sdkprefix.NewStore(storeAdapter, types.FutureTasksKeyPrefix)
-	iterator := storetypes.KVStoreReversePrefixIterator(store, types.FutureTaskKeyPending())
+	iterator := storetypes.KVStorePrefixIterator(store, types.FutureTaskKeyPending())
 
 	defer iterator.Close()
 
@@ -92,7 +97,7 @@ func (k Keeper) GetCurrentFutureTasks(ctx context.Context) (list []types.FutureT
 		// if scheduledOn is in the past, then it is a current task
 		currentBlockTime := sdkCtx.BlockTime()
 		if val.ScheduledOn.Before(currentBlockTime) {
-			list = append(list, val)
+			list = append(list, &val)
 		} else {
 			break
 		}
@@ -101,7 +106,7 @@ func (k Keeper) GetCurrentFutureTasks(ctx context.Context) (list []types.FutureT
 }
 
 // GetPoolFutureTasks returns all FutureTasks that are in the pool
-func (k Keeper) GetPoolFutureTasks(ctx context.Context) (list []types.FutureTask) {
+func (k Keeper) GetPoolFutureTasks(ctx context.Context) (list []*types.FutureTask) {
 
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := sdkprefix.NewStore(storeAdapter, types.FutureTasksKeyPrefix)
@@ -113,7 +118,7 @@ func (k Keeper) GetPoolFutureTasks(ctx context.Context) (list []types.FutureTask
 		var val types.FutureTask
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
 
-		list = append(list, val)
+		list = append(list, &val)
 	}
 
 	return
@@ -122,21 +127,26 @@ func (k Keeper) GetPoolFutureTasks(ctx context.Context) (list []types.FutureTask
 // RunTask run the task
 func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 
-	taskStartingGas := ctx.GasMeter().GasConsumed()
+	taskStartingGas := ctx.BlockGasMeter().GasConsumed()
 	cachedCtx, Write := ctx.CacheContext()
 	cachedCtx = cachedCtx.WithGasMeter(storetypes.NewGasMeter(task.TaskGasLimit))
 
 	func() {
 		defer func() {
+			lastExecutedOn := sdk.UnwrapSDKContext(cachedCtx).BlockTime()
+			task.LastExecutedOn = &lastExecutedOn
+
 			if r := recover(); r != nil {
 				err := handleTaskRecovery(r, cachedCtx)
 
 				k.Logger().Error("recovered from panic", "error", err)
-				task.ErrorLog = fmt.Sprintf("Err %s", err)
+				task.ErrorLog = fmt.Sprintf("Error: %s", err)
 				task.Results = nil
+				task.Enabled = false
 				// TODO disable task if needed
 				// Set the error on the task result
 			} else {
+				// Set the next future task
 				Write()
 			}
 			k.SetTask(ctx, task)
@@ -150,21 +160,35 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 		// to recover from this one.
 		defer func() {
 			cashedCtxConsumedGas := cachedCtx.GasMeter().GasConsumedToLimit()
-			ctx.GasMeter().ConsumeGas(
+			ctx.BlockGasMeter().ConsumeGas(
 				cashedCtxConsumedGas, "block gas meter",
 			)
 
-			if ctx.GasMeter().GasConsumed() < taskStartingGas {
+			if ctx.BlockGasMeter().GasConsumed() < taskStartingGas {
 				panic(storetypes.ErrorGasOverflow{Descriptor: "tx gas summation"})
 			}
 		}()
 
-		// TODO: Run the task
+		// Charge the gas fee
+		creatorAddress, err := sdk.AccAddressFromBech32(task.Creator)
+		if err != nil {
+			task.ErrorLog = fmt.Sprintf("Failed to get creator address: %s", err)
+			task.Enabled = false
+			return
+		}
+		err = k.DeductTaskFee(ctx, creatorAddress, task.TaskGasFee)
+		if err != nil {
+			task.ErrorLog = fmt.Sprintf("Failed to deduct fee: %s", err)
+			task.Enabled = false
+			return
+		}
 
 		// GetMessages returns the cache values from the MsgExecAuthorized.Msgs if present.
 		msgs, err := task.GetTaskMessages()
 		if err != nil {
-			panic(fmt.Errorf("failed to get task messages: %w", err))
+			task.ErrorLog = fmt.Sprintf("Failed to get task messages: %s", err)
+			task.Enabled = false
+			return
 		}
 
 		// Store the results as strings
@@ -172,28 +196,34 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 		results := make([]*sdk.Result, len(msgs))
 		// Run the messages
 		for i, msg := range msgs {
-			fmt.Println("msg", i, msg)
 
 			m, ok := msg.(sdk.HasValidateBasic)
 			if ok {
 				if err := m.ValidateBasic(); err != nil {
-					task.ErrorLog = fmt.Sprintf("Error validatating message %d: %s", i, err)
+					task.ErrorLog = fmt.Sprintf("Errori: validatating message %d: %s", i, err)
+					task.Enabled = false
 					return
 				}
 			}
 
 			handler := k.Router.Handler(msg)
 			if handler == nil {
-				panic(fmt.Errorf("unrecognized task message type: %T", msg))
+				task.ErrorLog = fmt.Sprintf("Error: unrecognized task message type: %T", msg)
+				task.Enabled = false
+				return
 			}
 
 			r, err := handler(cachedCtx, msg)
 			if err != nil {
 				task.ErrorLog = fmt.Sprintf("Error on message %d: %s", i, err)
+				task.Enabled = false
 				return
 			} // Handler should always return non-nil sdk.Result.
+
 			if r == nil {
-				panic(fmt.Errorf("handler %T returned nil Result", handler))
+				task.ErrorLog = fmt.Sprintf("Error: handler %T returned nil Result", handler)
+				task.Enabled = false
+				return
 			}
 
 			// Store the result
@@ -201,6 +231,26 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 		}
 
 		task.Results = results
+
+		if task.Enabled {
+			gasPrice := sdk.NewDecCoinsFromCoins((task.TaskGasFee)).QuoDec(math.LegacyNewDec(int64(task.TaskGasLimit)))[0]
+			nextTime := cachedCtx.BlockTime().Add(*task.MinimumInterval)
+			futureTask := &types.FutureTask{
+				TaskId:      task.Id,
+				ScheduledOn: nextTime,
+				Status:      types.FutureTaskStatus_PENDING,
+				GasPrice:    &gasPrice,
+			}
+			futureTaskIndex, err := k.SetFutureTask(ctx, futureTask)
+			if err != nil {
+				task.ErrorLog = fmt.Sprintf("Error: failed to set future task: %s", err)
+				task.Enabled = false
+				return
+			}
+
+			task.FutureTaskIndex = futureTaskIndex
+		}
+
 	}()
 
 }
@@ -209,48 +259,85 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 func (k Keeper) RunTasks(goCtx context.Context) error {
 
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
 	// Loop over current future tasks
-	currentFutureTasks := k.GetCurrentFutureTasks(ctx)
+	currentFutureTasks := k.GetCurrentFutureTasks(goCtx)
 	for _, futureTask := range currentFutureTasks {
-		fmt.Println("currentFutureTask", futureTask)
+		fmt.Println(fmt.Sprintf("CurrentFutureTask: %+v", futureTask))
+	}
+	for _, futureTask := range currentFutureTasks {
+
 		k.RemoveFutureTask(ctx, futureTask.Index)
+		// Set the future task to pool
 		futureTask.Status = types.FutureTaskStatus_POOL
 		index, err := k.SetFutureTask(ctx, futureTask)
-		fmt.Println("index", index)
 		if err != nil {
+			ctx.Logger().Error("Error: failed to set future task", "error", err)
 			return err
 		}
+
+		task, err := k.GetTaskById(ctx, futureTask.TaskId)
+
+		if err != nil {
+			fmt.Println("task not found", futureTask.TaskId)
+			k.RemoveFutureTask(ctx, futureTask.Index)
+			continue
+		}
+		task.FutureTaskIndex = index
 	}
 
 	// Loop over pool future tasks
-	poolFutureTasks := k.GetPoolFutureTasks(ctx)
+
+	allFutureTasks, err := k.GetAllFutureTask(goCtx)
+	if err != nil {
+		return err
+	}
+	fmt.Println("========")
+	for _, futureTask := range allFutureTasks {
+		fmt.Println(fmt.Sprintf("FutureTask: %+v", futureTask))
+	}
+	fmt.Println("========")
+
+	poolFutureTasks := k.GetPoolFutureTasks(goCtx)
 	for _, futureTask := range poolFutureTasks {
-		fmt.Println("poolFutureTask", futureTask)
+		fmt.Println(fmt.Sprintf("PoolFutureTask: %+v", futureTask))
 		// get the task from the store
-		k.RemoveFutureTask(ctx, futureTask.Index)
 		task, err := k.GetTaskById(ctx, futureTask.TaskId)
+
 		if err != nil {
-			fmt.Println("error getting task", err)
+			k.RemoveFutureTask(ctx, futureTask.Index)
+			fmt.Println("task not found", futureTask.TaskId)
 			continue
 		}
 
-		if err != nil {
-			return err
-		}
-
-		// if the task.ExpireAfter is in the past, then remove it from the pool
 		currentBlockTime := sdk.UnwrapSDKContext(ctx).BlockTime()
 		if task.ExpireAfter.Before(currentBlockTime) {
-			fmt.Println("removed from pool", futureTask)
-			// TODO write task result with error
+			fmt.Println(fmt.Sprintf("Skipping Task: ExpireAfter: %s < currentBlockTime: %s", task.ExpireAfter, currentBlockTime))
+			k.RemoveFutureTask(ctx, futureTask.Index)
+			task.FutureTaskIndex = ""
+			k.SetTask(ctx, task)
 			continue
 		}
 
+		availableGas := ctx.BlockGasMeter().GasRemaining() / 2
+
+		// Skip Task if gasRemaining < types.TaskGasLimit
+		if availableGas < task.TaskGasLimit {
+			fmt.Println(fmt.Sprintf("Skipping Task: availableGas: %d < TaskGasLimit: %d", availableGas, task.TaskGasLimit))
+			continue
+		}
+
+		err = k.RemoveFutureTask(ctx, futureTask.Index)
+		if err != nil {
+			ctx.Logger().Error("Error: failed to remove future task", "error", err)
+			continue
+		}
+		task.FutureTaskIndex = ""
+
+		task.TotalRuns++
 		// Run the task
 		k.RunTask(ctx, task)
 
-		fmt.Println("task", fmt.Sprintf("%#v", task))
-		// Create the TaskResult
 	}
 
 	return nil
@@ -266,9 +353,21 @@ func handleTaskRecovery(r interface{}, ctx sdk.Context) error {
 
 	default:
 		ctx.Logger().Error("recovered from panic", "error", r)
-		// print stack debug
 		fmt.Println("stacktrace from panic: \n" + string(debug.Stack()))
-
 		return sdkerrors.ErrPanic.Wrapf("Unhandled Excpetion")
 	}
+}
+
+// DeductFees deducts fee from the given account.
+func (k Keeper) DeductTaskFee(ctx sdk.Context, address sdk.AccAddress, fee sdk.Coin) error {
+	if !fee.IsValid() {
+		return errorsmod.Wrapf(sdkerrors.ErrInsufficientFee, "invalid fee amount: %s", fee)
+	}
+
+	err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, address, authtypes.FeeCollectorName, sdk.NewCoins(fee))
+	if err != nil {
+		return errorsmod.Wrapf(sdkerrors.ErrInsufficientFunds, err.Error())
+	}
+
+	return nil
 }

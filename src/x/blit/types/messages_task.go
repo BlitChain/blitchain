@@ -27,7 +27,7 @@ func NewMsgCreateTask(
 	creator string,
 	activateAfter time.Time,
 	expireAfter time.Time,
-	interval time.Duration,
+	minimumInterval *time.Duration,
 	frequency time.Duration,
 	maxRuns uint64,
 	disableOnError bool,
@@ -43,16 +43,16 @@ func NewMsgCreateTask(
 	}
 
 	return &MsgCreateTask{
-		Creator:        creator,
-		ActivateAfter:  activateAfter,
-		ExpireAfter:    expireAfter,
-		Interval:       interval,
-		MaxRuns:        maxRuns,
-		DisableOnError: disableOnError,
-		Enabled:        enabled,
-		TaskGasLimit:   taskGasLimit,
-		TaskGasFee:     taskGasFee,
-		Messages:       anys,
+		Creator:         creator,
+		ActivateAfter:   activateAfter,
+		ExpireAfter:     expireAfter,
+		MinimumInterval: minimumInterval,
+		MaxRuns:         maxRuns,
+		DisableOnError:  disableOnError,
+		Enabled:         enabled,
+		TaskGasLimit:    taskGasLimit,
+		TaskGasFee:      taskGasFee,
+		Messages:        anys,
 	}, nil
 }
 

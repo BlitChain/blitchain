@@ -10,6 +10,4 @@ option go_package = "blit/x/blit/types";
 message Params {
   option (amino.name) = "blit/x/blit/Params";
   option (gogoproto.equal) = true;
-
-  
 }
