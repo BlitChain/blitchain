@@ -312,7 +312,25 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 
 		currentBlockTime := sdk.UnwrapSDKContext(ctx).BlockTime()
 		if task.ExpireAfter.Before(currentBlockTime) {
-			fmt.Println(fmt.Sprintf("Skipping Task: ExpireAfter: %s < currentBlockTime: %s", task.ExpireAfter, currentBlockTime))
+			fmt.Println(fmt.Sprintf("Task Expired: ExpireAfter: %s < currentBlockTime: %s", task.ExpireAfter, currentBlockTime))
+			k.RemoveFutureTask(ctx, futureTask.Index)
+			task.FutureTaskIndex = ""
+			task.Enabled = false
+			k.SetTask(ctx, task)
+			continue
+		}
+
+		if task.TotalRuns >= task.MaxRuns {
+			fmt.Println(fmt.Sprintf("Task MaxRuns: TotalRuns: %d >= MaxRuns: %d", task.TotalRuns, task.MaxRuns))
+			k.RemoveFutureTask(ctx, futureTask.Index)
+			task.FutureTaskIndex = ""
+			task.Enabled = false
+			k.SetTask(ctx, task)
+			continue
+		}
+
+		if task.Enabled == false {
+			fmt.Println(fmt.Sprintf("Task Disabled: Enabled: %t", task.Enabled))
 			k.RemoveFutureTask(ctx, futureTask.Index)
 			task.FutureTaskIndex = ""
 			k.SetTask(ctx, task)
@@ -330,6 +348,9 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 		err = k.RemoveFutureTask(ctx, futureTask.Index)
 		if err != nil {
 			ctx.Logger().Error("Error: failed to remove future task", "error", err)
+			task.Enabled = false
+			task.ErrorLog = fmt.Sprintf("Error: failed to remove future task: %s", err)
+			k.SetTask(ctx, task)
 			continue
 		}
 		task.FutureTaskIndex = ""
