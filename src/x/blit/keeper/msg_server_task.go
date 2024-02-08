@@ -60,10 +60,6 @@ func (k msgServer) CreateTask(goCtx context.Context, msg *types.MsgCreateTask) (
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "task gas fee must be in ublit")
 	}
 
-	if msg.MaxRuns < 1 {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "max runs must be positive")
-	}
-
 	var task = &types.Task{
 		Creator:         msg.Creator,
 		Id:              taskId,
@@ -71,7 +67,6 @@ func (k msgServer) CreateTask(goCtx context.Context, msg *types.MsgCreateTask) (
 		ExpireAfter:     msg.ExpireAfter,
 		MinimumInterval: msg.MinimumInterval,
 		MaxRuns:         msg.MaxRuns,
-		DisableOnError:  msg.DisableOnError,
 		Enabled:         msg.Enabled,
 		TaskGasLimit:    msg.TaskGasLimit,
 		TaskGasFee:      msg.TaskGasFee,

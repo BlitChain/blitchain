@@ -232,7 +232,7 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 
 		task.Results = results
 
-		if task.Enabled {
+		if task.Enabled && (task.MaxRuns == 0 || task.TotalRuns < task.MaxRuns) {
 			gasPrice := sdk.NewDecCoinsFromCoins((task.TaskGasFee)).QuoDec(math.LegacyNewDec(int64(task.TaskGasLimit)))[0]
 			nextTime := cachedCtx.BlockTime().Add(*task.MinimumInterval)
 			futureTask := &types.FutureTask{
@@ -263,9 +263,6 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 	// Loop over current future tasks
 	currentFutureTasks := k.GetCurrentFutureTasks(goCtx)
 	for _, futureTask := range currentFutureTasks {
-		fmt.Println(fmt.Sprintf("CurrentFutureTask: %+v", futureTask))
-	}
-	for _, futureTask := range currentFutureTasks {
 
 		k.RemoveFutureTask(ctx, futureTask.Index)
 		// Set the future task to pool
@@ -286,20 +283,14 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 		task.FutureTaskIndex = index
 	}
 
-	// Loop over pool future tasks
-
-	allFutureTasks, err := k.GetAllFutureTask(goCtx)
-	if err != nil {
-		return err
-	}
-	fmt.Println("========")
-	for _, futureTask := range allFutureTasks {
-		fmt.Println(fmt.Sprintf("FutureTask: %+v", futureTask))
-	}
-	fmt.Println("========")
-
 	poolFutureTasks := k.GetPoolFutureTasks(goCtx)
-	for _, futureTask := range poolFutureTasks {
+	for i, futureTask := range poolFutureTasks {
+		// max 15 tasks per block
+		if i > 15 {
+			ctx.Logger().Info("Max 15 tasks per block")
+			break
+		}
+
 		fmt.Println(fmt.Sprintf("PoolFutureTask: %+v", futureTask))
 		// get the task from the store
 		task, err := k.GetTaskById(ctx, futureTask.TaskId)
@@ -320,7 +311,7 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 			continue
 		}
 
-		if task.TotalRuns >= task.MaxRuns {
+		if !(task.MaxRuns == 0 || task.TotalRuns < task.MaxRuns) {
 			fmt.Println(fmt.Sprintf("Task MaxRuns: TotalRuns: %d >= MaxRuns: %d", task.TotalRuns, task.MaxRuns))
 			k.RemoveFutureTask(ctx, futureTask.Index)
 			task.FutureTaskIndex = ""

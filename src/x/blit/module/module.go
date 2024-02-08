@@ -166,12 +166,7 @@ func (am AppModule) BeginBlock(goCtx context.Context) error {
 
 // EndBlock contains the logic that is automatically triggered at the end of each block.
 // The end block implementation is optional.
-func (am AppModule) EndBlock(goCtx context.Context) error {
-
-	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	fmt.Println(fmt.Sprintf("EndBlock BlockGasMeter %s", ctx.BlockGasMeter().String()))
-	fmt.Println(fmt.Sprintf("EndBlock GasMeter %s", ctx.GasMeter().String()))
+func (am AppModule) EndBlock(_ context.Context) error {
 
 	return nil
 }

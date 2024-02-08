@@ -607,7 +607,8 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 			sdk.NewAttribute("caller_address", scriptCtx.CallerAddress),
 			sdk.NewAttribute("script_address", valFound.Address),
 			sdk.NewAttribute("function_name", scriptCtx.FunctionName),
-			sdk.NewAttribute("response", response),
+			sdk.NewAttribute("kwargs", scriptCtx.Kwargs),
+			sdk.NewAttribute("messages", jsonMsgs),
 		),
 	)
 	if (runErr != nil) && (raiseRunErr == true) {
