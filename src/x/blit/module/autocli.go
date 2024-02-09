@@ -79,10 +79,14 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Short:     "Create a new Task",
 				},
 				{
-					RpcMethod:      "DeleteTask",
-					Use:            "delete-task [id]",
-					Short:          "Delete Task",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+					RpcMethod: "UpdateTask",
+					Use:       "update-task",
+					Short:     "Update a new Task",
+				},
+				{
+					RpcMethod: "DeleteTask",
+					Use:       "delete-task --id [id]",
+					Short:     "Delete Task",
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},

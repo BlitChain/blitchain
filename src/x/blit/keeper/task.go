@@ -15,7 +15,7 @@ import (
 )
 
 func (k Keeper) SetTask(ctx context.Context, task *types.Task) error {
-	address, err := sdk.AccAddressFromBech32(task.Creator)
+	address, err := sdk.AccAddressFromBech32(task.Address)
 	if err != nil {
 		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "failed to get address from bech32")
 	}

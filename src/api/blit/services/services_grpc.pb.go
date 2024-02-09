@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: blit/blit/service.proto
+// source: blit/services/services.proto
 
-package blit
+package services
 
 import (
 	context "context"
@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Service_Endpoints_FullMethodName = "/blit.blit.Service/Endpoints"
+	Service_Endpoints_FullMethodName = "/blit.services.Service/Endpoints"
 )
 
 // ServiceClient is the client API for Service service.
@@ -98,7 +98,7 @@ func _Service_Endpoints_Handler(srv interface{}, ctx context.Context, dec func(i
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Service_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "blit.blit.Service",
+	ServiceName: "blit.services.Service",
 	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -107,5 +107,5 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "blit/blit/service.proto",
+	Metadata: "blit/services/services.proto",
 }

@@ -21,6 +21,7 @@ import (
 	circuitkeeper "cosmossdk.io/x/circuit/keeper"
 	evidencekeeper "cosmossdk.io/x/evidence/keeper"
 	feegrantkeeper "cosmossdk.io/x/feegrant/keeper"
+	"cosmossdk.io/x/tx/signing"
 	upgradekeeper "cosmossdk.io/x/upgrade/keeper"
 	dbm "github.com/cosmos/cosmos-db"
 	"github.com/cosmos/cosmos-sdk/baseapp"
@@ -64,6 +65,8 @@ import (
 	ibcfeekeeper "github.com/cosmos/ibc-go/v8/modules/apps/29-fee/keeper"
 	ibctransferkeeper "github.com/cosmos/ibc-go/v8/modules/apps/transfer/keeper"
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/protoadapt"
 
 	blitmodulekeeper "blit/x/blit/keeper"
 	blit "blit/x/blit/module"
@@ -71,7 +74,8 @@ import (
 	scriptkeeper "blit/x/script/keeper"
 	storagemodulekeeper "blit/x/storage/keeper"
 
-	servicesmodulekeeper "blit/x/services/keeper"
+	taskpulsertypes "blit/api/blit/blit"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"blit/docs"
@@ -137,12 +141,11 @@ type App struct {
 	ScopedICAControllerKeeper capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
 
-	ServicesKeeper servicesmodulekeeper.Keeper
-	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 	BlitKeeper    blitmodulekeeper.Keeper
 	ScriptKeeper  scriptkeeper.Keeper
 	StorageKeeper storagemodulekeeper.Keeper
 
+	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 	// simulation manager
 	sm *module.SimulationManager
 }
@@ -169,6 +172,25 @@ func getGovProposalHandlers() []govclient.ProposalHandler {
 	return govProposalHandlers
 }
 
+func ProvideCustomGetSigners() signing.CustomGetSigner {
+	return signing.CustomGetSigner{
+		MsgType: proto.MessageName(&taskpulsertypes.MsgUpdateTask{}),
+		Fn: func(v2 proto.Message) ([][]byte, error) {
+			m := protoadapt.MessageV1Of(v2)
+			//msg := m.(*tasktypes.MsgUpdateTask)
+			if m == nil {
+				return nil, nil
+			}
+			_ = m.(*taskpulsertypes.MsgUpdateTask)
+			msg := v2.(*taskpulsertypes.MsgUpdateTask)
+			if msg.GetGrantee() != "" {
+				return [][]byte{[]byte(msg.Grantee)}, nil
+			}
+			return [][]byte{[]byte(msg.Address)}, nil
+		},
+	}
+}
+
 // AppConfig returns the default app config.
 func AppConfig() depinject.Config {
 	return depinject.Configs(
@@ -183,6 +205,7 @@ func AppConfig() depinject.Config {
 				// this line is used by starport scaffolding # stargate/appConfig/moduleBasic
 			},
 		),
+		//depinject.Provide(ProvideCustomGetSigners),
 	)
 }
 
@@ -285,7 +308,6 @@ func New(
 		&app.GroupKeeper,
 		&app.ConsensusParamsKeeper,
 		&app.CircuitBreakerKeeper,
-		&app.ServicesKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 		&app.BlitKeeper,
 		&app.ScriptKeeper,
@@ -439,7 +461,7 @@ func (app *App) SimulationManager() *module.SimulationManager {
 // RegisterNodeService registers the node gRPC service on the app gRPC router.
 func (a *App) RegisterNodeService(clientCtx client.Context, cfg config.Config) {
 	nodeservice.RegisterNodeService(clientCtx, a.GRPCQueryRouter(), cfg)
-	servicesmodulekeeper.RegisterNodeService(clientCtx, a.GRPCQueryRouter(), cfg)
+	blitmodulekeeper.RegisterNodeService(clientCtx, a.GRPCQueryRouter(), cfg)
 }
 
 // RegisterAPIRoutes registers all application module routes with the provided
@@ -448,7 +470,7 @@ func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig
 	// log BlitConfig
 	clientCtx := apiSvr.ClientCtx
 	nodeservice.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
-	servicesmodulekeeper.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
+	blitmodulekeeper.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
 
 	app.App.RegisterAPIRoutes(apiSvr, apiConfig)
 	// register swagger API in app.go so that other applications can override easily

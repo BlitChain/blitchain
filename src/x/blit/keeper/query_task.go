@@ -17,9 +17,22 @@ func (k Keeper) TaskAll(ctx context.Context, req *types.QueryAllTaskRequest) (*t
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	addr, err := k.accountKeeper.AddressCodec().StringToBytes(req.Address)
-	if err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "invalid address: %s", err.Error())
+	if req.Address != "" {
+		addr, err := k.accountKeeper.AddressCodec().StringToBytes(req.Address)
+		tasks, pageRes, err := query.CollectionPaginate(
+			ctx,
+			k.Tasks,
+			req.Pagination,
+			func(key collections.Pair[sdk.AccAddress, uint64], value types.Task) (types.Task, error) {
+				return value, nil
+			},
+			query.WithCollectionPaginationPairPrefix[sdk.AccAddress, uint64](addr),
+		)
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "paginate: %v", err)
+		}
+
+		return &types.QueryAllTaskResponse{Task: tasks, Pagination: pageRes}, nil
 	}
 
 	tasks, pageRes, err := query.CollectionPaginate(
@@ -29,7 +42,6 @@ func (k Keeper) TaskAll(ctx context.Context, req *types.QueryAllTaskRequest) (*t
 		func(key collections.Pair[sdk.AccAddress, uint64], value types.Task) (types.Task, error) {
 			return value, nil
 		},
-		query.WithCollectionPaginationPairPrefix[sdk.AccAddress, uint64](addr),
 	)
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "paginate: %v", err)

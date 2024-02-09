@@ -24,6 +24,7 @@ require (
 	cosmossdk.io/x/circuit v0.1.0
 	cosmossdk.io/x/evidence v0.1.0
 	cosmossdk.io/x/feegrant v0.1.0
+	cosmossdk.io/x/tx v0.12.0
 	cosmossdk.io/x/upgrade v0.1.0
 	github.com/bufbuild/buf v1.27.2
 	github.com/cometbft/cometbft v0.38.2
@@ -57,7 +58,6 @@ require (
 	cloud.google.com/go/storage v1.30.1 // indirect
 	connectrpc.com/connect v1.11.1 // indirect
 	connectrpc.com/otelconnect v0.6.0 // indirect
-	cosmossdk.io/x/tx v0.12.0 // indirect
 	filippo.io/edwards25519 v1.0.0 // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.1 // indirect

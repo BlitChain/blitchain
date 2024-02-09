@@ -1,0 +1,16 @@
+syntax = "proto3";
+package blit.blit;
+
+import "cosmos_proto/cosmos.proto";
+import "cosmos/group/v1/types.proto";
+
+option go_package = "blit/x/blit/types";
+
+// EventCreateTask is an event emitted when a task is created.
+message EventCreateTask {
+
+  // task_id is the unique ID of the task.
+  uint64 task_id = 1;
+}
+
+

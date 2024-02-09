@@ -142,7 +142,9 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 				k.Logger().Error("recovered from panic", "error", err)
 				task.ErrorLog = fmt.Sprintf("Error: %s", err)
 				task.Results = nil
-				task.Enabled = false
+				if task.DisableOnError {
+					task.Enabled = false
+				}
 				// TODO disable task if needed
 				// Set the error on the task result
 			} else {
@@ -170,16 +172,20 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 		}()
 
 		// Charge the gas fee
-		creatorAddress, err := sdk.AccAddressFromBech32(task.Creator)
+		creatorAddress, err := sdk.AccAddressFromBech32(task.Address)
 		if err != nil {
-			task.ErrorLog = fmt.Sprintf("Failed to get creator address: %s", err)
-			task.Enabled = false
+			task.ErrorLog = fmt.Sprintf("Failed to get task address: %s", err)
+			if task.DisableOnError {
+				task.Enabled = false
+			}
 			return
 		}
 		err = k.DeductTaskFee(ctx, creatorAddress, task.TaskGasFee)
 		if err != nil {
 			task.ErrorLog = fmt.Sprintf("Failed to deduct fee: %s", err)
-			task.Enabled = false
+			if task.DisableOnError {
+				task.Enabled = false
+			}
 			return
 		}
 
@@ -187,7 +193,9 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 		msgs, err := task.GetTaskMessages()
 		if err != nil {
 			task.ErrorLog = fmt.Sprintf("Failed to get task messages: %s", err)
-			task.Enabled = false
+			if task.DisableOnError {
+				task.Enabled = false
+			}
 			return
 		}
 
@@ -201,7 +209,9 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 			if ok {
 				if err := m.ValidateBasic(); err != nil {
 					task.ErrorLog = fmt.Sprintf("Errori: validatating message %d: %s", i, err)
-					task.Enabled = false
+					if task.DisableOnError {
+						task.Enabled = false
+					}
 					return
 				}
 			}
@@ -209,20 +219,26 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 			handler := k.Router.Handler(msg)
 			if handler == nil {
 				task.ErrorLog = fmt.Sprintf("Error: unrecognized task message type: %T", msg)
-				task.Enabled = false
+				if task.DisableOnError {
+					task.Enabled = false
+				}
 				return
 			}
 
 			r, err := handler(cachedCtx, msg)
 			if err != nil {
 				task.ErrorLog = fmt.Sprintf("Error on message %d: %s", i, err)
-				task.Enabled = false
+				if task.DisableOnError {
+					task.Enabled = false
+				}
 				return
 			} // Handler should always return non-nil sdk.Result.
 
 			if r == nil {
 				task.ErrorLog = fmt.Sprintf("Error: handler %T returned nil Result", handler)
-				task.Enabled = false
+				if task.DisableOnError {
+					task.Enabled = false
+				}
 				return
 			}
 
@@ -244,7 +260,9 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 			futureTaskIndex, err := k.SetFutureTask(ctx, futureTask)
 			if err != nil {
 				task.ErrorLog = fmt.Sprintf("Error: failed to set future task: %s", err)
-				task.Enabled = false
+				if task.DisableOnError {
+					task.Enabled = false
+				}
 				return
 			}
 
@@ -306,7 +324,9 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 			fmt.Println(fmt.Sprintf("Task Expired: ExpireAfter: %s < currentBlockTime: %s", task.ExpireAfter, currentBlockTime))
 			k.RemoveFutureTask(ctx, futureTask.Index)
 			task.FutureTaskIndex = ""
-			task.Enabled = false
+			if task.DisableOnError {
+				task.Enabled = false
+			}
 			k.SetTask(ctx, task)
 			continue
 		}
@@ -315,7 +335,9 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 			fmt.Println(fmt.Sprintf("Task MaxRuns: TotalRuns: %d >= MaxRuns: %d", task.TotalRuns, task.MaxRuns))
 			k.RemoveFutureTask(ctx, futureTask.Index)
 			task.FutureTaskIndex = ""
-			task.Enabled = false
+			if task.DisableOnError {
+				task.Enabled = false
+			}
 			k.SetTask(ctx, task)
 			continue
 		}

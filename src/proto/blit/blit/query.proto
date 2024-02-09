@@ -13,6 +13,7 @@ import "blit/blit/future_task.proto";
 
 option go_package = "blit/x/blit/types";
 
+
 // Query defines the gRPC querier service.
 service Query {
   

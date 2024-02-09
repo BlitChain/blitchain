@@ -25,6 +25,7 @@ const (
 	Msg_ForceTransferCoins_FullMethodName = "/blit.blit.Msg/ForceTransferCoins"
 	Msg_SetDenomMetadata_FullMethodName   = "/blit.blit.Msg/SetDenomMetadata"
 	Msg_CreateTask_FullMethodName         = "/blit.blit.Msg/CreateTask"
+	Msg_UpdateTask_FullMethodName         = "/blit.blit.Msg/UpdateTask"
 	Msg_DeleteTask_FullMethodName         = "/blit.blit.Msg/DeleteTask"
 )
 
@@ -40,6 +41,7 @@ type MsgClient interface {
 	ForceTransferCoins(ctx context.Context, in *MsgForceTransferCoins, opts ...grpc.CallOption) (*MsgForceTransferCoinsResponse, error)
 	SetDenomMetadata(ctx context.Context, in *MsgSetDenomMetadata, opts ...grpc.CallOption) (*MsgSetDenomMetadataResponse, error)
 	CreateTask(ctx context.Context, in *MsgCreateTask, opts ...grpc.CallOption) (*MsgCreateTaskResponse, error)
+	UpdateTask(ctx context.Context, in *MsgUpdateTask, opts ...grpc.CallOption) (*MsgUpdateTaskResponse, error)
 	DeleteTask(ctx context.Context, in *MsgDeleteTask, opts ...grpc.CallOption) (*MsgDeleteTaskResponse, error)
 }
 
@@ -105,6 +107,15 @@ func (c *msgClient) CreateTask(ctx context.Context, in *MsgCreateTask, opts ...g
 	return out, nil
 }
 
+func (c *msgClient) UpdateTask(ctx context.Context, in *MsgUpdateTask, opts ...grpc.CallOption) (*MsgUpdateTaskResponse, error) {
+	out := new(MsgUpdateTaskResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *msgClient) DeleteTask(ctx context.Context, in *MsgDeleteTask, opts ...grpc.CallOption) (*MsgDeleteTaskResponse, error) {
 	out := new(MsgDeleteTaskResponse)
 	err := c.cc.Invoke(ctx, Msg_DeleteTask_FullMethodName, in, out, opts...)
@@ -126,6 +137,7 @@ type MsgServer interface {
 	ForceTransferCoins(context.Context, *MsgForceTransferCoins) (*MsgForceTransferCoinsResponse, error)
 	SetDenomMetadata(context.Context, *MsgSetDenomMetadata) (*MsgSetDenomMetadataResponse, error)
 	CreateTask(context.Context, *MsgCreateTask) (*MsgCreateTaskResponse, error)
+	UpdateTask(context.Context, *MsgUpdateTask) (*MsgUpdateTaskResponse, error)
 	DeleteTask(context.Context, *MsgDeleteTask) (*MsgDeleteTaskResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
@@ -151,6 +163,9 @@ func (UnimplementedMsgServer) SetDenomMetadata(context.Context, *MsgSetDenomMeta
 }
 func (UnimplementedMsgServer) CreateTask(context.Context, *MsgCreateTask) (*MsgCreateTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTask not implemented")
+}
+func (UnimplementedMsgServer) UpdateTask(context.Context, *MsgUpdateTask) (*MsgUpdateTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTask not implemented")
 }
 func (UnimplementedMsgServer) DeleteTask(context.Context, *MsgDeleteTask) (*MsgDeleteTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
@@ -276,6 +291,24 @@ func _Msg_CreateTask_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_UpdateTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateTask)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateTask(ctx, req.(*MsgUpdateTask))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Msg_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MsgDeleteTask)
 	if err := dec(in); err != nil {
@@ -324,6 +357,10 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateTask",
 			Handler:    _Msg_CreateTask_Handler,
+		},
+		{
+			MethodName: "UpdateTask",
+			Handler:    _Msg_UpdateTask_Handler,
 		},
 		{
 			MethodName: "DeleteTask",

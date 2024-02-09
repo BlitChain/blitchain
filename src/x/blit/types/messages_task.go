@@ -24,7 +24,7 @@ func (msg MsgCreateTask) UnpackInterfaces(unpacker sdktypes.AnyUnpacker) error {
 }
 
 func NewMsgCreateTask(
-	creator string,
+	address string,
 	activateAfter time.Time,
 	expireAfter time.Time,
 	minimumInterval *time.Duration,
@@ -43,7 +43,7 @@ func NewMsgCreateTask(
 	}
 
 	return &MsgCreateTask{
-		Creator:         creator,
+		Address:         address,
 		ActivateAfter:   activateAfter,
 		ExpireAfter:     expireAfter,
 		MinimumInterval: minimumInterval,
@@ -57,7 +57,7 @@ func NewMsgCreateTask(
 }
 
 func (msg *MsgCreateTask) ValidateBasic() error {
-	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Address)
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
@@ -78,18 +78,18 @@ func (msg *MsgCreateTask) ValidateBasic() error {
 var _ sdk.Msg = &MsgDeleteTask{}
 
 func NewMsgDeleteTask(
-	creator string,
+	address string,
 	id uint64,
 
 ) *MsgDeleteTask {
 	return &MsgDeleteTask{
-		Creator: creator,
+		Address: address,
 		Id:      id,
 	}
 }
 
 func (msg *MsgDeleteTask) ValidateBasic() error {
-	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Address)
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
