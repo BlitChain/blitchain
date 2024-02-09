@@ -71,6 +71,7 @@ import (
 	scriptkeeper "blit/x/script/keeper"
 	storagemodulekeeper "blit/x/storage/keeper"
 
+	servicesmodulekeeper "blit/x/services/keeper"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"blit/docs"
@@ -136,6 +137,7 @@ type App struct {
 	ScopedICAControllerKeeper capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
 
+	ServicesKeeper servicesmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 	BlitKeeper    blitmodulekeeper.Keeper
 	ScriptKeeper  scriptkeeper.Keeper
@@ -283,6 +285,7 @@ func New(
 		&app.GroupKeeper,
 		&app.ConsensusParamsKeeper,
 		&app.CircuitBreakerKeeper,
+		&app.ServicesKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 		&app.BlitKeeper,
 		&app.ScriptKeeper,
@@ -436,7 +439,7 @@ func (app *App) SimulationManager() *module.SimulationManager {
 // RegisterNodeService registers the node gRPC service on the app gRPC router.
 func (a *App) RegisterNodeService(clientCtx client.Context, cfg config.Config) {
 	nodeservice.RegisterNodeService(clientCtx, a.GRPCQueryRouter(), cfg)
-	blitmodulekeeper.RegisterNodeService(clientCtx, a.GRPCQueryRouter(), cfg)
+	servicesmodulekeeper.RegisterNodeService(clientCtx, a.GRPCQueryRouter(), cfg)
 }
 
 // RegisterAPIRoutes registers all application module routes with the provided
@@ -445,7 +448,7 @@ func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig
 	// log BlitConfig
 	clientCtx := apiSvr.ClientCtx
 	nodeservice.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
-	blitmodulekeeper.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
+	servicesmodulekeeper.RegisterGRPCGatewayRoutes(clientCtx, apiSvr.GRPCGatewayRouter)
 
 	app.App.RegisterAPIRoutes(apiSvr, apiConfig)
 	// register swagger API in app.go so that other applications can override easily

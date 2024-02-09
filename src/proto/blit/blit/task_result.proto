@@ -1,7 +1,0 @@
-syntax = "proto3";
-package blit.blit;
-
-option go_package = "blit/x/blit/types";
-import "google/protobuf/any.proto";
-
-

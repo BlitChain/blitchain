@@ -71,7 +71,10 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v8/modules/core/exported"
 	"google.golang.org/protobuf/types/known/durationpb"
 
-	// this line is used by starport scaffolding # stargate/app/moduleImport
+	servicesmodulev1 "blit/api/blit/services/module"
+_ "blit/x/services/module" // import for side-effects
+servicesmoduletypes "blit/x/services/types"
+// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	blitmodulev1 "blit/api/blit/blit/module"
 	scriptmodulev1 "blit/api/blit/script/module"
@@ -118,7 +121,8 @@ var (
 		consensusparamtypes.ModuleName,
 		circuittypes.ModuleName,
 		// chain modules
-		// this line is used by starport scaffolding # stargate/app/initGenesis
+		servicesmoduletypes.ModuleName,
+// this line is used by starport scaffolding # stargate/app/initGenesis
 		blitmoduletypes.ModuleName,
 		scriptmoduletypes.ModuleName,
 		storagemoduletypes.ModuleName,
@@ -145,7 +149,8 @@ var (
 		icatypes.ModuleName,
 		ibcfeetypes.ModuleName,
 		// chain modules
-		// this line is used by starport scaffolding # stargate/app/beginBlockers
+		servicesmoduletypes.ModuleName,
+// this line is used by starport scaffolding # stargate/app/beginBlockers
 		blitmoduletypes.ModuleName,
 		scriptmoduletypes.ModuleName,
 		storagemoduletypes.ModuleName,
@@ -166,7 +171,8 @@ var (
 		icatypes.ModuleName,
 		ibcfeetypes.ModuleName,
 		// chain modules
-		// this line is used by starport scaffolding # stargate/app/endBlockers
+		servicesmoduletypes.ModuleName,
+// this line is used by starport scaffolding # stargate/app/endBlockers
 		blitmoduletypes.ModuleName,
 		scriptmoduletypes.ModuleName,
 		storagemoduletypes.ModuleName,
@@ -330,7 +336,11 @@ var (
 				Name:   storagemoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&storagemodulev1.Module{}),
 			},
-			// this line is used by starport scaffolding # stargate/app/moduleConfig
+			{
+				Name:   servicesmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&servicesmodulev1.Module{}),
+			},
+// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
 	})
 )

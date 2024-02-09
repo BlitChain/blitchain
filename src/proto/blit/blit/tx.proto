@@ -12,10 +12,8 @@ import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "blit/blit/params.proto";
 import "blit/blit/task.proto";
-import "blit/blit/task_result.proto";
 import "blit/blit/future_task.proto";
 
-import "blit/blit/timespec.proto";
 
 option go_package = "blit/x/blit/types";
 
