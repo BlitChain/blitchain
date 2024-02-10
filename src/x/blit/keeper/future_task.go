@@ -246,6 +246,13 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 			results[i] = r
 		}
 
+		// Refresh the task from the store so we don't overwrite any changes while running the task
+		task, err := k.GetTaskById(ctx, task.Id)
+
+		if err != nil {
+			// Task was deleted at some point
+			return
+		}
 		task.Results = results
 
 		if task.Enabled && (task.MaxRuns == 0 || task.TotalRuns < task.MaxRuns) {
