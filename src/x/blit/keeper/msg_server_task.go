@@ -137,7 +137,7 @@ func (k msgServer) UpdateTask(goCtx context.Context, msg *types.MsgUpdateTask) (
 
 	_, err := sdk.AccAddressFromBech32(msg.Address)
 	if err != nil {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidAddress, "invalid creator address")
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidAddress, "invalid msg.Address")
 	}
 
 	task, err := k.GetTaskById(

@@ -44,14 +44,6 @@ func (k Keeper) GetTask(ctx context.Context, creator string, id uint64) (types.T
 
 func (k Keeper) GetTaskById(ctx context.Context, id uint64) (task *types.Task, err error) {
 
-	// This is massible ghetto but "key.PrimaryKey()" uses "assertValid()" when getting the primary key
-	// and it panics if the task doesn't exist. So we need to recover from the panic and return an error
-	defer func() {
-		if r := recover(); r != nil {
-			err = status.Error(codes.NotFound, fmt.Sprintf("task with id %d not found", id))
-			task = nil
-		}
-	}()
 	key, err := k.Tasks.Indexes.Id.MatchExact(
 		ctx,
 		id,

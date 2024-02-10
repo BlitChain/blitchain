@@ -57,7 +57,6 @@ func newTasksIndexes(sb *collections.SchemaBuilder) TasksIndexes {
 		Id: indexes.NewReversePair[types.Task](
 			sb, types.TaskAddressPrefix, "task_by_address_index",
 			collections.PairKeyCodec(sdk.AccAddressKey, collections.Uint64Key),
-			indexes.WithReversePairUncheckedValue(),
 		),
 	}
 }
