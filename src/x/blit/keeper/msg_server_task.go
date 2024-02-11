@@ -144,6 +144,7 @@ func (k msgServer) UpdateTask(goCtx context.Context, msg *types.MsgUpdateTask) (
 		ctx,
 		msg.Id,
 	)
+
 	if err != nil {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, "Task not found")
 	}
@@ -212,35 +213,49 @@ func (k msgServer) UpdateTask(goCtx context.Context, msg *types.MsgUpdateTask) (
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "task gas fee must be in ublit")
 	}
 
-	task = &types.Task{
-		Address:         msg.Address,
-		Id:              msg.Id,
-		ActivateAfter:   msg.ActivateAfter,
-		ExpireAfter:     msg.ExpireAfter,
-		MinimumInterval: msg.MinimumInterval,
-		MaxRuns:         msg.MaxRuns,
-		Enabled:         msg.Enabled,
-		TaskGasLimit:    msg.TaskGasLimit,
-		TaskGasFee:      msg.TaskGasFee,
-		Messages:        msg.Messages,
-		TotalRuns:       0,
-	}
-
-	// Calculate gas price from gas fee / gas limit
-	gasPrice := sdk.NewDecCoinsFromCoins((task.TaskGasFee)).QuoDec(math.LegacyNewDec(int64(task.TaskGasLimit)))[0]
-
-	futureTask := &types.FutureTask{
-		TaskId:      task.Id,
-		ScheduledOn: task.ActivateAfter.Truncate(60 * time.Second),
-		Status:      types.FutureTaskStatus_PENDING,
-		GasPrice:    &gasPrice,
-	}
-	futureTaskIndex, err := k.SetFutureTask(ctx, futureTask)
-
-	task.FutureTaskIndex = futureTaskIndex
-
+	err = k.RemoveFutureTask(ctx, task.FutureTaskIndex)
 	if err != nil {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "failed to set future task")
+		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "failed to remove future task")
+	}
+
+	enabling := !task.Enabled && msg.Enabled
+	disabling := task.Enabled && !msg.Enabled
+	gasPricedChanged := task.TaskGasFee != msg.TaskGasFee
+
+	task.ActivateAfter = msg.ActivateAfter
+	task.ExpireAfter = msg.ExpireAfter
+	task.MinimumInterval = msg.MinimumInterval
+	task.MaxRuns = msg.MaxRuns
+	task.Enabled = msg.Enabled
+	task.TaskGasLimit = msg.TaskGasLimit
+	task.TaskGasFee = msg.TaskGasFee
+	task.Messages = msg.Messages
+
+	if enabling || (task.Enabled && gasPricedChanged) {
+		// Calculate gas price from gas fee / gas limit
+		gasPrice := sdk.NewDecCoinsFromCoins((task.TaskGasFee)).QuoDec(math.LegacyNewDec(int64(task.TaskGasLimit)))[0]
+		futureTask := &types.FutureTask{
+			TaskId:      task.Id,
+			ScheduledOn: task.ActivateAfter.Truncate(60 * time.Second),
+			Status:      types.FutureTaskStatus_PENDING,
+			GasPrice:    &gasPrice,
+		}
+		futureTaskIndex, err := k.SetFutureTask(ctx, futureTask)
+		if err != nil {
+			return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "failed to set future task")
+		}
+		task.FutureTaskIndex = futureTaskIndex
+		ctx.Logger().Info("Enabling task", "task", task.Id, "futureTaskIndex", futureTaskIndex)
+	}
+
+	if disabling {
+		ctx.Logger().Info("Disabling task", "task", task.Id)
+		err = k.RemoveFutureTask(ctx, task.FutureTaskIndex)
+		if err != nil {
+			return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "failed to remove future task")
+		}
+
+		task.FutureTaskIndex = ""
 	}
 
 	err = k.SetTask(

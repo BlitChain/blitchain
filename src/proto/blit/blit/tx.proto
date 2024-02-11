@@ -163,7 +163,9 @@ message MsgUpdateTask {
   string grantee = 12 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
-message MsgUpdateTaskResponse {}
+message MsgUpdateTaskResponse {
+  string future_task_index = 1;
+}
 
 message MsgDeleteTask {
   option (cosmos.msg.v1.signer) = "address";

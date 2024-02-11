@@ -52,6 +52,9 @@ func (k Keeper) GetTaskById(ctx context.Context, id uint64) (task *types.Task, e
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
+	if !key.Valid() {
+		return nil, status.Error(codes.NotFound, "not found")
+	}
 	fullKey, err := key.PrimaryKey()
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
