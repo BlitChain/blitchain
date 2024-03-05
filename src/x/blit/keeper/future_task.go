@@ -125,7 +125,17 @@ func (k Keeper) GetPoolFutureTasks(ctx context.Context) (list []*types.FutureTas
 }
 
 // RunTask run the task
-func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
+func (k Keeper) RunTask(ctx sdk.Context, taskId uint64) {
+	task, err := k.GetTaskById(ctx, taskId)
+	if err != nil {
+		ctx.Logger().Error("Error: failed to get task", "error", err)
+		return
+	}
+
+	task.ErrorLog = ""
+	task.Results = nil
+
+	fmt.Println(fmt.Sprintf("Running Task: %#v", task))
 
 	taskStartingGas := ctx.BlockGasMeter().GasConsumed()
 	cachedCtx, Write := ctx.CacheContext()
@@ -135,7 +145,6 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 		defer func() {
 			lastExecutedOn := sdk.UnwrapSDKContext(cachedCtx).BlockTime()
 			task.LastExecutedOn = &lastExecutedOn
-			k.SetTask(ctx, task)
 
 			if r := recover(); r != nil {
 				err := handleTaskRecovery(r, cachedCtx)
@@ -151,6 +160,26 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 				Write()
 			}
 
+			if task.Enabled {
+				gasPrice := sdk.NewDecCoinsFromCoins((task.TaskGasFee)).QuoDec(math.LegacyNewDec(int64(task.TaskGasLimit)))[0]
+				nextTime := ctx.BlockTime().Add(*task.MinimumInterval)
+				futureTask := &types.FutureTask{
+					TaskId:      task.Id,
+					ScheduledOn: nextTime,
+					Status:      types.FutureTaskStatus_PENDING,
+					GasPrice:    &gasPrice,
+				}
+				futureTaskIndex, err := k.SetFutureTask(ctx, futureTask)
+				if err != nil {
+					task.ErrorLog = fmt.Sprintf("Error: failed to set future task: %s", err)
+					if task.DisableOnError {
+						task.Enabled = false
+					}
+					return
+				}
+
+				task.FutureTaskIndex = futureTaskIndex
+			}
 			k.SetTask(ctx, task)
 
 		}()
@@ -260,27 +289,6 @@ func (k Keeper) RunTask(ctx sdk.Context, task *types.Task) {
 		}
 		task.Results = results
 
-		if task.Enabled && (task.MaxRuns == 0 || task.TotalRuns < task.MaxRuns) {
-			gasPrice := sdk.NewDecCoinsFromCoins((task.TaskGasFee)).QuoDec(math.LegacyNewDec(int64(task.TaskGasLimit)))[0]
-			nextTime := ctx.BlockTime().Add(*task.MinimumInterval)
-			futureTask := &types.FutureTask{
-				TaskId:      task.Id,
-				ScheduledOn: nextTime,
-				Status:      types.FutureTaskStatus_PENDING,
-				GasPrice:    &gasPrice,
-			}
-			futureTaskIndex, err := k.SetFutureTask(ctx, futureTask)
-			if err != nil {
-				task.ErrorLog = fmt.Sprintf("Error: failed to set future task: %s", err)
-				if task.DisableOnError {
-					task.Enabled = false
-				}
-				return
-			}
-
-			task.FutureTaskIndex = futureTaskIndex
-		}
-
 	}()
 
 }
@@ -328,25 +336,43 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 
 		if err != nil {
 			ctx.Logger().Error("Error: failed to get task", "error", err, "futureTask.TaskId", futureTask.TaskId)
-			k.RemoveFutureTask(ctx, futureTask.Index)
+			err = k.RemoveFutureTask(ctx, futureTask.Index)
+			if err != nil {
+				ctx.Logger().Error("Error: failed to remove future task", "error", err, "futureTask.Index", futureTask.Index)
+			}
 			continue
 		}
 
 		if task.FutureTaskIndex != futureTask.Index {
 			ctx.Logger().Error("Error: futureTaskIndex mismatch", "task.FutureTaskIndex", task.FutureTaskIndex, "futureTask.Index", futureTask.Index)
-			k.RemoveFutureTask(ctx, futureTask.Index)
+			err = k.RemoveFutureTask(ctx, futureTask.Index)
+			if err != nil {
+				ctx.Logger().Error("Error: failed to remove future task", "error", err, "futureTask.Index", futureTask.Index)
+			}
+			task.FutureTaskIndex = ""
+			err = k.SetTask(ctx, task)
+			if err != nil {
+				ctx.Logger().Error("Error: failed to set task", "error", err, "task", task)
+			}
 			continue
 		}
 
 		currentBlockTime := sdk.UnwrapSDKContext(ctx).BlockTime()
+
 		if task.ExpireAfter.Before(currentBlockTime) {
-			ctx.Logger().Error("Error: Expired Task", "task.ExpireAfter", task.ExpireAfter, "currentBlockTime", currentBlockTime)
-			k.RemoveFutureTask(ctx, futureTask.Index)
+			ctx.Logger().Info("Error: Expired Task", "task.ExpireAfter", task.ExpireAfter, "currentBlockTime", currentBlockTime)
+			err = k.RemoveFutureTask(ctx, futureTask.Index)
+			if err != nil {
+				ctx.Logger().Error("Error: failed to remove future task", "error", err, "futureTask.Index", futureTask.Index)
+			}
 			task.FutureTaskIndex = ""
 			if task.DisableOnError {
 				task.Enabled = false
 			}
-			k.SetTask(ctx, task)
+			err = k.SetTask(ctx, task)
+			if err != nil {
+				ctx.Logger().Error("Error: failed to set task", "error", err, "task", task)
+			}
 			continue
 		}
 
@@ -360,15 +386,24 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 			if task.DisableOnError {
 				task.Enabled = false
 			}
-			k.SetTask(ctx, task)
+			err = k.SetTask(ctx, task)
+			if err != nil {
+				ctx.Logger().Error("Error: failed to set task", "error", err, "task", task)
+			}
 			continue
 		}
 
 		if task.Enabled == false {
 			fmt.Println(fmt.Sprintf("Task Disabled: Enabled: %t", task.Enabled))
-			k.RemoveFutureTask(ctx, futureTask.Index)
+			err = k.RemoveFutureTask(ctx, futureTask.Index)
+			if err != nil {
+				ctx.Logger().Error("Error: failed to remove future task", "error", err, "futureTask.Index", futureTask.Index)
+			}
 			task.FutureTaskIndex = ""
-			k.SetTask(ctx, task)
+			err = k.SetTask(ctx, task)
+			if err != nil {
+				ctx.Logger().Error("Error: failed to set task", "error", err, "task", task)
+			}
 			continue
 		}
 
@@ -385,17 +420,23 @@ func (k Keeper) RunTasks(goCtx context.Context) error {
 			ctx.Logger().Error("Error: failed to remove future task", "error", err)
 			task.Enabled = false
 			task.ErrorLog = fmt.Sprintf("Error: failed to remove future task: %s", err)
-			k.SetTask(ctx, task)
+			err = k.SetTask(ctx, task)
+			if err != nil {
+				ctx.Logger().Error("Error: failed to set task", "error", err, "task", task)
+			}
 			continue
 		}
 
 		task.FutureTaskIndex = ""
 		task.TotalRuns++
-		k.SetTask(ctx, task)
+		err = k.SetTask(ctx, task)
+		if err != nil {
+			ctx.Logger().Error("Error: failed to set task", "error", err, "task", task)
+		}
 		// Run the task
 
 		i++
-		k.RunTask(ctx, task)
+		k.RunTask(ctx, task.Id)
 
 		// Limit the number of tasks that can be run in a single block
 		if i > 10 {

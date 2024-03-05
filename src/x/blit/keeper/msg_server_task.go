@@ -93,6 +93,7 @@ func (k msgServer) CreateTask(goCtx context.Context, msg *types.MsgCreateTask) (
 		MinimumInterval: msg.MinimumInterval,
 		MaxRuns:         msg.MaxRuns,
 		Enabled:         msg.Enabled,
+		DisableOnError:  msg.DisableOnError,
 		TaskGasLimit:    msg.TaskGasLimit,
 		TaskGasFee:      msg.TaskGasFee,
 		Messages:        msg.Messages,
@@ -227,9 +228,12 @@ func (k msgServer) UpdateTask(goCtx context.Context, msg *types.MsgUpdateTask) (
 	task.MinimumInterval = msg.MinimumInterval
 	task.MaxRuns = msg.MaxRuns
 	task.Enabled = msg.Enabled
+	task.DisableOnError = msg.DisableOnError
 	task.TaskGasLimit = msg.TaskGasLimit
 	task.TaskGasFee = msg.TaskGasFee
 	task.Messages = msg.Messages
+	task.Results = nil
+	task.ErrorLog = ""
 
 	if enabling || (task.Enabled && gasPricedChanged) {
 		// Calculate gas price from gas fee / gas limit
@@ -265,7 +269,9 @@ func (k msgServer) UpdateTask(goCtx context.Context, msg *types.MsgUpdateTask) (
 	if err != nil {
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "failed to set task")
 	}
-	return &types.MsgUpdateTaskResponse{}, nil
+	return &types.MsgUpdateTaskResponse{
+		FutureTaskIndex: task.FutureTaskIndex,
+	}, nil
 }
 
 func (k msgServer) DeleteTask(goCtx context.Context, msg *types.MsgDeleteTask) (*types.MsgDeleteTaskResponse, error) {

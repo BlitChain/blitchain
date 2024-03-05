@@ -115,8 +115,8 @@ message MsgCreateTask {
     (gogoproto.stdduration) = true
   ];
   uint64 max_runs = 6;
-  bool disable_on_error = 7;
-  bool enabled = 8;
+  bool disable_on_error = 7 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  bool enabled = 8 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
   uint64 task_gas_limit = 9;
  cosmos.base.v1beta1.Coin task_gas_fee = 10 [
     (gogoproto.nullable)     = false, 
@@ -150,8 +150,9 @@ message MsgUpdateTask {
     (gogoproto.stdduration) = true
   ];
   uint64 max_runs = 6;
-  bool disable_on_error = 7;
-  bool enabled = 8;
+  bool disable_on_error = 7 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  bool enabled = 8 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+
   uint64 task_gas_limit = 9;
  cosmos.base.v1beta1.Coin task_gas_fee = 10 [
     (gogoproto.nullable)     = false, 
