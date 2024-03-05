@@ -75,17 +75,17 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 				},
 				{
 					RpcMethod: "CreateTask",
-					Use:       "create-task",
+					Use:       "create-task --messages [google.protobuf.Any (json) (repeated)] --activate-after [timestamp (RFC 3339)] --expire-after [timestamp (RFC 3339)] --max-runs [uint] --minimum-interval [duration]  --task-gas-fee [cosmos.base.v1beta1.Coin] --task-gas-limit [uint] --disable-on-error --enabled",
 					Short:     "Create a new Task",
 				},
 				{
 					RpcMethod: "UpdateTask",
-					Use:       "update-task",
+					Use:       "update-task -id [task id] --messages [google.protobuf.Any (json) (repeated)] --activate-after [timestamp (RFC 3339)] --expire-after [timestamp (RFC 3339)] --max-runs [uint] --minimum-interval [duration]  --task-gas-fee [cosmos.base.v1beta1.Coin] --task-gas-limit [uint] --disable-on-error --enabled",
 					Short:     "Update a new Task",
 				},
 				{
 					RpcMethod: "DeleteTask",
-					Use:       "delete-task --id [id]",
+					Use:       "delete-task --id [task id]",
 					Short:     "Delete Task",
 				},
 				// this line is used by ignite scaffolding # autocli/tx
