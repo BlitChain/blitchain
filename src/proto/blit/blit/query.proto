@@ -1,50 +1,92 @@
 syntax = "proto3";
+
 package blit.blit;
 
-import "amino/amino.proto";
+import "google/protobuf/timestamp.proto";
 import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "blit/blit/params.proto";
+import "blit/blit/task.proto";
+import "blit/blit/future_task.proto";
 
 option go_package = "blit/x/blit/types";
 
+
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/blit/blit/params";
+  
+  }
+  
+  // Queries a list of Task items.
+  rpc Task    (QueryGetTaskRequest) returns (QueryGetTaskResponse) {
+    option (google.api.http).get = "/blit/blit/task";
+  
+  }
+  rpc TaskAll (QueryAllTaskRequest) returns (QueryAllTaskResponse) {
+    option (google.api.http).get = "/blit/blit/all-tasks";
+  
+  }
+  
+  // Queries a list of FutureTask items.
+  rpc FutureTask    (QueryGetFutureTaskRequest) returns (QueryGetFutureTaskResponse) {
+    option (google.api.http).get = "/blit/blit/future-task";
+  
+  }
+  rpc FutureTaskAll (QueryAllFutureTaskRequest) returns (QueryAllFutureTaskResponse) {
+    option (google.api.http).get = "/blit/blit/all-future-tasks";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+  Params params = 1 [(gogoproto.nullable) = false];
 }
 
-// Service defines the gRPC querier service for node related queries.
-service Service {
-  // Config queries for the operator configuration.
-  rpc Endpoints(EndpointsRequest) returns (EndpointsResponse) {
-    option (google.api.http).get = "/blit/services/endpoints";
-  }
+message QueryGetTaskRequest {
+  uint64 id = 1;
 }
 
-// ConfigRequest defines the request structure for the Config gRPC query.
-message EndpointsRequest {}
+message QueryGetTaskResponse {
+  Task task = 1 [(gogoproto.nullable) = false];
+}
 
-// ConfigResponse defines the response structure for the Config gRPC query.
-message EndpointsResponse {
-  // api_url is the url of the api service. It can be set with the ENV variable BLIT_PUBLIC_API_URL.
-  string api_url = 1;
-  // rpc_url is the url of the rpc service. It can be set with the ENV variable BLIT_PUBLIC_RPC_URL.
-  string rpc_url = 2;
+message QueryAllTaskRequest {
+  string address = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryAllTaskResponse {
+  repeated Task                                   task       = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetFutureTaskRequest {
+  string index = 1;
+}
+
+message QueryGetFutureTaskResponse {
+  FutureTask futureTask = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllFutureTaskRequest {
+  // Prefix queries the future tasks with indexs with the given prefix.
+  string prefix = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryAllFutureTaskResponse {
+  repeated FutureTask                             futureTask = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

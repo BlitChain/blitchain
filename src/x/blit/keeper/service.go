@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"blit/x/blit/types"
+	types "blit/x/blit/types"
 	"context"
 
 	"github.com/cosmos/cosmos-sdk/client"

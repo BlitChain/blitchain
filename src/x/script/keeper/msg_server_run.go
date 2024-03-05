@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"blit/x/script/types"
@@ -47,35 +46,9 @@ func (k msgServer) Run(goCtx context.Context, msg *types.MsgRun) (*types.MsgRunR
 
 	}
 
-	attachedMsgs := []sdk.Msg{}
-
-	if msg.AttachedMessages != "" {
-		var objects []map[string]interface{}
-		err := json.Unmarshal([]byte(msg.AttachedMessages), &objects)
-		if err != nil {
-			fmt.Println("error:", err)
-			return nil, errorsmod.Wrapf(err, "failed to unmarshal attached messages: %+v", msg.AttachedMessages)
-		}
-
-		// Step 2: Iterate and marshal each object back to JSON string
-		var stringifiedObjects []string
-		for i, obj := range objects {
-			jsonStr, err := json.Marshal(obj)
-			if err != nil {
-				return nil, errorsmod.Wrapf(err, "failed to marshal attached message at index %d: %s", i, obj)
-			}
-			stringifiedObjects = append(stringifiedObjects, string(jsonStr))
-		}
-
-		for i, anyJSON := range stringifiedObjects {
-			var attachedMsg sdk.Msg
-			err = k.cdc.UnmarshalInterfaceJSON([]byte(anyJSON), &attachedMsg)
-			if err != nil {
-				return nil, errorsmod.Wrapf(err, "failed to unmarshal attached message at index %d: %s", i, anyJSON)
-			}
-
-			attachedMsgs = append(attachedMsgs, attachedMsg)
-		}
+	attachedMsgs, err := msg.GetMessages()
+	if err != nil {
+		return nil, err
 	}
 
 	fmt.Println(fmt.Sprintf("Script at address %v found", msg.ScriptAddress))

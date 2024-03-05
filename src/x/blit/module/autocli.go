@@ -1,9 +1,9 @@
 package blit
 
 import (
-	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
-
 	modulev1 "blit/api/blit/blit"
+
+	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.
@@ -17,6 +17,27 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "params",
 					Short:     "Shows the parameters of the module.",
 				},
+				{
+					RpcMethod: "TaskAll",
+					Use:       "list-task",
+					Short:     "List all Task",
+				},
+				{
+					RpcMethod: "Task",
+					Use:       "show-task",
+					Short:     "Shows a Task",
+				},
+				{
+					RpcMethod: "FutureTaskAll",
+					Use:       "list-future-task",
+					Short:     "List all FutureTask",
+				},
+				{
+					RpcMethod: "FutureTask",
+					Use:       "show-future-task",
+					Short:     "Shows a FutureTask",
+				},
+
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},
@@ -51,6 +72,21 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:            "set-denom-metadata [base] [display] [name] [symbol] [uri] [uri-hash] [exponent] [description]",
 					Short:          "Send a set_denom_metadata tx",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "base"}, {ProtoField: "display"}, {ProtoField: "name"}, {ProtoField: "symbol"}, {ProtoField: "uri"}, {ProtoField: "uri_hash"}, {ProtoField: "exponent"}, {ProtoField: "description"}},
+				},
+				{
+					RpcMethod: "CreateTask",
+					Use:       "create-task --messages [google.protobuf.Any (json) (repeated)] --activate-after [timestamp (RFC 3339)] --expire-after [timestamp (RFC 3339)] --max-runs [uint] --minimum-interval [duration]  --task-gas-fee [cosmos.base.v1beta1.Coin] --task-gas-limit [uint] --disable-on-error --enabled",
+					Short:     "Create a new Task",
+				},
+				{
+					RpcMethod: "UpdateTask",
+					Use:       "update-task -id [task id] --messages [google.protobuf.Any (json) (repeated)] --activate-after [timestamp (RFC 3339)] --expire-after [timestamp (RFC 3339)] --max-runs [uint] --minimum-interval [duration]  --task-gas-fee [cosmos.base.v1beta1.Coin] --task-gas-limit [uint] --disable-on-error --enabled",
+					Short:     "Update a new Task",
+				},
+				{
+					RpcMethod: "DeleteTask",
+					Use:       "delete-task --id [task id]",
+					Short:     "Delete Task",
 				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},

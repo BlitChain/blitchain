@@ -229,10 +229,10 @@ func (k Keeper) HandleMsg(ctx sdk.Context, jsonMsg string, signer string) (res s
 		return "", err
 	}
 	// Validate the message
-	//err = m.ValidateBasic()
-	//if err != nil {
+	// err = m.ValidateBasic()
+	// if err != nil {
 	//	return "", errorsmod.Wrap(err, "validation failed")
-	//}
+	// }
 
 	k.Logger(ctx).Info("Run", "msg", m)
 
@@ -512,7 +512,7 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 		sdkEvents := make([]sdk.Event, 0, len(events))
 		for _, event := range events {
 			e := event
-			e.Attributes = append(e.Attributes, abci.EventAttribute{Key: "authz_msg_index", Value: strconv.Itoa(i)})
+			e.Attributes = append(e.Attributes, abci.EventAttribute{Key: "attached_message_index", Value: strconv.Itoa(i)})
 
 			sdkEvents = append(sdkEvents, sdk.Event(e))
 		}
@@ -607,7 +607,8 @@ func (k Keeper) evalScript(goCtx context.Context, scriptCtx *EvalScriptContext, 
 			sdk.NewAttribute("caller_address", scriptCtx.CallerAddress),
 			sdk.NewAttribute("script_address", valFound.Address),
 			sdk.NewAttribute("function_name", scriptCtx.FunctionName),
-			sdk.NewAttribute("response", response),
+			sdk.NewAttribute("kwargs", scriptCtx.Kwargs),
+			sdk.NewAttribute("messages", jsonMsgs),
 		),
 	)
 	if (runErr != nil) && (raiseRunErr == true) {

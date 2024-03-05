@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package blit.services;
+
+import "cosmos_proto/cosmos.proto";
+import "google/api/annotations.proto";
+
+option go_package = "blit/x/blit/types";
+
+
+// Service defines the gRPC querier service for node related queries.
+service Service {
+  
+  // Config queries for the operator configuration.
+  rpc Endpoints (EndpointsRequest) returns (EndpointsResponse) {
+    option (google.api.http).get = "/blit/services/endpoints";
+  
+  }
+}
+// ConfigRequest defines the request structure for the Config gRPC query.
+message EndpointsRequest {}
+
+// ConfigResponse defines the response structure for the Config gRPC query.
+message EndpointsResponse {
+  
+  // api_url is the url of the api service. It can be set with the ENV variable BLIT_PUBLIC_API_URL.
+  string api_url = 1;
+  
+  // rpc_url is the url of the rpc service. It can be set with the ENV variable BLIT_PUBLIC_RPC_URL.
+  string rpc_url = 2;
+}

@@ -291,7 +291,9 @@ def get_module_dict():
     return mod_dict
 
 
-def build_sandbox(port, caller_address, script_address, block_info, json_msgs, json_msg_results):
+def build_sandbox(
+    port, caller_address, script_address, block_info, json_msgs, json_msg_results
+):
     url = f"http://localhost:{port}/rpc"
 
     def _chain(chain_method, **params):
@@ -418,8 +420,16 @@ def build_sandbox(port, caller_address, script_address, block_info, json_msgs, j
         if "data" in res:
             del res["data"]
         if res.get("events"):
-            res["event"] = res["events"][0]
-            del res["events"]
+            events = []
+            for event in res["events"]:
+                events.append(
+                    {
+                        event["type"]: {
+                            attr["key"]: attr["value"] for attr in event["attributes"]
+                        }
+                    }
+                )
+            res["events"] = events
         if res.get("msg_responses"):
             res["msg_response"] = res["msg_responses"][0]
             del res["msg_responses"]
@@ -526,19 +536,28 @@ def build_sandbox(port, caller_address, script_address, block_info, json_msgs, j
         """
         msgs, responses = json.loads(json_msgs), json.loads(json_msg_results)
         results = []
+
         for msg, response in zip(msgs, responses):
+            events = []
+            for event in response.get("events", []):
+                events.append(
+                    {
+                        event["type"]: {
+                            attr["key"]: attr["value"] for attr in event["attributes"]
+                        }
+                    }
+                )
+                # for attr in event["attributes"]:
+                #    event[event["type"] + "." + attr["key"]] = attr["value"]
             results.append(
                 {
                     "msg": msg,
-                    "events": response.get("events", []),
+                    "events": events,
                     "msg_response": response.get("msg_responses", [None])[0],
                     "log": response.get("log", ""),
                 }
             )
         return results
-
-
-
 
     @allow_blit_func
     def _blit_eval(

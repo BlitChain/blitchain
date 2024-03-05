@@ -19,7 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName = "/blit.blit.Query/Params"
+	Query_Params_FullMethodName        = "/blit.blit.Query/Params"
+	Query_Task_FullMethodName          = "/blit.blit.Query/Task"
+	Query_TaskAll_FullMethodName       = "/blit.blit.Query/TaskAll"
+	Query_FutureTask_FullMethodName    = "/blit.blit.Query/FutureTask"
+	Query_FutureTaskAll_FullMethodName = "/blit.blit.Query/FutureTaskAll"
 )
 
 // QueryClient is the client API for Query service.
@@ -28,6 +32,12 @@ const (
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// Queries a list of Task items.
+	Task(ctx context.Context, in *QueryGetTaskRequest, opts ...grpc.CallOption) (*QueryGetTaskResponse, error)
+	TaskAll(ctx context.Context, in *QueryAllTaskRequest, opts ...grpc.CallOption) (*QueryAllTaskResponse, error)
+	// Queries a list of FutureTask items.
+	FutureTask(ctx context.Context, in *QueryGetFutureTaskRequest, opts ...grpc.CallOption) (*QueryGetFutureTaskResponse, error)
+	FutureTaskAll(ctx context.Context, in *QueryAllFutureTaskRequest, opts ...grpc.CallOption) (*QueryAllFutureTaskResponse, error)
 }
 
 type queryClient struct {
@@ -47,12 +57,54 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) Task(ctx context.Context, in *QueryGetTaskRequest, opts ...grpc.CallOption) (*QueryGetTaskResponse, error) {
+	out := new(QueryGetTaskResponse)
+	err := c.cc.Invoke(ctx, Query_Task_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) TaskAll(ctx context.Context, in *QueryAllTaskRequest, opts ...grpc.CallOption) (*QueryAllTaskResponse, error) {
+	out := new(QueryAllTaskResponse)
+	err := c.cc.Invoke(ctx, Query_TaskAll_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) FutureTask(ctx context.Context, in *QueryGetFutureTaskRequest, opts ...grpc.CallOption) (*QueryGetFutureTaskResponse, error) {
+	out := new(QueryGetFutureTaskResponse)
+	err := c.cc.Invoke(ctx, Query_FutureTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) FutureTaskAll(ctx context.Context, in *QueryAllFutureTaskRequest, opts ...grpc.CallOption) (*QueryAllFutureTaskResponse, error) {
+	out := new(QueryAllFutureTaskResponse)
+	err := c.cc.Invoke(ctx, Query_FutureTaskAll_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// Queries a list of Task items.
+	Task(context.Context, *QueryGetTaskRequest) (*QueryGetTaskResponse, error)
+	TaskAll(context.Context, *QueryAllTaskRequest) (*QueryAllTaskResponse, error)
+	// Queries a list of FutureTask items.
+	FutureTask(context.Context, *QueryGetFutureTaskRequest) (*QueryGetFutureTaskResponse, error)
+	FutureTaskAll(context.Context, *QueryAllFutureTaskRequest) (*QueryAllFutureTaskResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -62,6 +114,18 @@ type UnimplementedQueryServer struct {
 
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (UnimplementedQueryServer) Task(context.Context, *QueryGetTaskRequest) (*QueryGetTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Task not implemented")
+}
+func (UnimplementedQueryServer) TaskAll(context.Context, *QueryAllTaskRequest) (*QueryAllTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskAll not implemented")
+}
+func (UnimplementedQueryServer) FutureTask(context.Context, *QueryGetFutureTaskRequest) (*QueryGetFutureTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FutureTask not implemented")
+}
+func (UnimplementedQueryServer) FutureTaskAll(context.Context, *QueryAllFutureTaskRequest) (*QueryAllFutureTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FutureTaskAll not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -94,6 +158,78 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_Task_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).Task(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_Task_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).Task(ctx, req.(*QueryGetTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_TaskAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).TaskAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_TaskAll_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).TaskAll(ctx, req.(*QueryAllTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_FutureTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetFutureTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).FutureTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_FutureTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).FutureTask(ctx, req.(*QueryGetFutureTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_FutureTaskAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllFutureTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).FutureTaskAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_FutureTaskAll_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).FutureTaskAll(ctx, req.(*QueryAllFutureTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -105,97 +241,21 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
 		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "blit/blit/query.proto",
-}
-
-const (
-	Service_Endpoints_FullMethodName = "/blit.blit.Service/Endpoints"
-)
-
-// ServiceClient is the client API for Service service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ServiceClient interface {
-	// Config queries for the operator configuration.
-	Endpoints(ctx context.Context, in *EndpointsRequest, opts ...grpc.CallOption) (*EndpointsResponse, error)
-}
-
-type serviceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
-	return &serviceClient{cc}
-}
-
-func (c *serviceClient) Endpoints(ctx context.Context, in *EndpointsRequest, opts ...grpc.CallOption) (*EndpointsResponse, error) {
-	out := new(EndpointsResponse)
-	err := c.cc.Invoke(ctx, Service_Endpoints_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// ServiceServer is the server API for Service service.
-// All implementations must embed UnimplementedServiceServer
-// for forward compatibility
-type ServiceServer interface {
-	// Config queries for the operator configuration.
-	Endpoints(context.Context, *EndpointsRequest) (*EndpointsResponse, error)
-	mustEmbedUnimplementedServiceServer()
-}
-
-// UnimplementedServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedServiceServer struct {
-}
-
-func (UnimplementedServiceServer) Endpoints(context.Context, *EndpointsRequest) (*EndpointsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Endpoints not implemented")
-}
-func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
-
-// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ServiceServer will
-// result in compilation errors.
-type UnsafeServiceServer interface {
-	mustEmbedUnimplementedServiceServer()
-}
-
-func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
-	s.RegisterService(&Service_ServiceDesc, srv)
-}
-
-func _Service_Endpoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EndpointsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceServer).Endpoints(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Service_Endpoints_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).Endpoints(ctx, req.(*EndpointsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var Service_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "blit.blit.Service",
-	HandlerType: (*ServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Endpoints",
-			Handler:    _Service_Endpoints_Handler,
+			MethodName: "Task",
+			Handler:    _Query_Task_Handler,
+		},
+		{
+			MethodName: "TaskAll",
+			Handler:    _Query_TaskAll_Handler,
+		},
+		{
+			MethodName: "FutureTask",
+			Handler:    _Query_FutureTask_Handler,
+		},
+		{
+			MethodName: "FutureTaskAll",
+			Handler:    _Query_FutureTaskAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

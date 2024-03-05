@@ -1,0 +1,24 @@
+syntax = "proto3";
+package blit.blit;
+
+import "google/protobuf/timestamp.proto";
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "blit/x/blit/types";
+
+enum FutureTaskStatus {
+  NONE = 0;
+  PENDING = 1;
+  POOL = 2;
+}
+
+message FutureTask {
+  string index = 1; 
+  google.protobuf.Timestamp              scheduled_on     =  2
+	  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  uint64 task_id = 3; 
+  FutureTaskStatus status = 4;
+  cosmos.base.v1beta1.DecCoin gas_price = 5;
+}
+

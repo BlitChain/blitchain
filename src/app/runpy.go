@@ -14,6 +14,10 @@ import (
 func runBlitVmScript(script string) (string, error) {
 
 	blitvmPath := viper.GetString(blittypes.FlagBlitVMPath)
+	if blitvmPath == "" {
+		// log warning
+		return "", nil
+	}
 	pyenv_root := os.Getenv("PYENV_ROOT")
 	if pyenv_root == "" {
 		fmt.Println("PYENV_ROOT is not set. Please set it to the root of your pyenv installation.")

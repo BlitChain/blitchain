@@ -23,6 +23,7 @@ var (
 )
 
 const (
+
 // this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -34,6 +35,14 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	}
 	blitGenesis := types.GenesisState{
 		Params: types.DefaultParams(),
+		FutureTaskList: []types.FutureTask{
+			{
+				Index: "0",
+			},
+			{
+				Index: "1",
+			},
+		},
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&blitGenesis)
