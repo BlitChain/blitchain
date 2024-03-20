@@ -61,14 +61,9 @@ import (
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	_ "github.com/cosmos/cosmos-sdk/x/staking" // import for side-effects
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-	_ "github.com/cosmos/ibc-go/modules/capability" // import for side-effects
-	capabilitytypes "github.com/cosmos/ibc-go/modules/capability/types"
+	_ "github.com/cosmos/ibc-go/modules/capability"                     // import for side-effects
 	_ "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts" // import for side-effects
-	icatypes "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/types"
-	_ "github.com/cosmos/ibc-go/v8/modules/apps/29-fee" // import for side-effects
-	ibcfeetypes "github.com/cosmos/ibc-go/v8/modules/apps/29-fee/types"
-	ibctransfertypes "github.com/cosmos/ibc-go/v8/modules/apps/transfer/types"
-	ibcexported "github.com/cosmos/ibc-go/v8/modules/core/exported"
+	_ "github.com/cosmos/ibc-go/v8/modules/apps/29-fee"                 // import for side-effects
 	"google.golang.org/protobuf/types/known/durationpb"
 
 	// this line is used by starport scaffolding # stargate/app/moduleImport
@@ -93,7 +88,8 @@ var (
 	// can do so safely.
 	genesisModuleOrder = []string{
 		// cosmos-sdk/ibc modules
-		capabilitytypes.ModuleName,
+		// TODO: readd with proper upgrade store key
+		//capabilitytypes.ModuleName,
 		authtypes.ModuleName,
 		banktypes.ModuleName,
 		distrtypes.ModuleName,
@@ -102,13 +98,13 @@ var (
 		govtypes.ModuleName,
 		minttypes.ModuleName,
 		crisistypes.ModuleName,
-		ibcexported.ModuleName,
+		//ibcexported.ModuleName,
 		genutiltypes.ModuleName,
 		evidencetypes.ModuleName,
 		authz.ModuleName,
-		ibctransfertypes.ModuleName,
-		icatypes.ModuleName,
-		ibcfeetypes.ModuleName,
+		//ibctransfertypes.ModuleName,
+		//icatypes.ModuleName,
+		//ibcfeetypes.ModuleName,
 		feegrant.ModuleName,
 		paramstypes.ModuleName,
 		upgradetypes.ModuleName,
@@ -139,11 +135,14 @@ var (
 		authz.ModuleName,
 		genutiltypes.ModuleName,
 		// ibc modules
-		capabilitytypes.ModuleName,
-		ibcexported.ModuleName,
-		ibctransfertypes.ModuleName,
-		icatypes.ModuleName,
-		ibcfeetypes.ModuleName,
+		// TODO: readd with proper upgrade store key
+		//capabilitytypes.ModuleName,
+		//ibcexported.ModuleName,
+		//ibctransfertypes.ModuleName,
+		//icatypes.ModuleName,
+		//ibcfeetypes.ModuleName,
+		// END TODO
+
 		// chain modules
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 		blitmoduletypes.ModuleName,
@@ -160,11 +159,13 @@ var (
 		group.ModuleName,
 		genutiltypes.ModuleName,
 		// ibc modules
-		ibcexported.ModuleName,
-		ibctransfertypes.ModuleName,
-		capabilitytypes.ModuleName,
-		icatypes.ModuleName,
-		ibcfeetypes.ModuleName,
+		// TODO: readd with proper upgrade store key
+		//ibcexported.ModuleName,
+		//ibctransfertypes.ModuleName,
+		//capabilitytypes.ModuleName,
+		//icatypes.ModuleName,
+		//ibcfeetypes.ModuleName,
+		// END TODO
 		// chain modules
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 		blitmoduletypes.ModuleName,
@@ -185,9 +186,11 @@ var (
 		{Account: stakingtypes.BondedPoolName, Permissions: []string{authtypes.Burner, stakingtypes.ModuleName}},
 		{Account: stakingtypes.NotBondedPoolName, Permissions: []string{authtypes.Burner, stakingtypes.ModuleName}},
 		{Account: govtypes.ModuleName, Permissions: []string{authtypes.Burner}},
-		{Account: ibctransfertypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
-		{Account: ibcfeetypes.ModuleName},
-		{Account: icatypes.ModuleName},
+		// TODO: readd with proper upgrade store key
+		//{Account: ibctransfertypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
+		//{Account: ibcfeetypes.ModuleName},
+		//{Account: icatypes.ModuleName},
+		// END TODO
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 

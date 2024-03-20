@@ -59,12 +59,6 @@ import (
 	paramstypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	slashingkeeper "github.com/cosmos/cosmos-sdk/x/slashing/keeper"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
-	capabilitykeeper "github.com/cosmos/ibc-go/modules/capability/keeper"
-	icacontrollerkeeper "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/controller/keeper"
-	icahostkeeper "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/host/keeper"
-	ibcfeekeeper "github.com/cosmos/ibc-go/v8/modules/apps/29-fee/keeper"
-	ibctransferkeeper "github.com/cosmos/ibc-go/v8/modules/apps/transfer/keeper"
-	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/protoadapt"
 
@@ -128,18 +122,18 @@ type App struct {
 	CircuitBreakerKeeper  circuitkeeper.Keeper
 
 	// IBC
-	IBCKeeper           *ibckeeper.Keeper // IBC Keeper must be a pointer in the app, so we can SetRouter on it correctly
-	CapabilityKeeper    *capabilitykeeper.Keeper
-	IBCFeeKeeper        ibcfeekeeper.Keeper
-	ICAControllerKeeper icacontrollerkeeper.Keeper
-	ICAHostKeeper       icahostkeeper.Keeper
-	TransferKeeper      ibctransferkeeper.Keeper
+	//IBCKeeper           *ibckeeper.Keeper // IBC Keeper must be a pointer in the app, so we can SetRouter on it correctly
+	//CapabilityKeeper    *capabilitykeeper.Keeper
+	//IBCFeeKeeper        ibcfeekeeper.Keeper
+	//ICAControllerKeeper icacontrollerkeeper.Keeper
+	//ICAHostKeeper       icahostkeeper.Keeper
+	//TransferKeeper      ibctransferkeeper.Keeper
 
 	// Scoped IBC
-	ScopedIBCKeeper           capabilitykeeper.ScopedKeeper
-	ScopedIBCTransferKeeper   capabilitykeeper.ScopedKeeper
-	ScopedICAControllerKeeper capabilitykeeper.ScopedKeeper
-	ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
+	//ScopedIBCKeeper           capabilitykeeper.ScopedKeeper
+	//ScopedIBCTransferKeeper   capabilitykeeper.ScopedKeeper
+	//ScopedICAControllerKeeper capabilitykeeper.ScopedKeeper
+	//ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
 
 	BlitKeeper    blitmodulekeeper.Keeper
 	ScriptKeeper  scriptkeeper.Keeper
@@ -239,8 +233,8 @@ func New(
 				// The IBC Keeper cannot be passed because it has not been initiated yet.
 				// Passing the getter, the app IBC Keeper will always be accessible.
 				// This needs to be removed after IBC supports App Wiring.
-				app.GetIBCKeeper,
-				app.GetCapabilityScopedKeeper,
+				//app.GetIBCKeeper,
+				//app.GetCapabilityScopedKeeper,
 				// Supply the logger
 				logger,
 
@@ -353,7 +347,10 @@ func New(
 	app.App = appBuilder.Build(db, traceStore, baseAppOptions...)
 
 	// Register legacy modules
-	app.registerIBCModules()
+	// Remove and readd with proper store keys in upgrade
+	//if err := app.registerIBCModules(appOpts); err != nil {
+	//	return nil, err
+	//}
 
 	// register streaming services
 	if err := app.RegisterStreamingServices(appOpts, app.kvStoreKeys()); err != nil {
@@ -706,14 +703,14 @@ func getRawRequest(r *http.Request) (string, error) {
 }
 
 // GetIBCKeeper returns the IBC keeper.
-func (app *App) GetIBCKeeper() *ibckeeper.Keeper {
-	return app.IBCKeeper
-}
+//func (app *App) GetIBCKeeper() *ibckeeper.Keeper {
+//	return app.IBCKeeper
+//}
 
 // GetCapabilityScopedKeeper returns the capability scoped keeper.
-func (app *App) GetCapabilityScopedKeeper(moduleName string) capabilitykeeper.ScopedKeeper {
-	return app.CapabilityKeeper.ScopeToModule(moduleName)
-}
+//func (app *App) GetCapabilityScopedKeeper(moduleName string) capabilitykeeper.ScopedKeeper {
+//	return app.CapabilityKeeper.ScopeToModule(moduleName)
+//}
 
 // GetMaccPerms returns a copy of the module account permissions
 //
